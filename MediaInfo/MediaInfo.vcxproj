@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D35DD0AE-32B7-42F4-A4B7-40372E7914AD}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MediaInfo</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+    <Platform Condition="'$(Platform)'==''">Win32</Platform>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <TargetName>MediaInfo</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <EmbedManifest>false</EmbedManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>MinSpace</Optimization>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <EnableEnhancedInstructionSet Condition="'$(Platform)'=='Win32'">NoExtensions</EnableEnhancedInstructionSet>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;UNICODE;_UNICODE;WINVER=0x0400;_WIN32_WINNT=0x0400;NOMINMAX=;WIN32_LEAN_AND_MEAN=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <OmitDefaultLibName>true</OmitDefaultLibName>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalOptions>/Gs999999 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
+      <EntryPointSymbol>Start</EntryPointSymbol>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comctl32.lib;comdlg32.lib;shell32.lib;advapi32.lib;version.lib;ole32.lib</AdditionalDependencies>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>false</DataExecutionPrevention>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+    <PreBuildEvent>
+      <Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(ProjectDir)prepare.ps1" -License "$(ProjectDir)..\license.txt" -Output "$(ProjectDir)$(IntDir)license.utf16"</Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(ProjectDir)postbuild.ps1" -Path "$(TargetPath)" -Library "$(ProjectDir)..\MediaInfo.dll"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="MediaInfo.cpp" />
+    <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="LibraryWorker.cpp" />
+    <ClCompile Include="CurlLibrary.cpp" />
+    <ClCompile Include="Localization.cpp" />
+    <ClCompile Include="MediaInfoLibrary.cpp" />
+    <ClCompile Include="LibrarySupport.cpp" />
+    <ClCompile Include="TabControl.cpp" />
+    <ClCompile Include="SelectionEdit.cpp" />
+    <ClCompile Include="ComboBoxSupport.cpp" />
+    <ClCompile Include="SystemDialogTemplate.cpp" />
+    <ClCompile Include="RecentFiles.cpp" />
+    <ClCompile Include="SettingsStorage.cpp" />
+    <ClCompile Include="PersistWindowState.cpp" />
+    <ClCompile Include="HelpForm.cpp" />
+    <ClCompile Include="AboutForm.cpp" />
+    <ClCompile Include="ModernFileDialog.cpp" />
+    <ClCompile Include="JpegEncoder.cpp" />
+    <ClCompile Include="WebpEncoder.cpp" />
+    <ClCompile Include="runtime.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MediaInfo.h" />
+    <ClInclude Include="MainForm.h" />
+    <ClInclude Include="LibraryWorker.h" />
+    <ClInclude Include="CurlLibrary.h" />
+    <ClInclude Include="Localization.h" />
+    <ClInclude Include="MediaInfoLibrary.h" />
+    <ClInclude Include="LibrarySupport.h" />
+    <ClInclude Include="TabControl.h" />
+    <ClInclude Include="SelectionEdit.h" />
+    <ClInclude Include="ComboBoxSupport.h" />
+    <ClInclude Include="SystemDialogTemplate.h" />
+    <ClInclude Include="RecentFiles.h" />
+    <ClInclude Include="SettingsStorage.h" />
+    <ClInclude Include="PersistWindowState.h" />
+    <ClInclude Include="HelpForm.h" />
+    <ClInclude Include="AboutForm.h" />
+    <ClInclude Include="ModernFileDialog.h" />
+    <ClInclude Include="JpegEncoder.h" />
+    <ClInclude Include="WebpEncoder.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MediaInfo.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="prepare.ps1" />
+    <None Include="ResourcePacker.cs" />
+    <None Include="postbuild.ps1" />
+    <None Include="MediaInfo.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\MediaInfo.ico" />
+    <None Include="Resources\lang\ar.csv" />
+    <None Include="Resources\lang\be.csv" />
+    <None Include="Resources\lang\bg.csv" />
+    <None Include="Resources\lang\ca.csv" />
+    <None Include="Resources\lang\cs.csv" />
+    <None Include="Resources\lang\da.csv" />
+    <None Include="Resources\lang\de.csv" />
+    <None Include="Resources\lang\en.csv" />
+    <None Include="Resources\lang\es.csv" />
+    <None Include="Resources\lang\eu.csv" />
+    <None Include="Resources\lang\fa.csv" />
+    <None Include="Resources\lang\fr.csv" />
+    <None Include="Resources\lang\gl.csv" />
+    <None Include="Resources\lang\gr.csv" />
+    <None Include="Resources\lang\hr.csv" />
+    <None Include="Resources\lang\hu.csv" />
+    <None Include="Resources\lang\hy.csv" />
+    <None Include="Resources\lang\id.csv" />
+    <None Include="Resources\lang\it.csv" />
+    <None Include="Resources\lang\ja.csv" />
+    <None Include="Resources\lang\ka.csv" />
+    <None Include="Resources\lang\ko.csv" />
+    <None Include="Resources\lang\lt.csv" />
+    <None Include="Resources\lang\nl.csv" />
+    <None Include="Resources\lang\pl.csv" />
+    <None Include="Resources\lang\pt-BR.csv" />
+    <None Include="Resources\lang\pt.csv" />
+    <None Include="Resources\lang\ro.csv" />
+    <None Include="Resources\lang\ru.csv" />
+    <None Include="Resources\lang\sk.csv" />
+    <None Include="Resources\lang\sq.csv" />
+    <None Include="Resources\lang\sv.csv" />
+    <None Include="Resources\lang\th.csv" />
+    <None Include="Resources\lang\tr.csv" />
+    <None Include="Resources\lang\uk.csv" />
+    <None Include="Resources\lang\zh-CN.csv" />
+    <None Include="Resources\lang\zh-HK.csv" />
+    <None Include="Resources\lang\zh-TW.csv" />
+    <None Include="Resources\lib\26.10\MediaInfo.dll" />
+    <None Include="Resources\lib\26.10\libcurl.dll" />
+    <None Include="Resources\lib\21.03\MediaInfo.dll" />
+    <None Include="Resources\lib\21.03\libcurl.dll" />
+    <None Include="Resources\lib\0.7.60\MediaInfo.dll" />
+    <None Include="Resources\lib\libwebp.dll" />
+    <None Include="..\license.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

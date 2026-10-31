@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4B04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4C08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms;manifest;json;csv</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Build">
+      <UniqueIdentifier>{47ED576E-4D72-49FF-A67E-A28FCAC2CB98}</UniqueIdentifier>
+      <Extensions>ps1;cs</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\lib">
+      <UniqueIdentifier>{FCD4AB0E-B8EE-40A3-85A7-D4FB4CF8FEED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lib\0.7.60">
+      <UniqueIdentifier>{60D15478-E33B-47D1-8682-BBEE962DBE4D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lib\21.03">
+      <UniqueIdentifier>{8648CC24-ADF2-4FD7-B160-619EDD5589D3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lib\26.10">
+      <UniqueIdentifier>{0BD80529-58DA-4E26-874B-F38929947FE1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\lang">
+      <UniqueIdentifier>{8f14fca2-757a-48d8-8520-e06b4b1eb6bf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AboutForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboBoxSupport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CurlLibrary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JpegEncoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebpEncoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LibrarySupport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LibraryWorker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Localization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MediaInfoLibrary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernFileDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PersistWindowState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RecentFiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="runtime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectionEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsStorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemDialogTemplate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TabControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AboutForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboBoxSupport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CurlLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JpegEncoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WebpEncoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LibrarySupport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryWorker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Localization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MediaInfoLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernFileDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PersistWindowState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RecentFiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectionEdit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsStorage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemDialogTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TabControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MediaInfo.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MediaInfo.manifest">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\MediaInfo.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\lib\0.7.60\MediaInfo.dll">
+      <Filter>Resource Files\lib\0.7.60</Filter>
+    </None>
+    <None Include="Resources\lib\21.03\libcurl.dll">
+      <Filter>Resource Files\lib\21.03</Filter>
+    </None>
+    <None Include="Resources\lib\21.03\MediaInfo.dll">
+      <Filter>Resource Files\lib\21.03</Filter>
+    </None>
+    <None Include="Resources\lib\26.10\libcurl.dll">
+      <Filter>Resource Files\lib\26.10</Filter>
+    </None>
+    <None Include="Resources\lib\26.10\MediaInfo.dll">
+      <Filter>Resource Files\lib\26.10</Filter>
+    </None>
+    <None Include="postbuild.ps1">
+      <Filter>Source Files\Build</Filter>
+    </None>
+    <None Include="prepare.ps1">
+      <Filter>Source Files\Build</Filter>
+    </None>
+    <None Include="ResourcePacker.cs">
+      <Filter>Source Files\Build</Filter>
+    </None>
+    <None Include="..\license.txt">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\lang\ar.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\be.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\bg.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\ca.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\cs.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\da.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\de.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\en.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\es.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\eu.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\fa.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\fr.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\gl.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\gr.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\hr.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\hu.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\hy.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\id.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\it.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\ja.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\ka.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\ko.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\lt.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\nl.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\pl.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\pt.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\pt-BR.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\ro.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\ru.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\sk.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\sq.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\sv.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\th.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\tr.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\uk.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\zh-CN.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\zh-HK.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lang\zh-TW.csv">
+      <Filter>Resource Files\lang</Filter>
+    </None>
+    <None Include="Resources\lib\libwebp.dll">
+      <Filter>Resource Files\lib</Filter>
+    </None>
+  </ItemGroup>
+</Project>

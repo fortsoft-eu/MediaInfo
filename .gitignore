@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.aps
+
+# Build output
+[Dd]ebug/
+[Rr]elease/
+
+# ZIP archives
+*.zip
