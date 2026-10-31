@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.0
  */
 
 #pragma once
@@ -242,8 +242,8 @@ enum TextId {
     TXT_COPY,
     TXT_COPY_FILE_NAME,
     TXT_COPY_FULL_PATH,
-    TXT_OPEN_FILE,
-    TXT_OPEN_CONTAINING_FOLDER,
+    TXT_LAUNCH_FILE,
+    TXT_SHOW_IN_CONTAINING_FOLDER,
     TXT_EDIT_MENU,
     TXT_WORD_WRAP,
     TXT_WORD_WRAP_FAILED,
@@ -251,6 +251,7 @@ enum TextId {
     TXT_SELECT_ALL,
     TXT_FIND_MENU,
     TXT_FIND_NEXT_MENU,
+    TXT_FIND_PREVIOUS_MENU,
     TXT_FIND_TITLE,
     TXT_FIND_WHAT,
     TXT_FIND_NEXT,
@@ -340,7 +341,8 @@ bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWOR
     int errorCapacity);
 
 /// Saves the report in the selected text encoding, replacing the destination only after a complete write.
-bool SaveReportText(const wchar_t* report, const wchar_t* path, DWORD type, wchar_t* error, int errorCapacity);
+bool SaveReportText(const wchar_t* report, const wchar_t* path, DWORD type, wchar_t* error,
+    int errorCapacity);
 
 /// Reads the window DPI dynamically, retaining device-context metrics on older Windows.
 UINT WindowDpi(HWND window);

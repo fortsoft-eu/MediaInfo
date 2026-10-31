@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.1
+ * Last modified for version 1.1.0.0
  */
 
 #pragma once
@@ -35,7 +35,7 @@
 #include "RecentFiles.h"
 
 /// Temporary context owned by the active tab popup.
-struct TabMenuContext;
+struct FileMenuContext;
 
 /// Symbols used while compiling for the Windows NT 4.0 API target.
 #ifndef IDC_HAND
@@ -177,7 +177,7 @@ private:
     PrintJob* activePrintJob;
 
     /// Borrows the context while the native tab popup is active.
-    TabMenuContext* tabMenuContext;
+    FileMenuContext* tabMenuContext;
 
     /// Report font, tab-caption preferences and identifiers for queued work.
     LOGFONTW reportFontSpec;
@@ -223,10 +223,13 @@ private:
     /// Shows file commands for the tab header selected by the mouse or keyboard.
     void ShowTabContextMenu(POINT point);
 
-    /// Refreshes file and folder availability when the native tab popup opens.
-    void InitializeTabContextMenu();
+    /// Refreshes the file commands when the File menu or a tab popup opens.
+    void InitializeFileMenu(HMENU menu);
 
-    /// Opens the file or its containing folder, selecting the file when it was available at popup time.
+    /// Executes a file command for the supplied tab path or the currently selected file tab.
+    void ExecuteFileCommand(UINT command, const wchar_t* path = nullptr);
+
+    /// Opens the file or its containing folder, selecting the file when it is available.
     void OpenTabFile(const wchar_t* path, const wchar_t* folder, bool selectFile);
 
     /// Displays the selected report edit and refreshes its status information.

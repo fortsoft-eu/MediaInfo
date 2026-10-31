@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.0
  */
 
 #include "Localization.h"
@@ -43,12 +43,13 @@ struct MenuCaption {
     TextId text;
 };
 
-/// Borrows the file snapshot and owns availability data for one synchronous tab popup.
-struct TabMenuContext {
+/// Borrows a file path and owns availability data shared by the File menu and tab popup.
+struct FileMenuContext {
     HMENU menu;
     const wchar_t* path;
     wchar_t folder[MAX_PATH];
     bool fileExists;
+    bool folderExists;
 };
 
 /// Command captions refreshed when the interface language changes.
@@ -58,12 +59,17 @@ static const MenuCaption menuCaptions[] = {
     { 0, ID_FILE_CLOSE, TXT_CLOSE_TAB },
     { 0, ID_FILE_CLOSE_ALL, TXT_CLOSE_ALL },
     { 0, ID_FILE_EXPORT, TXT_EXPORT },
+    { 0, ID_FILE_LAUNCH, TXT_LAUNCH_FILE },
+    { 0, ID_FILE_SHOW_IN_FOLDER, TXT_SHOW_IN_CONTAINING_FOLDER },
     { 0, ID_FILE_PRINT, TXT_PRINT },
     { 0, ID_FILE_EXIT, TXT_EXIT },
     { 1, ID_EDIT_COPY, TXT_COPY_SELECTION },
     { 1, ID_EDIT_SELECT_ALL, TXT_SELECT_ALL },
     { 1, ID_EDIT_FIND, TXT_FIND_MENU },
     { 1, ID_EDIT_FIND_NEXT, TXT_FIND_NEXT_MENU },
+    { 1, ID_EDIT_FIND_PREVIOUS, TXT_FIND_PREVIOUS_MENU },
+    { 1, ID_EDIT_COPY_FILE_NAME, TXT_COPY_FILE_NAME },
+    { 1, ID_EDIT_COPY_FULL_PATH, TXT_COPY_FULL_PATH },
     { 2, ID_FULL_PARSING, TXT_FULL_PARSING },
     { 2, ID_ADVANCED_MODE, TXT_ADVANCED_MODE },
     { 2, ID_TRACE_LEVEL_0, TXT_TRACE_LEVEL_0 },
@@ -89,11 +95,34 @@ static const UINT printCompleteMessage = WM_APP + 5;
 /// Command returned by the status pane context menu.
 static const UINT statusCopyCommand = 1;
 
-/// Commands returned by a file tab context menu.
-static const UINT tabCopyNameCommand = 1;
-static const UINT tabCopyPathCommand = 2;
-static const UINT tabOpenFileCommand = 3;
-static const UINT tabOpenFolderCommand = 4;
+/// Reads the current availability of a file and its containing folder for either menu.
+static void ReadFileMenuAvailability(FileMenuContext& context) {
+    context.fileExists = false;
+    context.folderExists = false;
+    context.folder[0] = 0;
+    if (!context.path || !context.path[0]) {
+        return;
+    }
+    UINT previousMode = SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
+    DWORD attributes = GetFileAttributesW(context.path);
+    context.fileExists = attributes != INVALID_FILE_ATTRIBUTES && !(attributes & FILE_ATTRIBUTE_DIRECTORY);
+    wchar_t* name = nullptr;
+    DWORD length = GetFullPathNameW(context.path, ARRAYSIZE(context.folder), context.folder, &name);
+    if (length && length < ARRAYSIZE(context.folder) && name && *name) {
+        name[0] = L'.';
+        name[1] = 0;
+        HANDLE directory = CreateFileW(context.folder, 0,
+            FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+            nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+        if (directory != INVALID_HANDLE_VALUE) {
+            BY_HANDLE_FILE_INFORMATION information = BY_HANDLE_FILE_INFORMATION{};
+            context.folderExists = GetFileInformationByHandle(directory, &information)
+                && information.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY;
+            CloseHandle(directory);
+        }
+    }
+    SetErrorMode(previousMode);
+}
 
 /// Reads file identity, size and write time without reading its media content.
 static bool GetReportFileInfo(const wchar_t* path, BY_HANDLE_FILE_INFORMATION& information) {
@@ -527,21 +556,24 @@ void MainForm::ShowTabContextMenu(POINT point) {
     for (int tab = 0; file && tab < index; ++tab) {
         file = file->next;
     }
-    if (!file || file->command != LibraryCommand::Read) {
+    if (!file) {
         return;
     }
-    wchar_t path[MAX_PATH];
-    lstrcpynW(path, file->path, ARRAYSIZE(path));
+    wchar_t path[MAX_PATH] = L"";
+    if (file->command == LibraryCommand::Read) {
+        lstrcpynW(path, file->path, ARRAYSIZE(path));
+    }
     HMENU menu = CreatePopupMenu();
     if (!menu) {
         return;
     }
-    AppendMenuW(menu, MF_STRING, tabCopyNameCommand, T(TXT_COPY_FILE_NAME));
-    AppendMenuW(menu, MF_STRING, tabCopyPathCommand, T(TXT_COPY_FULL_PATH));
+    UINT copyFlags = MF_STRING | (path[0] ? MF_ENABLED : MF_GRAYED);
+    AppendMenuW(menu, copyFlags, ID_EDIT_COPY_FILE_NAME, T(TXT_COPY_FILE_NAME));
+    AppendMenuW(menu, copyFlags, ID_EDIT_COPY_FULL_PATH, T(TXT_COPY_FULL_PATH));
     AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(menu, MF_STRING | MF_GRAYED, tabOpenFileCommand, T(TXT_OPEN_FILE));
-    AppendMenuW(menu, MF_STRING | MF_GRAYED, tabOpenFolderCommand, T(TXT_OPEN_CONTAINING_FOLDER));
-    TabMenuContext context = TabMenuContext{};
+    AppendMenuW(menu, MF_STRING | MF_GRAYED, ID_FILE_LAUNCH, T(TXT_LAUNCH_FILE));
+    AppendMenuW(menu, MF_STRING | MF_GRAYED, ID_FILE_SHOW_IN_FOLDER, T(TXT_SHOW_IN_CONTAINING_FOLDER));
+    FileMenuContext context = FileMenuContext{};
     context.menu = menu;
     context.path = path;
     tabMenuContext = &context;
@@ -549,50 +581,59 @@ void MainForm::ShowTabContextMenu(POINT point) {
         TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
     tabMenuContext = nullptr;
     DestroyMenu(menu);
-    if (command == tabCopyNameCommand || command == tabCopyPathCommand) {
+    if (command) {
+        ExecuteFileCommand(command, path);
+    }
+}
+
+/// Refreshes the file commands when the File menu or a tab popup opens.
+void MainForm::InitializeFileMenu(HMENU menu) {
+    FileMenuContext current = FileMenuContext{};
+    FileMenuContext* context = tabMenuContext;
+    if (!context || context->menu != menu) {
+        FileTab* active = CurrentFile();
+        if (active && active->command == LibraryCommand::Read) {
+            current.path = active->path;
+        }
+        context = &current;
+    }
+    ReadFileMenuAvailability(*context);
+    EnableMenuItem(menu, ID_FILE_LAUNCH, MF_BYCOMMAND | (context->fileExists ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_FILE_SHOW_IN_FOLDER,
+        MF_BYCOMMAND | (context->folderExists ? MF_ENABLED : MF_GRAYED));
+}
+
+/// Executes a file command for the supplied tab path or the currently selected file tab.
+void MainForm::ExecuteFileCommand(UINT command, const wchar_t* path) {
+    if (!path) {
+        FileTab* active = CurrentFile();
+        if (!active || active->command != LibraryCommand::Read) {
+            return;
+        }
+        path = active->path;
+    }
+    wchar_t selected[MAX_PATH];
+    lstrcpynW(selected, path, ARRAYSIZE(selected));
+    if (command == ID_EDIT_COPY_FILE_NAME || command == ID_EDIT_COPY_FULL_PATH) {
         wchar_t name[MAX_PATH];
-        FormatFileNameCaption(path, MAX_PATH, name, ARRAYSIZE(name));
-        const wchar_t* text = command == tabCopyNameCommand ? name : path;
+        FormatFileNameCaption(selected, MAX_PATH, name, ARRAYSIZE(name));
+        const wchar_t* text = command == ID_EDIT_COPY_FILE_NAME ? name : selected;
         if (!CopyTextToClipboard(window, text)) {
             MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
         }
-    } else if (command == tabOpenFileCommand || command == tabOpenFolderCommand) {
-        const wchar_t* folder = command == tabOpenFolderCommand ? context.folder : nullptr;
-        OpenTabFile(path, folder, context.fileExists);
+        return;
+    }
+    FileMenuContext context = FileMenuContext{};
+    context.path = selected;
+    ReadFileMenuAvailability(context);
+    if (command == ID_FILE_LAUNCH && context.fileExists) {
+        OpenTabFile(selected, nullptr, true);
+    } else if (command == ID_FILE_SHOW_IN_FOLDER && context.folderExists) {
+        OpenTabFile(selected, context.folder, context.fileExists);
     }
 }
 
-/// Refreshes file and folder availability when the native tab popup opens.
-void MainForm::InitializeTabContextMenu() {
-    TabMenuContext& context = *tabMenuContext;
-    UINT previousMode = SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
-    DWORD attributes = GetFileAttributesW(context.path);
-    context.fileExists = attributes != INVALID_FILE_ATTRIBUTES && !(attributes & FILE_ATTRIBUTE_DIRECTORY);
-    context.folder[0] = 0;
-    bool folderExists = false;
-    wchar_t* name = nullptr;
-    DWORD length = GetFullPathNameW(context.path, ARRAYSIZE(context.folder), context.folder, &name);
-    if (length && length < ARRAYSIZE(context.folder) && name && *name) {
-        name[0] = L'.';
-        name[1] = 0;
-        HANDLE directory = CreateFileW(context.folder, 0,
-            FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-            nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
-        if (directory != INVALID_HANDLE_VALUE) {
-            BY_HANDLE_FILE_INFORMATION information = BY_HANDLE_FILE_INFORMATION{};
-            folderExists = GetFileInformationByHandle(directory, &information)
-                && information.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY;
-            CloseHandle(directory);
-        }
-    }
-    SetErrorMode(previousMode);
-    EnableMenuItem(context.menu, tabOpenFileCommand,
-        MF_BYCOMMAND | (context.fileExists ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(context.menu, tabOpenFolderCommand,
-        MF_BYCOMMAND | (folderExists ? MF_ENABLED : MF_GRAYED));
-}
-
-/// Opens the file or its containing folder, selecting the file when it was available at popup time.
+/// Opens the file or its containing folder, selecting the file when it is available.
 void MainForm::OpenTabFile(const wchar_t* path, const wchar_t* folder, bool selectFile) {
     SHELLEXECUTEINFOW execute = SHELLEXECUTEINFOW{};
     execute.cbSize = sizeof(execute);
@@ -794,6 +835,10 @@ void MainForm::UpdateEditMenu() {
         MF_BYCOMMAND | (length && (start || end < static_cast<DWORD>(length)) ? MF_ENABLED : MF_GRAYED));
     EnableMenuItem(menu, ID_EDIT_FIND, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
     EnableMenuItem(menu, ID_EDIT_FIND_NEXT, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_FIND_PREVIOUS, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
+    bool file = active && active->command == LibraryCommand::Read && !closing;
+    EnableMenuItem(menu, ID_EDIT_COPY_FILE_NAME, MF_BYCOMMAND | (file ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_COPY_FULL_PATH, MF_BYCOMMAND | (file ? MF_ENABLED : MF_GRAYED));
 }
 
 /// Copies only the selected text of the active report through the native edit control.
@@ -1575,9 +1620,10 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             owner->placement.SetVisible(reinterpret_cast<HWND>(lParam));
             return 0;
         case WM_INITMENUPOPUP:
-            if (owner->tabMenuContext
+            if (reinterpret_cast<HMENU>(wParam) == GetSubMenu(GetMenu(window), 0)
+                || owner->tabMenuContext
                     && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
-                owner->InitializeTabContextMenu();
+                owner->InitializeFileMenu(reinterpret_cast<HMENU>(wParam));
                 return 0;
             }
             if (reinterpret_cast<HMENU>(wParam) == GetSubMenu(GetMenu(window), 1)) {
@@ -1668,6 +1714,12 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                     return 0;
                 case ID_FILE_CLOSE_ALL:
                     owner->CloseAllTabs();
+                    return 0;
+                case ID_FILE_LAUNCH:
+                case ID_FILE_SHOW_IN_FOLDER:
+                case ID_EDIT_COPY_FILE_NAME:
+                case ID_EDIT_COPY_FULL_PATH:
+                    owner->ExecuteFileCommand(LOWORD(wParam));
                     return 0;
                 case ID_FILE_PRINT:
                     owner->PrintReport();

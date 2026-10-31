@@ -86,6 +86,10 @@
 #define ID_WORD_WRAP                    40026
 #define ID_EDIT_COPY                    40027
 #define ID_EDIT_SELECT_ALL              40028
+#define ID_FILE_LAUNCH                  40029
+#define ID_FILE_SHOW_IN_FOLDER          40030
+#define ID_EDIT_COPY_FILE_NAME          40031
+#define ID_EDIT_COPY_FULL_PATH          40032
 #define ID_FILE_RECENT_FIRST            41000
 
 // Next default values for new objects

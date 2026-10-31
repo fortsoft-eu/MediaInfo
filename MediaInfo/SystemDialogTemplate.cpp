@@ -21,14 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.0
  */
 
 #include "SystemDialogTemplate.h"
-#include "MainForm.h"
 
 static const SIZE_T extendedDialogHeaderSize = 26;
 static const SIZE_T extendedFontHeaderSize = 6;
+
+/// Reads the window DPI supplied by the application.
+UINT WindowDpi(HWND window);
+
+/// Creates the system message font supplied by the application.
+HFONT CreateUiFont(HWND window);
 
 /// Advances past one variable-length dialog-template field while checking its bounds.
 static bool SkipDialogField(const WORD*& cursor, const WORD* end) {
