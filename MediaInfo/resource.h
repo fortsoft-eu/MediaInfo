@@ -1,7 +1,7 @@
-﻿//{{NO_DEPENDENCIES}}
+//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by MediaInfo.rc
-//
+
 #define IDR_MENU                        101
 #define IDR_ACCELERATORS                102
 #define IDR_LICENSE                     103
