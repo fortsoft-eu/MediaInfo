@@ -470,15 +470,15 @@ static LONG ConstrainDimension(LONG value, LONG minimum, LONG maximum) {
 
 /// Creates a native state tracker with registry saving and Windows-selected initial bounds.
 PersistWindowState::PersistWindowState()
-    : window(nullptr), instanceMutex(nullptr), originalProc(nullptr), registrationLocked(false),
-    allowSaveMinimized(false), allowSaveTopMost(false), disableSaveHeight(false), disableSavePosition(false),
-    disableSaveSize(false), disableSaveWidth(false), disableSaveWindowState(false), fixHeight(false),
-    fixWidth(false), placeOnScreenAfterLoad(true), singleInstance(false), useWindowsDefaultLocation(true),
-    useWindowsDefaultSize(true), hasState(false), applying(false), restoredShowState(false),
-    detectionOptions(WindowDetectionOptions::Default),
-    savingOptions(PersistWindowStateSavingOptions::Registry), registryPath(nullptr), initialTitle(nullptr),
-    errorCode(ERROR_SUCCESS), errorHandler(nullptr), loadedHandler(nullptr), savedHandler(nullptr),
-    errorContext(nullptr), loadedContext(nullptr), savedContext(nullptr) {
+        : window(nullptr), instanceMutex(nullptr), originalProc(nullptr), registrationLocked(false),
+        allowSaveMinimized(false), allowSaveTopMost(false), disableSaveHeight(false),
+        disableSavePosition(false), disableSaveSize(false), disableSaveWidth(false),
+        disableSaveWindowState(false), fixHeight(false), fixWidth(false), placeOnScreenAfterLoad(true),
+        singleInstance(false), useWindowsDefaultLocation(true), useWindowsDefaultSize(true), hasState(false),
+        applying(false), restoredShowState(false), detectionOptions(WindowDetectionOptions::Default),
+        savingOptions(PersistWindowStateSavingOptions::Registry), registryPath(nullptr), initialTitle(nullptr),
+        errorCode(ERROR_SUCCESS), errorHandler(nullptr), loadedHandler(nullptr), savedHandler(nullptr),
+        errorContext(nullptr), loadedContext(nullptr), savedContext(nullptr) {
     identity[0] = 0;
     instanceProperty[0] = 0;
     InitializeRegistryPath();
@@ -1435,19 +1435,16 @@ LRESULT CALLBACK PersistWindowState::WindowSubclassProc(HWND window, UINT messag
         return result;
     }
     if (message == WM_GETMINMAXINFO && (owner->fixWidth || owner->fixHeight)) {
-        RECT bounds = RECT{};
-        if (GetWindowRect(window, &bounds)) {
-            MINMAXINFO* info = reinterpret_cast<MINMAXINFO*>(lParam);
-            if (owner->fixWidth) {
-                info->ptMinTrackSize.x = bounds.right - bounds.left;
-                info->ptMaxTrackSize.x = bounds.right - bounds.left;
-                info->ptMaxSize.x = bounds.right - bounds.left;
-            }
-            if (owner->fixHeight) {
-                info->ptMinTrackSize.y = bounds.bottom - bounds.top;
-                info->ptMaxTrackSize.y = bounds.bottom - bounds.top;
-                info->ptMaxSize.y = bounds.bottom - bounds.top;
-            }
+        MINMAXINFO* info = reinterpret_cast<MINMAXINFO*>(lParam);
+        if (owner->fixWidth) {
+            info->ptMinTrackSize.x = owner->state.width;
+            info->ptMaxTrackSize.x = owner->state.width;
+            info->ptMaxSize.x = owner->state.width;
+        }
+        if (owner->fixHeight) {
+            info->ptMinTrackSize.y = owner->state.height;
+            info->ptMaxTrackSize.y = owner->state.height;
+            info->ptMaxSize.y = owner->state.height;
         }
     } else if (message == WM_WINDOWPOSCHANGED) {
         owner->Capture();

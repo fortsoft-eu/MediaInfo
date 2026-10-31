@@ -79,7 +79,8 @@ static bool CreateWorkerPipe(HANDLE* read, HANDLE* write, bool childReads) {
 
 /// Initializes an unloaded MediaInfo worker connection and empty diagnostics.
 MediaInfoLibrary::MediaInfoLibrary()
-    : process(nullptr), requests(nullptr), responses(nullptr), failed(0), operation(LibraryOperation::Load) {
+        : process(nullptr), requests(nullptr), responses(nullptr), failed(0),
+        operation(LibraryOperation::Load) {
     path[0] = 0;
     version[0] = 0;
     error[0] = 0;

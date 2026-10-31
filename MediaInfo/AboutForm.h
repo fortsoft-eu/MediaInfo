@@ -47,6 +47,7 @@ private:
     UINT licenseDpi;
     bool ownsUiFont;
     bool nativeLink;
+    bool initialized;
     wchar_t websiteUrl[MAX_PATH];
     wchar_t tooltipText[256];
     char ansiTooltipText[768];
@@ -54,8 +55,11 @@ private:
     /// Applies current interface, license and link fonts and selects the appropriate icon size.
     void SetFonts(bool updateUi);
 
-    /// Places the product header, mirrored icon gap, license edit and Close button.
-    void Layout();
+    /// Builds the natural About layout, fits it to the work area and anchors controls on resize.
+    void Layout(bool resize = true) const;
+
+    /// Fits the About window to its monitor work area after its natural layout.
+    void FitToWorkArea() const;
 
     /// Applies the suggested DPI-change bounds, rebuilds fonts and updates the dialog layout.
     INT_PTR HandleDpiChange(LPARAM lParam);

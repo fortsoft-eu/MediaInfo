@@ -31,7 +31,7 @@
 
 /// Initializes an empty recent-files list.
 RecentFiles::RecentFiles()
-    : paths(static_cast<RecentPath*>(HeapAlloc(GetProcessHeap(),
+        : paths(static_cast<RecentPath*>(HeapAlloc(GetProcessHeap(),
         HEAP_ZERO_MEMORY, Capacity * sizeof(RecentPath)))), count(0) {}
 
 /// Releases every stored recent-file path.

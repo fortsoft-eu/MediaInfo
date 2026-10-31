@@ -79,11 +79,11 @@ static bool FindLiteralAt(const wchar_t* report, const wchar_t* query, int start
 
 /// Initializes forward literal searching and an empty thirty-item session history.
 FindForm::FindForm()
-    : window(nullptr), ownerWindow(nullptr), target(nullptr), lastTarget(nullptr),
-    uiFont(nullptr), buttonSize(SIZE{}), templateDpi(96), minimumWidth(380), fixedHeight(144), query(nullptr),
-    history(), matches(nullptr), historyCount(0), matchCount(0), matchCapacity(0), lastMatchStart(-1),
-    lastMatchLength(0), ownsUiFont(false), matchCase(false), backward(false), startsWith(false),
-    endsWith(false), regularExpression(false) {}
+        : window(nullptr), ownerWindow(nullptr), target(nullptr), lastTarget(nullptr),
+        uiFont(nullptr), buttonSize(SIZE{}), templateDpi(96), minimumWidth(380), fixedHeight(0),
+        query(nullptr), history(), matches(nullptr), historyCount(0), matchCount(0), matchCapacity(0),
+        lastMatchStart(-1), lastMatchLength(0), ownsUiFont(false), matchCase(false), backward(false),
+        startsWith(false), endsWith(false), regularExpression(false) {}
 
 /// Closes the form and releases its font, expression, history and match buffers.
 FindForm::~FindForm() {
@@ -159,8 +159,8 @@ void FindForm::Layout() {
     if (margin.cx + labelWidth + gap.cx > inputLeft) {
         inputLeft = margin.cx + labelWidth + gap.cx;
     }
-    LONG checkLeft = DialogUnits(uiFont, 10, 0).cx;
-    LONG firstWidth = DialogUnits(uiFont, 83, 0).cx;
+    LONG checkLeft = margin.cx;
+    LONG firstWidth = DialogUnits(uiFont, 93, 0).cx - checkLeft;
     LONG secondWidth = 0;
     LONG optionHeight = DialogUnits(uiFont, 0, 11).cy;
     const int options[] = {
@@ -228,11 +228,8 @@ void FindForm::Layout() {
     }
     PlaceControl(close, rightButton, rowTop + 2 * step, button.cx, button.cy);
     AlignControlBaseline(close, GetDlgItem(window, IDC_FIND_TOPMOST));
-    fixedHeight = rowTop + 2 * step + optionHeight + margin.cy + frameHeight;
-    LONG referenceHeight = MulDiv(144, dpi, 96);
-    if (fixedHeight < referenceHeight) {
-        fixedHeight = referenceHeight;
-    }
+    RECT closeBounds = ControlRect(close, window);
+    fixedHeight = closeBounds.bottom + margin.cy + frameHeight;
     if (width != bounds.right - bounds.left || fixedHeight != bounds.bottom - bounds.top) {
         SetWindowPos(window, nullptr, 0, 0, width, fixedHeight, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
     }
@@ -240,7 +237,8 @@ void FindForm::Layout() {
     int gripWidth = GetSystemMetrics(SM_CXVSCROLL);
     int gripHeight = GetSystemMetrics(SM_CYHSCROLL);
     SetWindowPos(GetDlgItem(window, IDC_FIND_GRIP), HWND_BOTTOM,
-        client.right - gripWidth, client.bottom - gripHeight, gripWidth, gripHeight, SWP_NOACTIVATE);
+        client.right - gripWidth, client.bottom - gripHeight, gripWidth, gripHeight,
+        SWP_NOACTIVATE | (IsZoomed(window) ? SWP_HIDEWINDOW : SWP_SHOWWINDOW));
 }
 
 /// Enables Find Next only when a report and a nonempty search expression are available.

@@ -58,8 +58,8 @@ typedef int (WINAPI* ImageEncodersFunction)(UINT, UINT, ImageCodec*);
 
 /// Loads optional GDI+ entry points and locates the installed JPEG encoder.
 JpegEncoder::JpegEncoder()
-    : module(nullptr), token(0), encoder(), shutdown(nullptr), create(nullptr), save(nullptr),
-    dispose(nullptr), available(false) {
+        : module(nullptr), token(0), encoder(), shutdown(nullptr), create(nullptr), save(nullptr),
+        dispose(nullptr), available(false) {
     wchar_t filename[MAX_PATH];
     UINT length = GetSystemDirectoryW(filename, MAX_PATH);
     if (!length || length + 13 >= MAX_PATH) {

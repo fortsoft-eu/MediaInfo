@@ -32,8 +32,8 @@ static const wchar_t* traceLevels[] = { L"0", L"0.5", L"0.9", L"1" };
 
 /// Initializes the isolated worker pipes, export pointers and unloaded library state.
 LibraryWorker::LibraryWorker(HANDLE requests, HANDLE responses)
-    : module(nullptr), input(requests), output(responses), create(nullptr), destroy(nullptr),
-    open(nullptr), close(nullptr), inform(nullptr), option(nullptr) {}
+        : module(nullptr), input(requests), output(responses), create(nullptr), destroy(nullptr),
+        open(nullptr), close(nullptr), inform(nullptr), option(nullptr) {}
 
 /// Releases the MediaInfo handle, loaded libraries and worker-owned report state.
 LibraryWorker::~LibraryWorker() {

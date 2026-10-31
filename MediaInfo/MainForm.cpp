@@ -165,11 +165,11 @@ static void FormatTabCaption(const FileTab* file, UINT limit, wchar_t* caption, 
 
 /// Initializes the viewer window, file lists, fonts and report-worker state.
 MainForm::MainForm()
-    : window(nullptr), tabs(nullptr), status(nullptr), uiFont(nullptr), reportFont(nullptr),
-    accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
-    activePrintJob(nullptr), tabMenuContext(nullptr), reportFontSpec(), reportFontDpi(96), nextId(1),
-    tabNameLength(defaultTabNameLength), traceLevel(0), closing(false), libraryLoading(true),
-    unicodeTabs(false), visualStylesActive(false), advancedMode(false), fullParsing(false) {
+        : window(nullptr), tabs(nullptr), status(nullptr), uiFont(nullptr), reportFont(nullptr),
+        accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
+        activePrintJob(nullptr), tabMenuContext(nullptr), reportFontSpec(), reportFontDpi(96), nextId(1),
+        tabNameLength(defaultTabNameLength), traceLevel(0), closing(false), libraryLoading(true),
+        unicodeTabs(false), visualStylesActive(false), advancedMode(false), fullParsing(false) {
     LoadReportOptionsSetting(fullParsing, advancedMode, traceLevel);
     LoadOpenFolderSetting(headerFolder, ARRAYSIZE(headerFolder));
 }
