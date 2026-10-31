@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4389;4701;4702;4706;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="PCRE2\pcre2_compile_cgroup.c">
       <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
