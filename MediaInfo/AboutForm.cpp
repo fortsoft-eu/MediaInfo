@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.0.0.1
  */
 
 #include "AboutForm.h"
@@ -43,6 +43,7 @@ typedef BOOL(WINAPI* InitializeControlsFunction)(const INITCOMMONCONTROLSEX*);
 /// Control-subclass properties and the application website address.
 static const wchar_t ownerProperty[] = L"MediaInfo.AboutOwner";
 static const wchar_t originalProperty[] = L"MediaInfo.AboutOriginal";
+static const wchar_t licenseOriginalProperty[] = L"MediaInfo.AboutLicenseOriginal";
 static const wchar_t websiteRoot[] = L"https://fortsoft.eu/";
 
 /// About context-menu commands and the controls that expose them.
@@ -53,6 +54,57 @@ static const int aboutControls[] = { IDC_INFO_PRODUCT, IDC_INFO_WEBSITE, IDC_INF
 
 /// Optional title removed before the embedded license body is displayed.
 static const wchar_t licenseHeading[] = L"MIT License";
+
+/// Measures unwrapped license text in the edit's current font and toggles the horizontal scrollbar only when
+/// needed. Restores horizontal position to the start before hiding the bar; measurement also works while the
+/// bar is hidden.
+static void UpdateAboutLicenseScrollBar(HWND window) {
+    HDC dc = GetDC(window);
+    if (dc == nullptr) {
+        return;
+    }
+    wchar_t* text = CopyControlText(window);
+    if (text == nullptr) {
+        ReleaseDC(window, dc);
+        return;
+    }
+    HFONT font = reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
+    HGDIOBJ previousFont = font == nullptr ? nullptr : SelectObject(dc, font);
+    RECT textBounds = {};
+    DrawTextW(dc, text, lstrlenW(text), &textBounds,
+        DT_CALCRECT | DT_NOPREFIX | DT_EXPANDTABS);
+    HeapFree(GetProcessHeap(), 0, text);
+    if (previousFont != nullptr) {
+        SelectObject(dc, previousFont);
+    }
+    ReleaseDC(window, dc);
+    RECT format = {};
+    SendMessageW(window, EM_GETRECT, 0, reinterpret_cast<LPARAM>(&format));
+    bool needed = textBounds.right - textBounds.left > format.right - format.left;
+    bool visible = (GetWindowLongPtrW(window, GWL_STYLE) & WS_HSCROLL) != 0;
+    if (needed != visible) {
+        if (!needed) {
+            SendMessageW(window, WM_HSCROLL, SB_LEFT, 0);
+        }
+        ShowScrollBar(window, SB_HORZ, needed);
+    }
+}
+
+/// Recalculates horizontal scrollbar visibility after native size, font, text, or theme updates and removes
+/// the subclass on destruction.
+static LRESULT CALLBACK AboutLicenseSubclassProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) {
+    WNDPROC original = reinterpret_cast<WNDPROC>(GetPropW(window, licenseOriginalProperty));
+    if (message == WM_SIZE || message == WM_SETFONT || message == WM_SETTEXT || message == WM_THEMECHANGED) {
+        LRESULT result = CallWindowProcW(original, window, message, wParam, lParam);
+        UpdateAboutLicenseScrollBar(window);
+        return result;
+    }
+    if (message == WM_NCDESTROY) {
+        SetWindowLongPtrW(window, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(original));
+        RemovePropW(window, licenseOriginalProperty);
+    }
+    return CallWindowProcW(original, window, message, wParam, lParam);
+}
 
 /// Loads the executable version resource for product-name and version queries; the caller frees the buffer.
 static BYTE* LoadApplicationVersionInfo() {
@@ -74,7 +126,8 @@ static BYTE* LoadApplicationVersionInfo() {
     return data;
 }
 
-/// Returns a borrowed product name from the declared version-resource translation tables, or ? if unavailable.
+/// Returns a borrowed product name from the declared version-resource translation tables, or ? if
+/// unavailable.
 static const wchar_t* GetApplicationName(const BYTE* data) {
     WORD* translations = nullptr;
     UINT translationBytes = 0;
@@ -116,7 +169,8 @@ static void GetApplicationVersion(const BYTE* data, wchar_t* version) {
     }
 }
 
-/// Inserts the executable product name into the localized About title, preserving its language-specific order.
+/// Inserts the executable product name into the localized About title, preserving its language-specific
+/// order.
 static void BuildAboutTitle(wchar_t* title) {
     BYTE* data = LoadApplicationVersionInfo();
     wsprintfW(title, T(TXT_ABOUT_TITLE), GetApplicationName(data));
@@ -125,7 +179,8 @@ static void BuildAboutTitle(wchar_t* title) {
     }
 }
 
-/// Builds the localized product header with the executable product name, version and bundled-library versions.
+/// Builds the localized product header with the executable product name, version and bundled-library
+/// versions.
 static void BuildAboutProductText(wchar_t* product) {
     BYTE* data = LoadApplicationVersionInfo();
     wchar_t version[48];
@@ -461,6 +516,16 @@ bool AboutForm::Initialize() {
     }
     SendMessageW(edit, EM_SETLIMITTEXT, 0x7FFFFFFE, 0);
     InstallInformationWordBreak(edit);
+    WNDPROC original = reinterpret_cast<WNDPROC>(GetWindowLongPtrW(edit, GWLP_WNDPROC));
+    if (!SetPropW(edit, licenseOriginalProperty, reinterpret_cast<HANDLE>(original))) {
+        return false;
+    }
+    SetLastError(0);
+    if (!SetWindowLongPtrW(edit, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(AboutLicenseSubclassProc))
+            && GetLastError()) {
+        RemovePropW(edit, licenseOriginalProperty);
+        return false;
+    }
     wchar_t* license = LicenseText();
     SetWindowTextW(edit, license ? license : T(TXT_LICENSE_UNAVAILABLE));
     if (license) {
@@ -665,9 +730,9 @@ bool AboutForm::AttachControls() {
             return false;
         }
     }
-    tooltip = CreateWindowExW(WS_EX_TOPMOST, TOOLTIPS_CLASSW, nullptr, WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX,
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, window, nullptr, GetModuleHandleW(nullptr),
-        nullptr);
+    tooltip = CreateWindowExW(WS_EX_TOPMOST, TOOLTIPS_CLASSW, nullptr,
+        WS_POPUP | TTS_ALWAYSTIP | TTS_NOPREFIX, CW_USEDEFAULT, CW_USEDEFAULT,
+        CW_USEDEFAULT, CW_USEDEFAULT, window, nullptr, GetModuleHandleW(nullptr), nullptr);
     if (!tooltip) {
         DetachControls();
         return false;
@@ -680,8 +745,8 @@ bool AboutForm::AttachControls() {
     information.uId = reinterpret_cast<UINT_PTR>(GetDlgItem(window, IDC_INFO_LINK));
     information.lpszText = tooltipText;
     if (!SendMessageW(tooltip, TTM_ADDTOOLW, 0, reinterpret_cast<LPARAM>(&information))) {
-        if (!WideCharToMultiByte(CP_ACP, 0, tooltipText, -1, ansiTooltipText, sizeof(ansiTooltipText), nullptr,
-                nullptr)) {
+        if (!WideCharToMultiByte(CP_ACP, 0, tooltipText, -1, ansiTooltipText, sizeof(ansiTooltipText),
+                nullptr, nullptr)) {
             DetachControls();
             return false;
         }
@@ -774,7 +839,8 @@ void AboutForm::ShowContextMenu(HWND source, LPARAM location) {
         GetWindowRect(source, &bounds);
         point = POINT{ bounds.left, bounds.bottom };
     }
-    UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+    UINT command =
+        TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
     DestroyMenu(menu);
     if (command == openWebsiteCommand) {
         OpenWebsite();

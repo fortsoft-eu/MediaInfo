@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.0.0.1
  */
 
 #pragma once
@@ -193,6 +193,7 @@ private:
     bool visualStylesActive;
     bool advancedMode;
     bool fullParsing;
+    bool defaultWordWrap;
 
     /// Session-only header-tool folder and the ANSI tab-tooltip conversion buffer.
     wchar_t headerFolder[MAX_PATH];
@@ -279,7 +280,7 @@ private:
     /// Selects the entire active report and focuses its native edit control.
     void SelectAll();
 
-    /// Toggles wrapping only for the active tab while preserving its text, selection and viewport.
+    /// Toggles wrapping only for the active tab and remembers the choice for new tabs.
     void ToggleWordWrap();
 
     /// Creates the common report edit and tab and queues the selected library operation.

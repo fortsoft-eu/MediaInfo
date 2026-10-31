@@ -49,6 +49,7 @@ static const DWORD fullParsingOption = 0x01;
 static const DWORD advancedModeOption = 0x02;
 static const DWORD multipleInstancesOption = 0x04;
 static const DWORD traceLevelMask = 0x18;
+static const DWORD wordWrapOption = 0x20;
 static const char optionsMutexName[] = "FortSoft.MediaInfo.Options";
 
 /// Current-user registry location for viewer preferences and recent-file history.
@@ -117,6 +118,16 @@ bool SaveReportOptionsSetting(bool fullParsing, bool advancedMode, UINT traceLev
     DWORD bits =
         (fullParsing ? fullParsingOption : 0) | (advancedMode ? advancedModeOption : 0) | traceLevel << 3;
     return traceLevel < 4 && SaveOption(fullParsingOption | advancedModeOption | traceLevelMask, bits);
+}
+
+/// Loads the remembered wrapping default for new report tabs, disabled by default.
+bool LoadWordWrapSetting() {
+    return (LoadOptions() & wordWrapOption) != 0;
+}
+
+/// Persists the last manually selected wrapping state for new report tabs.
+bool SaveWordWrapSetting(bool enabled) {
+    return SaveOption(wordWrapOption, enabled ? wordWrapOption : 0);
 }
 
 /// Loads the optional permission for multiple instances, disabled by default.

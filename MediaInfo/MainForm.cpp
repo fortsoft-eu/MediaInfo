@@ -110,7 +110,8 @@ static bool GetReportFileInfo(const wchar_t* path, BY_HANDLE_FILE_INFORMATION& i
 }
 
 /// Compares the file identity and content-change metadata used by report variants.
-static bool SameReportFile(const BY_HANDLE_FILE_INFORMATION& first, const BY_HANDLE_FILE_INFORMATION& second) {
+static bool SameReportFile(const BY_HANDLE_FILE_INFORMATION& first,
+        const BY_HANDLE_FILE_INFORMATION& second) {
     return first.dwVolumeSerialNumber == second.dwVolumeSerialNumber
         && first.nFileIndexHigh == second.nFileIndexHigh
         && first.nFileIndexLow == second.nFileIndexLow
@@ -166,11 +167,13 @@ static void FormatTabCaption(const FileTab* file, UINT limit, wchar_t* caption, 
 /// Initializes the viewer window, file lists, fonts and report-worker state.
 MainForm::MainForm()
         : window(nullptr), tabs(nullptr), status(nullptr), uiFont(nullptr), reportFont(nullptr),
-        accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
-        activePrintJob(nullptr), tabMenuContext(nullptr), reportFontSpec(), reportFontDpi(96), nextId(1),
-        tabNameLength(defaultTabNameLength), traceLevel(0), closing(false), libraryLoading(true),
-        unicodeTabs(false), visualStylesActive(false), advancedMode(false), fullParsing(false) {
+        accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr),
+        activeJob(nullptr), activePrintJob(nullptr), tabMenuContext(nullptr), reportFontSpec(),
+        reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength), traceLevel(0), closing(false),
+        libraryLoading(true), unicodeTabs(false), visualStylesActive(false), advancedMode(false),
+        fullParsing(false), defaultWordWrap(false) {
     LoadReportOptionsSetting(fullParsing, advancedMode, traceLevel);
+    defaultWordWrap = LoadWordWrapSetting();
     LoadOpenFolderSetting(headerFolder, ARRAYSIZE(headerFolder));
 }
 
@@ -303,8 +306,8 @@ void MainForm::ApplyLanguage() {
         TXT_HELP_MENU
     };
     for (int index = 0; index < static_cast<int>(ARRAYSIZE(popups)); ++index) {
-        ModifyMenuW(menu, index, MF_BYPOSITION | MF_POPUP, reinterpret_cast<UINT_PTR>(GetSubMenu(menu, index)),
-            T(popups[index]));
+        ModifyMenuW(menu, index, MF_BYPOSITION | MF_POPUP,
+            reinterpret_cast<UINT_PTR>(GetSubMenu(menu, index)), T(popups[index]));
     }
     for (int index = 0; index < static_cast<int>(sizeof(menuCaptions) / sizeof(menuCaptions[0])); ++index) {
         const MenuCaption& caption = menuCaptions[index];
@@ -405,12 +408,13 @@ void MainForm::UpdateStatus() {
     SendMessageW(status, SB_SETPARTS, showVersion ? 2 : 1, reinterpret_cast<LPARAM>(parts));
     FileTab* active = CurrentFile();
     bool searchable = active && active->ready && !closing;
+    bool wrap = active ? active->wordWrap : defaultWordWrap;
     findForm.SetTarget(searchable ? active->edit : nullptr);
     UpdateEditMenu();
     EnableMenuItem(GetMenu(window), ID_WORD_WRAP,
         MF_BYCOMMAND | (active && !closing ? MF_ENABLED : MF_GRAYED));
     CheckMenuItem(GetMenu(window), ID_WORD_WRAP,
-        MF_BYCOMMAND | (active && active->wordWrap ? MF_CHECKED : MF_UNCHECKED));
+        MF_BYCOMMAND | (wrap ? MF_CHECKED : MF_UNCHECKED));
     const wchar_t* text = nullptr;
     if (closing) {
         text = T(TXT_WAITING_FOR_REPORT);
@@ -541,7 +545,8 @@ void MainForm::ShowTabContextMenu(POINT point) {
     context.menu = menu;
     context.path = path;
     tabMenuContext = &context;
-    UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+    UINT command =
+        TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
     tabMenuContext = nullptr;
     DestroyMenu(menu);
     if (command == tabCopyNameCommand || command == tabCopyPathCommand) {
@@ -714,7 +719,8 @@ bool MainForm::ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelectio
         return false;
     }
     RECT bounds = ControlRect(original, window);
-    PlaceControl(replacement, bounds.left, bounds.top, bounds.right - bounds.left, bounds.bottom - bounds.top);
+    PlaceControl(replacement, bounds.left, bounds.top, bounds.right - bounds.left,
+        bounds.bottom - bounds.top);
     BOOL copied = SetWindowTextW(replacement, text);
     HeapFree(GetProcessHeap(), 0, text);
     if (!copied) {
@@ -807,7 +813,7 @@ void MainForm::SelectAll() {
     }
 }
 
-/// Toggles wrapping only for the active tab while preserving its text, selection and viewport.
+/// Toggles wrapping only for the active tab and remembers the choice for new tabs.
 void MainForm::ToggleWordWrap() {
     FileTab* file = CurrentFile();
     if (!file || closing) {
@@ -816,6 +822,11 @@ void MainForm::ToggleWordWrap() {
     bool showSelection = (GetWindowLongW(file->edit, GWL_STYLE) & ES_NOHIDESEL) != 0;
     if (!ReplaceReportEdit(file, !file->wordWrap, showSelection)) {
         MessageBoxW(window, T(TXT_WORD_WRAP_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+    } else {
+        defaultWordWrap = file->wordWrap;
+        if (!SaveWordWrapSetting(defaultWordWrap)) {
+            MessageBoxW(window, T(TXT_PREFERENCES_SAVE_FAILED), L"MediaInfo", MB_OK | MB_ICONWARNING);
+        }
     }
     UpdateStatus();
 }
@@ -838,6 +849,7 @@ bool MainForm::CreateTab(LibraryCommand command, const wchar_t* path) {
     file->advancedMode = advancedMode;
     file->fullParsing = fullParsing;
     file->traceLevel = traceLevel;
+    file->wordWrap = defaultWordWrap;
     if (path) {
         lstrcpyW(file->path, path);
     }

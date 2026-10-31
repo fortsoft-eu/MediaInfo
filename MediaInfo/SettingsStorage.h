@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.0.0.1
  */
 
 #pragma once
@@ -38,6 +38,12 @@ void LoadReportOptionsSetting(bool& fullParsing, bool& advancedMode, UINT& trace
 
 /// Persists the full report-option combination for newly opened tabs in one shared-option update.
 bool SaveReportOptionsSetting(bool fullParsing, bool advancedMode, UINT traceLevel);
+
+/// Loads the remembered wrapping default for new report tabs, disabled by default.
+bool LoadWordWrapSetting();
+
+/// Persists the last manually selected wrapping state for new report tabs.
+bool SaveWordWrapSetting(bool enabled);
 
 /// Loads the optional permission for multiple instances, disabled by default.
 bool LoadMultipleInstancesSetting();
