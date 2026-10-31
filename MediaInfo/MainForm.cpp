@@ -43,6 +43,14 @@ struct MenuCaption {
     TextId text;
 };
 
+/// Borrows the file snapshot and owns availability data for one synchronous tab popup.
+struct TabMenuContext {
+    HMENU menu;
+    const wchar_t* path;
+    wchar_t folder[MAX_PATH];
+    bool fileExists;
+};
+
 /// Command captions refreshed when the interface language changes.
 static const MenuCaption menuCaptions[] = {
     { 0, ID_FILE_OPEN, TXT_OPEN },
@@ -154,7 +162,7 @@ static void FormatTabCaption(const FileTab* file, UINT limit, wchar_t* caption, 
 MainForm::MainForm()
     : window(nullptr), tabs(nullptr), status(nullptr), uiFont(nullptr), reportFont(nullptr),
     accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
-    activePrintJob(nullptr), reportFontSpec(), reportFontDpi(96), nextId(1),
+    activePrintJob(nullptr), tabMenuContext(nullptr), reportFontSpec(), reportFontDpi(96), nextId(1),
     tabNameLength(defaultTabNameLength), traceLevel(0), closing(false), libraryLoading(true),
     unicodeTabs(false), visualStylesActive(false), advancedMode(false), fullParsing(false) {
     LoadReportOptionsSetting(fullParsing, advancedMode, traceLevel);
@@ -507,9 +515,14 @@ void MainForm::ShowTabContextMenu(POINT point) {
     AppendMenuW(menu, MF_STRING, tabCopyNameCommand, T(TXT_COPY_FILE_NAME));
     AppendMenuW(menu, MF_STRING, tabCopyPathCommand, T(TXT_COPY_FULL_PATH));
     AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
-    AppendMenuW(menu, MF_STRING, tabOpenFileCommand, T(TXT_OPEN_FILE));
-    AppendMenuW(menu, MF_STRING, tabOpenFolderCommand, T(TXT_OPEN_CONTAINING_FOLDER));
+    AppendMenuW(menu, MF_STRING | MF_GRAYED, tabOpenFileCommand, T(TXT_OPEN_FILE));
+    AppendMenuW(menu, MF_STRING | MF_GRAYED, tabOpenFolderCommand, T(TXT_OPEN_CONTAINING_FOLDER));
+    TabMenuContext context = TabMenuContext{};
+    context.menu = menu;
+    context.path = path;
+    tabMenuContext = &context;
     UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+    tabMenuContext = nullptr;
     DestroyMenu(menu);
     if (command == tabCopyNameCommand || command == tabCopyPathCommand) {
         wchar_t name[MAX_PATH];
@@ -519,12 +532,43 @@ void MainForm::ShowTabContextMenu(POINT point) {
             MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
         }
     } else if (command == tabOpenFileCommand || command == tabOpenFolderCommand) {
-        OpenTabFile(path, command == tabOpenFolderCommand);
+        const wchar_t* folder = command == tabOpenFolderCommand ? context.folder : nullptr;
+        OpenTabFile(path, folder, context.fileExists);
     }
 }
 
-/// Invokes the file's default Shell action or selects it in Windows Explorer, retaining native error dialogs.
-void MainForm::OpenTabFile(const wchar_t* path, bool containingFolder) {
+/// Refreshes file and folder availability when the native tab popup opens.
+void MainForm::InitializeTabContextMenu() {
+    TabMenuContext& context = *tabMenuContext;
+    UINT previousMode = SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
+    DWORD attributes = GetFileAttributesW(context.path);
+    context.fileExists = attributes != INVALID_FILE_ATTRIBUTES && !(attributes & FILE_ATTRIBUTE_DIRECTORY);
+    context.folder[0] = 0;
+    bool folderExists = false;
+    wchar_t* name = nullptr;
+    DWORD length = GetFullPathNameW(context.path, ARRAYSIZE(context.folder), context.folder, &name);
+    if (length && length < ARRAYSIZE(context.folder) && name && *name) {
+        name[0] = L'.';
+        name[1] = 0;
+        HANDLE directory = CreateFileW(context.folder, 0,
+            FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+            nullptr, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, nullptr);
+        if (directory != INVALID_HANDLE_VALUE) {
+            BY_HANDLE_FILE_INFORMATION information = BY_HANDLE_FILE_INFORMATION{};
+            folderExists = GetFileInformationByHandle(directory, &information)
+                && information.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY;
+            CloseHandle(directory);
+        }
+    }
+    SetErrorMode(previousMode);
+    EnableMenuItem(context.menu, tabOpenFileCommand,
+        MF_BYCOMMAND | (context.fileExists ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(context.menu, tabOpenFolderCommand,
+        MF_BYCOMMAND | (folderExists ? MF_ENABLED : MF_GRAYED));
+}
+
+/// Opens the file or its containing folder, selecting the file when it was available at popup time.
+void MainForm::OpenTabFile(const wchar_t* path, const wchar_t* folder, bool selectFile) {
     SHELLEXECUTEINFOW execute = SHELLEXECUTEINFOW{};
     execute.cbSize = sizeof(execute);
     execute.fMask = SEE_MASK_FLAG_DDEWAIT;
@@ -533,7 +577,7 @@ void MainForm::OpenTabFile(const wchar_t* path, bool containingFolder) {
     execute.nShow = SW_SHOWNORMAL;
     wchar_t explorer[MAX_PATH];
     wchar_t parameters[MAX_PATH + 12];
-    if (containingFolder) {
+    if (folder) {
         UINT length = GetWindowsDirectoryW(explorer, ARRAYSIZE(explorer));
         if (!length || length + ARRAYSIZE(L"\\explorer.exe") > ARRAYSIZE(explorer)) {
             wchar_t error[MAX_PATH + 128];
@@ -542,7 +586,11 @@ void MainForm::OpenTabFile(const wchar_t* path, bool containingFolder) {
             return;
         }
         lstrcatW(explorer, L"\\explorer.exe");
-        wsprintfW(parameters, L"/select,\"%s\"", path);
+        if (selectFile) {
+            wsprintfW(parameters, L"/select,\"%s\"", path);
+        } else {
+            wsprintfW(parameters, L"\"%s\"", folder);
+        }
         execute.lpFile = explorer;
         execute.lpParameters = parameters;
     }
@@ -1140,6 +1188,177 @@ void MainForm::CompleteReport(ReportJob* job) {
     }
 }
 
+/// Copies and queues the validated file list received from another viewer instance.
+LRESULT MainForm::HandleCopyData(LPARAM lParam) {
+    const COPYDATASTRUCT* request = reinterpret_cast<const COPYDATASTRUCT*>(lParam);
+    if (closing || !ValidateInstanceFiles(request)) {
+        return FALSE;
+    }
+    void* paths = HeapAlloc(GetProcessHeap(), 0, request->cbData);
+    if (!paths) {
+        return FALSE;
+    }
+    CopyMemory(paths, request->lpData, request->cbData);
+    if (!PostMessageW(window, instanceFilesMessage, 0, reinterpret_cast<LPARAM>(paths))) {
+        HeapFree(GetProcessHeap(), 0, paths);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+/// Activates the viewer, opens the queued instance paths and releases their buffer.
+LRESULT MainForm::HandleInstanceFiles(LPARAM lParam) {
+    wchar_t* paths = reinterpret_cast<wchar_t*>(lParam);
+    placement.BringToFront();
+    const wchar_t* path = paths;
+    while (*path) {
+        AddFile(path);
+        path += lstrlenW(path) + 1;
+    }
+    HeapFree(GetProcessHeap(), 0, paths);
+    return 0;
+}
+
+/// Handles status menus, tab selection and Unicode or ANSI tab tooltips.
+LRESULT MainForm::HandleNotification(WPARAM wParam, LPARAM lParam) {
+    NMHDR* notification = reinterpret_cast<NMHDR*>(lParam);
+    if (notification->hwndFrom == status && notification->code == NM_RCLICK) {
+        DWORD position = GetMessagePos();
+        POINT point = POINT{ GET_X_LPARAM(position), GET_Y_LPARAM(position) };
+        ShowStatusContextMenu(point);
+        return TRUE;
+    }
+    if (notification->hwndFrom == tabs && notification->code == TCN_SELCHANGE) {
+        SelectTab(TabCtrl_GetCurSel(tabs));
+        return 0;
+    }
+    if ((notification->code == TTN_GETDISPINFOW || notification->code == TTN_GETDISPINFOA)
+            && notification->hwndFrom == TabCtrl_GetToolTips(tabs)) {
+        FileTab* file = files;
+        for (UINT_PTR index = 0; file && index < notification->idFrom; ++index) {
+            file = file->next;
+        }
+        RECT bounds = RECT{};
+        GetWindowRect(window, &bounds);
+        RECT work = WindowWorkArea(bounds);
+        SendMessageW(notification->hwndFrom, TTM_SETMAXTIPWIDTH, 0, work.right - work.left);
+        const wchar_t* tooltip = !file ? nullptr : file->command == LibraryCommand::Read
+            ? file->path
+            : KnownInformationTitle(file->command);
+        if (notification->code == TTN_GETDISPINFOW) {
+            reinterpret_cast<NMTTDISPINFOW*>(lParam)->lpszText = const_cast<wchar_t*>(tooltip);
+        } else {
+            tabTooltipPath[0] = 0;
+            if (tooltip) {
+                WideCharToMultiByte(CP_ACP, 0, tooltip, -1, tabTooltipPath,
+                    sizeof(tabTooltipPath), nullptr, nullptr);
+            }
+            reinterpret_cast<NMTTDISPINFOA*>(lParam)->lpszText = tabTooltipPath;
+        }
+        return 0;
+    }
+    return DefWindowProcW(window, WM_NOTIFY, wParam, lParam);
+}
+
+/// Paints the empty workspace without changing the report controls.
+LRESULT MainForm::HandlePaint() {
+    PAINTSTRUCT paint = PAINTSTRUCT{};
+    HDC dc = BeginPaint(window, &paint);
+    if (!files) {
+        FillRect(dc, &paint.rcPaint, GetSysColorBrush(COLOR_APPWORKSPACE));
+    }
+    EndPaint(window, &paint);
+    return 0;
+}
+
+/// Draws the status pane with the current loading text and width-aware path caption.
+LRESULT MainForm::HandleDrawItem(WPARAM wParam, LPARAM lParam) {
+    DRAWITEMSTRUCT* item = reinterpret_cast<DRAWITEMSTRUCT*>(lParam);
+    if (item->hwndItem == status) {
+        HGDIOBJ old = SelectObject(item->hDC, uiFont);
+        TEXTMETRICW metrics = TEXTMETRICW{};
+        GetTextMetricsW(item->hDC, &metrics);
+        RECT text = item->rcItem;
+        int borders[3] = {};
+        SendMessageW(status, SB_GETBORDERS, 0, reinterpret_cast<LPARAM>(borders));
+        text.left += borders[2];
+        int parts = static_cast<int>(SendMessageW(status, SB_GETPARTS, 0, 0));
+        if (item->itemID + 1 == static_cast<UINT>(parts)) {
+            text.right -= GetSystemMetrics(SM_CXVSCROLL);
+        }
+        text.top += (text.bottom - text.top - metrics.tmHeight) / 2;
+        SetTextColor(item->hDC, GetSysColor(COLOR_BTNTEXT));
+        SetBkMode(item->hDC, TRANSPARENT);
+        const wchar_t* caption = reinterpret_cast<const wchar_t*>(item->itemData);
+        FileTab* active = item->itemID == 0 ? CurrentFile() : nullptr;
+        const wchar_t* loadingFormat = item->itemID == 0
+            && activeJob
+            && activeJob->command == LibraryCommand::Read
+            && caption == T(TXT_LOADING) ? T(TXT_LOADING_FILE) : nullptr;
+        wchar_t pathCaption[MAX_PATH + 4];
+        wchar_t loadingCaption[MAX_PATH + 128];
+        UINT flags = DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS;
+        if (loadingFormat || active && caption == active->path) {
+            int width = text.right - text.left;
+            if (loadingFormat) {
+                wsprintfW(loadingCaption, loadingFormat, L"");
+                SIZE extent = SIZE{};
+                GetTextExtentPoint32W(item->hDC, loadingCaption, lstrlenW(loadingCaption), &extent);
+                width -= extent.cx;
+            }
+            FormatPathCaption(item->hDC, loadingFormat ? activeJob->path : caption, width,
+                pathCaption, ARRAYSIZE(pathCaption));
+            caption = pathCaption;
+            if (loadingFormat) {
+                wsprintfW(loadingCaption, loadingFormat, pathCaption);
+                caption = loadingCaption;
+            }
+            flags &= ~DT_END_ELLIPSIS;
+        }
+        DrawTextW(item->hDC, caption, -1, &text, flags);
+        SelectObject(item->hDC, old);
+        return TRUE;
+    }
+    return DefWindowProcW(window, WM_DRAWITEM, wParam, lParam);
+}
+
+/// Opens the dropped files and releases the native drop handle.
+LRESULT MainForm::HandleDropFiles(WPARAM wParam) {
+    HDROP drop = reinterpret_cast<HDROP>(wParam);
+    UINT count = DragQueryFileW(drop, 0xFFFFFFFF, nullptr, 0);
+    for (UINT index = 0; index < count; ++index) {
+        wchar_t path[MAX_PATH];
+        UINT length = DragQueryFileW(drop, index, nullptr, 0);
+        if (length < MAX_PATH && DragQueryFileW(drop, index, path, MAX_PATH)) {
+            AddFile(path);
+        }
+    }
+    DragFinish(drop);
+    return 0;
+}
+
+/// Applies the suggested window bounds and rebuilds fonts and layout for the new DPI.
+LRESULT MainForm::HandleDpiChange(LPARAM lParam) {
+    RECT* bounds = reinterpret_cast<RECT*>(lParam);
+    SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
+        bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
+    RebuildFonts();
+    Layout();
+    return 0;
+}
+
+/// Releases pending instance requests, closes information forms and ends the message loop.
+LRESULT MainForm::HandleDestroy() {
+    MSG pending = MSG{};
+    while (PeekMessageW(&pending, window, instanceFilesMessage, instanceFilesMessage, PM_REMOVE)) {
+        HeapFree(GetProcessHeap(), 0, reinterpret_cast<void*>(pending.lParam));
+    }
+    helpForm.Close();
+    aboutForm.Close();
+    PostQuitMessage(0);
+    return 0;
+}
+
 /// Dispatches native main-window input, layout, file, menu and asynchronous report messages.
 LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) {
     MainForm* owner = reinterpret_cast<MainForm*>(GetWindowLongPtrW(window, GWLP_USERDATA));
@@ -1164,37 +1383,19 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
         case WM_CREATE:
             return owner->Initialize() ? 0 : -1;
         case WM_COPYDATA:
-        {
-            const COPYDATASTRUCT* request = reinterpret_cast<const COPYDATASTRUCT*>(lParam);
-            if (owner->closing || !ValidateInstanceFiles(request)) {
-                return FALSE;
-            }
-            void* paths = HeapAlloc(GetProcessHeap(), 0, request->cbData);
-            if (!paths) {
-                return FALSE;
-            }
-            CopyMemory(paths, request->lpData, request->cbData);
-            if (!PostMessageW(window, instanceFilesMessage, 0, reinterpret_cast<LPARAM>(paths))) {
-                HeapFree(GetProcessHeap(), 0, paths);
-                return FALSE;
-            }
-            return TRUE;
-        }
+            return owner->HandleCopyData(lParam);
         case instanceFilesMessage:
-        {
-            wchar_t* paths = reinterpret_cast<wchar_t*>(lParam);
-            owner->placement.BringToFront();
-            const wchar_t* path = paths;
-            while (*path) {
-                owner->AddFile(path);
-                path += lstrlenW(path) + 1;
-            }
-            HeapFree(GetProcessHeap(), 0, paths);
-            return 0;
-        }
+            return owner->HandleInstanceFiles(lParam);
         case WM_SIZE:
             owner->Layout();
             return 0;
+        case WM_INITMENUPOPUP:
+            if (owner->tabMenuContext
+                    && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
+                owner->InitializeTabContextMenu();
+                return 0;
+            }
+            break;
         case WM_CONTEXTMENU:
             if (reinterpret_cast<HWND>(wParam) == owner->tabs) {
                 POINT point = POINT{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
@@ -1203,45 +1404,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             }
             break;
         case WM_NOTIFY:
-        {
-            NMHDR* notification = reinterpret_cast<NMHDR*>(lParam);
-            if (notification->hwndFrom == owner->status && notification->code == NM_RCLICK) {
-                DWORD position = GetMessagePos();
-                POINT point = POINT{ GET_X_LPARAM(position), GET_Y_LPARAM(position) };
-                owner->ShowStatusContextMenu(point);
-                return TRUE;
-            }
-            if (notification->hwndFrom == owner->tabs && notification->code == TCN_SELCHANGE) {
-                owner->SelectTab(TabCtrl_GetCurSel(owner->tabs));
-                return 0;
-            }
-            if ((notification->code == TTN_GETDISPINFOW || notification->code == TTN_GETDISPINFOA)
-                    && notification->hwndFrom == TabCtrl_GetToolTips(owner->tabs)) {
-                FileTab* file = owner->files;
-                for (UINT_PTR index = 0; file && index < notification->idFrom; ++index) {
-                    file = file->next;
-                }
-                RECT bounds = RECT{};
-                GetWindowRect(window, &bounds);
-                RECT work = WindowWorkArea(bounds);
-                SendMessageW(notification->hwndFrom, TTM_SETMAXTIPWIDTH, 0, work.right - work.left);
-                const wchar_t* tooltip = !file ? nullptr : file->command == LibraryCommand::Read
-                    ? file->path
-                    : KnownInformationTitle(file->command);
-                if (notification->code == TTN_GETDISPINFOW) {
-                    reinterpret_cast<NMTTDISPINFOW*>(lParam)->lpszText = const_cast<wchar_t*>(tooltip);
-                } else {
-                    owner->tabTooltipPath[0] = 0;
-                    if (tooltip) {
-                        WideCharToMultiByte(CP_ACP, 0, tooltip, -1, owner->tabTooltipPath,
-                            sizeof(owner->tabTooltipPath), nullptr, nullptr);
-                    }
-                    reinterpret_cast<NMTTDISPINFOA*>(lParam)->lpszText = owner->tabTooltipPath;
-                }
-                return 0;
-            }
-            break;
-        }
+            return owner->HandleNotification(wParam, lParam);
         case WM_CTLCOLORSTATIC:
             if (!owner->visualStylesActive) {
                 break;
@@ -1264,65 +1427,9 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             }
             break;
         case WM_PAINT:
-        {
-            PAINTSTRUCT paint = PAINTSTRUCT{};
-            HDC dc = BeginPaint(window, &paint);
-            if (!owner->files) {
-                FillRect(dc, &paint.rcPaint, GetSysColorBrush(COLOR_APPWORKSPACE));
-            }
-            EndPaint(window, &paint);
-            return 0;
-        }
+            return owner->HandlePaint();
         case WM_DRAWITEM:
-        {
-            DRAWITEMSTRUCT* item = reinterpret_cast<DRAWITEMSTRUCT*>(lParam);
-            if (item->hwndItem == owner->status) {
-                HGDIOBJ old = SelectObject(item->hDC, owner->uiFont);
-                TEXTMETRICW metrics = TEXTMETRICW{};
-                GetTextMetricsW(item->hDC, &metrics);
-                RECT text = item->rcItem;
-                int borders[3] = {};
-                SendMessageW(owner->status, SB_GETBORDERS, 0, reinterpret_cast<LPARAM>(borders));
-                text.left += borders[2];
-                int parts = static_cast<int>(SendMessageW(owner->status, SB_GETPARTS, 0, 0));
-                if (item->itemID + 1 == static_cast<UINT>(parts)) {
-                    text.right -= GetSystemMetrics(SM_CXVSCROLL);
-                }
-                text.top += (text.bottom - text.top - metrics.tmHeight) / 2;
-                SetTextColor(item->hDC, GetSysColor(COLOR_BTNTEXT));
-                SetBkMode(item->hDC, TRANSPARENT);
-                const wchar_t* caption = reinterpret_cast<const wchar_t*>(item->itemData);
-                FileTab* active = item->itemID == 0 ? owner->CurrentFile() : nullptr;
-                const wchar_t* loadingFormat = item->itemID == 0
-                    && owner->activeJob
-                    && owner->activeJob->command == LibraryCommand::Read
-                    && caption == T(TXT_LOADING) ? T(TXT_LOADING_FILE) : nullptr;
-                wchar_t pathCaption[MAX_PATH + 4];
-                wchar_t loadingCaption[MAX_PATH + 128];
-                UINT flags = DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS;
-                if (loadingFormat || active && caption == active->path) {
-                    int width = text.right - text.left;
-                    if (loadingFormat) {
-                        wsprintfW(loadingCaption, loadingFormat, L"");
-                        SIZE extent = SIZE{};
-                        GetTextExtentPoint32W(item->hDC, loadingCaption, lstrlenW(loadingCaption), &extent);
-                        width -= extent.cx;
-                    }
-                    FormatPathCaption(item->hDC, loadingFormat ? owner->activeJob->path : caption, width,
-                        pathCaption, ARRAYSIZE(pathCaption));
-                    caption = pathCaption;
-                    if (loadingFormat) {
-                        wsprintfW(loadingCaption, loadingFormat, pathCaption);
-                        caption = loadingCaption;
-                    }
-                    flags &= ~DT_END_ELLIPSIS;
-                }
-                DrawTextW(item->hDC, caption, -1, &text, flags);
-                SelectObject(item->hDC, old);
-                return TRUE;
-            }
-            break;
-        }
+            return owner->HandleDrawItem(wParam, lParam);
         case WM_MOUSEWHEEL:
             if (ScrollTabHeaders(window, owner->tabs, wParam, lParam)) {
                 return 0;
@@ -1429,19 +1536,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             }
             return 0;
         case WM_DROPFILES:
-        {
-            HDROP drop = reinterpret_cast<HDROP>(wParam);
-            UINT count = DragQueryFileW(drop, 0xFFFFFFFF, nullptr, 0);
-            for (UINT index = 0; index < count; ++index) {
-                wchar_t path[MAX_PATH];
-                UINT length = DragQueryFileW(drop, index, nullptr, 0);
-                if (length < MAX_PATH && DragQueryFileW(drop, index, path, MAX_PATH)) {
-                    owner->AddFile(path);
-                }
-            }
-            DragFinish(drop);
-            return 0;
-        }
+            return owner->HandleDropFiles(wParam);
         case WM_SYSCOLORCHANGE:
             RedrawWindow(window, nullptr, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN);
             return 0;
@@ -1453,14 +1548,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             RedrawWindow(window, nullptr, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN);
             return 0;
         case WM_DPICHANGED:
-        {
-            RECT* bounds = reinterpret_cast<RECT*>(lParam);
-            SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
-                bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
-            owner->RebuildFonts();
-            owner->Layout();
-            return 0;
-        }
+            return owner->HandleDpiChange(lParam);
         case WM_QUERYENDSESSION:
             return TRUE;
         case WM_CLOSE:
@@ -1476,16 +1564,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             DestroyWindow(window);
             return 0;
         case WM_DESTROY:
-        {
-            MSG pending = MSG{};
-            while (PeekMessageW(&pending, window, instanceFilesMessage, instanceFilesMessage, PM_REMOVE)) {
-                HeapFree(GetProcessHeap(), 0, reinterpret_cast<void*>(pending.lParam));
-            }
-            owner->helpForm.Close();
-            owner->aboutForm.Close();
-            PostQuitMessage(0);
-            return 0;
-        }
+            return owner->HandleDestroy();
         case WM_NCDESTROY:
             owner->window = nullptr;
             break;

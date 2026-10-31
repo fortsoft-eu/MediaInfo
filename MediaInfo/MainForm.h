@@ -33,6 +33,9 @@
 #include "HelpForm.h"
 #include "RecentFiles.h"
 
+/// Temporary context owned by the active tab popup.
+struct TabMenuContext;
+
 /// Symbols used while compiling for the Windows NT 4.0 API target.
 #ifndef IDC_HAND
 #define IDC_HAND MAKEINTRESOURCE(32649)
@@ -170,6 +173,9 @@ private:
     ReportJob* activeJob;
     PrintJob* activePrintJob;
 
+    /// Borrows the context while the native tab popup is active.
+    TabMenuContext* tabMenuContext;
+
     /// Report font, tab-caption preferences and identifiers for queued work.
     LOGFONTW reportFontSpec;
     UINT reportFontDpi;
@@ -213,9 +219,11 @@ private:
     /// Shows file commands for the tab header selected by the mouse or keyboard.
     void ShowTabContextMenu(POINT point);
 
-    /// Invokes the file's default Shell action or selects it in Windows Explorer, retaining native error
-    /// dialogs.
-    void OpenTabFile(const wchar_t* path, bool containingFolder);
+    /// Refreshes file and folder availability when the native tab popup opens.
+    void InitializeTabContextMenu();
+
+    /// Opens the file or its containing folder, selecting the file when it was available at popup time.
+    void OpenTabFile(const wchar_t* path, const wchar_t* folder, bool selectFile);
 
     /// Displays the selected report edit and refreshes its status information.
     void SelectTab(int index);
@@ -297,6 +305,30 @@ private:
 
     /// Reads the requested file report on the background thread and posts its completion to the viewer.
     static DWORD WINAPI ReadReport(void* parameter);
+
+    /// Copies and queues the validated file list received from another viewer instance.
+    LRESULT HandleCopyData(LPARAM lParam);
+
+    /// Activates the viewer, opens the queued instance paths and releases their buffer.
+    LRESULT HandleInstanceFiles(LPARAM lParam);
+
+    /// Handles status menus, tab selection and Unicode or ANSI tab tooltips.
+    LRESULT HandleNotification(WPARAM wParam, LPARAM lParam);
+
+    /// Paints the empty workspace without changing the report controls.
+    LRESULT HandlePaint();
+
+    /// Draws the status pane with the current loading text and width-aware path caption.
+    LRESULT HandleDrawItem(WPARAM wParam, LPARAM lParam);
+
+    /// Opens the dropped files and releases the native drop handle.
+    LRESULT HandleDropFiles(WPARAM wParam);
+
+    /// Applies the suggested window bounds and rebuilds fonts and layout for the new DPI.
+    LRESULT HandleDpiChange(LPARAM lParam);
+
+    /// Releases pending instance requests, closes information forms and ends the message loop.
+    LRESULT HandleDestroy();
 
     /// Dispatches native main-window input, layout, file, menu and asynchronous report messages.
     static LRESULT CALLBACK WindowProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam);

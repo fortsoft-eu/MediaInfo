@@ -3370,6 +3370,75 @@ static bool ApplyPreferences(PreferencesData& data) {
     return true;
 }
 
+/// Browses for the library selected by the MediaInfo or libcurl Browse command.
+static INT_PTR BrowsePreferencesLibrary(HWND window, WPARAM wParam) {
+    bool curl = LOWORD(wParam) == IDC_CURL_BROWSE;
+    int control = curl ? IDC_CURL_PATH : IDC_DLL_PATH;
+    wchar_t path[MAX_PATH];
+    GetDlgItemTextW(window, control, path, MAX_PATH);
+    if (ChooseLibraryFile(window, path, curl)) {
+        SetDlgItemTextW(window, control, path);
+    }
+    return TRUE;
+}
+
+/// Sizes the interface-language dropdown and records a pending language selection.
+static INT_PTR HandlePreferencesLanguage(PreferencesData& data, WPARAM wParam) {
+    HWND combo = GetDlgItem(data.window, IDC_LANGUAGE);
+    if (HIWORD(wParam) == CBN_DROPDOWN) {
+        UpdateComboBoxDropDown(combo);
+    } else if (HIWORD(wParam) == CBN_SELCHANGE) {
+        LRESULT item = SendMessageW(combo, CB_GETCURSEL, 0, 0);
+        int language = static_cast<int>(SendMessageW(combo, CB_GETITEMDATA, item, 0));
+        if (language >= 0 && language < applicationLanguageCount) {
+            data.language = language;
+            UpdateApplyButton(data);
+        }
+    }
+    return TRUE;
+}
+
+/// Sizes the report-language dropdown and records a pending report-language selection.
+static INT_PTR HandlePreferencesReportLanguage(PreferencesData& data, WPARAM wParam) {
+    HWND combo = GetDlgItem(data.window, IDC_REPORT_LANGUAGE);
+    if (HIWORD(wParam) == CBN_DROPDOWN) {
+        UpdateComboBoxDropDown(combo);
+    } else if (HIWORD(wParam) == CBN_SELCHANGE) {
+        LRESULT item = SendMessageW(combo, CB_GETCURSEL, 0, 0);
+        int index = static_cast<int>(SendMessageW(combo, CB_GETITEMDATA, item, 0));
+        if (index >= 0) {
+            lstrcpynW(data.reportLanguage, ReportLanguageCode(index), MAX_PATH);
+            UpdateApplyButton(data);
+        }
+    }
+    return TRUE;
+}
+
+/// Browses for a custom report-language file and refreshes the pending selection.
+static INT_PTR BrowsePreferencesReportLanguage(PreferencesData& data) {
+    wchar_t path[MAX_PATH] = L"";
+    if (ReportLanguageIndex(data.reportLanguage) < 0) {
+        lstrcpyW(path, data.reportLanguage);
+    }
+    if (ChooseReportLanguageFile(data.window, path)) {
+        lstrcpyW(data.reportLanguage, path);
+        UpdateReportChoices(data);
+        UpdateApplyButton(data);
+    }
+    return TRUE;
+}
+
+/// Restores the default report font while preserving the selected antialiasing.
+static INT_PTR ResetPreferencesFont(PreferencesData& data) {
+    BYTE quality = data.font.lfQuality;
+    data.font = LOGFONTW{};
+    data.font.lfQuality = quality;
+    data.dpi = 96;
+    UpdateFontButtons(data);
+    UpdateApplyButton(data);
+    return TRUE;
+}
+
 /// Handles modal Preferences input while keeping edits pending until OK or Apply.
 static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) {
     PreferencesData* data = reinterpret_cast<PreferencesData*>(GetWindowLongPtrW(window, DWLP_USER));
@@ -3478,59 +3547,13 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
                 return TRUE;
             case IDC_DLL_BROWSE:
             case IDC_CURL_BROWSE:
-            {
-                bool curl = LOWORD(wParam) == IDC_CURL_BROWSE;
-                int control = curl ? IDC_CURL_PATH : IDC_DLL_PATH;
-                wchar_t path[MAX_PATH];
-                GetDlgItemTextW(window, control, path, MAX_PATH);
-                if (ChooseLibraryFile(window, path, curl)) {
-                    SetDlgItemTextW(window, control, path);
-                }
-                return TRUE;
-            }
+                return BrowsePreferencesLibrary(window, wParam);
             case IDC_LANGUAGE:
-            {
-                HWND combo = GetDlgItem(window, IDC_LANGUAGE);
-                if (HIWORD(wParam) == CBN_DROPDOWN) {
-                    UpdateComboBoxDropDown(combo);
-                } else if (HIWORD(wParam) == CBN_SELCHANGE) {
-                    LRESULT item = SendMessageW(combo, CB_GETCURSEL, 0, 0);
-                    int language = static_cast<int>(SendMessageW(combo, CB_GETITEMDATA, item, 0));
-                    if (language >= 0 && language < applicationLanguageCount) {
-                        data->language = language;
-                        UpdateApplyButton(*data);
-                    }
-                }
-                return TRUE;
-            }
+                return HandlePreferencesLanguage(*data, wParam);
             case IDC_REPORT_LANGUAGE:
-            {
-                HWND combo = GetDlgItem(window, IDC_REPORT_LANGUAGE);
-                if (HIWORD(wParam) == CBN_DROPDOWN) {
-                    UpdateComboBoxDropDown(combo);
-                } else if (HIWORD(wParam) == CBN_SELCHANGE) {
-                    LRESULT item = SendMessageW(combo, CB_GETCURSEL, 0, 0);
-                    int index = static_cast<int>(SendMessageW(combo, CB_GETITEMDATA, item, 0));
-                    if (index >= 0) {
-                        lstrcpynW(data->reportLanguage, ReportLanguageCode(index), MAX_PATH);
-                        UpdateApplyButton(*data);
-                    }
-                }
-                return TRUE;
-            }
+                return HandlePreferencesReportLanguage(*data, wParam);
             case IDC_REPORT_BROWSE:
-            {
-                wchar_t path[MAX_PATH] = L"";
-                if (ReportLanguageIndex(data->reportLanguage) < 0) {
-                    lstrcpyW(path, data->reportLanguage);
-                }
-                if (ChooseReportLanguageFile(window, path)) {
-                    lstrcpyW(data->reportLanguage, path);
-                    UpdateReportChoices(*data);
-                    UpdateApplyButton(*data);
-                }
-                return TRUE;
-            }
+                return BrowsePreferencesReportLanguage(*data);
             case IDC_FONT_CHOOSE:
                 ChoosePreferencesFont(*data);
                 UpdateApplyButton(*data);
@@ -3546,15 +3569,7 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
                 }
                 return TRUE;
             case IDC_FONT_DEFAULT:
-            {
-                BYTE quality = data->font.lfQuality;
-                data->font = LOGFONTW{};
-                data->font.lfQuality = quality;
-                data->dpi = 96;
-                UpdateFontButtons(*data);
-                UpdateApplyButton(*data);
-                return TRUE;
-            }
+                return ResetPreferencesFont(*data);
             case IDOK:
             case IDC_PREFERENCES_APPLY:
                 if (ApplyPreferences(*data)) {
