@@ -1,7 +1,7 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by MediaInfo.rc
-
+//
 #define IDR_MENU                        101
 #define IDR_ACCELERATORS                102
 #define IDR_LICENSE                     103
@@ -17,6 +17,8 @@
 #define IDD_HELP                        202
 #define IDD_PREFERENCES                 203
 #define IDD_FIND                        204
+#define ABOUT_LICENSE_HEIGHT_96DPI      267
+#define ABOUT_LICENSE_WIDTH_96DPI       508
 #define IDC_INFO_ICON                   1001
 #define IDC_INFO_PRODUCT                1002
 #define IDC_INFO_WEBSITE                1003
@@ -85,8 +87,6 @@
 #define ID_EDIT_COPY                    40027
 #define ID_EDIT_SELECT_ALL              40028
 #define ID_FILE_RECENT_FIRST            41000
-#define ABOUT_LICENSE_WIDTH_96DPI       508
-#define ABOUT_LICENSE_HEIGHT_96DPI      267
 
 // Next default values for new objects
 // 
