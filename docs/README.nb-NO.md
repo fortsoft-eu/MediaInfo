@@ -10,6 +10,10 @@ Windows x86-viser for MediaInfo.dll-rapporter. Hver fil har sin egen skrivebesky
 
 Åpne MediaInfo.sln i Visual Studio 2015 med Visual C++ v140 verktøysettet installert. Velg Release | Win32 og bygg løsningen. Den eneste applikasjonsplattformen er Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statisk lenket, BSD-3-Clause.
+[license.txt](../license.txt). [Kildekode](../MediaInfo/PCRE2/).
+PCRE2 er innebygd i EXE-filen og krever ingen separat DLL eller installasjon.
+
 Utganger:
 
 - Release\MediaInfo.exe
@@ -58,12 +62,23 @@ Windows 95 er for øyeblikket ikke en støttet kjøretid.
   Spørringen inkluderer hele banen.
 - Musehjulet over overfylte faneoverskrifter ruller overskriften én fane per melding uten å endre valg eller
   fokus.
-- Ctrl+Tab og Ctrl+Shift+Tab bryterfaner; Ctrl+W lukker den aktive fanen. Midtklikk på en faneoverskrift
+- Ctrl+Tab og Ctrl+Skift+Tab bryterfaner; Ctrl+W lukker den aktive fanen. Midtklikk på en faneoverskrift
   lukker den fanen mens andre aktive faner bevares. Fil > Lukk alle lukker hver fane, inkludert rapporter i
   kø. Fil > Avslutt (Alt+F4) lukker programmet.
 - Dobbeltklikk velger et ord. Trippelklikk velger en logisk linje. Dra utvider utvalget med ord eller linjer.
 - Ctrl+A velger rapporten; Ctrl+C kopierer den.
-- Innstillinger > Innstillinger (Ctrl+G) åpner en enkelt preferansedialog for MediaInfo og curl baner,
+- Rediger > Søk (Ctrl+F) søker i den aktive fanen. F3 gjentar søket; Skift+F3 snur retningen. Ved tekstens
+  ender fortsetter søket fra motsatt ende. Alternativer > Tekstbryting gjelder bare den aktive fanen; haken
+  følger den valgte fanen. Søkevinduet kan minimeres og endres i bredden; plasseringen og innstillingen Alltid
+  øverst huskes. Opptil 30 søketekster med innstillingene deres beholdes bare til programmet avsluttes.
+  Valgene for begynnelse og slutt gjelder logiske linjer. Regulære uttrykk bruker PCRE2-syntaks. Alle
+  kommandoer i Rediger gjelder bare den aktive fanen. Enter starter søket; Skift+Enter snur den valgte
+  retningen. «Skill mellom store og små bokstaver» skiller mellom store og små bokstaver; «Søk bakover» søker
+  mot begynnelsen av teksten. Valg av en historikkoppføring gjenoppretter alle fem søkevalg, inkludert
+  innstillingen for regulære uttrykk; «Alltid øverst» er uavhengig. «Regulært uttrykk» deaktiverer «Linjen
+  starter med» og «Linjen slutter med». Når begge valgene for linjens ender er aktivert, holder det med et
+  treff ved én ende. «Tekstbryting» endrer bare visningen.
+- Alternativer > Innstillinger (Ctrl+G) åpner en enkelt preferansedialog for MediaInfo og curl baner,
   rapportfont, skriftkantutjevnelse, grensesnittspråk og rapportspråk. En tom DLL-bane muliggjør automatisk
   oppdagelse.
 - Font-knappen viser familie, punktstørrelse og stil og åpner standard Windows skriftdialog. Standard
@@ -98,7 +113,7 @@ innlastede MediaInfo.dll. Lange baner forkortes med utelatelsesprikker etter til
 
 ## Opprett en headerfil
 
-Menyen Verktøy er den tredje på menylinjen. Dens Opprett en headerfil…-kommando åpner én kildefil uavhengig av
+Menyen Verktøy er den fjerde på menylinjen. Dens Opprett en headerfil…-kommando åpner én kildefil uavhengig av
 rapportfanene og kopierer de første 524288 byte (512 KiB). En kortere fil kopieres i sin helhet; en tom fil
 produserer en tom utdatafil. Dette er vanlig binær fillesing, uten MediaInfo-analyse eller krav om
 MediaInfo.dll. Verktøyet lar rapportfaner og programmets liste over siste filer være uendret.
@@ -161,10 +176,10 @@ WebP: 16383 × 16383 px.
 
 ## Grensesnitt og rapportspråk
 
-Preferanser (Innstillinger > Preferanser, Ctrl+G) inneholder bibliotekstier, rapportskrift, utjevning og
-språk. Grensesnittet har 36 varianter og følger først Windows. Rapporter bruker alltid bibliotekets
-opprinnelige engelsk som standard, uavhengig av Windows og grensesnittet. Bare et manuelt valg endrer
-rapportspråket: engelsk, 37 oversettelser eller en egen MediaInfo-CSV-tabell.
+Preferanser (Alternativer > Preferanser, Ctrl+G) inneholder bibliotekstier, rapportskrift, utjevning og språk.
+Grensesnittet har 36 varianter og følger først Windows. Rapporter bruker alltid bibliotekets opprinnelige
+engelsk som standard, uavhengig av Windows og grensesnittet. Bare et manuelt valg endrer rapportspråket:
+engelsk, 37 oversettelser eller en egen MediaInfo-CSV-tabell.
 
 OK eller Bruk bekrefter endringer; Avbryt forkaster ventende endringer. Preferanser angir grensen for fanenavn
 (80 som standard) og tømmer listen over nylige filer. Lange navn beholder begynnelsen, slutten og filtypen med

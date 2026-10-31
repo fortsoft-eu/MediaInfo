@@ -10,6 +10,11 @@ Natívny prehliadač reportov MediaInfo.dll pre Windows x86. Každý súbor má 
 
 Otvorte MediaInfo.sln vo Visual Studio 2015 s nainštalovanou súpravou nástrojov Visual C++ v140. Vyberte Release | Win32 a zostavte riešenie. Jedinou platformou aplikácie je Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, staticky pripojené,
+BSD-3-Clause. [Zdrojový kód](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 je zabudovaná do EXE a nevyžaduje samostatnú DLL ani inštaláciu.
+
 Výstupy:
 
 - Release\MediaInfo.exe
@@ -64,8 +69,19 @@ Windows 95 momentálne nie je podporované prostredie runtime.
   všetko zatvorí všetky karty vrátane prehľadov vo fronte. Súbor > Ukončiť (Alt+F4) zatvorí aplikáciu.
 - Dvojklik vyberie slovo. Trojklik vyberie logický riadok. Ťahanie rozširuje výber po slovách alebo riadkoch.
 - Ctrl+A vyberie zostavu; Ctrl+C ho skopíruje.
-- Nastavenia > Predvoľby (Ctrl+G) otvorí jediný dialóg pre cesty MediaInfo a curl, písmo reportu,
-  vyhladzovanie písma, jazyk rozhrania a jazyk reportu. Prázdna cesta DLL zapína automatické vyhľadávanie.
+- Úpravy > Hľadať (Ctrl+F) vyhľadáva v aktívnej karte. F3 hľadanie opakuje, Shift+F3 obráti jeho smer. Po
+  dosiahnutí okraja textu pokračuje hľadanie na opačnom konci. Možnosti > Zalamovanie riadkov ovplyvňuje iba
+  aktívnu kartu; začiarknutie sa mení podľa vybratej karty. Formulár hľadania možno minimalizovať a meniť jeho
+  šírku; pamätá si polohu a voľbu Vždy navrchu. História uchováva najviac 30 hľadaných textov s ich voľbami
+  iba do ukončenia aplikácie. Začína na a Končí na hľadajú na okrajoch logických riadkov. Regulárne výrazy
+  používajú syntax PCRE2. Všetky príkazy ponuky Úpravy sa vzťahujú iba na aktívnu kartu. Enter spustí
+  hľadanie, Shift+Enter obráti zvolený smer. Voľba „Rozlišovať veľké a malé písmená“ rozlišuje veľké a malé
+  písmená; „Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z histórie obnoví všetkých päť volieb hľadania
+  vrátane uloženého stavu regulárneho výrazu; „Vždy navrchu“ je nezávislá voľba. „Regulárny výraz“ vypne voľby
+  „Začína na“ a „Končí na“. Ak sú zapnuté obe voľby okrajov riadka, stačí zhoda na jednom z nich. „Zalamovanie
+  riadkov“ mení iba zobrazenie.
+- Možnosti > Predvoľby (Ctrl+G) otvorí jediný dialóg pre cesty MediaInfo a curl, písmo reportu, vyhladzovanie
+  písma, jazyk rozhrania a jazyk reportu. Prázdna cesta DLL zapína automatické vyhľadávanie.
 - Tlačidlo písma zobrazuje rodinu, veľkosť bodu a štýl a otvára štandardné dialógové okno písma Windows.
   Predvolene obnoví Consolas alebo Courier New, ak Consolas nie je k dispozícii; tlačidlo Predvolené je
   vypnuté, kým je vybraté predvolené. Používateľom zvolené písma sa zachovajú bez nahradenia kódom aplikácie.
@@ -100,7 +116,7 @@ MediaInfo.dll. Dlhé cesty sa podľa dostupného miesta skracujú výpustkou.
 
 ## Vytvoriť súbor hlavičky
 
-Ponuka Nástroje je treťou hlavnou ponukou. Príkaz Vytvoriť súbor hlavičky… otvorí jeden vstupný súbor
+Ponuka Nástroje je štvrtou hlavnou ponukou. Príkaz Vytvoriť súbor hlavičky… otvorí jeden vstupný súbor
 nezávisle od kariet reportov a skopíruje jeho prvých 524288 bajtov (512 KiB). Kratší súbor sa skopíruje celý;
 prázdny súbor vytvorí prázdny výstup. Ide o bežné binárne čítanie súboru bez analýzy MediaInfo; knižnica
 MediaInfo.dll nie je potrebná. Karty reportov ani zoznam posledných súborov sa tým nemenia.
@@ -162,10 +178,10 @@ WebP: 16383 × 16383 px.
 
 ## Jazyky rozhrania a reportov
 
-Predvoľby (Nastavenia > Predvoľby, Ctrl+G) obsahujú cesty ku knižniciam, písmo reportu, vyhladzovanie a
-jazyky. Rozhranie má 36 variantov a spočiatku sa riadi Windows. Reporty sú vždy predvolene v pôvodnej
-angličtine knižnice, nezávisle od Windows a rozhrania. Zmení to iba ručná voľba: angličtina, 37 prekladov
-alebo vlastná tabuľka MediaInfo CSV.
+Predvoľby (Možnosti > Predvoľby, Ctrl+G) obsahujú cesty ku knižniciam, písmo reportu, vyhladzovanie a jazyky.
+Rozhranie má 36 variantov a spočiatku sa riadi Windows. Reporty sú vždy predvolene v pôvodnej angličtine
+knižnice, nezávisle od Windows a rozhrania. Zmení to iba ručná voľba: angličtina, 37 prekladov alebo vlastná
+tabuľka MediaInfo CSV.
 
 OK alebo Použiť potvrdí zmeny; Zrušiť zahodí rozpracované úpravy. Predvoľby umožňujú zmeniť limit dĺžky názvu
 karty (predvolene 80 znakov) a vymazať zoznam posledných súborov. Dlhé názvy zachovajú začiatok, koniec aj

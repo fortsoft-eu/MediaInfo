@@ -10,6 +10,11 @@ Natív Windows x86 megjelenítő a MediaInfo.dll jelentéseihez. Minden fájlnak
 
 Nyissa meg a MediaInfo.sln-t a Visual Studio 2015-ban a Visual C++ v140 eszközkészlettel. Válassza a Release | lehetőséget Win32 és készítse el a megoldást. Az egyetlen alkalmazásplatform a Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statikusan csatolva,
+BSD-3-Clause. [Forráskód](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+A PCRE2 az EXE része, ezért nem igényel külön DLL-t vagy további telepítést.
+
 Kimenetek:
 
 - Release\MediaInfo.exe
@@ -68,6 +73,19 @@ A Windows 95 jelenleg nem támogatott futtatókörnyezet.
 - Dupla kattintással kiválaszt egy szót. Három kattintással kiválaszt egy logikai sort. Az elhúzás szavakkal
   vagy sorokkal bővíti a kijelölést.
 - Ctrl+A kiválasztja a jelentést; Ctrl+C másolja.
+- A Szerkesztés > Keresés (Ctrl+F) az aktív lapon keres. Az F3 megismétli a keresést, a Shift+F3 pedig
+  megfordítja az irányát. A szöveg végéhez érve a keresés a másik végéről folytatódik. A Beállítások >
+  Sortörés csak az aktív lapra érvényes; a jelölés a kiválasztott lapot követi. A keresőablak kis méretre
+  állítható és vízszintesen átméretezhető; a helyzete és a Mindig felül beállítás megmarad. Legfeljebb 30
+  keresési szöveg és beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor elejére és végére
+  vonatkozó beállítások logikai sorokra érvényesek. A reguláris kifejezések PCRE2-szintaxist használnak. A
+  Szerkesztés menü összes parancsa csak az aktív lapra érvényes. Az Enter elindítja a keresést; a Shift+Enter
+  megfordítja a kiválasztott irányt. A „Kis- és nagybetűk megkülönböztetése” megkülönbözteti a kis- és
+  nagybetűket; a „Keresés visszafelé” a szöveg eleje felé keres. Egy előzmény kiválasztása visszaállítja mind
+  az öt keresési beállítást, beleértve a reguláris kifejezések módjának állapotát is; a „Mindig felül” ettől
+  független. A „Reguláris kifejezés” letiltja a „Sor elején” és „Sor végén” beállításokat. Ha mindkét
+  sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron elég az egyezés. A „Sortörés” csak a
+  megjelenítést módosítja.
 - A Beállítások > Beállítások (Ctrl+G) egyetlen beállítási párbeszédpanelt nyit meg a MediaInfo és curl
   útvonalak, a jelentés betűtípusa, a betűtípus élsimítása, a felület nyelve és a jelentés nyelve számára. Az
   üres DLL elérési út lehetővé teszi az automatikus felderítést.
@@ -110,7 +128,7 @@ rövidülnek.
 
 ## Fejlécfájl létrehozása
 
-Az Eszközök a menüsor harmadik menüje. A Fejlécfájl létrehozása… parancsa egy forrásfájlt nyit meg a
+Az Eszközök a menüsor negyedik menüje. A Fejlécfájl létrehozása… parancsa egy forrásfájlt nyit meg a
 jelentéslapoktól függetlenül, és átmásolja annak első 524288 bájtját (512 KiB). A rövidebb fájlt teljes
 egészében másolja; egy üres fájl üres kimenetet ad. Ez egy közönséges bináris fájlolvasás, MediaInfo elemzés
 vagy MediaInfo.dll követelmény nélkül. Az eszköz változatlanul hagyja a jelentéslapokat és a megtekintő

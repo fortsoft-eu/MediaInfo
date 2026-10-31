@@ -10,6 +10,10 @@ Windows x86-skoðari fyrir MediaInfo.dll-skýrslur. Hver skrá hefur sinn eigin 
 
 Opnaðu MediaInfo.sln í Visual Studio 2015 með Visual C++ v140 verkfærasettinu uppsett. Veldu Release | Win32 og byggðu lausnina. Eini umsóknarvettvangurinn er Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, tengt statískt, BSD-3-Clause.
+[license.txt](../license.txt). [Frumkóði](../MediaInfo/PCRE2/).
+PCRE2 er innbyggt í EXE-skrána og þarf hvorki sérstaka DLL-skrá né viðbótaruppsetningu.
+
 Úttak:
 
 - Release\MediaInfo.exe
@@ -62,9 +66,19 @@ Windows 95 er ekki studdur keyrslutími.
   skýrslum í biðröð. Skrá > Hætta (Alt+F4) lokar forritinu.
 - Tvísmella velur orð. Þrísmellur velur rökrétta línu. Að draga eykur valið með orðum eða línum.
 - Ctrl+A velur skýrsluna; Ctrl+C afritar það.
-- Stillingar > Kjörstillingar (Ctrl+G) opnar stakan valglugga fyrir MediaInfo og curl slóðir,
-  skýrsluleturgerð, hliðrun leturs, viðmótstungumál og skýrslumál. Tóm DLL slóð gerir sjálfvirka uppgötvun
-  kleift.
+- Breyta > Finna (Ctrl+F) leitar í virkum flipa. F3 endurtekur leitina og Shift+F3 snýr leitarstefnunni við.
+  Við enda textans heldur leitin áfram frá hinum endanum. Valkostir > Línuskipting gildir aðeins fyrir virkan
+  flipa; gátmerkið fylgir völdum flipa. Hægt er að lágmarka leitargluggann og breyta breidd hans; staðsetning
+  og stillingin Alltaf efst eru vistaðar. Allt að 30 leitartextar og stillingar þeirra eru aðeins geymd þar
+  til forritinu er lokað. Upphafs- og endaskilyrði eiga við röklegar línur. Reglulegar segðir nota
+  PCRE2-málskipan. Allar skipanir í Breyta eiga aðeins við virkan flipa. Enter ræsir leit; Shift+Enter snýr
+  valinni stefnu við. „Greina á milli há- og lágstafa“ greinir á milli há- og lágstafa; „Leita afturábak“
+  leitar að upphafi textans. Val á færslu úr leitarsögunni endurheimtir alla fimm leitarvalkostina, þar á
+  meðal stillingu reglulegra segða; „Alltaf efst“ er óháður valkostur. „Regluleg segð“ gerir „Lína byrjar á“
+  og „Lína endar á“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir nægir samsvörun við annan endann.
+  „Línuskipting“ breytir aðeins birtingunni.
+- Valkostir > Kjörstillingar (Ctrl+G) opnar stakan valglugga fyrir MediaInfo og curl slóðir, skýrsluleturgerð,
+  hliðrun leturs, viðmótstungumál og skýrslumál. Tóm DLL slóð gerir sjálfvirka uppgötvun kleift.
 - Leturhnappurinn sýnir fjölskyldu, punktastærð og stíl og opnar venjulega Windows leturgluggann. Sjálfgefið
   endurheimtir Consolas, eða Courier New ef Consolas er ekki tiltækt; Sjálfgefin hnappur er óvirkur meðan
   sjálfgefið er valið. Notandavalið letur er haldið án þess að skipta út með forritakóða.
@@ -98,7 +112,7 @@ MediaInfo.dll sem er hlaðið. Langar slóðir eru styttar með úrfellingarpunk
 
 ## Búa til hausaskrá
 
-Valmyndin Verkfæri er þriðja valmyndin á valmyndastikunni. Búa til hausaskrá… skipunin hennar opnar eina
+Valmyndin Verkfæri er fjórða valmyndin á valmyndastikunni. Búa til hausaskrá… skipunin hennar opnar eina
 frumskrá óháð skýrsluflipa og afritar fyrstu 524288 bæti (512 KiB). Styttri skrá er afrituð í heild; tóm skrá
 framleiðir tómt úttak. Þetta er venjulegur lestur tvíundargagna úr skrá, án MediaInfo greiningar eða kröfu um
 MediaInfo.dll. Tólið breytir hvorki skýrsluflipum né lista forritsins yfir nýlegar skrár.
@@ -160,7 +174,7 @@ WebP: 16383 × 16383 px.
 
 ## Viðmót og skýrslutungumál
 
-Kjörstillingar (Stillingar > Kjörstillingar, Ctrl+G) innihalda slóðir safna, letur skýrslu, leturjöfnun og
+Kjörstillingar (Valkostir > Kjörstillingar, Ctrl+G) innihalda slóðir safna, letur skýrslu, leturjöfnun og
 tungumál. Viðmótið hefur 36 útgáfur og fylgir Windows í upphafi. Skýrslur nota alltaf upprunalega ensku
 safnsins sjálfgefið, óháð Windows og viðmóti. Aðeins handvirkt val breytir því: enska, 37 þýðingar eða eigin
 MediaInfo CSV-tafla.

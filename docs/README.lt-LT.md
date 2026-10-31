@@ -11,6 +11,11 @@ kortelę.
 
 Atidarykite MediaInfo.sln Visual Studio 2015 su įdiegtu Visual C++ v140 įrankių rinkiniu. Pasirinkite Release | Win32 ir sukurkite sprendimą. Vienintelė taikomųjų programų platforma yra Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statiškai susieta,
+BSD-3-Clause. [Pirminis kodas](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 yra įtraukta į EXE failą ir jai nereikia atskiro DLL failo ar papildomo diegimo.
+
 Išėjimai:
 
 - Release\MediaInfo.exe
@@ -66,6 +71,17 @@ Windows 95 šiuo metu nepalaikomas vykdymo laikas.
 - Dukart spustelėjus pasirenkamas žodis. Tris kartus spustelėjus pasirenkama loginė eilutė. Vilkimas praplečia
   pasirinkimą žodžiais arba eilutėmis.
 - Ctrl+A pasirenka ataskaitą; Ctrl+C jį nukopijuoja.
+- Redaguoti > Rasti (Ctrl+F) ieško aktyviame skirtuke. F3 kartoja paiešką, o Shift+F3 pakeičia jos kryptį.
+  Pasiekus teksto galą, paieška tęsiama nuo kito galo. Parinktys > Teksto eilučių kėlimas taikomas tik
+  aktyviam skirtukui; varnelė atitinka pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo
+  plotį; jo vieta ir parinktis Visada viršuje įsimenamos. Iki 30 paieškos tekstų su parinktimis saugoma tik
+  iki programos uždarymo. Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. Reguliarieji reiškiniai
+  naudoja PCRE2 sintaksę. Visos meniu Redaguoti komandos taikomos tik aktyviam skirtukui. Enter pradeda
+  paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti didžiąsias ir mažąsias raides“ skiria didžiąsias ir
+  mažąsias raides; „Ieškoti atgal“ ieško teksto pradžios link. Pasirinkus istorijos įrašą atkuriamos visos
+  penkios paieškos parinktys, įskaitant reguliariųjų reiškinių režimo būseną; „Visada viršuje“ yra
+  nepriklausoma. „Reguliarusis reiškinys“ išjungia „Eilutė prasideda“ ir „Eilutė baigiasi“. Įjungus abi
+  eilutės kraštų parinktis, pakanka atitikmens viename krašte. „Teksto eilučių kėlimas“ keičia tik rodymą.
 - „Nustatymai“ > „Nuostatos“ (Ctrl+G) atidaro vieną nuostatų dialogo langą, skirtą MediaInfo ir curl takams,
   ataskaitos šriftui, šrifto antialiasing, sąsajos kalbai ir ataskaitos kalbai. Tuščias DLL kelias įgalina
   automatinį aptikimą.
@@ -105,7 +121,7 @@ Ilgi keliai trumpinami daugtaškiu pagal turimą vietą.
 
 ## Sukurti antraštės failą
 
-Įrankiai yra trečiasis meniu juostos meniu. Jo komanda Sukurti antraštės failą… atidaro vieną šaltinio failą
+Įrankiai yra ketvirtasis meniu juostos meniu. Jo komanda Sukurti antraštės failą… atidaro vieną šaltinio failą
 nepriklausomai nuo ataskaitos skirtukų ir nukopijuoja pirmuosius 524288 baitus (512 KiB). Trumpesnis failas
 nukopijuojamas visas; tuščias failas sukuria tuščią išvestį. Tai įprastas dvejetainių failų skaitymas be
 MediaInfo analizės arba MediaInfo.dll reikalavimo. Įrankis nepakeičia ataskaitų skirtukų ir peržiūros
@@ -169,7 +185,7 @@ WebP: 16383 × 16383 px.
 
 ## Sąsajos ir ataskaitų kalbos
 
-Nuostatose (Parametrai > Nuostatos, Ctrl+G) yra bibliotekų keliai, ataskaitos šriftas, glodinimas ir kalbos.
+Nuostatose (Parinktys > Nuostatos, Ctrl+G) yra bibliotekų keliai, ataskaitos šriftas, glodinimas ir kalbos.
 Sąsaja turi 36 variantus ir iš pradžių laikosi Windows kalbos. Ataskaitoms visada numatyta originali
 bibliotekos anglų kalba, nepriklausomai nuo Windows ir sąsajos. Tai pakeičia tik rankinis pasirinkimas: anglų
 kalba, 37 vertimai arba savas MediaInfo CSV žodynas.

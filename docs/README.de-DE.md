@@ -11,6 +11,11 @@ schreibgeschützten Tab.
 
 Öffnen Sie MediaInfo.sln in Visual Studio 2015 mit installiertem Visual C++ v140-Toolset. Wählen Sie Release | Win32 und erstellen Sie die Lösung. Die einzige Anwendungsplattform ist Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statisch eingebunden,
+BSD-3-Clause. [Quellcode](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 ist in die EXE eingebunden und erfordert weder eine separate DLL noch eine zusätzliche Installation.
+
 Ausgänge:
 
 - Release\MediaInfo.exe
@@ -67,15 +72,27 @@ Windows 95 ist derzeit keine unterstützte Laufzeit.
   vollständigen Pfad.
 - Das Mausrad über überfüllten Tab-Headern scrollt den Header-Streifen um einen Tab pro Nachricht, ohne die
   Auswahl oder den Fokus zu ändern.
-- Strg+Tab und Strg+Shift+Tab wechseln die Registerkarten; Strg+W schließt die aktive Registerkarte. Wenn Sie
-  mit der mittleren Maustaste auf eine Registerkartenüberschrift klicken, wird diese Registerkarte
+- Strg+Tab und Strg+Umschalt+Tab wechseln die Registerkarten; Strg+W schließt die aktive Registerkarte. Wenn
+  Sie mit der mittleren Maustaste auf eine Registerkartenüberschrift klicken, wird diese Registerkarte
   geschlossen, während alle anderen aktiven Registerkarten erhalten bleiben. „Datei“ > „Alle schließen“
   schließt alle Registerkarten, einschließlich der in der Warteschlange befindlichen Berichte. Datei > Beenden
   (Alt+F4) schließt die Anwendung.
 - Durch Doppelklick wird ein Wort ausgewählt. Ein Dreifachklick wählt eine logische Zeile aus. Durch Ziehen
   wird die Auswahl um Wörter oder Zeilen erweitert.
 - Strg+A wählt den Bericht aus; Strg+C kopiert es.
-- Einstellungen > Voreinstellungen (Strg+G) öffnet einen einzelnen Voreinstellungsdialog für MediaInfo- und
+- Bearbeiten > Suchen (Strg+F) durchsucht den aktiven Tab. F3 wiederholt die Suche; Umschalt+F3 kehrt die
+  Suchrichtung um. Am Textende wird die Suche am anderen Ende fortgesetzt. Optionen > Zeilenumbruch gilt nur
+  für den aktiven Tab; das Häkchen richtet sich nach dem ausgewählten Tab. Das Suchfenster lässt sich
+  minimieren und in der Breite verändern; seine Position und die Einstellung Immer im Vordergrund werden
+  gespeichert. Bis zu 30 Suchtexte mit ihren Optionen bleiben nur bis zum Beenden der Anwendung erhalten.
+  Zeile beginnt mit und Zeile endet mit beziehen sich auf logische Zeilen. Reguläre Ausdrücke verwenden die
+  PCRE2-Syntax. Alle Befehle unter Bearbeiten betreffen nur den aktiven Tab. Eingabe startet die Suche;
+  Umschalt+Eingabe kehrt die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ unterscheidet Groß- und
+  Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein Eintrag aus dem Verlauf stellt alle fünf
+  Suchoptionen wieder her und schaltet gegebenenfalls den Regexmodus aus; „Immer im Vordergrund“ ist
+  unabhängig davon. „Regulärer Ausdruck“ deaktiviert „Zeile beginnt mit“ und „Zeile endet mit“. Sind beide
+  Zeilenrandoptionen aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“ ändert nur die Darstellung.
+- Optionen > Voreinstellungen (Strg+G) öffnet einen einzelnen Voreinstellungsdialog für MediaInfo- und
   curl-Pfade, Berichtsschriftart, Schriftarten-Antialiasing, Schnittstellensprache und Berichtssprache. Ein
   leerer DLL-Pfad ermöglicht die automatische Erkennung.
 - Die Schriftart-Schaltfläche zeigt die Familie, die Punktgröße und den Stil an und öffnet das
@@ -118,7 +135,7 @@ geladenen MediaInfo.dll. Lange Pfade werden passend zum verfügbaren Platz mit A
 
 ## Header-Datei erstellen
 
-Das Menü Extras ist der dritte Eintrag in der Menüleiste. Sein Befehl Header-Datei erstellen… öffnet eine
+Das Menü Extras ist der vierte Eintrag in der Menüleiste. Sein Befehl Header-Datei erstellen… öffnet eine
 Quelldatei unabhängig von den Berichtsregisterkarten und kopiert deren erste 524288 Bytes (512 KiB). Eine
 kürzere Datei wird vollständig kopiert; eine leere Datei erzeugt eine leere Ausgabe. Dabei handelt es sich um
 das normale Lesen von Binärdateien ohne MediaInfo-Analyse und ohne MediaInfo.dll. Das Tool lässt die
@@ -187,7 +204,7 @@ WebP: 16383 × 16383 px.
 
 ## Sprachen der Oberfläche und der Berichte
 
-Die Voreinstellungen (Einstellungen > Voreinstellungen, Strg+G) enthalten Bibliothekspfade, Berichtsschrift,
+Die Voreinstellungen (Optionen > Voreinstellungen, Strg+G) enthalten Bibliothekspfade, Berichtsschrift,
 Kantenglättung und Sprachen. Die Oberfläche bietet 36 Varianten und richtet sich zunächst nach Windows.
 Berichte verwenden stets das ursprüngliche Englisch der Bibliothek, unabhängig von Windows und Oberfläche. Nur
 die manuelle Berichtssprachwahl ändert dies: Englisch, 37 Übersetzungen oder eine eigene

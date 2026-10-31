@@ -10,6 +10,11 @@ Windows x86 omarakendus MediaInfo.dll-i aruannete vaatamiseks. Igal failil on om
 
 Avage MediaInfo.sln kaustas Visual Studio 2015, kui tööriistakomplekt on installitud Visual C++ v140. Valige Release | Win32 ja koostage lahendus. Ainus rakendusplatvorm on Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, staatiliselt lingitud,
+BSD-3-Clause. [Lähtekood](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 on EXE-faili sisse ehitatud ega vaja eraldi DLL-faili või paigaldamist.
+
 Väljundid:
 
 - Release\MediaInfo.exe
@@ -66,6 +71,17 @@ Windows 95 ei ole praegu toetatud käitusaeg.
 - Topeltklõps valib sõna. Kolmikklõps valib loogilise rea. Lohistamine laiendab valikut sõnade või ridade
   kaupa.
 - Ctrl+A valib aruande; Ctrl+C kopeerib selle.
+- Redigeeri > Otsi (Ctrl+F) otsib aktiivselt vahekaardilt. F3 kordab otsingut ja Shift+F3 pöörab otsingu suuna
+  ümber. Teksti lõppu jõudes jätkub otsing teisest otsast. Suvandid > Reamurdmine kehtib ainult aktiivsel
+  vahekaardil; märge vastab valitud vahekaardile. Otsinguakna saab minimeerida ja selle laiust muuta; asukoht
+  ning valik Alati pealmine jäetakse meelde. Kuni 30 otsinguteksti koos valikutega säilitatakse ainult
+  rakenduse sulgemiseni. Alguse ja lõpu valikud kehtivad loogiliste ridade kohta. Regulaaravaldised kasutavad
+  PCRE2 süntaksit. Kõik menüü Redigeeri käsud kehtivad ainult aktiivsel vahekaardil. Enter käivitab otsingu;
+  Shift+Enter pöörab valitud suuna ümber. „Tõstutundlik“ eristab suur- ja väiketähti; „Otsi tagasisuunas“
+  otsib teksti alguse suunas. Ajalookirje valimine taastab kõik viis otsinguvalikut, sealhulgas
+  regulaaravaldise režiimi oleku; „Alati pealmine“ on sõltumatu. „Regulaaravaldis“ keelab valikud „Rida algab“
+  ja „Rida lõpeb“. Kui mõlemad reapiiri valikud on lubatud, piisab vastest ühes piiris. „Reamurdmine“ muudab
+  ainult kuvamist.
 - Seaded > Eelistused (Ctrl+G) avab ühe eelistuste dialoogi MediaInfo ja curl teede, aruande fondi, fondi
   antialiasingu, liidese keele ja aruande keele jaoks. Tühi DLL tee võimaldab automaatset tuvastamist.
 - Fondinupp kuvab perekonna, punkti suuruse ja stiili ning avab standardse Windows fondidialoogi. Vaikeseade
@@ -102,7 +118,7 @@ Pikad teed lühendatakse vastavalt vabale ruumile mõttepunktidega.
 
 ## Loo päisefail
 
-Tööriistad on menüüriba kolmas menüü. Selle käsk Loo päisefail… avab aruande vahekaartidest sõltumatult ühe
+Tööriistad on menüüriba neljas menüü. Selle käsk Loo päisefail… avab aruande vahekaartidest sõltumatult ühe
 lähtefaili ja kopeerib selle esimesed 524288 baiti (512 KiB). Lühem fail kopeeritakse täielikult; tühi fail
 annab tühja väljundi. See on tavaline binaarfailide lugemine, ilma MediaInfo analüüsita või MediaInfo.dll-i
 nõudeta. Tööriist jätab aruannete vahelehed ja programmi viimaste failide loendi muutmata.
@@ -164,7 +180,7 @@ WebP: 16383 × 16383 px.
 
 ## Liidese ja aruannete keeled
 
-Eelistused (Sätted > Eelistused, Ctrl+G) sisaldavad teekide asukohti, aruande fonti, silumist ja keeli.
+Eelistused (Suvandid > Eelistused, Ctrl+G) sisaldavad teekide asukohti, aruande fonti, silumist ja keeli.
 Liidesel on 36 varianti ning alguses järgib see Windowsi. Aruanded kasutavad vaikimisi alati teegi algset
 inglise keelt, sõltumata Windowsist ja liidesest. Seda muudab ainult käsitsi valitud aruande keel: inglise
 keel, 37 tõlget või oma MediaInfo CSV-tabel.

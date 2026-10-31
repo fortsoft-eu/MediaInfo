@@ -60,19 +60,24 @@ static const MenuCaption menuCaptions[] = {
     { 0, ID_FILE_EXPORT, TXT_EXPORT },
     { 0, ID_FILE_PRINT, TXT_PRINT },
     { 0, ID_FILE_EXIT, TXT_EXIT },
-    { 1, ID_FULL_PARSING, TXT_FULL_PARSING },
-    { 1, ID_ADVANCED_MODE, TXT_ADVANCED_MODE },
-    { 1, ID_TRACE_LEVEL_0, TXT_TRACE_LEVEL_0 },
-    { 1, ID_TRACE_LEVEL_5, TXT_TRACE_LEVEL_5 },
-    { 1, ID_TRACE_LEVEL_9, TXT_TRACE_LEVEL_9 },
-    { 1, ID_TRACE_LEVEL_10, TXT_TRACE_LEVEL_10 },
-    { 1, ID_PREFERENCES, TXT_PREFERENCES_MENU },
-    { 2, ID_TOOLS_CREATE_HEADER, TXT_CREATE_HEADER },
-    { 3, ID_HELP_CONTENTS, TXT_HELP },
-    { 3, ID_HELP_FORMATS, TXT_KNOWN_FORMATS },
-    { 3, ID_HELP_CODECS, TXT_KNOWN_CODECS },
-    { 3, ID_HELP_PARAMETERS, TXT_KNOWN_PARAMETERS },
-    { 3, ID_HELP_ABOUT, TXT_ABOUT }
+    { 1, ID_EDIT_COPY, TXT_COPY_SELECTION },
+    { 1, ID_EDIT_SELECT_ALL, TXT_SELECT_ALL },
+    { 1, ID_EDIT_FIND, TXT_FIND_MENU },
+    { 1, ID_EDIT_FIND_NEXT, TXT_FIND_NEXT_MENU },
+    { 2, ID_FULL_PARSING, TXT_FULL_PARSING },
+    { 2, ID_ADVANCED_MODE, TXT_ADVANCED_MODE },
+    { 2, ID_TRACE_LEVEL_0, TXT_TRACE_LEVEL_0 },
+    { 2, ID_TRACE_LEVEL_5, TXT_TRACE_LEVEL_5 },
+    { 2, ID_TRACE_LEVEL_9, TXT_TRACE_LEVEL_9 },
+    { 2, ID_TRACE_LEVEL_10, TXT_TRACE_LEVEL_10 },
+    { 2, ID_WORD_WRAP, TXT_WORD_WRAP },
+    { 2, ID_PREFERENCES, TXT_PREFERENCES_MENU },
+    { 3, ID_TOOLS_CREATE_HEADER, TXT_CREATE_HEADER },
+    { 4, ID_HELP_CONTENTS, TXT_HELP },
+    { 4, ID_HELP_FORMATS, TXT_KNOWN_FORMATS },
+    { 4, ID_HELP_CODECS, TXT_KNOWN_CODECS },
+    { 4, ID_HELP_PARAMETERS, TXT_KNOWN_PARAMETERS },
+    { 4, ID_HELP_ABOUT, TXT_ABOUT }
 };
 
 /// Private messages for background completion, forwarded files and deferred library startup.
@@ -190,6 +195,7 @@ MainForm::~MainForm() {
     }
     helpForm.Close();
     aboutForm.Close();
+    findForm.Close();
     if (window && IsWindow(window)) {
         DestroyWindow(window);
     }
@@ -289,7 +295,13 @@ void MainForm::InitializeLibrary() {
 /// Refreshes main-menu captions, recent files and information windows for the active interface language.
 void MainForm::ApplyLanguage() {
     HMENU menu = GetMenu(window);
-    const TextId popups[] = { TXT_FILE_MENU, TXT_SETTINGS_MENU, TXT_TOOLS_MENU, TXT_HELP_MENU };
+    const TextId popups[] = {
+        TXT_FILE_MENU,
+        TXT_EDIT_MENU,
+        TXT_OPTIONS_MENU,
+        TXT_TOOLS_MENU,
+        TXT_HELP_MENU
+    };
     for (int index = 0; index < static_cast<int>(ARRAYSIZE(popups)); ++index) {
         ModifyMenuW(menu, index, MF_BYPOSITION | MF_POPUP, reinterpret_cast<UINT_PTR>(GetSubMenu(menu, index)),
             T(popups[index]));
@@ -302,6 +314,7 @@ void MainForm::ApplyLanguage() {
     DrawMenuBar(window);
     helpForm.RefreshLanguage();
     aboutForm.RefreshLanguage();
+    findForm.RefreshLanguage();
     UpdateStatus();
 }
 
@@ -391,6 +404,13 @@ void MainForm::UpdateStatus() {
     int parts[] = { showVersion ? client.right - versionWidth : -1, -1 };
     SendMessageW(status, SB_SETPARTS, showVersion ? 2 : 1, reinterpret_cast<LPARAM>(parts));
     FileTab* active = CurrentFile();
+    bool searchable = active && active->ready && !closing;
+    findForm.SetTarget(searchable ? active->edit : nullptr);
+    UpdateEditMenu();
+    EnableMenuItem(GetMenu(window), ID_WORD_WRAP,
+        MF_BYCOMMAND | (active && !closing ? MF_ENABLED : MF_GRAYED));
+    CheckMenuItem(GetMenu(window), ID_WORD_WRAP,
+        MF_BYCOMMAND | (active && active->wordWrap ? MF_CHECKED : MF_UNCHECKED));
     const wchar_t* text = nullptr;
     if (closing) {
         text = T(TXT_WAITING_FOR_REPORT);
@@ -431,7 +451,7 @@ void MainForm::UpdateStatus() {
         | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     CheckMenuItem(GetMenu(window), ID_FULL_PARSING,
         MF_BYCOMMAND | ((active ? active->fullParsing : fullParsing) ? MF_CHECKED : MF_UNCHECKED));
-    CheckMenuRadioItem(GetSubMenu(GetMenu(window), 1), ID_TRACE_LEVEL_0, ID_TRACE_LEVEL_10,
+    CheckMenuRadioItem(GetSubMenu(GetMenu(window), 2), ID_TRACE_LEVEL_0, ID_TRACE_LEVEL_10,
         ID_TRACE_LEVEL_0 + (active ? active->traceLevel : traceLevel), MF_BYCOMMAND);
     for (UINT item = ID_TRACE_LEVEL_0; item <= ID_TRACE_LEVEL_10; ++item) {
         EnableMenuItem(GetMenu(window), item, MF_BYCOMMAND
@@ -607,6 +627,9 @@ void MainForm::SelectTab(int index) {
         TabCtrl_SetCurSel(tabs, index);
     }
     FileTab* selected = CurrentFile();
+    if (!UpdateSearchSelection()) {
+        MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+    }
     for (FileTab* file = files; file; file = file->next) {
         SetWindowPos(file->edit, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE
             | (file == selected ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
@@ -655,6 +678,148 @@ bool MainForm::SelectExistingTab(LibraryCommand command, const wchar_t* path) {
     return false;
 }
 
+/// Creates a report edit with the established selection handler and selected line-wrapping style.
+HWND MainForm::CreateReportEdit(bool wordWrap, bool showSelection) {
+    DWORD style = WS_CHILD | WS_TABSTOP | WS_CLIPSIBLINGS | WS_VSCROLL
+        | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL;
+    if (!wordWrap) {
+        style |= WS_HSCROLL | ES_AUTOHSCROLL;
+    }
+    if (showSelection) {
+        style |= ES_NOHIDESEL;
+    }
+    HWND edit = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"", style,
+        0, 0, 1, 1, window, nullptr, GetModuleHandleW(nullptr), nullptr);
+    if (!edit || !InstallSelectionEditHandler(edit)) {
+        if (edit) {
+            DestroyWindow(edit);
+        }
+        return nullptr;
+    }
+    SendMessageW(edit, WM_SETFONT, reinterpret_cast<WPARAM>(reportFont), FALSE);
+    SendMessageW(edit, EM_SETLIMITTEXT, 0x7FFFFFFE, 0);
+    return edit;
+}
+
+/// Replaces one native edit while preserving report text, selection, viewport and focus.
+bool MainForm::ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelection) {
+    HWND original = file->edit;
+    HWND replacement = CreateReportEdit(wordWrap, showSelection);
+    if (!replacement) {
+        return false;
+    }
+    wchar_t* text = CopyControlText(original);
+    if (!text) {
+        DestroyWindow(replacement);
+        return false;
+    }
+    RECT bounds = ControlRect(original, window);
+    PlaceControl(replacement, bounds.left, bounds.top, bounds.right - bounds.left, bounds.bottom - bounds.top);
+    BOOL copied = SetWindowTextW(replacement, text);
+    HeapFree(GetProcessHeap(), 0, text);
+    if (!copied) {
+        DestroyWindow(replacement);
+        return false;
+    }
+    DWORD start = 0;
+    DWORD end = 0;
+    SendMessageW(original, EM_GETSEL, reinterpret_cast<WPARAM>(&start), reinterpret_cast<LPARAM>(&end));
+    LRESULT firstLine = SendMessageW(original, EM_GETFIRSTVISIBLELINE, 0, 0);
+    LRESULT firstCharacter = SendMessageW(original, EM_LINEINDEX, firstLine, 0);
+    int horizontal = GetScrollPos(original, SB_HORZ);
+    SendMessageW(replacement, EM_SETSEL, start, end);
+    if (firstCharacter >= 0) {
+        LRESULT line = SendMessageW(replacement, EM_LINEFROMCHAR, firstCharacter, 0);
+        LRESULT current = SendMessageW(replacement, EM_GETFIRSTVISIBLELINE, 0, 0);
+        SendMessageW(replacement, EM_LINESCROLL, 0, line - current);
+    }
+    if (!wordWrap && !file->wordWrap && horizontal) {
+        SendMessageW(replacement, WM_HSCROLL, MAKEWPARAM(SB_THUMBPOSITION, horizontal), 0);
+    }
+    bool focused = GetFocus() == original;
+    bool visible = (GetWindowLongW(original, GWL_STYLE) & WS_VISIBLE) != 0;
+    file->edit = replacement;
+    file->wordWrap = wordWrap;
+    findForm.ReplaceTarget(original, replacement);
+    SetWindowPos(replacement, HWND_TOP, 0, 0, 0, 0,
+        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | (visible ? SWP_SHOWWINDOW : 0));
+    DestroyWindow(original);
+    if (focused) {
+        SetFocus(replacement);
+    }
+    return true;
+}
+
+/// Synchronizes report selection visibility after the modeless search form opens or closes.
+LRESULT MainForm::HandleFindVisibility() {
+    bool success = UpdateSearchSelection();
+    UpdateStatus();
+    return success;
+}
+
+/// Shows the active search selection while restoring normal hiding in all other report edits.
+bool MainForm::UpdateSearchSelection() {
+    FileTab* active = CurrentFile();
+    bool success = true;
+    for (FileTab* file = files; file; file = file->next) {
+        bool show = findForm.GetWindow() && file == active;
+        bool shown = (GetWindowLongW(file->edit, GWL_STYLE) & ES_NOHIDESEL) != 0;
+        if (show != shown && !ReplaceReportEdit(file, file->wordWrap, show)) {
+            success = false;
+        }
+    }
+    return success;
+}
+
+/// Refreshes active-tab command availability immediately before the Edit menu or shortcuts are used.
+void MainForm::UpdateEditMenu() {
+    FileTab* active = CurrentFile();
+    DWORD start = 0;
+    DWORD end = 0;
+    int length = 0;
+    if (active && active->ready && !closing) {
+        SendMessageW(active->edit, EM_GETSEL, reinterpret_cast<WPARAM>(&start),
+            reinterpret_cast<LPARAM>(&end));
+        length = GetWindowTextLengthW(active->edit);
+    }
+    HMENU menu = GetMenu(window);
+    EnableMenuItem(menu, ID_EDIT_COPY, MF_BYCOMMAND | (start != end ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_SELECT_ALL,
+        MF_BYCOMMAND | (length && (start || end < static_cast<DWORD>(length)) ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_FIND, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_FIND_NEXT, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
+}
+
+/// Copies only the selected text of the active report through the native edit control.
+void MainForm::CopySelection() {
+    FileTab* active = CurrentFile();
+    if (active && active->ready) {
+        SendMessageW(active->edit, WM_COPY, 0, 0);
+    }
+}
+
+/// Selects the entire active report and focuses its native edit control.
+void MainForm::SelectAll() {
+    FileTab* active = CurrentFile();
+    if (active && active->ready) {
+        SetFocus(active->edit);
+        SendMessageW(active->edit, EM_SETSEL, 0, -1);
+    }
+}
+
+/// Toggles wrapping only for the active tab while preserving its text, selection and viewport.
+void MainForm::ToggleWordWrap() {
+    FileTab* file = CurrentFile();
+    if (!file || closing) {
+        return;
+    }
+    bool showSelection = (GetWindowLongW(file->edit, GWL_STYLE) & ES_NOHIDESEL) != 0;
+    if (!ReplaceReportEdit(file, !file->wordWrap, showSelection)) {
+        MessageBoxW(window, T(TXT_WORD_WRAP_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+    }
+    UpdateStatus();
+}
+
 /// Creates the common report edit and tab and queues the selected library operation.
 bool MainForm::CreateTab(LibraryCommand command, const wchar_t* path) {
     if (!libraryLoading && !library.IsLoaded()) {
@@ -677,18 +842,11 @@ bool MainForm::CreateTab(LibraryCommand command, const wchar_t* path) {
         lstrcpyW(file->path, path);
     }
     file->id = nextId++;
-    file->edit = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"", WS_CHILD | WS_TABSTOP | WS_CLIPSIBLINGS
-        | WS_VSCROLL | WS_HSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL | ES_AUTOHSCROLL,
-        0, 0, 1, 1, window, nullptr, GetModuleHandleW(nullptr), nullptr);
-    if (!file->edit || !InstallSelectionEditHandler(file->edit)) {
-        if (file->edit) {
-            DestroyWindow(file->edit);
-        }
+    file->edit = CreateReportEdit(file->wordWrap, findForm.GetWindow() != nullptr);
+    if (!file->edit) {
         HeapFree(GetProcessHeap(), 0, file);
         return false;
     }
-    SendMessageW(file->edit, WM_SETFONT, reinterpret_cast<WPARAM>(reportFont), FALSE);
-    SendMessageW(file->edit, EM_SETLIMITTEXT, 0x7FFFFFFE, 0);
     wchar_t name[MAX_PATH];
     FormatTabCaption(file, tabNameLength, name, MAX_PATH);
     int index = TabCtrl_GetItemCount(tabs);
@@ -746,6 +904,9 @@ void MainForm::CloseTab(int index) {
     FileTab* removed = *cursor;
     TabCtrl_DeleteItem(tabs, index);
     *cursor = removed->next;
+    if (index == selected) {
+        findForm.SetTarget(nullptr);
+    }
     DestroyWindow(removed->edit);
     ClearReportVariants(removed);
     HeapFree(GetProcessHeap(), 0, removed);
@@ -1103,6 +1264,9 @@ void MainForm::StartNextReport() {
         if (file->reports[variant]) {
             if (file->report != file->reports[variant]) {
                 file->report = file->reports[variant];
+                if (file == CurrentFile()) {
+                    findForm.SetTarget(nullptr);
+                }
                 SetWindowTextW(file->edit, file->report);
                 SendMessageW(file->edit, EM_SETSEL, 0, 0);
             }
@@ -1169,6 +1333,9 @@ void MainForm::CompleteReport(ReportJob* job) {
             }
             file->refreshing = false;
             lstrcpynW(file->error, job->success ? L"" : job->error, ARRAYSIZE(file->error));
+            if (file == CurrentFile()) {
+                findForm.SetTarget(nullptr);
+            }
             SetWindowTextW(file->edit, job->success ? file->report : L"");
             SendMessageW(file->edit, EM_SETSEL, 0, 0);
             break;
@@ -1355,6 +1522,7 @@ LRESULT MainForm::HandleDestroy() {
     }
     helpForm.Close();
     aboutForm.Close();
+    findForm.Close();
     PostQuitMessage(0);
     return 0;
 }
@@ -1389,10 +1557,19 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
         case WM_SIZE:
             owner->Layout();
             return 0;
+        case findVisibilityChangedMessage:
+            return owner->HandleFindVisibility();
+        case findMatchMessage:
+            owner->placement.SetVisible(reinterpret_cast<HWND>(lParam));
+            return 0;
         case WM_INITMENUPOPUP:
             if (owner->tabMenuContext
                     && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
                 owner->InitializeTabContextMenu();
+                return 0;
+            }
+            if (reinterpret_cast<HMENU>(wParam) == GetSubMenu(GetMenu(window), 1)) {
+                owner->UpdateEditMenu();
                 return 0;
             }
             break;
@@ -1499,6 +1676,24 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                         owner->ChangeReportOptions(LOWORD(wParam));
                     }
                     return 0;
+                case ID_EDIT_COPY:
+                    owner->CopySelection();
+                    return 0;
+                case ID_EDIT_SELECT_ALL:
+                    owner->SelectAll();
+                    return 0;
+                case ID_EDIT_FIND:
+                    owner->findForm.Show(window);
+                    return 0;
+                case ID_EDIT_FIND_NEXT:
+                    owner->findForm.FindNext(window, false);
+                    return 0;
+                case ID_EDIT_FIND_PREVIOUS:
+                    owner->findForm.FindNext(window, true);
+                    return 0;
+                case ID_WORD_WRAP:
+                    owner->ToggleWordWrap();
+                    return 0;
                 case ID_PREFERENCES:
                     if (!owner->HasPendingReports()) {
                         owner->Preferences();
@@ -1593,6 +1788,12 @@ void MainForm::Show() {
 
 /// Routes hovered-control wheel input and window keyboard shortcuts before normal native dispatch.
 bool MainForm::Translate(MSG* message) {
+    if (message->message == WM_KEYDOWN
+            && GetActiveWindow() == window
+            && (message->wParam == L'C' || message->wParam == L'A')
+            && GetKeyState(VK_CONTROL) & 0x8000) {
+        UpdateEditMenu();
+    }
     if (message->message == WM_MOUSEWHEEL) {
         if (ScrollTabHeaders(window, tabs, message->wParam, message->lParam)) {
             return true;
@@ -1610,7 +1811,8 @@ bool MainForm::Translate(MSG* message) {
         }
         return false;
     }
-    return helpForm.Translate(message)
+    return findForm.Translate(message)
+        || helpForm.Translate(message)
         || TranslateAcceleratorW(window, accelerators, message)
         || IsDialogMessageW(window, message);
 }

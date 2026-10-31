@@ -10,6 +10,11 @@ Nativní prohlížeč reportů MediaInfo.dll pro Windows x86. Každý soubor má
 
 Otevřete MediaInfo.sln ve Visual Studio 2015 s nainstalovanou sadou nástrojů Visual C++ v140. Vyberte Release | Win32 a sestavte řešení. Jedinou platformou aplikace je Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, staticky připojeno,
+BSD-3-Clause. [Zdrojové kódy](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 je vestavěna do EXE a nevyžaduje samostatnou DLL ani instalaci.
+
 Výstupní soubory:
 
 - Release\MediaInfo.exe
@@ -61,7 +66,18 @@ Windows 95 v současnosti nejsou podporovaným prostředím pro spuštění.
   reportů ve frontě. Soubor > Konec (Alt+F4) ukončí aplikaci.
 - Dvojklik vybere slovo. Trojklik vybere logický řádek. Tažení rozšiřuje výběr po slovech nebo řádcích.
 - Ctrl+A vybere report; Ctrl+C jej zkopíruje.
-- Nastavení > Předvolby (Ctrl+G) otevře jediný dialog pro cesty MediaInfo a curl, písmo reportu, vyhlazování
+- Úpravy > Najít (Ctrl+F) hledá v aktivní kartě. F3 hledání opakuje, Shift+F3 obrátí jeho směr. Po dosažení
+  okraje textu pokračuje hledání na opačném konci. Možnosti > Zalamování řádků ovlivňuje jen aktivní kartu;
+  zatržení se mění podle vybrané karty. Formulář hledání lze minimalizovat a měnit jeho šířku; pamatuje si
+  polohu a volbu Vždy navrchu. Historie uchovává až 30 hledaných textů s jejich volbami pouze do ukončení
+  aplikace. Začíná na a Končí na hledají na okrajích logických řádků. Regulární výrazy používají syntaxi
+  PCRE2. Všechny příkazy nabídky Úpravy pracují pouze s aktivní kartou. Enter spustí hledání, Shift+Enter
+  obrátí zvolený směr. Volba „Rozlišovat velikost písmen“ rozlišuje velká a malá písmena; „Hledat pozpátku“
+  hledá směrem k začátku textu. Výběr z historie obnoví všech pět voleb hledání, včetně uloženého stavu
+  regulárního výrazu; „Vždy navrchu“ je nezávislá volba. „Regulární výraz“ vypne volby „Začíná na“ a „Končí
+  na“. Jsou-li obě volby okrajů zapnuté, stačí shoda na jednom z nich. „Zalamování řádků“ mění pouze
+  zobrazení.
+- Možnosti > Předvolby (Ctrl+G) otevře jediný dialog pro cesty MediaInfo a curl, písmo reportu, vyhlazování
   písma, jazyk rozhraní a jazyk reportu. Prázdná cesta DLL zapíná automatické vyhledávání.
 - Tlačítko písma ukazuje rodinu, bodovou velikost a řez a otevírá standardní dialog písma Windows. Výchozí
   obnoví Consolas, případně Courier New, pokud Consolas není dostupné; při výchozím nastavení je tlačítko
@@ -95,7 +111,7 @@ Dlouhé cesty se podle dostupného místa zkracují výpustkou.
 
 ## Vytvořit hlavičkový soubor
 
-Nabídka Nástroje je třetí hlavní nabídkou. Příkaz Vytvořit hlavičkový soubor… otevře jeden vstupní soubor
+Nabídka Nástroje je čtvrtou hlavní nabídkou. Příkaz Vytvořit hlavičkový soubor… otevře jeden vstupní soubor
 nezávisle na kartách reportů a zkopíruje jeho prvních 524288 bajtů (512 KiB). Kratší soubor se zkopíruje celý;
 prázdný soubor vytvoří prázdný výstup. Jde o běžné binární čtení souboru bez analýzy MediaInfo; knihovna
 MediaInfo.dll není potřeba. Karty reportů ani seznam posledních souborů se tím nemění.
@@ -158,7 +174,7 @@ WebP: 16383 × 16383 px.
 
 ## Jazyky rozhraní a reportů
 
-Předvolby (Nastavení > Předvolby, Ctrl+G) obsahují cesty ke knihovnám, písmo reportu, vyhlazování a jazyky.
+Předvolby (Možnosti > Předvolby, Ctrl+G) obsahují cesty ke knihovnám, písmo reportu, vyhlazování a jazyky.
 Rozhraní má 36 variant a zpočátku se řídí Windows. Výchozí report je vždy v původní angličtině knihovny,
 nezávisle na Windows i rozhraní. Změní jej pouze ruční volba jazyka reportu: angličtina, 37 překladů nebo
 vlastní tabulka MediaInfo CSV.

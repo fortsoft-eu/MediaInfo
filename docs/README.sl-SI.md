@@ -10,6 +10,11 @@ Izvorni pregledovalnik Windows x86 za poročila MediaInfo.dll. Vsaka datoteka im
 
 Odprite MediaInfo.sln v Visual Studio 2015 z nameščenim naborom orodij Visual C++ v140. Izberite Release | Win32 in zgradite rešitev. Edina aplikacijska platforma je Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statično povezano,
+BSD-3-Clause. [Izvorna koda](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 je vgrajena v EXE in ne zahteva ločene datoteke DLL ali dodatne namestitve.
+
 Izhodi:
 
 - Release\MediaInfo.exe
@@ -64,7 +69,17 @@ Windows 95 trenutno ni podprto izvajalno okolje.
   v čakalni vrsti. Datoteka > Izhod (Alt+F4) zapre aplikacijo.
 - Dvoklik izbere besedo. Trojni klik izbere logično vrstico. Vlečenje razširi izbor za besede ali vrstice.
 - Ctrl+A izbere poročilo; Ctrl+C ga kopira.
-- Nastavitve > Nastavitve (Ctrl+G) odpre eno samo pogovorno okno z nastavitvami za poti MediaInfo in curl,
+- Uredi > Najdi (Ctrl+F) išče na aktivnem zavihku. F3 ponovi iskanje, Shift+F3 pa obrne njegovo smer. Na koncu
+  besedila se iskanje nadaljuje z drugega konca. Možnosti > Prelom vrstic velja le za aktivni zavihek;
+  kljukica sledi izbranemu zavihku. Iskalno okno je mogoče minimizirati in mu spreminjati širino; položaj in
+  možnost Vedno na vrhu se shranita. Do 30 iskalnih besedil z možnostmi se hrani le do zaprtja programa.
+  Možnosti začetka in konca veljata za logične vrstice. Regularni izrazi uporabljajo sintakso PCRE2. Vsi ukazi
+  menija Uredi veljajo samo za aktivni zavihek. Enter začne iskanje, Shift+Enter pa obrne izbrano smer.
+  »Razlikuj velike in male črke« razlikuje velike in male črke; »Išči nazaj« išče proti začetku besedila.
+  Izbira vnosa iz zgodovine obnovi vseh pet možnosti iskanja, vključno s stanjem regularnih izrazov; »Vedno na
+  vrhu« je neodvisna možnost. »Regularni izraz« onemogoči »Vrstica se začne z« in »Vrstica se konča z«. Če sta
+  vključeni obe možnosti robov vrstice, zadostuje ujemanje na enem robu. »Prelom vrstic« spremeni samo prikaz.
+- Možnosti > Nastavitve (Ctrl+G) odpre eno samo pogovorno okno z nastavitvami za poti MediaInfo in curl,
   pisavo poročila, izravnavo pisave, jezik vmesnika in jezik poročila. Prazna pot DLL omogoča samodejno
   odkrivanje.
 - Gumb pisave prikaže družino, velikost in slog pisave ter odpre standardno pogovorno okno pisave Windows.
@@ -101,7 +116,7 @@ MediaInfo.dll. Dolge poti se skrajšajo s tripičjem glede na razpoložljivi pro
 
 ## Ustvari datoteko glave
 
-Meni Orodja je tretji v menijski vrstici. Njegov ukaz Ustvari datoteko glave… odpre eno izvorno datoteko
+Meni Orodja je četrti v menijski vrstici. Njegov ukaz Ustvari datoteko glave… odpre eno izvorno datoteko
 neodvisno od zavihkov poročila in kopira njenih prvih 524288 bajtov (512 KiB). Krajša datoteka se kopira v
 celoti; prazna datoteka ustvari prazen rezultat. To je običajno branje binarne datoteke, brez analize
 MediaInfo ali zahteve za MediaInfo.dll. Orodje pusti nespremenjene zavihke poročila in pregledovalnikov seznam
@@ -164,7 +179,7 @@ WebP: 16383 × 16383 px.
 
 ## Jeziki vmesnika in poročil
 
-Nastavitve (Nastavitve > Nastavitve, Ctrl+G) vsebujejo poti knjižnic, pisavo poročila, glajenje in jezike.
+Nastavitve (Možnosti > Nastavitve, Ctrl+G) vsebujejo poti knjižnic, pisavo poročila, glajenje in jezike.
 Vmesnik ima 36 različic in sprva sledi Windowsu. Poročila vedno privzeto uporabljajo izvirno angleščino
 knjižnice, neodvisno od Windowsa in vmesnika. To spremeni samo ročna izbira jezika: angleščina, 37 prevodov
 ali lastna tabela MediaInfo CSV.

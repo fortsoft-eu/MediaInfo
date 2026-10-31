@@ -11,6 +11,10 @@ citire.
 
 Deschideți MediaInfo.sln în Visual Studio 2015 cu setul de instrumente Visual C++ v140 instalat. Alegeți Release | Win32 și construiți soluția. Singura platformă de aplicație este Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, legat static, BSD-3-Clause.
+[license.txt](../license.txt). [Cod sursă](../MediaInfo/PCRE2/).
+PCRE2 este inclusă în executabil și nu necesită un DLL separat sau o instalare suplimentară.
+
 Ieșiri:
 
 - Release\MediaInfo.exe
@@ -68,7 +72,19 @@ Windows 95 nu este în prezent un timp de rulare acceptat.
 - Faceți dublu clic pentru a selecta un cuvânt. Triplu clic selectează o linie logică. Tragerea extinde
   selecția cu cuvinte sau linii.
 - Ctrl+A selectează raportul; Ctrl+C îl copiază.
-- Setări > Preferințe (Ctrl+G) deschide un dialog unic de preferințe pentru căile MediaInfo și curl, fontul
+- Editare > Găsire (Ctrl+F) caută în fila activă. F3 repetă căutarea; Shift+F3 îi inversează direcția. La
+  capătul textului, căutarea continuă din celălalt capăt. Opțiuni > Încadrare cuvinte se aplică numai filei
+  active; bifa corespunde filei selectate. Fereastra de căutare poate fi minimizată și redimensionată
+  orizontal; poziția și opțiunea Întotdeauna deasupra sunt memorate. Până la 30 de texte căutate și opțiunile
+  lor sunt păstrate numai până la închiderea aplicației. Opțiunile de început și sfârșit se aplică liniilor
+  logice. Expresiile regulate folosesc sintaxa PCRE2. Toate comenzile din Editare se aplică numai filei
+  active. Enter pornește căutarea; Shift+Enter inversează direcția aleasă. „Potrivire litere mari și mici”
+  deosebește literele mari de cele mici; „Căutare înapoi” caută spre începutul textului. Alegerea unei intrări
+  din istoric restabilește toate cele cinci opțiuni de căutare, inclusiv starea modului de expresii regulate;
+  „Întotdeauna deasupra” este independentă. „Expresie regulată” dezactivează „Linia începe cu” și „Linia se
+  termină cu”. Dacă ambele opțiuni pentru capetele liniei sunt active, este suficientă o potrivire la oricare
+  capăt. „Încadrare cuvinte” schimbă numai afișarea.
+- Opțiuni > Preferințe (Ctrl+G) deschide un dialog unic de preferințe pentru căile MediaInfo și curl, fontul
   raportului, antialiasing font, limba interfeței și limba raportului. O cale goală DLL permite descoperirea
   automată.
 - Butonul pentru font afișează familia, dimensiunea punctului și stilul și deschide dialogul standard pentru
@@ -110,7 +126,7 @@ disponibil.
 
 ## Creează un fișier antet
 
-Meniul Instrumente este al treilea din bara de meniu. Comanda sa Creează un fișier antet… deschide un fișier
+Meniul Instrumente este al patrulea din bara de meniu. Comanda sa Creează un fișier antet… deschide un fișier
 sursă independent de filele de raport și îi copiază primii 524288 de octeți (512 KiB). Un fișier mai scurt
 este copiat integral; un fișier gol produce o ieșire goală. Aceasta este o citire binară obișnuită a unui
 fișier, fără analiză MediaInfo sau o cerință pentru MediaInfo.dll. Instrumentul lasă neschimbate filele de
@@ -176,7 +192,7 @@ WebP: 16383 × 16383 px.
 
 ## Limbi de interfață și rapoarte
 
-Preferințele (Setări > Preferințe, Ctrl+G) conțin căile bibliotecilor, fontul raportului, netezirea și
+Preferințele (Opțiuni > Preferințe, Ctrl+G) conțin căile bibliotecilor, fontul raportului, netezirea și
 limbile. Interfața are 36 de variante și urmează inițial Windows. Rapoartele folosesc întotdeauna implicit
 engleza originală a bibliotecii, independent de Windows și interfață. Doar o alegere manuală schimbă limba:
 engleză, 37 de traduceri sau un tabel CSV MediaInfo propriu.

@@ -31,6 +31,7 @@
 #include "PersistWindowState.h"
 #include "AboutForm.h"
 #include "HelpForm.h"
+#include "FindForm.h"
 #include "RecentFiles.h"
 
 /// Temporary context owned by the active tab popup.
@@ -86,6 +87,7 @@ struct FileTab {
     bool started;
     bool ready;
     bool refreshing;
+    bool wordWrap;
 };
 
 /// Carries one report request and its result between the viewer and its background thread.
@@ -166,6 +168,7 @@ private:
     PersistWindowState placement;
     HelpForm helpForm;
     AboutForm aboutForm;
+    FindForm findForm;
     RecentFiles recentFiles;
 
     /// Owned tab records and the currently active report and print requests.
@@ -254,6 +257,30 @@ private:
 
     /// Selects a matching file or information tab through the shared activation path.
     bool SelectExistingTab(LibraryCommand command, const wchar_t* path);
+
+    /// Creates a report edit with the established selection handler and selected line-wrapping style.
+    HWND CreateReportEdit(bool wordWrap, bool showSelection = false);
+
+    /// Replaces one native edit while preserving report text, selection, viewport and focus.
+    bool ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelection);
+
+    /// Synchronizes report selection visibility after the modeless search form opens or closes.
+    LRESULT HandleFindVisibility();
+
+    /// Shows the active search selection while restoring normal hiding in all other report edits.
+    bool UpdateSearchSelection();
+
+    /// Refreshes active-tab command availability immediately before the Edit menu or shortcuts are used.
+    void UpdateEditMenu();
+
+    /// Copies only the selected text of the active report through the native edit control.
+    void CopySelection();
+
+    /// Selects the entire active report and focuses its native edit control.
+    void SelectAll();
+
+    /// Toggles wrapping only for the active tab while preserving its text, selection and viewport.
+    void ToggleWordWrap();
 
     /// Creates the common report edit and tab and queues the selected library operation.
     bool CreateTab(LibraryCommand command, const wchar_t* path);

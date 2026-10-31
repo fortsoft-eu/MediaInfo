@@ -96,6 +96,143 @@
     <ClCompile Include="SettingsStorage.cpp" />
     <ClCompile Include="PersistWindowState.cpp" />
     <ClCompile Include="HelpForm.cpp" />
+    <ClCompile Include="FindForm.cpp" />
+    <ClCompile Include="RegexSearch.cpp" />
+    <ClCompile Include="PcreRuntime.c">
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_auto_possess.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_chartables.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_chkdint.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_compile.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_compile_cgroup.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_compile_class.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_context.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_error.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_extuni.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_find_bracket.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_match.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_match_data.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_newline.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_ord2utf.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_pattern_info.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_script_run.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_string_utils.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_study.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_tables.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_ucd.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_valid_utf.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_xclass.c">
+      <PreprocessorDefinitions>HAVE_CONFIG_H;SUPPORT_PCRE2_16;SUPPORT_UNICODE;PCRE2_STATIC;PCRE2_CODE_UNIT_WIDTH=16;PARENS_NEST_LIMIT=100;HEAP_LIMIT=32768;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <DisableSpecificWarnings>4244;4389;4701;4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="AboutForm.cpp" />
     <ClCompile Include="ModernFileDialog.cpp" />
     <ClCompile Include="JpegEncoder.cpp" />
@@ -118,6 +255,16 @@
     <ClInclude Include="SettingsStorage.h" />
     <ClInclude Include="PersistWindowState.h" />
     <ClInclude Include="HelpForm.h" />
+    <ClInclude Include="FindForm.h" />
+    <ClInclude Include="RegexSearch.h" />
+    <ClInclude Include="PCRE2\config.h" />
+    <ClInclude Include="PCRE2\pcre2.h" />
+    <ClInclude Include="PCRE2\pcre2_compile.h" />
+    <ClInclude Include="PCRE2\pcre2_internal.h" />
+    <ClInclude Include="PCRE2\pcre2_intmodedep.h" />
+    <ClInclude Include="PCRE2\pcre2_ucp.h" />
+    <ClInclude Include="PCRE2\pcre2_ucptables_inc.h" />
+    <ClInclude Include="PCRE2\pcre2_util.h" />
     <ClInclude Include="AboutForm.h" />
     <ClInclude Include="ModernFileDialog.h" />
     <ClInclude Include="JpegEncoder.h" />
@@ -135,6 +282,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Resources\MediaInfo.ico" />
+    <None Include="Resources\Find.ico" />
+    <None Include="PCRE2\LICENCE.md" />
     <None Include="Resources\lang\ar.csv" />
     <None Include="Resources\lang\be.csv" />
     <None Include="Resources\lang\bg.csv" />

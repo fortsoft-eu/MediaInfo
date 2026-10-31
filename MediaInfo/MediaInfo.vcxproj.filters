@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="PCRE2">
+      <UniqueIdentifier>{913DE34C-5ABF-4354-AC10-80C2101A5EF7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -44,6 +47,81 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CurlLibrary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegexSearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PcreRuntime.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_auto_possess.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_chartables.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_chkdint.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_compile.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_compile_cgroup.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_compile_class.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_context.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_error.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_extuni.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_find_bracket.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_match.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_match_data.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_newline.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_ord2utf.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_pattern_info.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_script_run.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_string_utils.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_study.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_tables.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_ucd.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_valid_utf.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="PCRE2\pcre2_xclass.c">
+      <Filter>PCRE2</Filter>
+    </ClCompile>
+    <ClCompile Include="FindForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HelpForm.cpp">
@@ -111,6 +189,36 @@
     <ClInclude Include="CurlLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RegexSearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\config.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2_compile.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2_internal.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2_intmodedep.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2_ucp.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2_ucptables_inc.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="PCRE2\pcre2_util.h">
+      <Filter>PCRE2</Filter>
+    </ClInclude>
+    <ClInclude Include="FindForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="HelpForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -164,6 +272,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MediaInfo.manifest">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="PCRE2\LICENCE.md">
+      <Filter>PCRE2</Filter>
+    </None>
+    <None Include="Resources\Find.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Resources\MediaInfo.ico">

@@ -11,6 +11,10 @@ leitura.
 
 Abra MediaInfo.sln em Visual Studio 2015 com o conjunto de ferramentas Visual C++ v140 instalado. Escolha Release | Win32 e construa a solução. A única plataforma de aplicação é a Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, ligação estática,
+BSD-3-Clause. [license.txt](../license.txt). [Código-fonte](../MediaInfo/PCRE2/).
+A PCRE2 está integrada no executável e não requer uma DLL separada nem uma instalação adicional.
+
 Saídas:
 
 - Release\MediaInfo.exe
@@ -68,7 +72,19 @@ Windows 95 não é atualmente um tempo de execução compatível.
 - Clique duas vezes para selecionar uma palavra. Clique três vezes para selecionar uma linha lógica. Arrastar
   estende a seleção por palavras ou linhas.
 - Ctrl+A seleciona o relatório; Ctrl+C cópia.
-- Definições > Preferências (Ctrl+G) abre um único diálogo de preferências para os caminhos MediaInfo e curl,
+- Editar > Localizar (Ctrl+F) pesquisa no separador ativo. F3 repete a pesquisa; Shift+F3 inverte a direção.
+  Ao atingir uma extremidade do texto, a pesquisa continua na outra. Opções > Moldar texto afeta apenas o
+  separador ativo; a marca acompanha o separador selecionado. A janela de pesquisa pode ser minimizada e
+  redimensionada horizontalmente; a posição e a opção Sempre em cima são memorizadas. São guardadas até 30
+  pesquisas e as respetivas opções apenas até a aplicação ser encerrada. As opções de início e fim referem-se
+  às linhas lógicas. As expressões regulares utilizam a sintaxe PCRE2. Todos os comandos de Editar afetam
+  apenas o separador ativo. Enter inicia a pesquisa; Shift+Enter inverte a direção escolhida. «Distinguir
+  maiúsculas de minúsculas» distingue maiúsculas de minúsculas; «Procurar para trás» pesquisa em direção ao
+  início do texto. A escolha de uma entrada do histórico repõe as cinco opções de pesquisa, incluindo o estado
+  do modo de expressão regular; «Sempre em cima» é independente. «Expressão regular» desativa «A linha começa
+  por» e «A linha termina com». Com ambas as opções de início e fim de linha ativas, basta uma correspondência
+  numa das extremidades. «Moldar texto» altera apenas a apresentação.
+- Opções > Preferências (Ctrl+G) abre um único diálogo de preferências para os caminhos MediaInfo e curl,
   fonte de relatório, suavização de fonte, idioma de interface e idioma de relatório. Um caminho DLL vazio
   permite a descoberta automática.
 - O botão de tipo de letra apresenta a família, o tamanho do ponto e o estilo e abre a caixa de diálogo de
@@ -111,7 +127,7 @@ acordo com o espaço disponível.
 
 ## Criar ficheiro de cabeçalho
 
-O menu Ferramentas é o terceiro na barra de menus. O seu comando Criar ficheiro de cabeçalho… abre um ficheiro
+O menu Ferramentas é o quarto na barra de menus. O seu comando Criar ficheiro de cabeçalho… abre um ficheiro
 de origem independentemente dos separadores do relatório e copia os seus primeiros 524288 bytes (512 KiB). Um
 ficheiro mais curto é copiado por completo; um ficheiro vazio produz uma saída vazia. Esta é uma leitura comum
 de ficheiro binário, sem análise MediaInfo nem necessidade de MediaInfo.dll. A ferramenta deixa inalteradas os
@@ -177,10 +193,10 @@ WebP: 16383 × 16383 px.
 
 ## Idiomas de interface e de relatório
 
-As preferências (Definições > Preferências, Ctrl+G) contêm caminhos das bibliotecas, tipo de letra do
-relatório, suavização e idiomas. A interface tem 36 variantes e segue inicialmente o Windows. Os relatórios
-usam sempre o inglês original da biblioteca, independentemente do Windows e da interface. Só uma escolha
-manual muda o idioma: inglês, 37 traduções ou uma tabela CSV MediaInfo personalizada.
+As preferências (Opções > Preferências, Ctrl+G) contêm caminhos das bibliotecas, tipo de letra do relatório,
+suavização e idiomas. A interface tem 36 variantes e segue inicialmente o Windows. Os relatórios usam sempre o
+inglês original da biblioteca, independentemente do Windows e da interface. Só uma escolha manual muda o
+idioma: inglês, 37 traduções ou uma tabela CSV MediaInfo personalizada.
 
 OK ou Aplicar confirma as alterações; Cancelar descarta as pendentes. As preferências permitem limitar os
 nomes dos separadores (80 por predefinição) e limpar a lista dos ficheiros recentes. Os nomes longos mantêm

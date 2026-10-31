@@ -1,4 +1,4 @@
-//{{NO_DEPENDENCIES}}
+﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
 // Used by MediaInfo.rc
 
@@ -12,9 +12,11 @@
 #define IDR_LIBRARY_CURL                109
 #define IDR_LIBRARY_CURL_XP             110
 #define IDR_LIBRARY_WEBP                111
+#define IDI_FIND                        112
 #define IDD_ABOUT                       201
 #define IDD_HELP                        202
 #define IDD_PREFERENCES                 203
+#define IDD_FIND                        204
 #define IDC_INFO_ICON                   1001
 #define IDC_INFO_PRODUCT                1002
 #define IDC_INFO_WEBSITE                1003
@@ -45,6 +47,15 @@
 #define IDC_RECENT_LABEL                1122
 #define IDC_RECENT_CLEAR                1123
 #define IDC_MULTIPLE_INSTANCES          1124
+#define IDC_FIND_LABEL                  1201
+#define IDC_FIND_TEXT                   1202
+#define IDC_FIND_MATCH_CASE             1203
+#define IDC_FIND_BACKWARD               1204
+#define IDC_FIND_TOPMOST                1205
+#define IDC_FIND_STARTS_WITH            1206
+#define IDC_FIND_ENDS_WITH              1207
+#define IDC_FIND_REGEX                  1208
+#define IDC_FIND_GRIP                   1209
 #define ID_FILE_EXIT                    40001
 #define ID_FILE_OPEN                    40002
 #define ID_FILE_CLOSE                   40003
@@ -67,6 +78,12 @@
 #define ID_TRACE_LEVEL_10               40020
 #define ID_FILE_PRINT                   40021
 #define ID_TOOLS_CREATE_HEADER          40022
+#define ID_EDIT_FIND                    40023
+#define ID_EDIT_FIND_NEXT               40024
+#define ID_EDIT_FIND_PREVIOUS           40025
+#define ID_WORD_WRAP                    40026
+#define ID_EDIT_COPY                    40027
+#define ID_EDIT_SELECT_ALL              40028
 #define ID_FILE_RECENT_FIRST            41000
 #define ABOUT_LICENSE_WIDTH_96DPI       508
 #define ABOUT_LICENSE_HEIGHT_96DPI      267
@@ -75,9 +92,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        204
+#define _APS_NEXT_RESOURCE_VALUE        205
 #define _APS_NEXT_COMMAND_VALUE         41008
-#define _APS_NEXT_CONTROL_VALUE         1125
+#define _APS_NEXT_CONTROL_VALUE         1210
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -10,6 +10,10 @@ Windows x86-visare för rapporter från MediaInfo.dll. Varje fil har en egen skr
 
 Öppna MediaInfo.sln i Visual Studio 2015 med verktygsuppsättningen Visual C++ v140 installerad. Välj Release | Win32 och bygg lösningen. Den enda applikationsplattformen är Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statiskt länkat, BSD-3-Clause.
+[license.txt](../license.txt). [Källkod](../MediaInfo/PCRE2/).
+PCRE2 är inbyggt i EXE-filen och kräver ingen separat DLL eller installation.
+
 Utgångar:
 
 - Release\MediaInfo.exe
@@ -57,13 +61,24 @@ Windows 95 stöds för närvarande inte.
   Uppmaningen inkluderar hela sökvägen.
 - Mushjulet över svämmande flikrubriker rullar rubrikremsan en flik per meddelande utan att ändra val eller
   fokus.
-- Ctrl+Tab och Ctrl+Shift+Tab växla flikar; Ctrl+W stänger den aktiva fliken. Genom att mittklicka på en
+- Ctrl+Tab och Ctrl+Skift+Tab växla flikar; Ctrl+W stänger den aktiva fliken. Genom att mittklicka på en
   flikrubrik stängs den fliken samtidigt som alla andra aktiva flikar bevaras. Arkiv > Stäng alla stänger alla
   flikar, inklusive köade rapporter. Arkiv > Avsluta (Alt+F4) stänger programmet.
 - Dubbelklicka väljer ett ord. Trippelklick väljer en logisk linje. Genom att dra utökas markeringen med ord
   eller rader.
 - Ctrl+A väljer rapporten; Ctrl+C kopierar det.
-- Inställningar > Inställningar (Ctrl+G) öppnar en enskild inställningsdialog för MediaInfo och curl sökvägar,
+- Redigera > Sök (Ctrl+F) söker i den aktiva fliken. F3 upprepar sökningen; Skift+F3 vänder riktningen. Vid
+  textens ändar fortsätter sökningen från motsatt ände. Alternativ > Automatiskt radbyte gäller bara den
+  aktiva fliken; bocken följer den valda fliken. Sökfönstret kan minimeras och ändras i bredd; positionen och
+  inställningen Alltid överst sparas. Upp till 30 söktexter med sina alternativ behålls bara tills programmet
+  avslutas. Alternativen för början och slutet gäller logiska rader. Reguljära uttryck använder PCRE2-syntax.
+  Alla kommandon i Redigera gäller bara den aktiva fliken. Enter startar sökningen; Skift+Enter vänder den
+  valda riktningen. ”Matcha gemener och versaler” skiljer mellan gemener och versaler; ”Sök bakåt” söker mot
+  textens början. Ett val i historiken återställer alla fem sökalternativen, inklusive inställningen för
+  reguljära uttryck; ”Alltid överst” är oberoende. ”Reguljärt uttryck” inaktiverar ”Raden börjar med” och
+  ”Raden slutar med”. Om båda alternativen för radens ändar är aktiverade räcker en träff vid endera änden.
+  ”Automatiskt radbyte” ändrar bara visningen.
+- Alternativ > Inställningar (Ctrl+G) öppnar en enskild inställningsdialog för MediaInfo och curl sökvägar,
   rapportteckensnitt, teckensnittskantutjämning, gränssnittsspråk och rapportspråk. En tom DLL-sökväg
   möjliggör automatisk upptäckt.
 - Teckensnittsknappen visar familjen, punktstorleken och stilen och öppnar standarddialogen Windows
@@ -101,7 +116,7 @@ MediaInfo.dll. Långa sökvägar förkortas med uteslutningstecken efter det til
 
 ## Skapa en header-fil
 
-Menyn Verktyg är den tredje på menyraden. Dess Skapa en header-fil…-kommando öppnar en källfil oberoende av
+Menyn Verktyg är den fjärde på menyraden. Dess Skapa en header-fil…-kommando öppnar en källfil oberoende av
 rapportflikarna och kopierar dess första 524288 byte (512 KiB). En kortare fil kopieras i sin helhet; en tom
 fil ger en tom utdatafil. Detta är vanlig binär filläsning, utan MediaInfo-analys eller krav på MediaInfo.dll.
 Verktyget lämnar rapportflikar och programmets lista över senaste filer oförändrade.
@@ -164,7 +179,7 @@ WebP: 16383 × 16383 px.
 
 ## Gränssnitt och rapportspråk
 
-Preferenser (Inställningar > Preferenser, Ctrl+G) innehåller bibliotekssökvägar, rapportteckensnitt, utjämning
+Preferenser (Alternativ > Preferenser, Ctrl+G) innehåller bibliotekssökvägar, rapportteckensnitt, utjämning
 och språk. Gränssnittet har 36 varianter och följer först Windows. Rapporter använder alltid bibliotekets
 ursprungliga engelska som standard, oberoende av Windows och gränssnittet. Endast ett manuellt val ändrar
 rapportspråket: engelska, 37 översättningar eller en egen MediaInfo-CSV-tabell.

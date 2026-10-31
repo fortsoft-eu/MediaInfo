@@ -10,6 +10,10 @@ MediaInfo.dll raporları için yerel Windows x86 görüntüleyicisi. Her dosyan�
 
 MediaInfo.sln dosyasını Visual Studio 2015 içinde Visual C++ v140 yüklü araç seti ile açın. Release'yi seçin | Win32 ve çözümü oluşturun. Tek uygulama platformu Win32 (x86)'dir.
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statik bağlı, BSD-3-Clause.
+[license.txt](../license.txt). [Kaynak kodu](../MediaInfo/PCRE2/).
+PCRE2, EXE dosyasına gömülüdür ve ayrı bir DLL ya da ek kurulum gerektirmez.
+
 Çıkışlar:
 
 - Release\MediaInfo.exe
@@ -65,8 +69,21 @@ Windows 95 şu anda desteklenen bir çalışma zamanı değil.
 - Çift tıklama bir kelimeyi seçer. Üç tıklama mantıksal bir çizgi seçer. Sürükleme, seçimi kelimelere veya
   satırlara göre genişletir.
 - Ctrl+A raporu seçer; Ctrl+C kopyalar.
-- Ayarlar > Tercihler (Ctrl+G), MediaInfo ve curl yolları, rapor yazı tipi, yazı tipi kenar yumuşatma, arayüz
-  dili ve rapor dili için tek bir tercihler iletişim kutusu açar. Boş bir DLL yolu otomatik keşif sağlar.
+- Düzenle > Bul (Ctrl+F), etkin sekmede arama yapar. F3 aramayı yineler; Shift+F3 yönünü tersine çevirir.
+  Metnin sonuna ulaşıldığında arama diğer uçtan devam eder. Seçenekler > Sözcük Kaydır yalnızca etkin sekmeyi
+  etkiler; onay işareti seçili sekmeye göre değişir. Arama penceresi simge durumuna küçültülebilir ve yatay
+  olarak boyutlandırılabilir; konumu ile Her zaman üstte ayarı hatırlanır. En fazla 30 arama metni ve
+  seçenekleri yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve bitiş seçenekleri mantıksal satırları
+  esas alır. Düzenli ifadeler PCRE2 sözdizimini kullanır. Düzenle menüsündeki tüm komutlar yalnızca etkin
+  sekmeyi etkiler. Enter aramayı başlatır; Shift+Enter seçilen yönü tersine çevirir. “Büyük/küçük harf
+  eşleştir” büyük ve küçük harfleri ayırt eder; “Geriye doğru ara” metnin başına doğru arar. Geçmişten bir öğe
+  seçmek, düzenli ifade modunun durumu da dahil beş arama seçeneğinin tümünü geri yükler; “Her zaman üstte”
+  bağımsızdır. “Düzenli ifade”, “Satır şu ifadeyle başlar” ve “Satır şu ifadeyle biter” seçeneklerini devre
+  dışı bırakır. Her iki satır ucu seçeneği de açıksa uçlardan birinde eşleşme olması yeterlidir. “Sözcük
+  Kaydır” yalnızca görünümü değiştirir.
+- Seçenekler > Tercihler (Ctrl+G), MediaInfo ve curl yolları, rapor yazı tipi, yazı tipi kenar yumuşatma,
+  arayüz dili ve rapor dili için tek bir tercihler iletişim kutusu açar. Boş bir DLL yolu otomatik keşif
+  sağlar.
 - Yazı tipi düğmesi aileyi, punto boyutunu ve stilini görüntüler ve standart Windows yazı tipi iletişim
   kutusunu açar. Varsayılan, Consolas'yi veya Consolas kullanılamıyorsa Courier New'yi geri yükler; Varsayılan
   seçiliyken Varsayılan düğmesi devre dışı bırakılır. Kullanıcı tarafından seçilen yazı tipleri, uygulama
@@ -104,7 +121,7 @@ sürümünü gösterir. Uzun yollar kullanılabilir alana göre üç noktayla k�
 
 ## Üst bilgi dosyası oluştur
 
-Araçlar menüsü, menü çubuğundaki üçüncü menüdür. Üst bilgi dosyası oluştur… komutu, rapor sekmelerinden
+Araçlar menüsü, menü çubuğundaki dördüncü menüdür. Üst bilgi dosyası oluştur… komutu, rapor sekmelerinden
 bağımsız olarak bir kaynak dosyayı açar ve ilk 524288 baytını (512 KiB) kopyalar. Daha kısa bir dosya tam
 olarak kopyalanır; boş bir dosya boş bir çıktı üretir. Bu, MediaInfo analizi veya MediaInfo.dll gereksinimi
 olmadan sıradan bir ikili dosya okumasıdır. Araç, rapor sekmelerini ve görüntüleyicinin son dosyalar listesini
@@ -168,10 +185,10 @@ WebP: 16383 × 16383 px.
 
 ## Arayüz ve rapor dilleri
 
-Tercihler (Ayarlar > Tercihler, Ctrl+G), kitaplık yollarını, rapor yazı tipini, yumuşatmayı ve dilleri içerir.
-Arayüzün 36 seçeneği vardır ve başlangıçta Windows’u izler. Raporların varsayılan dili, Windows ve arayüzden
-bağımsız olarak her zaman kitaplığın özgün İngilizcesidir. Bunu yalnızca elle yapılan rapor dili seçimi
-değiştirir: İngilizce, 37 çeviri veya özel MediaInfo CSV tablosu.
+Tercihler (Seçenekler > Tercihler, Ctrl+G), kitaplık yollarını, rapor yazı tipini, yumuşatmayı ve dilleri
+içerir. Arayüzün 36 seçeneği vardır ve başlangıçta Windows’u izler. Raporların varsayılan dili, Windows ve
+arayüzden bağımsız olarak her zaman kitaplığın özgün İngilizcesidir. Bunu yalnızca elle yapılan rapor dili
+seçimi değiştirir: İngilizce, 37 çeviri veya özel MediaInfo CSV tablosu.
 
 Tamam veya Uygula değişiklikleri onaylar; İptal bekleyen değişiklikleri atar. Tercihler, sekme adı sınırını
 (varsayılan 80) ayarlar ve son dosyalar listesini temizler. Uzun adlar başlangıcı, sonu ve uzantıyı korur;

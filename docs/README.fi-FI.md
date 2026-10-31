@@ -10,6 +10,11 @@ Natiivi Windows x86 -katselin MediaInfo.dll-raporteille. Jokaisella tiedostolla 
 
 Avaa MediaInfo.sln kansiossa Visual Studio 2015, kun työkalusarja on asennettu Visual C++ v140. Valitse Release | Win32 ja rakentaa ratkaisu. Ainoa sovellusalusta on Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, staattisesti linkitetty,
+BSD-3-Clause. [Lähdekoodi](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 on sisällytetty EXE-tiedostoon, eikä se vaadi erillistä DLL-tiedostoa tai asennusta.
+
 Lähdöt:
 
 - Release\MediaInfo.exe
@@ -60,13 +65,24 @@ Windows 95 ei ole tällä hetkellä tuettu suoritusaika.
   ja poistaa merkinnän valikosta ja rekisteristä; Ei säilytä sitä. Kehote sisältää koko polun.
 - Hiiren rulla ylivuoto välilehtien otsikoiden yli vierittää otsikkonauhaa yhden välilehden viestiä kohden
   muuttamatta valintaa tai kohdistusta.
-- Ctrl+Tab ja Ctrl+Shift+Tab vaihtaa välilehtiä; Ctrl+W sulkee aktiivisen välilehden. Välilehden otsikon
+- Ctrl+Tab ja Ctrl+Vaihto+Tab vaihtaa välilehtiä; Ctrl+W sulkee aktiivisen välilehden. Välilehden otsikon
   keskinapsauttaminen sulkee välilehden ja säilyttää muut aktiiviset välilehdet. Tiedosto > Sulje kaikki
   sulkee kaikki välilehdet, mukaan lukien jonossa olevat raportit. Tiedosto > Lopeta (Alt+F4) sulkee
   sovelluksen.
 - Kaksoisnapsautus valitsee sanan. Kolmoisnapsautus valitsee loogisen rivin. Vetäminen laajentaa valintaa
   sanoilla tai riveillä.
 - Ctrl+A valitsee raportin; Ctrl+C kopioi sen.
+- Muokkaa > Etsi (Ctrl+F) hakee aktiivisesta välilehdestä. F3 toistaa haun ja Vaihto+F3 vaihtaa hakusuunnan.
+  Tekstin päässä haku jatkuu toisesta päästä. Asetukset > Automaattinen rivitys koskee vain aktiivista
+  välilehteä; valintamerkki seuraa valittua välilehteä. Hakuikkunan voi pienentää ja sen leveyttä muuttaa;
+  sijainti ja Aina päällimmäisenä -asetus muistetaan. Enintään 30 hakutekstiä asetuksineen säilytetään vain
+  sovelluksen sulkemiseen asti. Rivin alku- ja loppuehdot koskevat loogisia rivejä. Säännölliset lausekkeet
+  käyttävät PCRE2-syntaksia. Kaikki Muokkaa-valikon komennot koskevat vain aktiivista välilehteä. Enter
+  käynnistää haun; Vaihto+Enter kääntää valitun suunnan. ”Sama kirjainkoko” erottaa isot ja pienet kirjaimet;
+  ”Etsi taaksepäin” hakee kohti tekstin alkua. Historiakohteen valinta palauttaa kaikki viisi hakuasetusta,
+  myös säännöllisten lausekkeiden tilan; ”Aina päällimmäisenä” on erillinen asetus. ”Säännöllinen lauseke”
+  poistaa käytöstä asetukset ”Rivi alkaa” ja ”Rivi päättyy”. Kun molemmat rivin reunaehdot ovat käytössä,
+  osuma kummassa tahansa reunassa riittää. ”Automaattinen rivitys” muuttaa vain näyttötapaa.
 - Asetukset > Asetukset (Ctrl+G) avaa yhden asetusikkunan MediaInfo- ja curl-poluille, raportin fontille,
   fontin antialiasolle, käyttöliittymäkielelle ja raportin kielelle. Tyhjä DLL polku mahdollistaa
   automaattisen etsinnän.
@@ -107,7 +123,7 @@ version. Pitkät polut lyhennetään kolmella pisteellä käytettävissä olevan
 
 ## Luo otsaketiedosto
 
-Työkalut on valikkorivin kolmas valikko. Sen Luo otsaketiedosto…-komento avaa yhden lähdetiedoston
+Työkalut on valikkorivin neljäs valikko. Sen Luo otsaketiedosto…-komento avaa yhden lähdetiedoston
 raporttivälilehdistä riippumatta ja kopioi sen ensimmäiset 524288 tavua (512 KiB). Lyhyempi tiedosto
 kopioidaan kokonaan; tyhjä tiedosto tuottaa tyhjän tulosteen. Tämä on tavallista binaaritiedostojen lukemista
 ilman MediaInfo-analyysiä tai MediaInfo.dll-vaatimusta. Työkalu jättää raporttivälilehdet ja katseluohjelman

@@ -10,6 +10,11 @@ Werrej nattiv ta’ Windows x86 għar-rapporti ta’ MediaInfo.dll. Kull fajl g�
 
 Iftaħ MediaInfo.sln f'Visual Studio 2015 bis-sett ta' għodda Visual C++ v140 installat. Agħżel Release | Win32 u ibni s-soluzzjoni. L-unika pjattaforma tal-applikazzjoni hija Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, marbut statikament,
+BSD-3-Clause. [Kodiċi tas-sors](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 hija integrata fil-fajl EXE u ma teħtieġx DLL separata jew installazzjoni addizzjonali.
+
 Outputs:
 
 - Release\MediaInfo.exe
@@ -66,6 +71,19 @@ Windows 95 bħalissa mhix runtime appoġġjata.
 - Ikklikkja darbtejn tagħżel kelma. Ikklikkja triple tagħżel linja loġika. It-tkaxkir testendi l-għażla bi
   kliem jew linji.
 - Ctrl+A jagħżel ir-rapport; Ctrl+C tikkopjaha.
+- Editja > Sib (Ctrl+F) ifittex fit-tab attiva. F3 jirrepeti t-tfittxija; Shift+F3 jaqleb id-direzzjoni
+  tagħha. Meta jintlaħaq tarf tat-test, it-tfittxija tkompli mit-tarf l-ieħor. Għażliet > Kebbeb il-kliem
+  japplika biss għat-tab attiva; il-marka ssegwi t-tab magħżula. It-tieqa tat-tfittxija tista’ tiġi
+  minimizzata u jinbidel il-wisa’ tagħha; il-pożizzjoni u l-għażla Dejjem fuq nett jinżammu. Sa 30 test
+  tat-tfittxija bl-għażliet tagħhom jinżammu biss sakemm tingħalaq l-applikazzjoni. L-għażliet tal-bidu u
+  tat-tmiem japplikaw għal-linji loġiċi. L-espressjonijiet regolari jużaw is-sintassi ta’ PCRE2. Il-kmandi
+  kollha fil-menu Editja japplikaw biss għat-tab attiva. Enter jibda t-tfittxija; Shift+Enter jaqleb
+  id-direzzjoni magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri kbar u żgħar; “Fittex lura”
+  tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja, jerġgħu jiġu applikati l-ħames għażliet
+  tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet regolari; “Dejjem fuq nett” hija
+  indipendenti. “Espressjoni regolari” tiddiżattiva “Il-linja tibda bi” u “Il-linja tispiċċa bi”. Meta ż-żewġ
+  għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb il-kliem” tbiddel biss
+  il-wiri.
 - Settings > Preferenzi (Ctrl+G) jiftaħ djalogu tal-preferenzi wieħed għal mogħdijiet MediaInfo u curl, font
   tar-rapport, antialiasing tat-tipa, lingwa tal-interface u lingwa tar-rapport. Mogħdija DLL vojta
   tippermetti skoperta awtomatika.
@@ -107,7 +125,7 @@ l-ispazju disponibbli.
 
 ## Oħloq Fajl tal-Intestatura
 
-Il-menu Għodod huwa t-tielet fil-bar tal-menus. Il-kmand Oħloq Fajl tal-Intestatura… jiftaħ fajl tad-dħul
+Il-menu Għodod huwa r-raba’ fil-bar tal-menus. Il-kmand Oħloq Fajl tal-Intestatura… jiftaħ fajl tad-dħul
 wieħed indipendentement mit-tabs tar-rapport u jikkopja l-ewwel 524288 byte tiegħu (512 KiB). Fajl iqsar jiġi
 kkupjat kollu; fajl vojt jipproduċi fajl tal-ħruġ vojt. Dan huwa qari binarju ordinarju tal-fajl, mingħajr
 analiżi ta’ MediaInfo u mingħajr il-ħtieġa ta’ MediaInfo.dll. L-għodda ma tbiddilx it-tabs tar-rapport jew

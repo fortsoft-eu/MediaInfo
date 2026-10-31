@@ -48,7 +48,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Jazyk:" },
             { TXT_OPEN_WEBSITE, L"&Otevřít ve výchozím prohlížeči" },
             { TXT_OPEN, L"&Otevřít…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"N&astavení" },
+            { TXT_OPTIONS_MENU, L"&Možnosti" },
             { TXT_PREFERENCES_MENU, L"&Předvolby…\tCtrl+G" },
             { TXT_ABOUT, L"&O programu" },
             { TXT_ABOUT_TITLE, L"O programu %ls" },
@@ -88,11 +88,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Cesta k MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll není načtena. Vyberte ji v Nastavení > Předvolby." },
+            { TXT_MEDIALIB_REQUIRED,
+                L"MediaInfo.dll není načtena. Vyberte ji v nabídce Možnosti > Předvolby."
+            },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll není načtena." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Nelze načíst žádnou kompatibilní externí ani vloženou MediaInfo.dll. Vyberte ji v "
-                L"Nastavení > Předvolby."
+                L"Nelze načíst žádnou kompatibilní externí ani vloženou MediaInfo.dll. Vyberte ji v nabídce "
+                L"Možnosti > Předvolby."
             },
             { TXT_ANTIALIASING_NONE, L"Žádné" },
             { TXT_OK, L"OK" },
@@ -100,7 +102,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Cílová platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Předvolby" },
-            { TXT_READY, L"Připraven." },
+            { TXT_READY, L"Připraven" },
             { TXT_FONT_REGULAR, L"Normální" },
             { TXT_REPORT_LANGUAGE, L"Jazyk &reportu:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jazykové tabulky reportu" },
@@ -161,11 +163,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Knihovna neexportuje požadované funkce Unicode knihovny MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Proces knihovny selhal při %s (kód 0x%08lX). Vyberte kompatibilní DLL v Nastavení > "
-                L"Předvolby."
+                L"Proces knihovny selhal při %s (kód 0x%08lX). Vyberte kompatibilní DLL v nabídce Možnosti "
+                L"> Předvolby."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces knihovny přestal odpovídat při %s. Vyberte kompatibilní DLL v Nastavení > Předvolby."
+                L"Proces knihovny přestal odpovídat při %s. Vyberte kompatibilní DLL v nabídce Možnosti > "
+                L"Předvolby."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Nastavení bylo použito, ale nepodařilo se je uložit do registru."
@@ -251,7 +254,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ukončení aplikace, i když dialog Uložit jako zrušíte. Nemění složky příkazů Otevřít a "
                 L"Exportovat a aplikace jeho vlastní cestu neukládá do registru. Každý dialog Uložit jako "
                 L"začne ve složce právě vybraného vstupního souboru bez ohledu na předchozí cíl "
-                L"ukládání.\r\n\r\nPŘEDVOLBY A JAZYKY\r\nPředvolby (Nastavení > Předvolby, Ctrl+G) obsahují "
+                L"ukládání.\r\n\r\nPŘEDVOLBY A JAZYKY\r\nPředvolby (Možnosti > Předvolby, Ctrl+G) obsahují "
                 L"cesty ke knihovnám, písmo reportu, vyhlazování a jazyky. Rozhraní má 36 variant a "
                 L"zpočátku se řídí Windows. Výchozí report je vždy v původní angličtině knihovny, nezávisle "
                 L"na Windows i rozhraní. Změní jej pouze ruční volba jazyka reportu: angličtina, 37 "
@@ -264,7 +267,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"mají odpovídající libcurl; 0.7.60 libcurl nikdy nerozbaluje. Umístění okna se ukládá. Ve "
                 L"výchozím stavu je povolena pouze jedna instance a další spuštění předá soubory otevřenému "
                 L"oknu. V předvolbách lze povolit více instancí. Při více oknech se uložená pozice obnoví "
-                L"jen prvnímu oknu daného typu; další převezmou pouze uloženou velikost."
+                L"jen prvnímu oknu daného typu; další převezmou pouze uloženou velikost.\r\n\r\nÚpravy > "
+                L"Najít (Ctrl+F) hledá v aktivní kartě. F3 hledání opakuje, Shift+F3 obrátí jeho směr. Po "
+                L"dosažení okraje textu pokračuje hledání na opačném konci. Možnosti > Zalamování řádků "
+                L"ovlivňuje jen aktivní kartu; zatržení se mění podle vybrané karty. Formulář hledání lze "
+                L"minimalizovat a měnit jeho šířku; pamatuje si polohu a volbu Vždy navrchu. Historie "
+                L"uchovává až 30 hledaných textů s jejich volbami pouze do ukončení aplikace. Začíná na a "
+                L"Končí na hledají na okrajích logických řádků. Regulární výrazy používají syntaxi PCRE2. "
+                L"Všechny příkazy nabídky Úpravy pracují pouze s aktivní kartou. Enter spustí hledání, "
+                L"Shift+Enter obrátí zvolený směr. Volba „Rozlišovat velikost písmen“ rozlišuje velká a "
+                L"malá písmena; „Hledat pozpátku“ hledá směrem k začátku textu. Výběr z historie obnoví "
+                L"všech pět voleb hledání, včetně uloženého stavu regulárního výrazu; „Vždy navrchu“ je "
+                L"nezávislá volba. „Regulární výraz“ vypne volby „Začíná na“ a „Končí na“. Jsou-li obě "
+                L"volby okrajů zapnuté, stačí shoda na jednom z nich. „Zalamování řádků“ mění pouze "
+                L"zobrazení."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -314,6 +330,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopírovat název souboru včetně &cesty" },
             { TXT_OPEN_FILE, L"&Otevřít soubor" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Otevřít &umístění souboru" },
+            { TXT_EDIT_MENU, L"&Úpravy" },
+            { TXT_WORD_WRAP, L"&Zalamování řádků" },
+            { TXT_WORD_WRAP_FAILED, L"Zalamování řádků nelze změnit." },
+            { TXT_COPY_SELECTION, L"&Kopírovat\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Vybrat &vše\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Najít…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Najít &další\tF3" },
+            { TXT_FIND_TITLE, L"%s — Najít" },
+            { TXT_FIND_WHAT, L"&Hledat:" },
+            { TXT_FIND_NEXT, L"Najít &další" },
+            { TXT_FIND_MATCH_CASE, L"Rozlišovat &velikost písmen" },
+            { TXT_FIND_BACKWARD, L"Hledat &pozpátku" },
+            { TXT_FIND_TOPMOST, L"Vždy navr&chu" },
+            { TXT_FIND_STARTS_WITH, L"Začíná &na" },
+            { TXT_FIND_ENDS_WITH, L"K&ončí na" },
+            { TXT_FIND_REGEX, L"&Regulární výraz" },
+            { TXT_FIND_NOT_FOUND, L"Zadaný text nebyl nalezen." },
+            { TXT_FIND_FAILED, L"Vyhledávání se nepodařilo dokončit." },
+            { TXT_FIND_REGEX_ERROR, L"Chyba regulárního výrazu:\r\n\r\n%s" },
         }
     },
     {
@@ -335,7 +370,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Language:" },
             { TXT_OPEN_WEBSITE, L"&Open in Default Browser" },
             { TXT_OPEN, L"&Open…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Settings" },
+            { TXT_OPTIONS_MENU, L"&Options" },
             { TXT_PREFERENCES_MENU, L"&Preferences…\tCtrl+G" },
             { TXT_ABOUT, L"&About" },
             { TXT_ABOUT_TITLE, L"About %ls" },
@@ -375,11 +410,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo Library" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll &path:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll is not loaded. Select it in Settings > Preferences." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll is not loaded. Select it in Options > Preferences." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll not loaded." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"No compatible external or bundled MediaInfo.dll could be loaded. Select a compatible DLL "
-                L"in Settings > Preferences."
+                L"in Options > Preferences."
             },
             { TXT_ANTIALIASING_NONE, L"None" },
             { TXT_OK, L"OK" },
@@ -387,7 +422,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Platform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferences" },
-            { TXT_READY, L"Ready." },
+            { TXT_READY, L"Ready" },
             { TXT_FONT_REGULAR, L"Regular" },
             { TXT_REPORT_LANGUAGE, L"Repor&t language:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Report Language Tables" },
@@ -453,11 +488,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"The library worker failed during %s (process exit code 0x%08lX). Select a compatible "
-                L"MediaInfo.dll in Settings > Preferences."
+                L"MediaInfo.dll in Options > Preferences."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"The library worker stopped responding during %s. Select a compatible MediaInfo.dll in "
-                L"Settings > Preferences."
+                L"Options > Preferences."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"The preferences were applied, but could not be saved in the registry."
@@ -545,7 +580,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"changes the folders used by Open and Export nor saves its own folder to the application "
                 L"settings. Every Save As dialog starts in the folder of the currently selected input file, "
                 L"regardless of the previous save destination.\r\n\r\nPREFERENCES AND "
-                L"LANGUAGES\r\nPreferences (Settings > Preferences, Ctrl+G) contains library paths, report "
+                L"LANGUAGES\r\nPreferences (Options > Preferences, Ctrl+G) contains library paths, report "
                 L"font, antialiasing and language choices. The interface has 36 variants and initially "
                 L"follows Windows. Reports always default to the library’s original English, independently "
                 L"of Windows and the interface. Only a manual report-language choice changes this: English, "
@@ -558,7 +593,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"have matching libcurl libraries; 0.7.60 never extracts libcurl. Window placement is "
                 L"saved. By default, only one instance is allowed and later launches send files to the open "
                 L"window. Preferences can allow multiple instances. With multiple windows, only the first "
-                L"window of each window type restores its saved position; later windows restore size only."
+                L"window of each window type restores its saved position; later windows restore size "
+                L"only.\r\n\r\nEdit > Find (Ctrl+F) searches the active tab. F3 repeats the search; "
+                L"Shift+F3 reverses its direction. Searching wraps at the ends of the text. Options > Word "
+                L"Wrap affects only the active tab, and its check mark follows the selected tab. The search "
+                L"window can be minimized and resized horizontally; its position and Always on Top setting "
+                L"are remembered. Up to 30 search texts and their options are retained only until the "
+                L"application exits. Starts with and Ends with match the edges of logical lines. Regular "
+                L"expressions use PCRE2 syntax. All commands in Edit affect only the active tab. Enter "
+                L"searches; Shift+Enter reverses the selected direction. \"Case sensitive\" distinguishes "
+                L"uppercase and lowercase; \"Backward\" searches toward the start of the text. Choosing a "
+                L"history entry restores all five search options, including the saved regular-expression "
+                L"mode; \"Always on top\" is independent. \"Regular expression\" disables \"Starts with\" "
+                L"and \"Ends with\". With both line-edge options enabled, either edge can match. \"Word "
+                L"Wrap\" changes only the display."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -608,6 +656,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copy Full &Path" },
             { TXT_OPEN_FILE, L"&Open File" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Open Containing &Folder" },
+            { TXT_EDIT_MENU, L"&Edit" },
+            { TXT_WORD_WRAP, L"&Word Wrap" },
+            { TXT_WORD_WRAP_FAILED, L"Word wrap could not be changed." },
+            { TXT_COPY_SELECTION, L"&Copy\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Select &All\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Find…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Find &Next\tF3" },
+            { TXT_FIND_TITLE, L"%s — Find" },
+            { TXT_FIND_WHAT, L"&Find:" },
+            { TXT_FIND_NEXT, L"Fi&nd Next" },
+            { TXT_FIND_MATCH_CASE, L"C&ase sensitive" },
+            { TXT_FIND_BACKWARD, L"&Backward" },
+            { TXT_FIND_TOPMOST, L"Always on &top" },
+            { TXT_FIND_STARTS_WITH, L"&Starts with" },
+            { TXT_FIND_ENDS_WITH, L"En&ds with" },
+            { TXT_FIND_REGEX, L"Regular e&xpression" },
+            { TXT_FIND_NOT_FOUND, L"The specified text was not found." },
+            { TXT_FIND_FAILED, L"The search could not be completed." },
+            { TXT_FIND_REGEX_ERROR, L"Regular expression error:\r\n\r\n%s" },
         }
     },
     {
@@ -629,7 +696,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Language:" },
             { TXT_OPEN_WEBSITE, L"&Open in Default Browser" },
             { TXT_OPEN, L"&Open…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Settings" },
+            { TXT_OPTIONS_MENU, L"&Options" },
             { TXT_PREFERENCES_MENU, L"&Preferences…\tCtrl+G" },
             { TXT_ABOUT, L"&About" },
             { TXT_ABOUT_TITLE, L"About %ls" },
@@ -669,11 +736,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo Library" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll &path:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll is not loaded. Select it in Settings > Preferences." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll is not loaded. Select it in Options > Preferences." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll not loaded." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"No compatible external or bundled MediaInfo.dll could be loaded. Select a compatible DLL "
-                L"in Settings > Preferences."
+                L"in Options > Preferences."
             },
             { TXT_ANTIALIASING_NONE, L"None" },
             { TXT_OK, L"OK" },
@@ -681,7 +748,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Platform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferences" },
-            { TXT_READY, L"Ready." },
+            { TXT_READY, L"Ready" },
             { TXT_FONT_REGULAR, L"Regular" },
             { TXT_REPORT_LANGUAGE, L"Repor&t language:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Report Language Tables" },
@@ -747,11 +814,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"The library worker failed during %s (process exit code 0x%08lX). Select a compatible "
-                L"MediaInfo.dll in Settings > Preferences."
+                L"MediaInfo.dll in Options > Preferences."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"The library worker stopped responding during %s. Select a compatible MediaInfo.dll in "
-                L"Settings > Preferences."
+                L"Options > Preferences."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"The preferences were applied, but could not be saved in the registry."
@@ -839,7 +906,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"changes the folders used by Open and Export nor saves its own folder to the application "
                 L"settings. Every Save As dialog starts in the folder of the currently selected input file, "
                 L"regardless of the previous save destination.\r\n\r\nPREFERENCES AND "
-                L"LANGUAGES\r\nPreferences (Settings > Preferences, Ctrl+G) contains library paths, report "
+                L"LANGUAGES\r\nPreferences (Options > Preferences, Ctrl+G) contains library paths, report "
                 L"font, antialiasing and language choices. The interface has 36 variants and initially "
                 L"follows Windows. Reports always default to the library’s original English, independently "
                 L"of Windows and the interface. Only a manual report-language choice changes this: English, "
@@ -852,7 +919,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"have matching libcurl libraries; 0.7.60 never extracts libcurl. Window placement is "
                 L"saved. By default, only one instance is allowed and later launches send files to the open "
                 L"window. Preferences can allow multiple instances. With multiple windows, only the first "
-                L"window of each window type restores its saved position; later windows restore size only."
+                L"window of each window type restores its saved position; later windows restore size "
+                L"only.\r\n\r\nEdit > Find (Ctrl+F) searches the active tab. F3 repeats the search; "
+                L"Shift+F3 reverses its direction. Searching wraps at the ends of the text. Options > Word "
+                L"Wrap affects only the active tab, and its check mark follows the selected tab. The search "
+                L"window can be minimised and resized horizontally; its position and Always on Top setting "
+                L"are remembered. Up to 30 search texts and their options are retained only until the "
+                L"application exits. Starts with and Ends with match the edges of logical lines. Regular "
+                L"expressions use PCRE2 syntax. All commands in Edit affect only the active tab. Enter "
+                L"searches; Shift+Enter reverses the selected direction. \"Case sensitive\" distinguishes "
+                L"uppercase and lowercase; \"Backward\" searches toward the start of the text. Choosing a "
+                L"history entry restores all five search options, including the saved regular-expression "
+                L"mode; \"Always on top\" is independent. \"Regular expression\" disables \"Starts with\" "
+                L"and \"Ends with\". With both line-edge options enabled, either edge can match. \"Word "
+                L"Wrap\" changes only the display."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -902,6 +982,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copy Full &Path" },
             { TXT_OPEN_FILE, L"&Open File" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Open Containing &Folder" },
+            { TXT_EDIT_MENU, L"&Edit" },
+            { TXT_WORD_WRAP, L"&Word Wrap" },
+            { TXT_WORD_WRAP_FAILED, L"Word wrap could not be changed." },
+            { TXT_COPY_SELECTION, L"&Copy\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Select &All\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Find…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Find &Next\tF3" },
+            { TXT_FIND_TITLE, L"%s — Find" },
+            { TXT_FIND_WHAT, L"&Find:" },
+            { TXT_FIND_NEXT, L"Fi&nd Next" },
+            { TXT_FIND_MATCH_CASE, L"C&ase sensitive" },
+            { TXT_FIND_BACKWARD, L"&Backward" },
+            { TXT_FIND_TOPMOST, L"Always on &top" },
+            { TXT_FIND_STARTS_WITH, L"&Starts with" },
+            { TXT_FIND_ENDS_WITH, L"En&ds with" },
+            { TXT_FIND_REGEX, L"Regular e&xpression" },
+            { TXT_FIND_NOT_FOUND, L"The specified text was not found." },
+            { TXT_FIND_FAILED, L"The search could not be completed." },
+            { TXT_FIND_REGEX_ERROR, L"Regular expression error:\r\n\r\n%s" },
         }
     },
     {
@@ -923,7 +1022,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Language:" },
             { TXT_OPEN_WEBSITE, L"&Open in Default Browser" },
             { TXT_OPEN, L"&Open…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Settings" },
+            { TXT_OPTIONS_MENU, L"&Options" },
             { TXT_PREFERENCES_MENU, L"&Preferences…\tCtrl+G" },
             { TXT_ABOUT, L"&About" },
             { TXT_ABOUT_TITLE, L"About %ls" },
@@ -963,11 +1062,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo Library" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll &path:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll is not loaded. Select it in Settings > Preferences." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll is not loaded. Select it in Options > Preferences." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll not loaded." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"No compatible external or bundled MediaInfo.dll could be loaded. Select a compatible DLL "
-                L"in Settings > Preferences."
+                L"in Options > Preferences."
             },
             { TXT_ANTIALIASING_NONE, L"None" },
             { TXT_OK, L"OK" },
@@ -975,7 +1074,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Platform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferences" },
-            { TXT_READY, L"Ready." },
+            { TXT_READY, L"Ready" },
             { TXT_FONT_REGULAR, L"Regular" },
             { TXT_REPORT_LANGUAGE, L"Repor&t language:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Report Language Tables" },
@@ -1041,11 +1140,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"The library worker failed during %s (process exit code 0x%08lX). Select a compatible "
-                L"MediaInfo.dll in Settings > Preferences."
+                L"MediaInfo.dll in Options > Preferences."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"The library worker stopped responding during %s. Select a compatible MediaInfo.dll in "
-                L"Settings > Preferences."
+                L"Options > Preferences."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"The preferences were applied, but could not be saved in the registry."
@@ -1133,7 +1232,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"changes the folders used by Open and Export nor saves its own folder to the application "
                 L"settings. Every Save As dialog starts in the folder of the currently selected input file, "
                 L"regardless of the previous save destination.\r\n\r\nPREFERENCES AND "
-                L"LANGUAGES\r\nPreferences (Settings > Preferences, Ctrl+G) contains library paths, report "
+                L"LANGUAGES\r\nPreferences (Options > Preferences, Ctrl+G) contains library paths, report "
                 L"font, antialiasing and language choices. The interface has 36 variants and initially "
                 L"follows Windows. Reports always default to the library’s original English, independently "
                 L"of Windows and the interface. Only a manual report-language choice changes this: English, "
@@ -1146,7 +1245,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"have matching libcurl libraries; 0.7.60 never extracts libcurl. Window placement is "
                 L"saved. By default, only one instance is allowed and later launches send files to the open "
                 L"window. Preferences can allow multiple instances. With multiple windows, only the first "
-                L"window of each window type restores its saved position; later windows restore size only."
+                L"window of each window type restores its saved position; later windows restore size "
+                L"only.\r\n\r\nEdit > Find (Ctrl+F) searches the active tab. F3 repeats the search; "
+                L"Shift+F3 reverses its direction. Searching wraps at the ends of the text. Options > Word "
+                L"Wrap affects only the active tab, and its check mark follows the selected tab. The search "
+                L"window can be minimised and resized horizontally; its position and Always on Top setting "
+                L"are remembered. Up to 30 search texts and their options are retained only until the "
+                L"application exits. Starts with and Ends with match the edges of logical lines. Regular "
+                L"expressions use PCRE2 syntax. All commands in Edit affect only the active tab. Enter "
+                L"searches; Shift+Enter reverses the selected direction. \"Case sensitive\" distinguishes "
+                L"uppercase and lowercase; \"Backward\" searches toward the start of the text. Choosing a "
+                L"history entry restores all five search options, including the saved regular-expression "
+                L"mode; \"Always on top\" is independent. \"Regular expression\" disables \"Starts with\" "
+                L"and \"Ends with\". With both line-edge options enabled, either edge can match. \"Word "
+                L"Wrap\" changes only the display."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1196,6 +1308,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copy Full &Path" },
             { TXT_OPEN_FILE, L"&Open File" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Open Containing &Folder" },
+            { TXT_EDIT_MENU, L"&Edit" },
+            { TXT_WORD_WRAP, L"&Word Wrap" },
+            { TXT_WORD_WRAP_FAILED, L"Word wrap could not be changed." },
+            { TXT_COPY_SELECTION, L"&Copy\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Select &All\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Find…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Find &Next\tF3" },
+            { TXT_FIND_TITLE, L"%s — Find" },
+            { TXT_FIND_WHAT, L"&Find:" },
+            { TXT_FIND_NEXT, L"Fi&nd Next" },
+            { TXT_FIND_MATCH_CASE, L"C&ase sensitive" },
+            { TXT_FIND_BACKWARD, L"&Backward" },
+            { TXT_FIND_TOPMOST, L"Always on &top" },
+            { TXT_FIND_STARTS_WITH, L"&Starts with" },
+            { TXT_FIND_ENDS_WITH, L"En&ds with" },
+            { TXT_FIND_REGEX, L"Regular e&xpression" },
+            { TXT_FIND_NOT_FOUND, L"The specified text was not found." },
+            { TXT_FIND_FAILED, L"The search could not be completed." },
+            { TXT_FIND_REGEX_ERROR, L"Regular expression error:\r\n\r\n%s" },
         }
     },
     {
@@ -1217,7 +1348,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"Sp&rache:" },
             { TXT_OPEN_WEBSITE, L"Im Standardbrowser &öffnen" },
             { TXT_OPEN, L"&Öffnen…\tStrg+O" },
-            { TXT_SETTINGS_MENU, L"&Einstellungen" },
+            { TXT_OPTIONS_MENU, L"&Optionen" },
             { TXT_PREFERENCES_MENU, L"&Voreinstellungen…\tStrg+G" },
             { TXT_ABOUT, L"&Info" },
             { TXT_ABOUT_TITLE, L"Info zu %ls" },
@@ -1262,12 +1393,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll-&Pfad:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll ist nicht geladen. Wählen Sie sie unter Einstellungen > Voreinstellungen."
+                L"MediaInfo.dll ist nicht geladen. Wählen Sie sie unter Optionen > Voreinstellungen."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll ist nicht geladen." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Keine kompatible externe oder eingebettete MediaInfo.dll konnte geladen werden. Wählen Sie "
-                L"sie unter Einstellungen > Voreinstellungen."
+                L"Keine kompatible externe oder eingebettete MediaInfo.dll konnte geladen werden. Wählen "
+                L"Sie sie unter Optionen > Voreinstellungen."
             },
             { TXT_ANTIALIASING_NONE, L"Keine" },
             { TXT_OK, L"OK" },
@@ -1275,7 +1406,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Zielplattform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Voreinstellungen" },
-            { TXT_READY, L"Bereit." },
+            { TXT_READY, L"Bereit" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"&Berichtssprache:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Berichtssprachtabellen" },
@@ -1350,11 +1481,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Der Bibliotheksprozess ist beim %s fehlgeschlagen (Code 0x%08lX). Wählen Sie eine "
-                L"kompatible DLL unter Einstellungen > Voreinstellungen."
+                L"kompatible DLL unter Optionen > Voreinstellungen."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"Der Bibliotheksprozess reagiert beim %s nicht mehr. Wählen Sie eine kompatible DLL unter "
-                L"Einstellungen > Voreinstellungen."
+                L"Optionen > Voreinstellungen."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Die Einstellungen wurden angewendet, konnten jedoch nicht in der Registrierung gespeichert "
@@ -1456,7 +1587,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"von Öffnen und Exportieren verwendeten Ordner, noch speichert es seinen eigenen Ordner in "
                 L"den Anwendungseinstellungen. Jeder Dialog „Speichern unter“ startet im Ordner der aktuell "
                 L"ausgewählten Eingabedatei, unabhängig vom vorherigen Speicherort.\r\n\r\nVOREINSTELLUNGEN "
-                L"UND SPRACHEN\r\nDie Voreinstellungen (Einstellungen > Voreinstellungen, Strg+G) enthalten "
+                L"UND SPRACHEN\r\nDie Voreinstellungen (Optionen > Voreinstellungen, Strg+G) enthalten "
                 L"Bibliothekspfade, Berichtsschrift, Kantenglättung und Sprachen. Die Oberfläche bietet 36 "
                 L"Varianten und richtet sich zunächst nach Windows. Berichte verwenden stets das "
                 L"ursprüngliche Englisch der Bibliothek, unabhängig von Windows und Oberfläche. Nur die "
@@ -1473,7 +1604,22 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"eine Instanz erlaubt; weitere Starts übergeben Dateien an das offene Fenster. In den "
                 L"Voreinstellungen lassen sich mehrere Instanzen zulassen. Bei mehreren Fenstern wird die "
                 L"gespeicherte Position nur für das erste Fenster jedes Fenstertyps wiederhergestellt; "
-                L"weitere Fenster übernehmen nur die Größe."
+                L"weitere Fenster übernehmen nur die Größe.\r\n\r\nBearbeiten > Suchen (Strg+F) durchsucht "
+                L"den aktiven Tab. F3 wiederholt die Suche; Umschalt+F3 kehrt die Suchrichtung um. Am "
+                L"Textende wird die Suche am anderen Ende fortgesetzt. Optionen > Zeilenumbruch gilt nur "
+                L"für den aktiven Tab; das Häkchen richtet sich nach dem ausgewählten Tab. Das Suchfenster "
+                L"lässt sich minimieren und in der Breite verändern; seine Position und die Einstellung "
+                L"Immer im Vordergrund werden gespeichert. Bis zu 30 Suchtexte mit ihren Optionen bleiben "
+                L"nur bis zum Beenden der Anwendung erhalten. Zeile beginnt mit und Zeile endet mit "
+                L"beziehen sich auf logische Zeilen. Reguläre Ausdrücke verwenden die PCRE2-Syntax. Alle "
+                L"Befehle unter Bearbeiten betreffen nur den aktiven Tab. Eingabe startet die Suche; "
+                L"Umschalt+Eingabe kehrt die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ "
+                L"unterscheidet Groß- und Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein "
+                L"Eintrag aus dem Verlauf stellt alle fünf Suchoptionen wieder her und schaltet "
+                L"gegebenenfalls den Regexmodus aus; „Immer im Vordergrund“ ist unabhängig davon. "
+                L"„Regulärer Ausdruck“ deaktiviert „Zeile beginnt mit“ und „Zeile endet mit“. Sind beide "
+                L"Zeilenrandoptionen aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“ ändert nur "
+                L"die Darstellung."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1530,6 +1676,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Vollständigen Datei&pfad kopieren" },
             { TXT_OPEN_FILE, L"&Datei öffnen" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Dateispeicher&ort öffnen" },
+            { TXT_EDIT_MENU, L"&Bearbeiten" },
+            { TXT_WORD_WRAP, L"&Zeilenumbruch" },
+            { TXT_WORD_WRAP_FAILED, L"Der Zeilenumbruch konnte nicht geändert werden." },
+            { TXT_COPY_SELECTION, L"&Kopieren\tStrg+C" },
+            { TXT_SELECT_ALL, L"&Alles auswählen\tStrg+A" },
+            { TXT_FIND_MENU, L"&Suchen…\tStrg+F" },
+            { TXT_FIND_NEXT_MENU, L"&Weitersuchen\tF3" },
+            { TXT_FIND_TITLE, L"%s — Suchen" },
+            { TXT_FIND_WHAT, L"Suchen &nach:" },
+            { TXT_FIND_NEXT, L"&Weitersuchen" },
+            { TXT_FIND_MATCH_CASE, L"Groß-/&Kleinschreibung beachten" },
+            { TXT_FIND_BACKWARD, L"&Rückwärts suchen" },
+            { TXT_FIND_TOPMOST, L"Immer im &Vordergrund" },
+            { TXT_FIND_STARTS_WITH, L"Zeile &beginnt mit" },
+            { TXT_FIND_ENDS_WITH, L"Zeile &endet mit" },
+            { TXT_FIND_REGEX, L"Regulärer &Ausdruck" },
+            { TXT_FIND_NOT_FOUND, L"Der angegebene Text wurde nicht gefunden." },
+            { TXT_FIND_FAILED, L"Die Suche konnte nicht abgeschlossen werden." },
+            { TXT_FIND_REGEX_ERROR, L"Fehler im regulären Ausdruck:\r\n\r\n%s" },
         }
     },
     {
@@ -1551,7 +1716,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"Lan&gue :" },
             { TXT_OPEN_WEBSITE, L"&Ouvrir dans le navigateur par défaut" },
             { TXT_OPEN, L"&Ouvrir…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Paramètres" },
+            { TXT_OPTIONS_MENU, L"O&ptions" },
             { TXT_PREFERENCES_MENU, L"&Préférences…\tCtrl+G" },
             { TXT_ABOUT, L"À &propos" },
             { TXT_ABOUT_TITLE, L"À propos de %ls" },
@@ -1596,12 +1761,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Chemin de MediaInfo.dll :" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll n’est pas chargée. Sélectionnez-la dans Paramètres > Préférences."
+                L"MediaInfo.dll n’est pas chargée. Sélectionnez-la dans Options > Préférences."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll n’est pas chargée." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Aucune MediaInfo.dll externe ou intégrée compatible n’a pu être chargée. Sélectionnez-la "
-                L"dans Paramètres > Préférences."
+                L"dans Options > Préférences."
             },
             { TXT_ANTIALIASING_NONE, L"Aucun" },
             { TXT_OK, L"OK" },
@@ -1609,7 +1774,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Plateforme cible :" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Préférences" },
-            { TXT_READY, L"Prêt." },
+            { TXT_READY, L"Prêt" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"Langue du rappor&t :" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tables de langue des rapports" },
@@ -1683,11 +1848,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Le processus de bibliothèque a échoué pendant %s (code 0x%08lX). Sélectionnez une DLL "
-                L"compatible dans Paramètres > Préférences."
+                L"compatible dans Options > Préférences."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"Le processus de bibliothèque ne répond plus pendant %s. Sélectionnez une DLL compatible "
-                L"dans Paramètres > Préférences."
+                L"dans Options > Préférences."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Les préférences ont été appliquées, mais n’ont pas pu être enregistrées dans le Registre."
@@ -1792,7 +1957,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"utilisés par Ouvrir et Exporter et n'enregistre pas non plus son propre dossier dans les "
                 L"paramètres de l'application. Chaque boîte de dialogue Enregistrer sous démarre dans le "
                 L"dossier du fichier d'entrée actuellement sélectionné, quelle que soit la destination de "
-                L"sauvegarde précédente.\r\n\r\nPRÉFÉRENCES ET LANGUES\r\nLes préférences (Paramètres > "
+                L"sauvegarde précédente.\r\n\r\nPRÉFÉRENCES ET LANGUES\r\nLes préférences (Options > "
                 L"Préférences, Ctrl+G) regroupent les chemins des bibliothèques, la police du rapport, le "
                 L"lissage et les langues. L’interface possède 36 variantes et suit initialement Windows. "
                 L"Les rapports utilisent toujours l’anglais d’origine de la bibliothèque, indépendamment de "
@@ -1810,7 +1975,23 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"les lancements suivants transmettent les fichiers à la fenêtre ouverte. Les préférences "
                 L"permettent d’autoriser plusieurs instances. Si plusieurs fenêtres sont autorisées, seule "
                 L"la première de chaque type de fenêtre retrouve sa position enregistrée ; les suivantes ne "
-                L"reprennent que la taille."
+                L"reprennent que la taille.\r\n\r\nÉdition > Rechercher (Ctrl+F) effectue une recherche "
+                L"dans l’onglet actif. F3 répète la recherche ; Maj+F3 inverse son sens. Aux extrémités du "
+                L"texte, la recherche reprend à l’autre extrémité. Options > Retour automatique à la ligne "
+                L"concerne uniquement l’onglet actif ; la coche suit l’onglet sélectionné. La fenêtre de "
+                L"recherche peut être réduite et redimensionnée horizontalement ; sa position et l’option "
+                L"Toujours au premier plan sont mémorisées. Jusqu’à 30 recherches et leurs options sont "
+                L"conservées uniquement jusqu’à la fermeture de l’application. Les options de début et de "
+                L"fin s’appliquent aux lignes logiques. Les expressions régulières utilisent la syntaxe "
+                L"PCRE2. Toutes les commandes du menu Édition concernent uniquement l’onglet actif. Entrée "
+                L"lance la recherche ; Maj+Entrée inverse le sens choisi. « Respecter la casse » distingue "
+                L"les majuscules des minuscules ; « Rechercher vers l’arrière » recherche vers le début du "
+                L"texte. Choisir une entrée de l’historique rétablit les cinq options de recherche, y "
+                L"compris l’état du mode d’expression régulière ; « Toujours au premier plan » est "
+                L"indépendante. « Expression régulière » désactive « La ligne commence par » et « La ligne "
+                L"se termine par ». Si les deux options de début et de fin de ligne sont activées, une "
+                L"correspondance à l’une des extrémités suffit. « Retour automatique à la ligne » modifie "
+                L"uniquement l’affichage."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1865,6 +2046,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copier le &chemin complet" },
             { TXT_OPEN_FILE, L"&Ouvrir le fichier" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Ouvrir l’&emplacement du fichier" },
+            { TXT_EDIT_MENU, L"É&dition" },
+            { TXT_WORD_WRAP, L"&Retour automatique à la ligne" },
+            { TXT_WORD_WRAP_FAILED, L"Le retour automatique à la ligne n’a pas pu être modifié." },
+            { TXT_COPY_SELECTION, L"&Copier\tCtrl+C" },
+            { TXT_SELECT_ALL, L"&Tout sélectionner\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Rechercher…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Rechercher le &suivant\tF3" },
+            { TXT_FIND_TITLE, L"%s — Rechercher" },
+            { TXT_FIND_WHAT, L"Rec&hercher :" },
+            { TXT_FIND_NEXT, L"Rechercher le &suivant" },
+            { TXT_FIND_MATCH_CASE, L"Respecter la &casse" },
+            { TXT_FIND_BACKWARD, L"Rechercher vers l’&arrière" },
+            { TXT_FIND_TOPMOST, L"Toujours au premier &plan" },
+            { TXT_FIND_STARTS_WITH, L"La l&igne commence par" },
+            { TXT_FIND_ENDS_WITH, L"La ligne se &termine par" },
+            { TXT_FIND_REGEX, L"Expression &régulière" },
+            { TXT_FIND_NOT_FOUND, L"Le texte spécifié est introuvable." },
+            { TXT_FIND_FAILED, L"La recherche n’a pas pu être terminée." },
+            { TXT_FIND_REGEX_ERROR, L"Erreur d’expression régulière :\r\n\r\n%s" },
         }
     },
     {
@@ -1886,7 +2086,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Idioma:" },
             { TXT_OPEN_WEBSITE, L"&Abrir en el navegador predeterminado" },
             { TXT_OPEN, L"&Abrir…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Configuración" },
+            { TXT_OPTIONS_MENU, L"&Opciones" },
             { TXT_PREFERENCES_MENU, L"&Preferencias…\tCtrl+G" },
             { TXT_ABOUT, L"A&cerca de" },
             { TXT_ABOUT_TITLE, L"Acerca de %ls" },
@@ -1931,12 +2131,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Ruta de MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll no está cargada. Selecciónela en Configuración > Preferencias."
+                L"MediaInfo.dll no está cargada. Selecciónela en Opciones > Preferencias."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll no está cargada." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"No se pudo cargar ninguna MediaInfo.dll externa o integrada compatible. Selecciónela en "
-                L"Configuración > Preferencias."
+                L"Opciones > Preferencias."
             },
             { TXT_ANTIALIASING_NONE, L"Ninguno" },
             { TXT_OK, L"Aceptar" },
@@ -1944,7 +2144,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Plataforma de destino:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferencias" },
-            { TXT_READY, L"Listo." },
+            { TXT_READY, L"Listo" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"Idioma &del informe:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tablas de idioma de los informes" },
@@ -2019,11 +2219,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"El proceso de biblioteca falló durante %s (código 0x%08lX). Seleccione una DLL compatible "
-                L"en Configuración > Preferencias."
+                L"en Opciones > Preferencias."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"El proceso de biblioteca dejó de responder durante %s. Seleccione una DLL compatible en "
-                L"Configuración > Preferencias."
+                L"Opciones > Preferencias."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Las preferencias se aplicaron, pero no se pudieron guardar en el Registro."
@@ -2119,7 +2319,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"como. No cambia las carpetas utilizadas por Abrir y Exportar ni guarda su propia carpeta "
                 L"en la configuración de la aplicación. Cada cuadro de diálogo Guardar como comienza en la "
                 L"carpeta del archivo de entrada seleccionado actualmente, independientemente del destino "
-                L"de guardado anterior.\r\n\r\nPREFERENCIAS E IDIOMAS\r\nLas preferencias (Configuración > "
+                L"de guardado anterior.\r\n\r\nPREFERENCIAS E IDIOMAS\r\nLas preferencias (Opciones > "
                 L"Preferencias, Ctrl+G) contienen rutas de bibliotecas, fuente del informe, suavizado e "
                 L"idiomas. La interfaz ofrece 36 variantes y sigue inicialmente a Windows. Los informes "
                 L"usan siempre el inglés original de la biblioteca, independientemente de Windows y de la "
@@ -2135,8 +2335,22 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"forma predeterminada, solo se permite una instancia y los siguientes inicios envían los "
                 L"archivos a la ventana abierta. En Preferencias se pueden permitir varias instancias. Si "
                 L"hay varias ventanas, solo la primera de cada tipo de ventana recupera su posición "
-                L"guardada; "
-                L"las siguientes recuperan únicamente el tamaño."
+                L"guardada; las siguientes recuperan únicamente el tamaño.\r\n\r\nEdición > Buscar (Ctrl+F) "
+                L"busca en la pestaña activa. F3 repite la búsqueda; Mayús+F3 invierte su dirección. Al "
+                L"llegar a un extremo del texto, la búsqueda continúa desde el otro. Opciones > Ajuste de "
+                L"línea solo afecta a la pestaña activa; la marca cambia según la pestaña seleccionada. La "
+                L"ventana de búsqueda se puede minimizar y redimensionar horizontalmente; se recuerdan su "
+                L"posición y la opción Siempre visible. Se conservan hasta 30 búsquedas y sus opciones solo "
+                L"hasta que se cierra la aplicación. Las opciones de principio y final se aplican a las "
+                L"líneas lógicas. Las expresiones regulares usan la sintaxis de PCRE2. Todos los comandos "
+                L"de Edición afectan solo a la pestaña activa. Entrar inicia la búsqueda; Mayús+Entrar "
+                L"invierte la dirección elegida. «Coincidir mayúsculas y minúsculas» distingue mayúsculas y "
+                L"minúsculas; «Buscar hacia atrás» busca hacia el principio del texto. Elegir una entrada "
+                L"del historial restaura las cinco opciones de búsqueda, incluido el estado del modo de "
+                L"expresión regular; «Siempre visible» es independiente. «Expresión regular» desactiva «La "
+                L"línea empieza por» y «La línea termina en». Si ambas opciones de extremos de línea están "
+                L"activadas, basta con que coincida uno de ellos. «Ajuste de línea» solo cambia la "
+                L"visualización."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2191,6 +2405,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copiar la &ruta completa" },
             { TXT_OPEN_FILE, L"&Abrir archivo" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Abrir &ubicación del archivo" },
+            { TXT_EDIT_MENU, L"&Edición" },
+            { TXT_WORD_WRAP, L"A&juste de línea" },
+            { TXT_WORD_WRAP_FAILED, L"No se pudo cambiar el ajuste de línea." },
+            { TXT_COPY_SELECTION, L"&Copiar\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Seleccionar &todo\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Buscar…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Buscar &siguiente\tF3" },
+            { TXT_FIND_TITLE, L"%s — Buscar" },
+            { TXT_FIND_WHAT, L"Buscar &texto:" },
+            { TXT_FIND_NEXT, L"Buscar &siguiente" },
+            { TXT_FIND_MATCH_CASE, L"Coincidir &mayúsculas y minúsculas" },
+            { TXT_FIND_BACKWARD, L"Buscar hacia &atrás" },
+            { TXT_FIND_TOPMOST, L"Siempre &visible" },
+            { TXT_FIND_STARTS_WITH, L"La línea &empieza por" },
+            { TXT_FIND_ENDS_WITH, L"La &línea termina en" },
+            { TXT_FIND_REGEX, L"Expresión &regular" },
+            { TXT_FIND_NOT_FOUND, L"No se encontró el texto especificado." },
+            { TXT_FIND_FAILED, L"No se pudo completar la búsqueda." },
+            { TXT_FIND_REGEX_ERROR, L"Error de expresión regular:\r\n\r\n%s" },
         }
     },
     {
@@ -2212,7 +2445,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Lingua:" },
             { TXT_OPEN_WEBSITE, L"&Apri nel browser predefinito" },
             { TXT_OPEN, L"&Apri…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Impostazioni" },
+            { TXT_OPTIONS_MENU, L"&Opzioni" },
             { TXT_PREFERENCES_MENU, L"&Preferenze…\tCtrl+G" },
             { TXT_ABOUT, L"&Informazioni" },
             { TXT_ABOUT_TITLE, L"Informazioni su %ls" },
@@ -2256,13 +2489,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Percorso di MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll non è caricata. Selezionarla in Impostazioni > Preferenze."
-            },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll non è caricata. Selezionarla in Opzioni > Preferenze." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll non è caricata." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Nessuna MediaInfo.dll esterna o incorporata compatibile può essere caricata. Selezionarla "
-                L"in Impostazioni > Preferenze."
+                L"in Opzioni > Preferenze."
             },
             { TXT_ANTIALIASING_NONE, L"Nessuno" },
             { TXT_OK, L"OK" },
@@ -2270,7 +2501,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Piattaforma di destinazione:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferenze" },
-            { TXT_READY, L"Pronto." },
+            { TXT_READY, L"Pronto" },
             { TXT_FONT_REGULAR, L"Normale" },
             { TXT_REPORT_LANGUAGE, L"Lin&gua del rapporto:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tabelle linguistiche dei rapporti" },
@@ -2342,11 +2573,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Il processo della libreria è fallito durante %s (codice 0x%08lX). Selezionare una DLL "
-                L"compatibile in Impostazioni > Preferenze."
+                L"compatibile in Opzioni > Preferenze."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"Il processo della libreria non risponde durante %s. Selezionare una DLL compatibile in "
-                L"Impostazioni > Preferenze."
+                L"Opzioni > Preferenze."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Le preferenze sono state applicate ma non salvate nel Registro."
@@ -2448,7 +2679,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"salva la propria cartella nelle impostazioni dell'applicazione. Ogni finestra di dialogo "
                 L"Salva con nome inizia nella cartella del file di input attualmente selezionato, "
                 L"indipendentemente dalla destinazione di salvataggio precedente.\r\n\r\nPREFERENZE E "
-                L"LINGUE\r\nLe preferenze (Impostazioni > Preferenze, Ctrl+G) contengono percorsi delle "
+                L"LINGUE\r\nLe preferenze (Opzioni > Preferenze, Ctrl+G) contengono percorsi delle "
                 L"librerie, carattere del rapporto, antialiasing e lingue. L’interfaccia ha 36 varianti e "
                 L"inizialmente segue Windows. I rapporti usano sempre l’inglese originale della libreria, "
                 L"indipendentemente da Windows e dall’interfaccia. Solo una scelta manuale cambia la "
@@ -2464,7 +2695,22 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"una sola istanza e gli avvii successivi inviano i file alla finestra aperta. Nelle "
                 L"preferenze è possibile consentire più istanze. Con più finestre, solo la prima di ciascun "
                 L"tipo di finestra ripristina la posizione salvata; le successive ripristinano solo le "
-                L"dimensioni."
+                L"dimensioni.\r\n\r\nModifica > Trova (Ctrl+F) cerca nella scheda attiva. F3 ripete la "
+                L"ricerca; Maiusc+F3 ne inverte la direzione. Alle estremità del testo, la ricerca riprende "
+                L"dall’estremità opposta. Opzioni > A capo automatico riguarda solo la scheda attiva; il "
+                L"segno di spunta segue la scheda selezionata. La finestra di ricerca può essere ridotta a "
+                L"icona e ridimensionata orizzontalmente; la posizione e l’opzione Sempre in primo piano "
+                L"vengono memorizzate. Fino a 30 ricerche e le relative opzioni vengono conservate solo "
+                L"fino alla chiusura dell’applicazione. Le opzioni di inizio e fine si riferiscono alle "
+                L"righe logiche. Le espressioni regolari usano la sintassi PCRE2. Tutti i comandi di "
+                L"Modifica riguardano solo la scheda attiva. Invio avvia la ricerca; Maiusc+Invio inverte "
+                L"la direzione scelta. «Maiuscole/minuscole» distingue le lettere maiuscole dalle "
+                L"minuscole; «Cerca all’indietro» cerca verso l’inizio del testo. La scelta di una voce "
+                L"della cronologia ripristina tutte e cinque le opzioni di ricerca, compreso lo stato del "
+                L"modo per le espressioni regolari; «Sempre in primo piano» è indipendente. «Espressione "
+                L"regolare» disattiva «La riga inizia con» e «La riga termina con». Se entrambe le opzioni "
+                L"di inizio e fine riga sono attive, è sufficiente una corrispondenza a una delle "
+                L"estremità. «A capo automatico» modifica solo la visualizzazione."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2519,6 +2765,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copia &percorso completo" },
             { TXT_OPEN_FILE, L"&Apri file" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Apri percorso &file" },
+            { TXT_EDIT_MENU, L"&Modifica" },
+            { TXT_WORD_WRAP, L"A cap&o automatico" },
+            { TXT_WORD_WRAP_FAILED, L"Impossibile modificare l’a capo automatico." },
+            { TXT_COPY_SELECTION, L"&Copia\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Seleziona t&utto\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Trova…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Trova &successivo\tF3" },
+            { TXT_FIND_TITLE, L"%s — Trova" },
+            { TXT_FIND_WHAT, L"&Testo da trovare:" },
+            { TXT_FIND_NEXT, L"Trova &successivo" },
+            { TXT_FIND_MATCH_CASE, L"&Maiuscole/minuscole" },
+            { TXT_FIND_BACKWARD, L"Cerca all’&indietro" },
+            { TXT_FIND_TOPMOST, L"Sempre in &primo piano" },
+            { TXT_FIND_STARTS_WITH, L"&La riga inizia con" },
+            { TXT_FIND_ENDS_WITH, L"La riga termin&a con" },
+            { TXT_FIND_REGEX, L"Espressione &regolare" },
+            { TXT_FIND_NOT_FOUND, L"Il testo specificato non è stato trovato." },
+            { TXT_FIND_FAILED, L"Impossibile completare la ricerca." },
+            { TXT_FIND_REGEX_ERROR, L"Errore nell’espressione regolare:\r\n\r\n%s" },
         }
     },
     {
@@ -2540,7 +2805,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Idioma:" },
             { TXT_OPEN_WEBSITE, L"&Abrir no navegador predefinido" },
             { TXT_OPEN, L"&Abrir…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Definições" },
+            { TXT_OPTIONS_MENU, L"&Opções" },
             { TXT_PREFERENCES_MENU, L"&Preferências…\tCtrl+G" },
             { TXT_ABOUT, L"Ac&erca de" },
             { TXT_ABOUT_TITLE, L"Acerca de %ls" },
@@ -2585,12 +2850,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Caminho de MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll não está carregada. Selecione-a em Definições > Preferências."
+                L"MediaInfo.dll não está carregada. Selecione-a em Opções > Preferências."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll não está carregada." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Não foi possível carregar uma MediaInfo.dll externa ou incluída compatível. Selecione-a em "
-                L"Definições > Preferências."
+                L"Não foi possível carregar uma MediaInfo.dll externa ou incluída compatível. Selecione-a "
+                L"em Opções > Preferências."
             },
             { TXT_ANTIALIASING_NONE, L"Nenhuma" },
             { TXT_OK, L"OK" },
@@ -2598,7 +2863,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Plataforma de destino:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferências" },
-            { TXT_READY, L"Pronto." },
+            { TXT_READY, L"Pronto" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"Idioma do r&elatório:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tabelas de idiomas dos relatórios" },
@@ -2672,11 +2937,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"O processo da biblioteca falhou durante %s (código 0x%08lX). Selecione uma DLL compatível "
-                L"em Definições > Preferências."
+                L"em Opções > Preferências."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"O processo da biblioteca deixou de responder durante %s. Selecione uma DLL compatível em "
-                L"Definições > Preferências."
+                L"Opções > Preferências."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"As preferências foram aplicadas, mas não foi possível guardá-las no Registo."
@@ -2772,7 +3037,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Não altera as pastas utilizadas por Abrir e Exportar nem guarda a sua própria pasta nas "
                 L"definições da aplicação. Cada caixa de diálogo Guardar como inicia-se na pasta do "
                 L"ficheiro de entrada atualmente selecionado, independentemente do destino de gravação "
-                L"anterior.\r\n\r\nPREFERÊNCIAS E IDIOMAS\r\nAs preferências (Definições > Preferências, "
+                L"anterior.\r\n\r\nPREFERÊNCIAS E IDIOMAS\r\nAs preferências (Opções > Preferências, "
                 L"Ctrl+G) contêm caminhos das bibliotecas, tipo de letra do relatório, suavização e "
                 L"idiomas. A interface tem 36 variantes e segue inicialmente o Windows. Os relatórios usam "
                 L"sempre o inglês original da biblioteca, independentemente do Windows e da interface. Só "
@@ -2786,8 +3051,23 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"externas. As duas versões recentes têm a respetiva libcurl; 0.7.60 nunca a extrai. A "
                 L"posição da janela é guardada. Por predefinição, só é permitida uma instância e os "
                 L"arranques seguintes enviam os ficheiros para a janela aberta. Nas preferências, é "
-                L"possível permitir várias instâncias. Com várias janelas, apenas a primeira de cada tipo de "
-                L"janela recupera a posição guardada; as seguintes recuperam apenas o tamanho."
+                L"possível permitir várias instâncias. Com várias janelas, apenas a primeira de cada tipo "
+                L"de janela recupera a posição guardada; as seguintes recuperam apenas o "
+                L"tamanho.\r\n\r\nEditar > Localizar (Ctrl+F) pesquisa no separador ativo. F3 repete a "
+                L"pesquisa; Shift+F3 inverte a direção. Ao atingir uma extremidade do texto, a pesquisa "
+                L"continua na outra. Opções > Moldar texto afeta apenas o separador ativo; a marca "
+                L"acompanha o separador selecionado. A janela de pesquisa pode ser minimizada e "
+                L"redimensionada horizontalmente; a posição e a opção Sempre em cima são memorizadas. São "
+                L"guardadas até 30 pesquisas e as respetivas opções apenas até a aplicação ser encerrada. "
+                L"As opções de início e fim referem-se às linhas lógicas. As expressões regulares utilizam "
+                L"a sintaxe PCRE2. Todos os comandos de Editar afetam apenas o separador ativo. Enter "
+                L"inicia a pesquisa; Shift+Enter inverte a direção escolhida. «Distinguir maiúsculas de "
+                L"minúsculas» distingue maiúsculas de minúsculas; «Procurar para trás» pesquisa em direção "
+                L"ao início do texto. A escolha de uma entrada do histórico repõe as cinco opções de "
+                L"pesquisa, incluindo o estado do modo de expressão regular; «Sempre em cima» é "
+                L"independente. «Expressão regular» desativa «A linha começa por» e «A linha termina com». "
+                L"Com ambas as opções de início e fim de linha ativas, basta uma correspondência numa das "
+                L"extremidades. «Moldar texto» altera apenas a apresentação."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2842,6 +3122,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copiar &caminho completo" },
             { TXT_OPEN_FILE, L"&Abrir ficheiro" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Abrir &localização do ficheiro" },
+            { TXT_EDIT_MENU, L"&Editar" },
+            { TXT_WORD_WRAP, L"&Moldar texto" },
+            { TXT_WORD_WRAP_FAILED, L"Não foi possível alterar a moldagem do texto." },
+            { TXT_COPY_SELECTION, L"&Copiar\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Selecionar t&udo\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Localizar…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Localizar &seguinte\tF3" },
+            { TXT_FIND_TITLE, L"%s — Localizar" },
+            { TXT_FIND_WHAT, L"&Localizar:" },
+            { TXT_FIND_NEXT, L"Localizar &seguinte" },
+            { TXT_FIND_MATCH_CASE, L"Distinguir &maiúsculas de minúsculas" },
+            { TXT_FIND_BACKWARD, L"Procurar para &trás" },
+            { TXT_FIND_TOPMOST, L"Sempre em &cima" },
+            { TXT_FIND_STARTS_WITH, L"&A linha começa por" },
+            { TXT_FIND_ENDS_WITH, L"A li&nha termina com" },
+            { TXT_FIND_REGEX, L"Expressão &regular" },
+            { TXT_FIND_NOT_FOUND, L"O texto especificado não foi encontrado." },
+            { TXT_FIND_FAILED, L"Não foi possível concluir a pesquisa." },
+            { TXT_FIND_REGEX_ERROR, L"Erro na expressão regular:\r\n\r\n%s" },
         }
     },
     {
@@ -2863,7 +3162,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Język:" },
             { TXT_OPEN_WEBSITE, L"&Otwórz w domyślnej przeglądarce" },
             { TXT_OPEN, L"&Otwórz…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Ustawienia" },
+            { TXT_OPTIONS_MENU, L"&Opcje" },
             { TXT_PREFERENCES_MENU, L"&Preferencje…\tCtrl+G" },
             { TXT_ABOUT, L"&O programie" },
             { TXT_ABOUT_TITLE, L"Informacje o %ls" },
@@ -2908,12 +3207,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Ścieżka do MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll nie jest załadowana. Wybierz ją w Ustawienia > Preferencje."
+                L"MediaInfo.dll nie jest załadowana. Wybierz ją w Opcje > Preferencje."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nie jest załadowana." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Nie można załadować zgodnej zewnętrznej ani dołączonej MediaInfo.dll. Wybierz ją w "
-                L"Ustawienia > Preferencje."
+                L"Nie można załadować zgodnej zewnętrznej ani dołączonej MediaInfo.dll. Wybierz ją w Opcje "
+                L"> Preferencje."
             },
             { TXT_ANTIALIASING_NONE, L"Brak" },
             { TXT_OK, L"OK" },
@@ -2921,7 +3220,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Platforma docelowa:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferencje" },
-            { TXT_READY, L"Gotowy." },
+            { TXT_READY, L"Gotowy" },
             { TXT_FONT_REGULAR, L"Zwykły" },
             { TXT_REPORT_LANGUAGE, L"Język &raportu:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tabele języków raportów" },
@@ -2986,11 +3285,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Biblioteka nie eksportuje wymaganych funkcji Unicode MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Proces biblioteki uległ awarii podczas %s (kod 0x%08lX). Wybierz zgodną DLL w Ustawienia > "
+                L"Proces biblioteki uległ awarii podczas %s (kod 0x%08lX). Wybierz zgodną DLL w Opcje > "
                 L"Preferencje."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces biblioteki przestał odpowiadać podczas %s. Wybierz zgodną DLL w Ustawienia > "
+                L"Proces biblioteki przestał odpowiadać podczas %s. Wybierz zgodną DLL w Opcje > "
                 L"Preferencje."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Preferencje zastosowano, ale nie zapisano ich w rejestrze." },
@@ -3082,7 +3381,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"folderów używanych przez Otwórz i Eksportuj ani nie zapisuje własnego folderu w "
                 L"ustawieniach aplikacji. Każde okno dialogowe Zapisz jako rozpoczyna się w folderze "
                 L"aktualnie wybranego pliku wejściowego, niezależnie od miejsca docelowego poprzedniego "
-                L"zapisu.\r\n\r\nPREFERENCJE I JĘZYKI\r\nPreferencje (Ustawienia > Preferencje, Ctrl+G) "
+                L"zapisu.\r\n\r\nPREFERENCJE I JĘZYKI\r\nPreferencje (Opcje > Preferencje, Ctrl+G) "
                 L"zawierają ścieżki bibliotek, czcionkę raportu, wygładzanie i języki. Interfejs ma 36 "
                 L"wariantów i początkowo korzysta z języka Windows. Raporty zawsze domyślnie używają "
                 L"oryginalnego angielskiego biblioteki, niezależnie od Windows i interfejsu. Zmienia to "
@@ -3096,8 +3395,22 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Dwie nowsze wersje mają odpowiednią libcurl; 0.7.60 nigdy jej nie rozpakowuje. Położenie "
                 L"okna jest zapisywane. Domyślnie dozwolona jest tylko jedna instancja, a kolejne "
                 L"uruchomienia przekazują pliki do otwartego okna. W ustawieniach można zezwolić na wiele "
-                L"instancji. Przy wielu oknach tylko pierwsze okno każdego typu przywraca zapisaną "
-                L"pozycję; następne przywracają jedynie rozmiar."
+                L"instancji. Przy wielu oknach tylko pierwsze okno każdego typu przywraca zapisaną pozycję; "
+                L"następne przywracają jedynie rozmiar.\r\n\r\nEdycja > Znajdź (Ctrl+F) wyszukuje w "
+                L"aktywnej karcie. F3 powtarza wyszukiwanie, a Shift+F3 odwraca jego kierunek. Po dotarciu "
+                L"do końca tekstu wyszukiwanie jest kontynuowane od drugiego końca. Opcje > Zawijanie "
+                L"wierszy dotyczy tylko aktywnej karty; zaznaczenie odpowiada wybranej karcie. Okno "
+                L"wyszukiwania można zminimalizować i zmieniać jego szerokość; położenie oraz ustawienie "
+                L"Zawsze na wierzchu są zapamiętywane. Do 30 wyszukiwanych tekstów z opcjami pozostaje w "
+                L"pamięci tylko do zamknięcia aplikacji. Opcje początku i końca dotyczą logicznych wierszy. "
+                L"Wyrażenia regularne używają składni PCRE2. Wszystkie polecenia menu Edycja dotyczą tylko "
+                L"aktywnej karty. Enter uruchamia wyszukiwanie, a Shift+Enter odwraca wybrany kierunek. "
+                L"„Uwzględnij wielkość liter” rozróżnia wielkie i małe litery; „Szukaj wstecz” wyszukuje w "
+                L"kierunku początku tekstu. Wybranie wpisu historii przywraca wszystkie pięć opcji "
+                L"wyszukiwania, w tym stan trybu wyrażeń regularnych; „Zawsze na wierzchu” jest niezależne. "
+                L"„Wyrażenie regularne” wyłącza opcje „Wiersz zaczyna się od” i „Wiersz kończy się na”. Gdy "
+                L"obie opcje krańców wiersza są włączone, wystarczy dopasowanie na jednym z nich. "
+                L"„Zawijanie wierszy” zmienia tylko sposób wyświetlania."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -3147,6 +3460,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiuj pełną &ścieżkę" },
             { TXT_OPEN_FILE, L"&Otwórz plik" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Otwórz &lokalizację pliku" },
+            { TXT_EDIT_MENU, L"&Edycja" },
+            { TXT_WORD_WRAP, L"Za&wijanie wierszy" },
+            { TXT_WORD_WRAP_FAILED, L"Nie można zmienić zawijania wierszy." },
+            { TXT_COPY_SELECTION, L"&Kopiuj\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Zaznacz &wszystko\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Znajdź…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Znajdź &następny\tF3" },
+            { TXT_FIND_TITLE, L"%s — Znajdź" },
+            { TXT_FIND_WHAT, L"Znajdź &tekst:" },
+            { TXT_FIND_NEXT, L"Znajdź &następny" },
+            { TXT_FIND_MATCH_CASE, L"Uwzględnij &wielkość liter" },
+            { TXT_FIND_BACKWARD, L"Szukaj w&stecz" },
+            { TXT_FIND_TOPMOST, L"Z&awsze na wierzchu" },
+            { TXT_FIND_STARTS_WITH, L"Wiersz zaczyna się &od" },
+            { TXT_FIND_ENDS_WITH, L"Wiersz &kończy się na" },
+            { TXT_FIND_REGEX, L"Wyrażenie &regularne" },
+            { TXT_FIND_NOT_FOUND, L"Nie znaleziono podanego tekstu." },
+            { TXT_FIND_FAILED, L"Nie można ukończyć wyszukiwania." },
+            { TXT_FIND_REGEX_ERROR, L"Błąd wyrażenia regularnego:\r\n\r\n%s" },
         }
     },
     {
@@ -3168,7 +3500,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Jazyk:" },
             { TXT_OPEN_WEBSITE, L"&Otvoriť v predvolenom prehliadači" },
             { TXT_OPEN, L"&Otvoriť…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Nastavenia" },
+            { TXT_OPTIONS_MENU, L"&Možnosti" },
             { TXT_PREFERENCES_MENU, L"&Predvoľby…\tCtrl+G" },
             { TXT_ABOUT, L"&O programe" },
             { TXT_ABOUT_TITLE, L"O programe %ls" },
@@ -3208,11 +3540,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Cesta k MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nie je načítaná. Vyberte ju v Nastavenia > Predvoľby." },
+            { TXT_MEDIALIB_REQUIRED,
+                L"MediaInfo.dll nie je načítaná. Vyberte ju v ponuke Možnosti > Predvoľby."
+            },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nie je načítaná." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Nemožno načítať kompatibilnú externú ani vloženú MediaInfo.dll. Vyberte ju v Nastavenia > "
-                L"Predvoľby."
+                L"Nemožno načítať kompatibilnú externú ani vloženú MediaInfo.dll. Vyberte ju v ponuke "
+                L"Možnosti > Predvoľby."
             },
             { TXT_ANTIALIASING_NONE, L"Žiadne" },
             { TXT_OK, L"OK" },
@@ -3220,7 +3554,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Cieľová platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Predvoľby" },
-            { TXT_READY, L"Pripravený." },
+            { TXT_READY, L"Pripravený" },
             { TXT_FONT_REGULAR, L"Normálne" },
             { TXT_REPORT_LANGUAGE, L"Jazyk &reportu:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jazykové tabuľky reportu" },
@@ -3283,11 +3617,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Knižnica neexportuje požadované funkcie Unicode knižnice MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Proces knižnice zlyhal pri %s (kód 0x%08lX). Vyberte kompatibilnú DLL v Nastavenia > "
+                L"Proces knižnice zlyhal pri %s (kód 0x%08lX). Vyberte kompatibilnú DLL v ponuke Možnosti > "
                 L"Predvoľby."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces knižnice prestal odpovedať pri %s. Vyberte kompatibilnú DLL v Nastavenia > "
+                L"Proces knižnice prestal odpovedať pri %s. Vyberte kompatibilnú DLL v ponuke Možnosti > "
                 L"Predvoľby."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
@@ -3375,7 +3709,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"aplikácie, aj keď dialógové okno Uložiť ako zrušíte. Nemení priečinky príkazov Otvoriť a "
                 L"Exportovať a aplikácia jeho vlastnú cestu neukladá do registra. Každé dialógové okno "
                 L"Uložiť ako začne v priečinku práve vybraného vstupného súboru bez ohľadu na "
-                L"predchádzajúci cieľ ukladania.\r\n\r\nPREDVOĽBY A JAZYKY\r\nPredvoľby (Nastavenia > "
+                L"predchádzajúci cieľ ukladania.\r\n\r\nPREDVOĽBY A JAZYKY\r\nPredvoľby (Možnosti > "
                 L"Predvoľby, Ctrl+G) obsahujú cesty ku knižniciam, písmo reportu, vyhladzovanie a jazyky. "
                 L"Rozhranie má 36 variantov a spočiatku sa riadi Windows. Reporty sú vždy predvolene v "
                 L"pôvodnej angličtine knižnice, nezávisle od Windows a rozhrania. Zmení to iba ručná voľba: "
@@ -3389,7 +3723,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"libcurl; 0.7.60 ju nikdy nerozbaľuje. Poloha okna sa ukladá. Predvolene je povolená iba "
                 L"jedna inštancia a ďalšie spustenie odovzdá súbory otvorenému oknu. V Predvoľbách možno "
                 L"povoliť viac inštancií. Pri viacerých oknách sa uložená poloha obnoví len prvému oknu "
-                L"daného typu; ďalšie prevezmú iba uloženú veľkosť."
+                L"daného typu; ďalšie prevezmú iba uloženú veľkosť.\r\n\r\nÚpravy > Hľadať (Ctrl+F) "
+                L"vyhľadáva v aktívnej karte. F3 hľadanie opakuje, Shift+F3 obráti jeho smer. Po dosiahnutí "
+                L"okraja textu pokračuje hľadanie na opačnom konci. Možnosti > Zalamovanie riadkov "
+                L"ovplyvňuje iba aktívnu kartu; začiarknutie sa mení podľa vybratej karty. Formulár "
+                L"hľadania možno minimalizovať a meniť jeho šírku; pamätá si polohu a voľbu Vždy navrchu. "
+                L"História uchováva najviac 30 hľadaných textov s ich voľbami iba do ukončenia aplikácie. "
+                L"Začína na a Končí na hľadajú na okrajoch logických riadkov. Regulárne výrazy používajú "
+                L"syntax PCRE2. Všetky príkazy ponuky Úpravy sa vzťahujú iba na aktívnu kartu. Enter spustí "
+                L"hľadanie, Shift+Enter obráti zvolený smer. Voľba „Rozlišovať veľké a malé písmená“ "
+                L"rozlišuje veľké a malé písmená; „Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z "
+                L"histórie obnoví všetkých päť volieb hľadania vrátane uloženého stavu regulárneho výrazu; "
+                L"„Vždy navrchu“ je nezávislá voľba. „Regulárny výraz“ vypne voľby „Začína na“ a „Končí "
+                L"na“. Ak sú zapnuté obe voľby okrajov riadka, stačí zhoda na jednom z nich. „Zalamovanie "
+                L"riadkov“ mení iba zobrazenie."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -3439,6 +3786,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopírovať úplnú &cestu" },
             { TXT_OPEN_FILE, L"&Otvoriť súbor" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Otvoriť &umiestnenie súboru" },
+            { TXT_EDIT_MENU, L"&Úpravy" },
+            { TXT_WORD_WRAP, L"&Zalamovanie riadkov" },
+            { TXT_WORD_WRAP_FAILED, L"Zalamovanie riadkov sa nepodarilo zmeniť." },
+            { TXT_COPY_SELECTION, L"&Kopírovať\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Vybrať &všetko\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Hľadať…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Hľadať ď&alej\tF3" },
+            { TXT_FIND_TITLE, L"%s — Hľadať" },
+            { TXT_FIND_WHAT, L"&Hľadať:" },
+            { TXT_FIND_NEXT, L"Hľadať ď&alej" },
+            { TXT_FIND_MATCH_CASE, L"Rozlišovať &veľké a malé písmená" },
+            { TXT_FIND_BACKWARD, L"Hľadať &dozadu" },
+            { TXT_FIND_TOPMOST, L"Vždy navr&chu" },
+            { TXT_FIND_STARTS_WITH, L"Začína &na" },
+            { TXT_FIND_ENDS_WITH, L"&Končí na" },
+            { TXT_FIND_REGEX, L"&Regulárny výraz" },
+            { TXT_FIND_NOT_FOUND, L"Zadaný text sa nenašiel." },
+            { TXT_FIND_FAILED, L"Vyhľadávanie sa nepodarilo dokončiť." },
+            { TXT_FIND_REGEX_ERROR, L"Chyba regulárneho výrazu:\r\n\r\n%s" },
         }
     },
     {
@@ -3460,7 +3826,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"S&prog:" },
             { TXT_OPEN_WEBSITE, L"&Åbn i standardbrowseren" },
             { TXT_OPEN, L"&Åbn…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Indstillinger" },
+            { TXT_OPTIONS_MENU, L"&Indstillinger" },
             { TXT_PREFERENCES_MENU, L"&Præferencer…\tCtrl+G" },
             { TXT_ABOUT, L"&Om" },
             { TXT_ABOUT_TITLE, L"Om %ls" },
@@ -3514,7 +3880,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Målplatform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Præferencer" },
-            { TXT_READY, L"Klar." },
+            { TXT_READY, L"Klar" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"&Rapportsprog:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Rapportsprogtabeller" },
@@ -3680,8 +4046,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"gemmes. Som standard tillades kun én instans, og senere starter sender filer til det åbne "
                 L"vindue. Flere instanser kan tillades i præferencerne. Ved flere vinduer gendannes den "
                 L"gemte placering kun for det første vindue af hver vinduestype; senere vinduer gendanner "
-                L"kun "
-                L"størrelsen."
+                L"kun størrelsen.\r\n\r\nRediger > Søg (Ctrl+F) søger i den aktive fane. F3 gentager "
+                L"søgningen; Skift+F3 vender retningen. Ved tekstens ender fortsætter søgningen fra den "
+                L"modsatte ende. Indstillinger > Tekstombrydning gælder kun den aktive fane; markeringen "
+                L"følger den valgte fane. Søgevinduet kan minimeres og ændres i bredden; placeringen og "
+                L"indstillingen Altid øverst huskes. Op til 30 søgetekster med deres indstillinger gemmes "
+                L"kun, indtil programmet lukkes. Indstillingerne for start og slutning gælder logiske "
+                L"linjer. Regulære udtryk bruger PCRE2-syntaks. Alle kommandoer i Rediger gælder kun den "
+                L"aktive fane. Enter starter søgningen; Skift+Enter vender den valgte retning. „Forskel på "
+                L"store og små bogstaver“ skelner mellem store og små bogstaver; „Søg bagud“ søger mod "
+                L"tekstens begyndelse. Valg af en historikpost gendanner alle fem søgeindstillinger, "
+                L"herunder tilstanden for regulære udtryk; „Altid øverst“ er uafhængig. „Regulært udtryk“ "
+                L"deaktiverer „Linjen starter med“ og „Linjen slutter med“. Er begge indstillinger for "
+                L"linjens ender slået til, er et match ved én ende nok. „Tekstombrydning“ ændrer kun "
+                L"visningen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -3732,6 +4110,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiér fuld &sti" },
             { TXT_OPEN_FILE, L"&Åbn fil" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Åbn &filplacering" },
+            { TXT_EDIT_MENU, L"&Rediger" },
+            { TXT_WORD_WRAP, L"&Tekstombrydning" },
+            { TXT_WORD_WRAP_FAILED, L"Tekstombrydning kunne ikke ændres." },
+            { TXT_COPY_SELECTION, L"&Kopiér\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Markér &alt\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Søg…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Søg &næste\tF3" },
+            { TXT_FIND_TITLE, L"%s — Søg" },
+            { TXT_FIND_WHAT, L"Søg &efter:" },
+            { TXT_FIND_NEXT, L"Søg &næste" },
+            { TXT_FIND_MATCH_CASE, L"Forskel på store og små &bogstaver" },
+            { TXT_FIND_BACKWARD, L"Søg b&agud" },
+            { TXT_FIND_TOPMOST, L"Altid &øverst" },
+            { TXT_FIND_STARTS_WITH, L"Linjen &starter med" },
+            { TXT_FIND_ENDS_WITH, L"Linjen sl&utter med" },
+            { TXT_FIND_REGEX, L"&Regulært udtryk" },
+            { TXT_FIND_NOT_FOUND, L"Den angivne tekst blev ikke fundet." },
+            { TXT_FIND_FAILED, L"Søgningen kunne ikke fuldføres." },
+            { TXT_FIND_REGEX_ERROR, L"Fejl i regulært udtryk:\r\n\r\n%s" },
         }
     },
     {
@@ -3753,7 +4150,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Kieli:" },
             { TXT_OPEN_WEBSITE, L"&Avaa oletusselaimessa" },
             { TXT_OPEN, L"&Avaa…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Asetukset" },
+            { TXT_OPTIONS_MENU, L"&Asetukset" },
             { TXT_PREFERENCES_MENU, L"&Asetukset…\tCtrl+G" },
             { TXT_ABOUT, L"&Tietoja" },
             { TXT_ABOUT_TITLE, L"Tietoja ohjelmasta %ls" },
@@ -3807,7 +4204,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Kohdealusta:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Asetukset" },
-            { TXT_READY, L"Valmis." },
+            { TXT_READY, L"Valmis" },
             { TXT_FONT_REGULAR, L"Normaali" },
             { TXT_REPORT_LANGUAGE, L"&Raportin kieli:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Raporttien kielitaulukot" },
@@ -3985,7 +4382,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"tallennetaan. Oletuksena sallitaan vain yksi esiintymä, ja myöhemmät käynnistykset "
                 L"lähettävät tiedostot avoimeen ikkunaan. Asetuksissa voi sallia useita esiintymiä. Kun "
                 L"ikkunoita on useita, vain kunkin ikkunatyypin ensimmäinen ikkuna palauttaa tallennetun "
-                L"sijaintinsa; myöhemmät ikkunat palauttavat vain koon."
+                L"sijaintinsa; myöhemmät ikkunat palauttavat vain koon.\r\n\r\nMuokkaa > Etsi (Ctrl+F) "
+                L"hakee aktiivisesta välilehdestä. F3 toistaa haun ja Vaihto+F3 vaihtaa hakusuunnan. "
+                L"Tekstin päässä haku jatkuu toisesta päästä. Asetukset > Automaattinen rivitys koskee vain "
+                L"aktiivista välilehteä; valintamerkki seuraa valittua välilehteä. Hakuikkunan voi "
+                L"pienentää ja sen leveyttä muuttaa; sijainti ja Aina päällimmäisenä -asetus muistetaan. "
+                L"Enintään 30 hakutekstiä asetuksineen säilytetään vain sovelluksen sulkemiseen asti. Rivin "
+                L"alku- ja loppuehdot koskevat loogisia rivejä. Säännölliset lausekkeet käyttävät "
+                L"PCRE2-syntaksia. Kaikki Muokkaa-valikon komennot koskevat vain aktiivista välilehteä. "
+                L"Enter käynnistää haun; Vaihto+Enter kääntää valitun suunnan. ”Sama kirjainkoko” erottaa "
+                L"isot ja pienet kirjaimet; ”Etsi taaksepäin” hakee kohti tekstin alkua. Historiakohteen "
+                L"valinta palauttaa kaikki viisi hakuasetusta, myös säännöllisten lausekkeiden tilan; ”Aina "
+                L"päällimmäisenä” on erillinen asetus. ”Säännöllinen lauseke” poistaa käytöstä asetukset "
+                L"”Rivi alkaa” ja ”Rivi päättyy”. Kun molemmat rivin reunaehdot ovat käytössä, osuma "
+                L"kummassa tahansa reunassa riittää. ”Automaattinen rivitys” muuttaa vain näyttötapaa."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4036,6 +4446,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopioi koko tiedosto&polku" },
             { TXT_OPEN_FILE, L"&Avaa tiedosto" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Avaa tiedosto&sijainti" },
+            { TXT_EDIT_MENU, L"&Muokkaa" },
+            { TXT_WORD_WRAP, L"A&utomaattinen rivitys" },
+            { TXT_WORD_WRAP_FAILED, L"Automaattista rivitystä ei voitu muuttaa." },
+            { TXT_COPY_SELECTION, L"&Kopioi\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Valitse k&aikki\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Etsi…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Etsi &seuraava\tF3" },
+            { TXT_FIND_TITLE, L"%s — Etsi" },
+            { TXT_FIND_WHAT, L"Etsittävä &teksti:" },
+            { TXT_FIND_NEXT, L"&Etsi seuraava" },
+            { TXT_FIND_MATCH_CASE, L"Sama kirjain&koko" },
+            { TXT_FIND_BACKWARD, L"Etsi t&aaksepäin" },
+            { TXT_FIND_TOPMOST, L"Aina &päällimmäisenä" },
+            { TXT_FIND_STARTS_WITH, L"Rivi a&lkaa" },
+            { TXT_FIND_ENDS_WITH, L"Rivi p&äättyy" },
+            { TXT_FIND_REGEX, L"Säänn&öllinen lauseke" },
+            { TXT_FIND_NOT_FOUND, L"Määritettyä tekstiä ei löytynyt." },
+            { TXT_FIND_FAILED, L"Hakua ei voitu suorittaa loppuun." },
+            { TXT_FIND_REGEX_ERROR, L"Virhe säännöllisessä lausekkeessa:\r\n\r\n%s" },
         }
     },
     {
@@ -4057,7 +4486,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Tungumál:" },
             { TXT_OPEN_WEBSITE, L"&Opna í sjálfgefnum vafra" },
             { TXT_OPEN, L"&Opna…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"S&tillingar" },
+            { TXT_OPTIONS_MENU, L"V&alkostir" },
             { TXT_PREFERENCES_MENU, L"&Kjörstillingar…\tCtrl+G" },
             { TXT_ABOUT, L"&Um" },
             { TXT_ABOUT_TITLE, L"Um %ls" },
@@ -4100,11 +4529,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Slóð að MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll er ekki hlaðið. Veldu það í Stillingar > Kjörstillingar."
+                L"MediaInfo.dll er ekki hlaðið. Veldu það í Valkostir > Kjörstillingar."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll er ekki hlaðið." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Ekki tókst að hlaða samhæft ytra eða innbyggt MediaInfo.dll. Veldu það í Stillingar > "
+                L"Ekki tókst að hlaða samhæft ytra eða innbyggt MediaInfo.dll. Veldu það í Valkostir > "
                 L"Kjörstillingar."
             },
             { TXT_ANTIALIASING_NONE, L"Engin" },
@@ -4113,7 +4542,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Markvettvangur:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Kjörstillingar" },
-            { TXT_READY, L"Tilbúið." },
+            { TXT_READY, L"Tilbúið" },
             { TXT_FONT_REGULAR, L"Venjulegt" },
             { TXT_REPORT_LANGUAGE, L"Tungu&mál skýrslu:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tungumálatöflur skýrslna" },
@@ -4170,11 +4599,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Safnið flytur ekki út nauðsynlegar Unicode-aðgerðir MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Safnferlið mistókst við %s (kóði 0x%08lX). Veldu samhæft DLL-safn í Stillingar > "
+                L"Safnferlið mistókst við %s (kóði 0x%08lX). Veldu samhæft DLL-safn í Valkostir > "
                 L"Kjörstillingar."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Safnferlið hætti að svara við %s. Veldu samhæft DLL-safn í Stillingar > Kjörstillingar."
+                L"Safnferlið hætti að svara við %s. Veldu samhæft DLL-safn í Valkostir > Kjörstillingar."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Stillingarnar voru virkjaðar en ekki vistaðar í skrásetningu." },
             { TXT_REPORT_START_FAILED, L"Ekki er nægt minni til að ræsa skýrsluna." },
@@ -4261,7 +4690,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"möppunum sem Opna og Flytja út eru notaðar né vistar sína eigin möppu í "
                 L"forritastillingunum. Sérhver vista sem gluggi byrjar í möppunni í inntaksskránni sem nú "
                 L"er valin, óháð fyrri vistunarstaðnum.\r\n\r\nKJÖRSTILLINGAR OG TUNGUMÁL\r\nKjörstillingar "
-                L"(Stillingar > Kjörstillingar, Ctrl+G) innihalda slóðir safna, letur skýrslu, leturjöfnun "
+                L"(Valkostir > Kjörstillingar, Ctrl+G) innihalda slóðir safna, letur skýrslu, leturjöfnun "
                 L"og tungumál. Viðmótið hefur 36 útgáfur og fylgir Windows í upphafi. Skýrslur nota alltaf "
                 L"upprunalega ensku safnsins sjálfgefið, óháð Windows og viðmóti. Aðeins handvirkt val "
                 L"breytir því: enska, 37 þýðingar eða eigin MediaInfo CSV-tafla. Í lagi eða Nota staðfestir "
@@ -4274,7 +4703,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"libcurl; 0.7.60 afþjappar því aldrei. Staðsetning gluggans er vistuð. Sjálfgefið er "
                 L"aðeins eitt tilvik leyft og síðari ræsingar senda skrár til opna gluggans. Í stillingum "
                 L"má leyfa mörg tilvik. Ef fleiri gluggar eru leyfðir endurheimtir aðeins fyrsti gluggi "
-                L"hverrar gluggategundar vistaða staðsetningu; síðari gluggar endurheimta aðeins stærðina."
+                L"hverrar gluggategundar vistaða staðsetningu; síðari gluggar endurheimta aðeins "
+                L"stærðina.\r\n\r\nBreyta > Finna (Ctrl+F) leitar í virkum flipa. F3 endurtekur leitina og "
+                L"Shift+F3 snýr leitarstefnunni við. Við enda textans heldur leitin áfram frá hinum "
+                L"endanum. Valkostir > Línuskipting gildir aðeins fyrir virkan flipa; gátmerkið fylgir "
+                L"völdum flipa. Hægt er að lágmarka leitargluggann og breyta breidd hans; staðsetning og "
+                L"stillingin Alltaf efst eru vistaðar. Allt að 30 leitartextar og stillingar þeirra eru "
+                L"aðeins geymd þar til forritinu er lokað. Upphafs- og endaskilyrði eiga við röklegar "
+                L"línur. Reglulegar segðir nota PCRE2-málskipan. Allar skipanir í Breyta eiga aðeins við "
+                L"virkan flipa. Enter ræsir leit; Shift+Enter snýr valinni stefnu við. „Greina á milli há- "
+                L"og lágstafa“ greinir á milli há- og lágstafa; „Leita afturábak“ leitar að upphafi "
+                L"textans. Val á færslu úr leitarsögunni endurheimtir alla fimm leitarvalkostina, þar á "
+                L"meðal stillingu reglulegra segða; „Alltaf efst“ er óháður valkostur. „Regluleg segð“ "
+                L"gerir „Lína byrjar á“ og „Lína endar á“ óvirka. Ef báðir valkostir fyrir enda línu eru "
+                L"virkir nægir samsvörun við annan endann. „Línuskipting“ breytir aðeins birtingunni."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4325,6 +4767,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Afrita alla &slóðina" },
             { TXT_OPEN_FILE, L"&Opna skrá" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Sýna í &möppu" },
+            { TXT_EDIT_MENU, L"&Breyta" },
+            { TXT_WORD_WRAP, L"&Línuskipting" },
+            { TXT_WORD_WRAP_FAILED, L"Ekki tókst að breyta línuskiptingu." },
+            { TXT_COPY_SELECTION, L"&Afrita\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Velja a&llt\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Finna…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Finna &næsta\tF3" },
+            { TXT_FIND_TITLE, L"%s — Finna" },
+            { TXT_FIND_WHAT, L"Leit&a að:" },
+            { TXT_FIND_NEXT, L"Finna &næsta" },
+            { TXT_FIND_MATCH_CASE, L"Greina á milli há- og lág&stafa" },
+            { TXT_FIND_BACKWARD, L"Leita a&fturábak" },
+            { TXT_FIND_TOPMOST, L"Alltaf &efst" },
+            { TXT_FIND_STARTS_WITH, L"Lína &byrjar á" },
+            { TXT_FIND_ENDS_WITH, L"Lína en&dar á" },
+            { TXT_FIND_REGEX, L"&Regluleg segð" },
+            { TXT_FIND_NOT_FOUND, L"Tilgreindur texti fannst ekki." },
+            { TXT_FIND_FAILED, L"Ekki tókst að ljúka leitinni." },
+            { TXT_FIND_REGEX_ERROR, L"Villa í reglulegri segð:\r\n\r\n%s" },
         }
     },
     {
@@ -4346,7 +4807,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"S&pråk:" },
             { TXT_OPEN_WEBSITE, L"&Åpne i standardnettleseren" },
             { TXT_OPEN, L"&Åpne…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Innstillinger" },
+            { TXT_OPTIONS_MENU, L"&Alternativer" },
             { TXT_PREFERENCES_MENU, L"&Preferanser…\tCtrl+G" },
             { TXT_ABOUT, L"&Om" },
             { TXT_ABOUT_TITLE, L"Om %ls" },
@@ -4387,12 +4848,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Sti til MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll er ikke lastet. Velg den under Innstillinger > Preferanser."
+                L"MediaInfo.dll er ikke lastet. Velg den under Alternativer > Preferanser."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll er ikke lastet." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Ingen kompatibel ekstern eller innebygd MediaInfo.dll kunne lastes. Velg den under "
-                L"Innstillinger > Preferanser."
+                L"Alternativer > Preferanser."
             },
             { TXT_ANTIALIASING_NONE, L"Ingen" },
             { TXT_OK, L"OK" },
@@ -4400,7 +4861,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Målplattform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferanser" },
-            { TXT_READY, L"Klar." },
+            { TXT_READY, L"Klar" },
             { TXT_FONT_REGULAR, L"Vanlig" },
             { TXT_REPORT_LANGUAGE, L"&Rapportspråk:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Rapportspråktabeller" },
@@ -4461,10 +4922,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Bibliotekprosessen feilet under %s (kode 0x%08lX). Velg en kompatibel DLL under "
-                L"Innstillinger > Preferanser."
+                L"Alternativer > Preferanser."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Bibliotekprosessen sluttet å svare under %s. Velg en kompatibel DLL under Innstillinger > "
+                L"Bibliotekprosessen sluttet å svare under %s. Velg en kompatibel DLL under Alternativer > "
                 L"Preferanser."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Innstillingene ble brukt, men kunne ikke lagres i registeret." },
@@ -4549,7 +5010,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"om Lagre som avbrytes. Det endrer verken mappene som brukes av Åpne og Eksporter eller "
                 L"lagrer sin egen mappe i applikasjonsinnstillingene. Hver Lagre som-dialog starter i "
                 L"mappen til den valgte inndatafilen, uavhengig av forrige lagringsmål.\r\n\r\nPREFERANSER "
-                L"OG SPRÅK\r\nPreferanser (Innstillinger > Preferanser, Ctrl+G) inneholder bibliotekstier, "
+                L"OG SPRÅK\r\nPreferanser (Alternativer > Preferanser, Ctrl+G) inneholder bibliotekstier, "
                 L"rapportskrift, utjevning og språk. Grensesnittet har 36 varianter og følger først "
                 L"Windows. Rapporter bruker alltid bibliotekets opprinnelige engelsk som standard, "
                 L"uavhengig av Windows og grensesnittet. Bare et manuelt valg endrer rapportspråket: "
@@ -4563,7 +5024,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"0.7.60 pakker aldri ut libcurl. Vindusplasseringen lagres. Som standard tillates bare én "
                 L"forekomst, og senere oppstarter sender filer til det åpne vinduet. Flere forekomster kan "
                 L"tillates i preferansene. Ved flere vinduer gjenopprettes lagret plassering bare for det "
-                L"første vinduet av hver vindustype; senere vinduer gjenoppretter bare størrelsen."
+                L"første vinduet av hver vindustype; senere vinduer gjenoppretter bare "
+                L"størrelsen.\r\n\r\nRediger > Søk (Ctrl+F) søker i den aktive fanen. F3 gjentar søket; "
+                L"Skift+F3 snur retningen. Ved tekstens ender fortsetter søket fra motsatt ende. "
+                L"Alternativer > Tekstbryting gjelder bare den aktive fanen; haken følger den valgte fanen. "
+                L"Søkevinduet kan minimeres og endres i bredden; plasseringen og innstillingen Alltid "
+                L"øverst huskes. Opptil 30 søketekster med innstillingene deres beholdes bare til "
+                L"programmet avsluttes. Valgene for begynnelse og slutt gjelder logiske linjer. Regulære "
+                L"uttrykk bruker PCRE2-syntaks. Alle kommandoer i Rediger gjelder bare den aktive fanen. "
+                L"Enter starter søket; Skift+Enter snur den valgte retningen. «Skill mellom store og små "
+                L"bokstaver» skiller mellom store og små bokstaver; «Søk bakover» søker mot begynnelsen av "
+                L"teksten. Valg av en historikkoppføring gjenoppretter alle fem søkevalg, inkludert "
+                L"innstillingen for regulære uttrykk; «Alltid øverst» er uavhengig. «Regulært uttrykk» "
+                L"deaktiverer «Linjen starter med» og «Linjen slutter med». Når begge valgene for linjens "
+                L"ender er aktivert, holder det med et treff ved én ende. «Tekstbryting» endrer bare "
+                L"visningen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4614,6 +5089,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopier fullstendig fil&bane" },
             { TXT_OPEN_FILE, L"&Åpne fil" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Åpne &filplassering" },
+            { TXT_EDIT_MENU, L"&Rediger" },
+            { TXT_WORD_WRAP, L"&Tekstbryting" },
+            { TXT_WORD_WRAP_FAILED, L"Tekstbryting kunne ikke endres." },
+            { TXT_COPY_SELECTION, L"&Kopier\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Merk &alt\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Søk…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Søk &neste\tF3" },
+            { TXT_FIND_TITLE, L"%s — Søk" },
+            { TXT_FIND_WHAT, L"Søk &etter:" },
+            { TXT_FIND_NEXT, L"Søk &neste" },
+            { TXT_FIND_MATCH_CASE, L"Skill mellom store og små &bokstaver" },
+            { TXT_FIND_BACKWARD, L"Søk b&akover" },
+            { TXT_FIND_TOPMOST, L"Alltid &øverst" },
+            { TXT_FIND_STARTS_WITH, L"Linjen &starter med" },
+            { TXT_FIND_ENDS_WITH, L"Linjen sl&utter med" },
+            { TXT_FIND_REGEX, L"&Regulært uttrykk" },
+            { TXT_FIND_NOT_FOUND, L"Den angitte teksten ble ikke funnet." },
+            { TXT_FIND_FAILED, L"Søket kunne ikke fullføres." },
+            { TXT_FIND_REGEX_ERROR, L"Feil i regulært uttrykk:\r\n\r\n%s" },
         }
     },
     {
@@ -4635,7 +5129,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"S&pråk:" },
             { TXT_OPEN_WEBSITE, L"&Öppna i standardwebbläsaren" },
             { TXT_OPEN, L"&Öppna…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Inställningar" },
+            { TXT_OPTIONS_MENU, L"A&lternativ" },
             { TXT_PREFERENCES_MENU, L"&Preferenser…\tCtrl+G" },
             { TXT_ABOUT, L"&Om" },
             { TXT_ABOUT_TITLE, L"Om %ls" },
@@ -4676,12 +5170,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Sökväg till MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll är inte inläst. Välj den under Inställningar > Preferenser."
+                L"MediaInfo.dll är inte inläst. Välj den under Alternativ > Preferenser."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll är inte inläst." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Ingen kompatibel extern eller inbäddad MediaInfo.dll kunde läsas in. Välj den under "
-                L"Inställningar > Preferenser."
+                L"Alternativ > Preferenser."
             },
             { TXT_ANTIALIASING_NONE, L"Ingen" },
             { TXT_OK, L"OK" },
@@ -4689,7 +5183,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Målplattform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferenser" },
-            { TXT_READY, L"Redo." },
+            { TXT_READY, L"Redo" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"&Rapportspråk:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Rapportspråktabeller" },
@@ -4754,10 +5248,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Biblioteksprocessen misslyckades under %s (kod 0x%08lX). Välj en kompatibel DLL under "
-                L"Inställningar > Preferenser."
+                L"Alternativ > Preferenser."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Biblioteksprocessen slutade svara under %s. Välj en kompatibel DLL under Inställningar > "
+                L"Biblioteksprocessen slutade svara under %s. Välj en kompatibel DLL under Alternativ > "
                 L"Preferenser."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
@@ -4847,7 +5341,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Det ändrar varken mapparna som används av Öppna och Exportera eller sparar sin egen mapp "
                 L"i programinställningarna. Varje Spara som-dialogruta startar i mappen för den för "
                 L"närvarande valda indatafilen, oavsett den tidigare sparade "
-                L"destinationen.\r\n\r\nPREFERENSER OCH SPRÅK\r\nPreferenser (Inställningar > Preferenser, "
+                L"destinationen.\r\n\r\nPREFERENSER OCH SPRÅK\r\nPreferenser (Alternativ > Preferenser, "
                 L"Ctrl+G) innehåller bibliotekssökvägar, rapportteckensnitt, utjämning och språk. "
                 L"Gränssnittet har 36 varianter och följer först Windows. Rapporter använder alltid "
                 L"bibliotekets ursprungliga engelska som standard, oberoende av Windows och gränssnittet. "
@@ -4862,7 +5356,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"upp libcurl. Fönsterplaceringen sparas. Som standard tillåts bara en instans och senare "
                 L"starter skickar filer till det öppna fönstret. Flera instanser kan tillåtas i "
                 L"preferenserna. Med flera fönster återställs den sparade positionen bara för det första "
-                L"fönstret av varje fönstertyp; senare fönster återställer bara storleken."
+                L"fönstret av varje fönstertyp; senare fönster återställer bara storleken.\r\n\r\nRedigera "
+                L"> Sök (Ctrl+F) söker i den aktiva fliken. F3 upprepar sökningen; Skift+F3 vänder "
+                L"riktningen. Vid textens ändar fortsätter sökningen från motsatt ände. Alternativ > "
+                L"Automatiskt radbyte gäller bara den aktiva fliken; bocken följer den valda fliken. "
+                L"Sökfönstret kan minimeras och ändras i bredd; positionen och inställningen Alltid överst "
+                L"sparas. Upp till 30 söktexter med sina alternativ behålls bara tills programmet avslutas. "
+                L"Alternativen för början och slutet gäller logiska rader. Reguljära uttryck använder "
+                L"PCRE2-syntax. Alla kommandon i Redigera gäller bara den aktiva fliken. Enter startar "
+                L"sökningen; Skift+Enter vänder den valda riktningen. ”Matcha gemener och versaler” skiljer "
+                L"mellan gemener och versaler; ”Sök bakåt” söker mot textens början. Ett val i historiken "
+                L"återställer alla fem sökalternativen, inklusive inställningen för reguljära uttryck; "
+                L"”Alltid överst” är oberoende. ”Reguljärt uttryck” inaktiverar ”Raden börjar med” och "
+                L"”Raden slutar med”. Om båda alternativen för radens ändar är aktiverade räcker en träff "
+                L"vid endera änden. ”Automatiskt radbyte” ändrar bara visningen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4912,6 +5419,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiera fullständig &sökväg" },
             { TXT_OPEN_FILE, L"&Öppna fil" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Öppna &filsökväg" },
+            { TXT_EDIT_MENU, L"&Redigera" },
+            { TXT_WORD_WRAP, L"A&utomatiskt radbyte" },
+            { TXT_WORD_WRAP_FAILED, L"Automatiskt radbyte kunde inte ändras." },
+            { TXT_COPY_SELECTION, L"&Kopiera\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Markera &allt\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Sök…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Sök &nästa\tF3" },
+            { TXT_FIND_TITLE, L"%s — Sök" },
+            { TXT_FIND_WHAT, L"Sök &efter:" },
+            { TXT_FIND_NEXT, L"Sök &nästa" },
+            { TXT_FIND_MATCH_CASE, L"&Matcha gemener och versaler" },
+            { TXT_FIND_BACKWARD, L"Sök &bakåt" },
+            { TXT_FIND_TOPMOST, L"Alltid &överst" },
+            { TXT_FIND_STARTS_WITH, L"&Raden börjar med" },
+            { TXT_FIND_ENDS_WITH, L"Raden s&lutar med" },
+            { TXT_FIND_REGEX, L"Re&guljärt uttryck" },
+            { TXT_FIND_NOT_FOUND, L"Den angivna texten hittades inte." },
+            { TXT_FIND_FAILED, L"Sökningen kunde inte slutföras." },
+            { TXT_FIND_REGEX_ERROR, L"Fel i reguljärt uttryck:\r\n\r\n%s" },
         }
     },
     {
@@ -4933,7 +5459,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Dil:" },
             { TXT_OPEN_WEBSITE, L"Varsayılan tarayıcıda &aç" },
             { TXT_OPEN, L"&Aç…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Ayarlar" },
+            { TXT_OPTIONS_MENU, L"&Seçenekler" },
             { TXT_PREFERENCES_MENU, L"&Tercihler…\tCtrl+G" },
             { TXT_ABOUT, L"&Hakkında" },
             { TXT_ABOUT_TITLE, L"%ls Hakkında" },
@@ -4977,10 +5503,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll &yolu:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll yüklenmedi. Ayarlar > Tercihler bölümünden seçin." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll yüklenmedi. Seçenekler > Tercihler bölümünden seçin." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll yüklenmedi." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Uyumlu haricî veya gömülü MediaInfo.dll yüklenemedi. Ayarlar > Tercihler bölümünden seçin."
+                L"Uyumlu haricî veya gömülü MediaInfo.dll yüklenemedi. Seçenekler > Tercihler bölümünden "
+                L"seçin."
             },
             { TXT_ANTIALIASING_NONE, L"Yok" },
             { TXT_OK, L"Tamam" },
@@ -4988,7 +5515,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Hedef platform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Tercihler" },
-            { TXT_READY, L"Hazır." },
+            { TXT_READY, L"Hazır" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"&Rapor dili:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Rapor dili tabloları" },
@@ -5046,12 +5573,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Kitaplık, gerekli MediaInfo Unicode işlevlerini dışa aktarmıyor."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Kitaplık işlemi %s sırasında başarısız oldu (kod 0x%08lX). Ayarlar > Tercihler bölümünden "
-                L"uyumlu bir DLL seçin."
+                L"Kitaplık işlemi %s sırasında başarısız oldu (kod 0x%08lX). Seçenekler > Tercihler "
+                L"bölümünden uyumlu bir DLL seçin."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Kitaplık işlemi %s sırasında yanıt vermeyi durdurdu. Ayarlar > Tercihler bölümünden uyumlu "
-                L"bir DLL seçin."
+                L"Kitaplık işlemi %s sırasında yanıt vermeyi durdurdu. Seçenekler > Tercihler bölümünden "
+                L"uyumlu bir DLL seçin."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Tercihler uygulandı ancak kayıt defterine kaydedilemedi." },
             { TXT_REPORT_START_FAILED, L"Raporu başlatmak için yeterli bellek yok." },
@@ -5138,7 +5665,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"uygulamadan çıkana kadar kendi klasörünü hatırlar. Aç ve Dışa aktar tarafından kullanılan "
                 L"klasörleri değiştirmez ve kendi klasörünü uygulama ayarlarına kaydetmez. Her Farklı "
                 L"Kaydet iletişim kutusu, önceki kaydetme hedefine bakılmaksızın, o anda seçili olan giriş "
-                L"dosyasının klasöründe başlar.\r\n\r\nTERCİHLER VE DİLLER\r\nTercihler (Ayarlar > "
+                L"dosyasının klasöründe başlar.\r\n\r\nTERCİHLER VE DİLLER\r\nTercihler (Seçenekler > "
                 L"Tercihler, Ctrl+G), kitaplık yollarını, rapor yazı tipini, yumuşatmayı ve dilleri içerir. "
                 L"Arayüzün 36 seçeneği vardır ve başlangıçta Windows’u izler. Raporların varsayılan dili, "
                 L"Windows ve arayüzden bağımsız olarak her zaman kitaplığın özgün İngilizcesidir. Bunu "
@@ -5153,9 +5680,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"libcurl’ü asla çıkartmaz. Pencere konumu kaydedilir. Varsayılan olarak yalnızca tek "
                 L"örneğe izin verilir ve sonraki başlatmalar dosyaları açık pencereye gönderir. Tercihlerde "
                 L"birden fazla örneğe izin verilebilir. Birden fazla pencere olduğunda, her pencere türünün "
-                L"yalnızca "
-                L"ilk penceresi kayıtlı konumunu geri yükler; sonraki pencereler yalnızca boyutu geri "
-                L"yükler."
+                L"yalnızca ilk penceresi kayıtlı konumunu geri yükler; sonraki pencereler yalnızca boyutu "
+                L"geri yükler.\r\n\r\nDüzenle > Bul (Ctrl+F), etkin sekmede arama yapar. F3 aramayı "
+                L"yineler; Shift+F3 yönünü tersine çevirir. Metnin sonuna ulaşıldığında arama diğer uçtan "
+                L"devam eder. Seçenekler > Sözcük Kaydır yalnızca etkin sekmeyi etkiler; onay işareti "
+                L"seçili sekmeye göre değişir. Arama penceresi simge durumuna küçültülebilir ve yatay "
+                L"olarak boyutlandırılabilir; konumu ile Her zaman üstte ayarı hatırlanır. En fazla 30 "
+                L"arama metni ve seçenekleri yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve "
+                L"bitiş seçenekleri mantıksal satırları esas alır. Düzenli ifadeler PCRE2 sözdizimini "
+                L"kullanır. Düzenle menüsündeki tüm komutlar yalnızca etkin sekmeyi etkiler. Enter aramayı "
+                L"başlatır; Shift+Enter seçilen yönü tersine çevirir. “Büyük/küçük harf eşleştir” büyük ve "
+                L"küçük harfleri ayırt eder; “Geriye doğru ara” metnin başına doğru arar. Geçmişten bir öğe "
+                L"seçmek, düzenli ifade modunun durumu da dahil beş arama seçeneğinin tümünü geri yükler; "
+                L"“Her zaman üstte” bağımsızdır. “Düzenli ifade”, “Satır şu ifadeyle başlar” ve “Satır şu "
+                L"ifadeyle biter” seçeneklerini devre dışı bırakır. Her iki satır ucu seçeneği de açıksa "
+                L"uçlardan birinde eşleşme olması yeterlidir. “Sözcük Kaydır” yalnızca görünümü değiştirir."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -5203,6 +5742,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Tam dosya &yolunu kopyala" },
             { TXT_OPEN_FILE, L"Dosyayı a&ç" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Dosya &konumunu aç" },
+            { TXT_EDIT_MENU, L"Dü&zenle" },
+            { TXT_WORD_WRAP, L"&Sözcük Kaydır" },
+            { TXT_WORD_WRAP_FAILED, L"Sözcük kaydırma değiştirilemedi." },
+            { TXT_COPY_SELECTION, L"&Kopyala\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Tü&münü Seç\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Bul…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"&Sonrakini Bul\tF3" },
+            { TXT_FIND_TITLE, L"%s — Bul" },
+            { TXT_FIND_WHAT, L"Aranan &metin:" },
+            { TXT_FIND_NEXT, L"&Sonrakini Bul" },
+            { TXT_FIND_MATCH_CASE, L"Büyük/küçük &harf eşleştir" },
+            { TXT_FIND_BACKWARD, L"&Geriye doğru ara" },
+            { TXT_FIND_TOPMOST, L"Her zaman &üstte" },
+            { TXT_FIND_STARTS_WITH, L"Satır şu ifadeyle &başlar" },
+            { TXT_FIND_ENDS_WITH, L"Sa&tır şu ifadeyle biter" },
+            { TXT_FIND_REGEX, L"Dü&zenli ifade" },
+            { TXT_FIND_NOT_FOUND, L"Belirtilen metin bulunamadı." },
+            { TXT_FIND_FAILED, L"Arama tamamlanamadı." },
+            { TXT_FIND_REGEX_ERROR, L"Düzenli ifade hatası:\r\n\r\n%s" },
         }
     },
     {
@@ -5224,7 +5782,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Keel:" },
             { TXT_OPEN_WEBSITE, L"&Ava vaikebrauseris" },
             { TXT_OPEN, L"&Ava…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"Sä&tted" },
+            { TXT_OPTIONS_MENU, L"S&uvandid" },
             { TXT_PREFERENCES_MENU, L"&Eelistused…\tCtrl+G" },
             { TXT_ABOUT, L"&Teave" },
             { TXT_ABOUT_TITLE, L"Teave %ls kohta" },
@@ -5265,12 +5823,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll-i &tee:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll pole laaditud. Valige see menüüst Sätted > Eelistused."
+                L"MediaInfo.dll pole laaditud. Valige see menüüst Suvandid > Eelistused."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll pole laaditud." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Ühilduvat välist ega kaasatud MediaInfo.dll-i ei saa laadida. Valige see menüüst Sätted > "
-                L"Eelistused."
+                L"Ühilduvat välist ega kaasatud MediaInfo.dll-i ei saa laadida. Valige see menüüst Suvandid "
+                L"> Eelistused."
             },
             { TXT_ANTIALIASING_NONE, L"Puudub" },
             { TXT_OK, L"OK" },
@@ -5278,7 +5836,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Sihtplatvorm:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Eelistused" },
-            { TXT_READY, L"Valmis." },
+            { TXT_READY, L"Valmis" },
             { TXT_FONT_REGULAR, L"Tavaline" },
             { TXT_REPORT_LANGUAGE, L"&Aruande keel:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Aruannete keeletabelid" },
@@ -5332,10 +5890,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CURL_EXPORTS_MISSING, L"Teek ei ekspordi MediaInfo jaoks nõutavaid curl-funktsioone." },
             { TXT_MEDIALIB_EXPORTS_MISSING, L"Teek ei ekspordi nõutavaid MediaInfo Unicode’i funktsioone." },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Teegi protsess nurjus %s (kood 0x%08lX). Valige ühilduv DLL menüüst Sätted > Eelistused."
+                L"Teegi protsess nurjus %s (kood 0x%08lX). Valige ühilduv DLL menüüst Suvandid > Eelistused."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Teegi protsess lakkas vastamast %s. Valige ühilduv DLL menüüst Sätted > Eelistused."
+                L"Teegi protsess lakkas vastamast %s. Valige ühilduv DLL menüüst Suvandid > Eelistused."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Sätted rakendati, kuid registrisse salvestamine nurjus." },
             { TXT_REPORT_START_FAILED, L"Aruande käivitamiseks pole piisavalt mälu." },
@@ -5419,7 +5977,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"rakenduse sulgemiseni, isegi kui Salvesta nimega on tühistatud. See ei muuda Ava ja "
                 L"Ekspordi kasutatavaid kaustu ega salvesta oma kausta rakenduse seadetesse. Iga Salvesta "
                 L"nimega dialoog algab parajasti valitud sisendfaili kaustast, olenemata eelmisest "
-                L"salvestussihtkohast.\r\n\r\nEELISTUSED JA KEELED\r\nEelistused (Sätted > Eelistused, "
+                L"salvestussihtkohast.\r\n\r\nEELISTUSED JA KEELED\r\nEelistused (Suvandid > Eelistused, "
                 L"Ctrl+G) sisaldavad teekide asukohti, aruande fonti, silumist ja keeli. Liidesel on 36 "
                 L"varianti ning alguses järgib see Windowsi. Aruanded kasutavad vaikimisi alati teegi "
                 L"algset inglise keelt, sõltumata Windowsist ja liidesest. Seda muudab ainult käsitsi "
@@ -5433,8 +5991,19 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"seda kunagi lahti. Akna asukoht salvestatakse. Vaikimisi on lubatud ainult üks eksemplar "
                 L"ja järgmised käivitused saadavad failid avatud aknasse. Eelistustes saab lubada mitu "
                 L"eksemplari. Mitme akna korral taastab salvestatud asukoha ainult iga aknatüübi esimene "
-                L"aken; "
-                L"järgmised aknad taastavad ainult suuruse."
+                L"aken; järgmised aknad taastavad ainult suuruse.\r\n\r\nRedigeeri > Otsi (Ctrl+F) otsib "
+                L"aktiivselt vahekaardilt. F3 kordab otsingut ja Shift+F3 pöörab otsingu suuna ümber. "
+                L"Teksti lõppu jõudes jätkub otsing teisest otsast. Suvandid > Reamurdmine kehtib ainult "
+                L"aktiivsel vahekaardil; märge vastab valitud vahekaardile. Otsinguakna saab minimeerida ja "
+                L"selle laiust muuta; asukoht ning valik Alati pealmine jäetakse meelde. Kuni 30 "
+                L"otsinguteksti koos valikutega säilitatakse ainult rakenduse sulgemiseni. Alguse ja lõpu "
+                L"valikud kehtivad loogiliste ridade kohta. Regulaaravaldised kasutavad PCRE2 süntaksit. "
+                L"Kõik menüü Redigeeri käsud kehtivad ainult aktiivsel vahekaardil. Enter käivitab otsingu; "
+                L"Shift+Enter pöörab valitud suuna ümber. „Tõstutundlik“ eristab suur- ja väiketähti; „Otsi "
+                L"tagasisuunas“ otsib teksti alguse suunas. Ajalookirje valimine taastab kõik viis "
+                L"otsinguvalikut, sealhulgas regulaaravaldise režiimi oleku; „Alati pealmine“ on sõltumatu. "
+                L"„Regulaaravaldis“ keelab valikud „Rida algab“ ja „Rida lõpeb“. Kui mõlemad reapiiri "
+                L"valikud on lubatud, piisab vastest ühes piiris. „Reamurdmine“ muudab ainult kuvamist."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -5483,6 +6052,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopeeri täielik faili&tee" },
             { TXT_OPEN_FILE, L"&Ava fail" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Ava faili a&sukoht" },
+            { TXT_EDIT_MENU, L"R&edigeeri" },
+            { TXT_WORD_WRAP, L"&Reamurdmine" },
+            { TXT_WORD_WRAP_FAILED, L"Reamurdmist ei saanud muuta." },
+            { TXT_COPY_SELECTION, L"&Kopeeri\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Val&i kõik\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Otsi…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Otsi &järgmist\tF3" },
+            { TXT_FIND_TITLE, L"%s — Otsi" },
+            { TXT_FIND_WHAT, L"Otsitav &tekst:" },
+            { TXT_FIND_NEXT, L"Otsi &järgmist" },
+            { TXT_FIND_MATCH_CASE, L"T&õstutundlik" },
+            { TXT_FIND_BACKWARD, L"Otsi t&agasisuunas" },
+            { TXT_FIND_TOPMOST, L"Alati &pealmine" },
+            { TXT_FIND_STARTS_WITH, L"&Rida algab" },
+            { TXT_FIND_ENDS_WITH, L"Rida &lõpeb" },
+            { TXT_FIND_REGEX, L"Re&gulaaravaldis" },
+            { TXT_FIND_NOT_FOUND, L"Määratud teksti ei leitud." },
+            { TXT_FIND_FAILED, L"Otsingut ei saanud lõpule viia." },
+            { TXT_FIND_REGEX_ERROR, L"Regulaaravaldise viga:\r\n\r\n%s" },
         }
     },
     {
@@ -5504,7 +6092,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Teanga:" },
             { TXT_OPEN_WEBSITE, L"&Oscail sa bhrabhsálaí réamhshocraithe" },
             { TXT_OPEN, L"&Oscail…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Socruithe" },
+            { TXT_OPTIONS_MENU, L"&Roghanna" },
             { TXT_PREFERENCES_MENU, L"&Roghanna…\tCtrl+G" },
             { TXT_ABOUT, L"&Maidir leis" },
             { TXT_ABOUT_TITLE, L"Maidir le %ls" },
@@ -5548,11 +6136,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Conair chuig MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"Níl MediaInfo.dll lódáilte. Roghnaigh é faoi Socruithe > Roghanna." },
+            { TXT_MEDIALIB_REQUIRED, L"Níl MediaInfo.dll lódáilte. Roghnaigh é faoi Roghanna > Roghanna." },
             { TXT_MEDIALIB_NOT_LOADED, L"Níl MediaInfo.dll lódáilte." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Níorbh fhéidir MediaInfo.dll comhoiriúnach seachtrach nó leabaithe a lódáil. Roghnaigh é "
-                L"faoi Socruithe > Roghanna."
+                L"faoi Roghanna > Roghanna."
             },
             { TXT_ANTIALIASING_NONE, L"Gan frithailiasáil" },
             { TXT_OK, L"OK" },
@@ -5560,7 +6148,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Sprioc-ardán:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Roghanna" },
-            { TXT_READY, L"Réidh." },
+            { TXT_READY, L"Réidh" },
             { TXT_FONT_REGULAR, L"Gnáth" },
             { TXT_REPORT_LANGUAGE, L"Tea&nga na tuairisce:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Táblaí teanga tuairiscí" },
@@ -5636,11 +6224,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Theip ar phróiseas na leabharlainne ag an gcéim seo: %s (cód 0x%08lX). Roghnaigh DLL "
-                L"comhoiriúnach faoi Socruithe > Roghanna."
+                L"comhoiriúnach faoi Roghanna > Roghanna."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Ní fhreagraíonn próiseas na leabharlainne ag an gcéim seo: %s. Roghnaigh DLL comhoiriúnach "
-                L"faoi Socruithe > Roghanna."
+                L"Ní fhreagraíonn próiseas na leabharlainne ag an gcéim seo: %s. Roghnaigh DLL "
+                L"comhoiriúnach faoi Roghanna > Roghanna."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Cuireadh na socruithe i bhfeidhm ach níor sábháladh sa chlárlann iad."
@@ -5738,24 +6326,37 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Easpórtáil agus ní shábhálann sí a fillteán féin i socruithe an fheidhmchláir. Osclaítear "
                 L"gach dialóg Sábháil Mar i bhfillteán an chomhaid ionchuir reatha, beag beann ar an gceann "
                 L"scríbe sábhála roimhe seo.\r\n\r\nROGHANNA AGUS TEANGACHA\r\nTá conairí leabharlainne, "
-                L"cló na tuairisce, frithailiasáil agus teangacha i Roghanna (Socruithe > Roghanna, "
-                L"Ctrl+G). Tá 36 leagan den chomhéadan ann agus leanann sé Windows ar dtús. Úsáideann "
-                L"tuairiscí bun-Bhéarla na leabharlainne i gcónaí mar réamhshocrú, neamhspleách ar Windows "
-                L"agus ar an gcomhéadan. Ní athraíonn é sin ach rogha láimhe: Béarla, 37 aistriúchán nó "
-                L"tábla CSV MediaInfo saincheaptha. Deimhníonn OK nó Cuir i bhfeidhm na hathruithe; "
-                L"caitheann Cealaigh na hathruithe ar feitheamh amach. Sna Roghanna, is féidir teorainn a "
-                L"chur le fad ainm an chluaisín (80 de réir réamhshocraithe) agus liosta na gcomhad le "
-                L"déanaí a ghlanadh. Coinnítear tús, deireadh agus iarmhír ainmneacha fada le comhartha "
-                L"focalbhá sa lár. Baineann Glan liosta na gcomhad le déanaí láithreach, fiú má dhúntar "
-                L"Roghanna le Cealaigh ina dhiaidh sin.\r\n\r\nLEABHARLANNA AGUS FUINNEOGA\r\nTá MediaInfo "
-                L"26.10, 21.03 agus 0.7.60 sa chlár, á dtriail ón gceann is nuaí tar éis leabharlanna "
-                L"seachtracha. Tá libcurl oiriúnach ag an dá leagan is nuaí; ní bhaineann 0.7.60 libcurl "
-                L"amach riamh. Sábháiltear suíomh na fuinneoige. De réir réamhshocraithe, ní cheadaítear "
-                L"ach ásc amháin agus seolann seoltaí eile na comhaid chuig an bhfuinneog oscailte. Is "
-                L"féidir áscanna iolracha a cheadú sna socruithe. Má tá roinnt fuinneog ann, ní "
-                L"athchóirítear an suíomh sábháilte ach don chéad fhuinneog de gach cineál fuinneoige; ní "
-                L"athchóirítear "
-                L"ach an méid do na fuinneoga eile."
+                L"cló na tuairisce, frithailiasáil agus teangacha i Roghanna (Roghanna > Roghanna, Ctrl+G). "
+                L"Tá 36 leagan den chomhéadan ann agus leanann sé Windows ar dtús. Úsáideann tuairiscí "
+                L"bun-Bhéarla na leabharlainne i gcónaí mar réamhshocrú, neamhspleách ar Windows agus ar an "
+                L"gcomhéadan. Ní athraíonn é sin ach rogha láimhe: Béarla, 37 aistriúchán nó tábla CSV "
+                L"MediaInfo saincheaptha. Deimhníonn OK nó Cuir i bhfeidhm na hathruithe; caitheann "
+                L"Cealaigh na hathruithe ar feitheamh amach. Sna Roghanna, is féidir teorainn a chur le fad "
+                L"ainm an chluaisín (80 de réir réamhshocraithe) agus liosta na gcomhad le déanaí a "
+                L"ghlanadh. Coinnítear tús, deireadh agus iarmhír ainmneacha fada le comhartha focalbhá sa "
+                L"lár. Baineann Glan liosta na gcomhad le déanaí láithreach, fiú má dhúntar Roghanna le "
+                L"Cealaigh ina dhiaidh sin.\r\n\r\nLEABHARLANNA AGUS FUINNEOGA\r\nTá MediaInfo 26.10, 21.03 "
+                L"agus 0.7.60 sa chlár, á dtriail ón gceann is nuaí tar éis leabharlanna seachtracha. Tá "
+                L"libcurl oiriúnach ag an dá leagan is nuaí; ní bhaineann 0.7.60 libcurl amach riamh. "
+                L"Sábháiltear suíomh na fuinneoige. De réir réamhshocraithe, ní cheadaítear ach ásc amháin "
+                L"agus seolann seoltaí eile na comhaid chuig an bhfuinneog oscailte. Is féidir áscanna "
+                L"iolracha a cheadú sna socruithe. Má tá roinnt fuinneog ann, ní athchóirítear an suíomh "
+                L"sábháilte ach don chéad fhuinneog de gach cineál fuinneoige; ní athchóirítear ach an méid "
+                L"do na fuinneoga eile.\r\n\r\nDéanann Eagar > Aimsigh (Ctrl+F) cuardach sa chluaisín "
+                L"gníomhach. Déanann F3 an cuardach arís agus aisiompaíonn Shift+F3 an treo. Ag ceann an "
+                L"téacs, leanann an cuardach ón gceann eile. Ní bhaineann Roghanna > Timfhilleadh Focal ach "
+                L"leis an gcluaisín gníomhach; leanann an tic an cluaisín roghnaithe. Is féidir an "
+                L"fhuinneog chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh agus an "
+                L"socrú Ar barr i gcónaí. Ní choinnítear suas le 30 téacs cuardaigh agus a gcuid roghanna "
+                L"ach go dtí go ndúntar an feidhmchlár. Baineann na roghanna tosaigh agus deiridh le línte "
+                L"loighciúla. Úsáideann sloinn rialta comhréir PCRE2. Ní bhaineann aon ordú sa roghchlár "
+                L"Eagar ach leis an gcluaisín gníomhach. Tosaíonn Enter cuardach; aisiompaíonn Shift+Enter "
+                L"an treo roghnaithe. Déanann “Meaitseáil an cás” idirdhealú idir cás uachtair agus cás "
+                L"íochtair; cuardaíonn “Cuardaigh ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú "
+                L"iontrála staire na cúig rogha cuardaigh uile, lena n-áirítear staid mhód na slonn rialta; "
+                L"tá “Ar barr i gcónaí” neamhspleách. Díchumasaíonn “Slonn rialta” na roghanna “Tosaíonn an "
+                L"líne le” agus “Críochnaíonn an líne le”. Má tá an dá rogha imill líne cumasaithe, is leor "
+                L"meaitseáil ag ceachtar imeall. Ní athraíonn “Timfhilleadh Focal” ach an taispeáint."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -5808,6 +6409,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Cóipeáil an chonair &iomlán" },
             { TXT_OPEN_FILE, L"&Oscail an comhad" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Taispeáin san &Fhillteán" },
+            { TXT_EDIT_MENU, L"&Eagar" },
+            { TXT_WORD_WRAP, L"&Timfhilleadh Focal" },
+            { TXT_WORD_WRAP_FAILED, L"Níorbh fhéidir timfhilleadh focal a athrú." },
+            { TXT_COPY_SELECTION, L"&Cóipeáil\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Roghnaigh &Uile\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Aimsigh…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Aimsigh an Chéad Cheann &Eile\tF3" },
+            { TXT_FIND_TITLE, L"%s — Aimsigh" },
+            { TXT_FIND_WHAT, L"Téacs le &haimsiú:" },
+            { TXT_FIND_NEXT, L"Aimsigh an &Chéad Cheann Eile" },
+            { TXT_FIND_MATCH_CASE, L"Meaitseáil an cá&s" },
+            { TXT_FIND_BACKWARD, L"Cuardaigh ar &gcúl" },
+            { TXT_FIND_TOPMOST, L"Ar &barr i gcónaí" },
+            { TXT_FIND_STARTS_WITH, L"&Tosaíonn an líne le" },
+            { TXT_FIND_ENDS_WITH, L"Críochnaíonn an líne &le" },
+            { TXT_FIND_REGEX, L"Slonn &rialta" },
+            { TXT_FIND_NOT_FOUND, L"Níor aimsíodh an téacs sonraithe." },
+            { TXT_FIND_FAILED, L"Níorbh fhéidir an cuardach a chríochnú." },
+            { TXT_FIND_REGEX_ERROR, L"Earráid sa slonn rialta:\r\n\r\n%s" },
         }
     },
     {
@@ -5829,7 +6449,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"Ka&lba:" },
             { TXT_OPEN_WEBSITE, L"&Atidaryti numatytojoje naršyklėje" },
             { TXT_OPEN, L"&Atidaryti…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Parametrai" },
+            { TXT_OPTIONS_MENU, L"&Parinktys" },
             { TXT_PREFERENCES_MENU, L"&Nuostatos…\tCtrl+G" },
             { TXT_ABOUT, L"&Apie" },
             { TXT_ABOUT_TITLE, L"Apie %ls" },
@@ -5871,11 +6491,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll &kelias:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll neįkelta. Pasirinkite ją per Parametrai > Nuostatos." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll neįkelta. Pasirinkite ją per Parinktys > Nuostatos." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll neįkelta." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Nepavyko įkelti suderinamos išorinės ar įterptos MediaInfo.dll. Pasirinkite ją per "
-                L"Parametrai > Nuostatos."
+                L"Parinktys > Nuostatos."
             },
             { TXT_ANTIALIASING_NONE, L"Nėra" },
             { TXT_OK, L"Gerai" },
@@ -5883,7 +6503,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Tikslinė platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Nuostatos" },
-            { TXT_READY, L"Parengta." },
+            { TXT_READY, L"Parengta" },
             { TXT_FONT_REGULAR, L"Įprastas" },
             { TXT_REPORT_LANGUAGE, L"A&taskaitos kalba:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Ataskaitų kalbų lentelės" },
@@ -5947,10 +6567,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Bibliotekos procesas nutrūko vykdant %s (kodas 0x%08lX). Pasirinkite suderinamą DLL per "
-                L"Parametrai > Nuostatos."
+                L"Parinktys > Nuostatos."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Bibliotekos procesas nebeatsako vykdant %s. Pasirinkite suderinamą DLL per Parametrai > "
+                L"Bibliotekos procesas nebeatsako vykdant %s. Pasirinkite suderinamą DLL per Parinktys > "
                 L"Nuostatos."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Nuostatos pritaikytos, bet jų nepavyko įrašyti į registrą." },
@@ -6039,7 +6659,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"nekeičia Atidaryti ir Eksportuoti naudojamų aplankų ir neišsaugo savo aplanko programos "
                 L"nustatymuose. Kiekvienas dialogo langas Įrašyti kaip prasideda šiuo metu pasirinkto "
                 L"įvesties failo aplanke, neatsižvelgiant į ankstesnę įrašymo vietą.\r\n\r\nNUOSTATOS IR "
-                L"KALBOS\r\nNuostatose (Parametrai > Nuostatos, Ctrl+G) yra bibliotekų keliai, ataskaitos "
+                L"KALBOS\r\nNuostatose (Parinktys > Nuostatos, Ctrl+G) yra bibliotekų keliai, ataskaitos "
                 L"šriftas, glodinimas ir kalbos. Sąsaja turi 36 variantus ir iš pradžių laikosi Windows "
                 L"kalbos. Ataskaitoms visada numatyta originali bibliotekos anglų kalba, nepriklausomai nuo "
                 L"Windows ir sąsajos. Tai pakeičia tik rankinis pasirinkimas: anglų kalba, 37 vertimai arba "
@@ -6053,7 +6673,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"niekada neišpakuoja. Lango padėtis išsaugoma. Pagal numatytąsias nuostatas leidžiamas tik "
                 L"vienas egzempliorius, o vėlesni paleidimai perduoda failus atvertam langui. Nuostatose "
                 L"galima leisti kelis egzempliorius. Kai langų yra keli, išsaugota vieta atkuriama tik "
-                L"pirmajam kiekvieno lango tipo langui; kiti langai atkuria tik dydį."
+                L"pirmajam kiekvieno lango tipo langui; kiti langai atkuria tik dydį.\r\n\r\nRedaguoti > "
+                L"Rasti (Ctrl+F) ieško aktyviame skirtuke. F3 kartoja paiešką, o Shift+F3 pakeičia jos "
+                L"kryptį. Pasiekus teksto galą, paieška tęsiama nuo kito galo. Parinktys > Teksto eilučių "
+                L"kėlimas taikomas tik aktyviam skirtukui; varnelė atitinka pasirinktą skirtuką. Paieškos "
+                L"langą galima sumažinti ir keisti jo plotį; jo vieta ir parinktis Visada viršuje "
+                L"įsimenamos. Iki 30 paieškos tekstų su parinktimis saugoma tik iki programos uždarymo. "
+                L"Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. Reguliarieji reiškiniai "
+                L"naudoja PCRE2 sintaksę. Visos meniu Redaguoti komandos taikomos tik aktyviam skirtukui. "
+                L"Enter pradeda paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti didžiąsias ir "
+                L"mažąsias raides“ skiria didžiąsias ir mažąsias raides; „Ieškoti atgal“ ieško teksto "
+                L"pradžios link. Pasirinkus istorijos įrašą atkuriamos visos penkios paieškos parinktys, "
+                L"įskaitant reguliariųjų reiškinių režimo būseną; „Visada viršuje“ yra nepriklausoma. "
+                L"„Reguliarusis reiškinys“ išjungia „Eilutė prasideda“ ir „Eilutė baigiasi“. Įjungus abi "
+                L"eilutės kraštų parinktis, pakanka atitikmens viename krašte. „Teksto eilučių kėlimas“ "
+                L"keičia tik rodymą."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6103,6 +6737,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopijuoti visą &kelią" },
             { TXT_OPEN_FILE, L"&Atidaryti failą" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Atidaryti &failo vietą" },
+            { TXT_EDIT_MENU, L"&Redaguoti" },
+            { TXT_WORD_WRAP, L"Teksto eilučių &kėlimas" },
+            { TXT_WORD_WRAP_FAILED, L"Nepavyko pakeisti teksto eilučių kėlimo." },
+            { TXT_COPY_SELECTION, L"&Kopijuoti\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Pažymėti &viską\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Rasti…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Rasti ki&tą\tF3" },
+            { TXT_FIND_TITLE, L"%s — Rasti" },
+            { TXT_FIND_WHAT, L"Rasti &tekstą:" },
+            { TXT_FIND_NEXT, L"Rasti &kitą" },
+            { TXT_FIND_MATCH_CASE, L"Skirti didžiąsias ir &mažąsias raides" },
+            { TXT_FIND_BACKWARD, L"Ieškoti &atgal" },
+            { TXT_FIND_TOPMOST, L"Visada &viršuje" },
+            { TXT_FIND_STARTS_WITH, L"Eilutė &prasideda" },
+            { TXT_FIND_ENDS_WITH, L"Eilutė &baigiasi" },
+            { TXT_FIND_REGEX, L"&Reguliarusis reiškinys" },
+            { TXT_FIND_NOT_FOUND, L"Nurodytas tekstas nerastas." },
+            { TXT_FIND_FAILED, L"Nepavyko užbaigti paieškos." },
+            { TXT_FIND_REGEX_ERROR, L"Reguliariojo reiškinio klaida:\r\n\r\n%s" },
         }
     },
     {
@@ -6124,7 +6777,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Valoda:" },
             { TXT_OPEN_WEBSITE, L"&Atvērt noklusējuma pārlūkprogrammā" },
             { TXT_OPEN, L"&Atvērt…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Iestatījumi" },
+            { TXT_OPTIONS_MENU, L"&Opcijas" },
             { TXT_PREFERENCES_MENU, L"&Iestatījumi…\tCtrl+G" },
             { TXT_ABOUT, L"Pa&r programmu" },
             { TXT_ABOUT_TITLE, L"Par programmu %ls" },
@@ -6169,11 +6822,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll &ceļš:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll nav ielādēta. Atlasiet to sadaļā Iestatījumi > Iestatījumi."
+                L"MediaInfo.dll nav ielādēta. Atlasiet to sadaļā Opcijas > Iestatījumi."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nav ielādēta." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Nevar ielādēt saderīgu ārējo vai iegulto MediaInfo.dll. Atlasiet to sadaļā Iestatījumi > "
+                L"Nevar ielādēt saderīgu ārējo vai iegulto MediaInfo.dll. Atlasiet to sadaļā Opcijas > "
                 L"Iestatījumi."
             },
             { TXT_ANTIALIASING_NONE, L"Nav" },
@@ -6182,7 +6835,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Mērķa platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Iestatījumi" },
-            { TXT_READY, L"Gatavs." },
+            { TXT_READY, L"Gatavs" },
             { TXT_FONT_REGULAR, L"Parasts" },
             { TXT_REPORT_LANGUAGE, L"Pā&rskata valoda:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Pārskatu valodu tabulas" },
@@ -6239,11 +6892,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Bibliotēka neeksportē nepieciešamās MediaInfo Unicode funkcijas."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Bibliotēkas process neizdevās %s (kods 0x%08lX). Atlasiet saderīgu DLL sadaļā Iestatījumi "
-                L"> Iestatījumi."
+                L"Bibliotēkas process neizdevās %s (kods 0x%08lX). Atlasiet saderīgu DLL sadaļā Opcijas > "
+                L"Iestatījumi."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Bibliotēkas process pārstāja atbildēt %s. Atlasiet saderīgu DLL sadaļā Iestatījumi > "
+                L"Bibliotēkas process pārstāja atbildēt %s. Atlasiet saderīgu DLL sadaļā Opcijas > "
                 L"Iestatījumi."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
@@ -6331,8 +6984,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"lietojumprogrammas iziešanai, pat ja ir atcelta opcija Saglabāt kā. Tas nemaina mapes, ko "
                 L"izmanto Atvērt un Eksportēt, un nesaglabā savu mapi lietojumprogrammas iestatījumos. "
                 L"Katrs dialoglodziņš Saglabāt kā sākas pašlaik atlasītā ievades faila mapē neatkarīgi no "
-                L"iepriekšējā saglabāšanas mērķa.\r\n\r\nIESTATĪJUMI UN VALODAS\r\nIestatījumi (Iestatījumi "
-                L"> Iestatījumi, Ctrl+G) ietver bibliotēku ceļus, pārskata fontu, fonta nogludināšanu un "
+                L"iepriekšējā saglabāšanas mērķa.\r\n\r\nIESTATĪJUMI UN VALODAS\r\nIestatījumi (Opcijas > "
+                L"Iestatījumi, Ctrl+G) ietver bibliotēku ceļus, pārskata fontu, fonta nogludināšanu un "
                 L"valodas. Saskarnei ir 36 varianti, un sākotnēji tā seko Windows valodai. Pārskati vienmēr "
                 L"pēc noklusējuma izmanto bibliotēkas sākotnējo angļu valodu neatkarīgi no Windows un "
                 L"saskarnes. To maina tikai manuāla izvēle: angļu valoda, 37 tulkojumi vai sava MediaInfo "
@@ -6346,7 +6999,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"atļauta tikai viena instance, un turpmākās palaišanas nodod failus atvērtajam logam. "
                 L"Iestatījumos var atļaut vairākas instances. Ja ir vairāki logi, saglabātā pozīcija tiek "
                 L"atjaunota tikai katra loga tipa pirmajam logam; pārējiem logiem tiek atjaunots tikai "
-                L"izmērs."
+                L"izmērs.\r\n\r\nRediģēt > Atrast (Ctrl+F) meklē aktīvajā cilnē. F3 atkārto meklēšanu, bet "
+                L"Shift+F3 maina tās virzienu. Sasniedzot teksta malu, meklēšana turpinās no otras malas. "
+                L"Opcijas > Teksta aplaušana attiecas tikai uz aktīvo cilni; atzīme mainās atbilstoši "
+                L"atlasītajai cilnei. Meklēšanas logu var minimizēt un mainīt tā platumu; tiek atcerēta "
+                L"atrašanās vieta un opcija Vienmēr virspusē. Līdz 30 meklēšanas tekstiem ar opcijām tiek "
+                L"saglabāti tikai līdz lietotnes aizvēršanai. Sākuma un beigu opcijas attiecas uz "
+                L"loģiskajām rindām. Regulārās izteiksmes izmanto PCRE2 sintaksi. Visas izvēlnes Rediģēt "
+                L"komandas attiecas tikai uz aktīvo cilni. Enter sāk meklēšanu; Shift+Enter apgriež "
+                L"izvēlēto virzienu. “Atšķirt lielos un mazos burtus” atšķir lielos un mazos burtus; "
+                L"“Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures ieraksta izvēle atjauno visas "
+                L"piecas meklēšanas opcijas, tostarp regulārās izteiksmes režīma stāvokli; “Vienmēr "
+                L"virspusē” ir neatkarīga opcija. “Regulārā izteiksme” atspējo “Rinda sākas ar” un “Rinda "
+                L"beidzas ar”. Ja abas rindas malu opcijas ir ieslēgtas, pietiek ar atbilstību vienā malā. "
+                L"“Teksta aplaušana” maina tikai attēlojumu."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6397,6 +7063,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopēt pilnu &ceļu" },
             { TXT_OPEN_FILE, L"&Atvērt failu" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Atvērt faila atrašanās &vietu" },
+            { TXT_EDIT_MENU, L"R&ediģēt" },
+            { TXT_WORD_WRAP, L"&Teksta aplaušana" },
+            { TXT_WORD_WRAP_FAILED, L"Neizdevās mainīt teksta aplaušanu." },
+            { TXT_COPY_SELECTION, L"&Kopēt\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Atlasīt &visu\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Atrast…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Atrast &nākamo\tF3" },
+            { TXT_FIND_TITLE, L"%s — Atrast" },
+            { TXT_FIND_WHAT, L"Meklējamais &teksts:" },
+            { TXT_FIND_NEXT, L"Atrast &nākamo" },
+            { TXT_FIND_MATCH_CASE, L"Atšķirt lielos un &mazos burtus" },
+            { TXT_FIND_BACKWARD, L"Meklēt &atpakaļ" },
+            { TXT_FIND_TOPMOST, L"Vienmēr &virspusē" },
+            { TXT_FIND_STARTS_WITH, L"Rinda &sākas ar" },
+            { TXT_FIND_ENDS_WITH, L"Rinda &beidzas ar" },
+            { TXT_FIND_REGEX, L"&Regulārā izteiksme" },
+            { TXT_FIND_NOT_FOUND, L"Norādītais teksts netika atrasts." },
+            { TXT_FIND_FAILED, L"Meklēšanu neizdevās pabeigt." },
+            { TXT_FIND_REGEX_ERROR, L"Regulārās izteiksmes kļūda:\r\n\r\n%s" },
         }
     },
     {
@@ -6420,7 +7105,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Nyelv:" },
             { TXT_OPEN_WEBSITE, L"&Megnyitás az alapértelmezett böngészőben" },
             { TXT_OPEN, L"&Megnyitás…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Beállítások" },
+            { TXT_OPTIONS_MENU, L"&Beállítások" },
             { TXT_PREFERENCES_MENU, L"&Beállítások…\tCtrl+G" },
             { TXT_ABOUT, L"&Névjegy" },
             { TXT_ABOUT_TITLE, L"A(z) %ls névjegye" },
@@ -6476,7 +7161,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Célplatform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Beállítások" },
-            { TXT_READY, L"Kész." },
+            { TXT_READY, L"Kész" },
             { TXT_FONT_REGULAR, L"Normál" },
             { TXT_REPORT_LANGUAGE, L"&Jelentés nyelve:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jelentésnyelvi táblázatok" },
@@ -6661,8 +7346,22 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"0.7.60 soha nem bontja ki. Az ablak helyzete megmarad. Alapértelmezés szerint csak egy "
                 L"példány engedélyezett, és a későbbi indítások átadják a fájlokat a nyitott ablaknak. A "
                 L"beállításokban több példány is engedélyezhető. Több ablak esetén csak az egyes "
-                L"ablaktípusok "
-                L"első ablaka állítja vissza a mentett pozíciót; a továbbiak csak a méretet."
+                L"ablaktípusok első ablaka állítja vissza a mentett pozíciót; a továbbiak csak a "
+                L"méretet.\r\n\r\nA Szerkesztés > Keresés (Ctrl+F) az aktív lapon keres. Az F3 megismétli a "
+                L"keresést, a Shift+F3 pedig megfordítja az irányát. A szöveg végéhez érve a keresés a "
+                L"másik végéről folytatódik. A Beállítások > Sortörés csak az aktív lapra érvényes; a "
+                L"jelölés a kiválasztott lapot követi. A keresőablak kis méretre állítható és vízszintesen "
+                L"átméretezhető; a helyzete és a Mindig felül beállítás megmarad. Legfeljebb 30 keresési "
+                L"szöveg és beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor elejére és "
+                L"végére vonatkozó beállítások logikai sorokra érvényesek. A reguláris kifejezések "
+                L"PCRE2-szintaxist használnak. A Szerkesztés menü összes parancsa csak az aktív lapra "
+                L"érvényes. Az Enter elindítja a keresést; a Shift+Enter megfordítja a kiválasztott irányt. "
+                L"A „Kis- és nagybetűk megkülönböztetése” megkülönbözteti a kis- és nagybetűket; a „Keresés "
+                L"visszafelé” a szöveg eleje felé keres. Egy előzmény kiválasztása visszaállítja mind az öt "
+                L"keresési beállítást, beleértve a reguláris kifejezések módjának állapotát is; a „Mindig "
+                L"felül” ettől független. A „Reguláris kifejezés” letiltja a „Sor elején” és „Sor végén” "
+                L"beállításokat. Ha mindkét sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik "
+                L"sorhatáron elég az egyezés. A „Sortörés” csak a megjelenítést módosítja."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6714,6 +7413,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Teljes elérési &út másolása" },
             { TXT_OPEN_FILE, L"Fájl &megnyitása" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Fájl &helyének megnyitása" },
+            { TXT_EDIT_MENU, L"S&zerkesztés" },
+            { TXT_WORD_WRAP, L"&Sortörés" },
+            { TXT_WORD_WRAP_FAILED, L"A sortörést nem sikerült módosítani." },
+            { TXT_COPY_SELECTION, L"&Másolás\tCtrl+C" },
+            { TXT_SELECT_ALL, L"&Az összes kijelölése\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Keresés…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Kö&vetkező keresése\tF3" },
+            { TXT_FIND_TITLE, L"%s — Keresés" },
+            { TXT_FIND_WHAT, L"Keresendő &szöveg:" },
+            { TXT_FIND_NEXT, L"Kö&vetkező keresése" },
+            { TXT_FIND_MATCH_CASE, L"Kis- és &nagybetűk megkülönböztetése" },
+            { TXT_FIND_BACKWARD, L"Keresés v&isszafelé" },
+            { TXT_FIND_TOPMOST, L"Mindig &felül" },
+            { TXT_FIND_STARTS_WITH, L"Sor &elején" },
+            { TXT_FIND_ENDS_WITH, L"Sor vé&gén" },
+            { TXT_FIND_REGEX, L"&Reguláris kifejezés" },
+            { TXT_FIND_NOT_FOUND, L"A megadott szöveg nem található." },
+            { TXT_FIND_FAILED, L"A keresést nem sikerült befejezni." },
+            { TXT_FIND_REGEX_ERROR, L"Hiba a reguláris kifejezésben:\r\n\r\n%s" },
         }
     },
     {
@@ -6735,7 +7453,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Lingwa:" },
             { TXT_OPEN_WEBSITE, L"&Iftaħ fil-brawżer predefinit" },
             { TXT_OPEN, L"&Iftaħ…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Issettjar" },
+            { TXT_OPTIONS_MENU, L"G&ħażliet" },
             { TXT_PREFERENCES_MENU, L"&Preferenzi…\tCtrl+G" },
             { TXT_ABOUT, L"&Dwar" },
             { TXT_ABOUT_TITLE, L"Dwar %ls" },
@@ -6779,18 +7497,21 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Mogħdija ta’ MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll mhijiex mgħobbija. Agħżilha minn Issettjar > "
-                L"Preferenzi." },
+            { TXT_MEDIALIB_REQUIRED,
+                L"MediaInfo.dll mhijiex mgħobbija. Agħżilha minn Għażliet > Preferenzi."
+            },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll mhijiex mgħobbija." },
-            { TXT_NO_COMPATIBLE_MEDIALIB, L"Ma setgħetx titgħabba MediaInfo.dll esterna jew inkorporata "
-                L"kompatibbli. Agħżilha minn Issettjar > Preferenzi." },
+            { TXT_NO_COMPATIBLE_MEDIALIB,
+                L"Ma setgħetx titgħabba MediaInfo.dll esterna jew inkorporata kompatibbli. Agħżilha minn "
+                L"Għażliet > Preferenzi."
+            },
             { TXT_ANTIALIASING_NONE, L"Xejn" },
             { TXT_OK, L"OK" },
             { TXT_OPEN_TITLE, L"Iftaħ fajls tal-midja" },
             { TXT_PLATFORM, L"Pjattaforma fil-mira:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferenzi" },
-            { TXT_READY, L"Lest." },
+            { TXT_READY, L"Lest" },
             { TXT_FONT_REGULAR, L"Normali" },
             { TXT_REPORT_LANGUAGE, L"Lingwa tar-&rapport:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tabelli tal-lingwa tar-rapporti" },
@@ -6859,10 +7580,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_EXPORTS_MISSING,
                 L"Il-librerija ma tesportax il-funzjonijiet Unicode meħtieġa ta’ MediaInfo."
             },
-            { TXT_LIBRARY_WORKER_FAILED, L"Il-proċess tal-librerija falla waqt %s (kodiċi 0x%08lX). "
-                L"Agħżel DLL kompatibbli minn Issettjar > Preferenzi." },
-            { TXT_LIBRARY_WORKER_TIMEOUT, L"Il-proċess tal-librerija ma jirrispondix waqt %s. Agħżel DLL "
-                L"kompatibbli minn Issettjar > Preferenzi." },
+            { TXT_LIBRARY_WORKER_FAILED,
+                L"Il-proċess tal-librerija falla waqt %s (kodiċi 0x%08lX). Agħżel DLL kompatibbli minn "
+                L"Għażliet > Preferenzi."
+            },
+            { TXT_LIBRARY_WORKER_TIMEOUT,
+                L"Il-proċess tal-librerija ma jirrispondix waqt %s. Agħżel DLL kompatibbli minn Għażliet > "
+                L"Preferenzi."
+            },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Il-preferenzi ġew applikati iżda ma ġewx issejvjati fir-reġistru."
             },
@@ -6910,16 +7635,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LOADING, L"Qed jitgħabba…" },
             { TXT_LOADING_FILE, L"Qed jitgħabba l-fajl %s…" },
             { TXT_APPLICATION_HELP,
-                L"FAJLS U TABS\r\nViżwalizzatur nattiv ta’ Windows x86 għar-rapporti ta’ MediaInfo.dll. Kull "
-                L"fajl "
-                L"għandu tab tiegħu għall-qari biss. Iftaħ b’Ctrl+O jew iddreggja l-fajls fit-tieqa. "
-                L"Il-ftuħ mill-ġdid jagħżel it-tab eżistenti. B’Ctrl+W jew bil-buttuna tan-nofs tal-maws "
-                L"tista’ tagħlaq tab; Agħlaq kollox jagħlaq it-tabs kollha. Il-menu Fajl jiftakar tmien "
-                L"fajls riċenti.\r\nIftaħ fowlder… jiftaħ il-fajls li jinsabu direttament fil-fowlder "
+                L"FAJLS U TABS\r\nViżwalizzatur nattiv ta’ Windows x86 għar-rapporti ta’ MediaInfo.dll. "
+                L"Kull fajl għandu tab tiegħu għall-qari biss. Iftaħ b’Ctrl+O jew iddreggja l-fajls "
+                L"fit-tieqa. Il-ftuħ mill-ġdid jagħżel it-tab eżistenti. B’Ctrl+W jew bil-buttuna tan-nofs "
+                L"tal-maws tista’ tagħlaq tab; Agħlaq kollox jagħlaq it-tabs kollha. Il-menu Fajl jiftakar "
+                L"tmien fajls riċenti.\r\nIftaħ fowlder… jiftaħ il-fajls li jinsabu direttament fil-fowlder "
                 L"magħżul, kull wieħed fit-tab tiegħu. Is-subfowlders mhumiex inklużi.\r\nIftaħ u Iftaħ "
                 L"fowlder jużaw l-istess fowlder magħżul l-aħħar. L-esportazzjoni tiftakar il-fowlder "
-                L"tagħha, "
-                L"Dokumenti b’mod predefinit. Il-modalità avvanzata turi oqsma addizzjonali "
+                L"tagħha, Dokumenti b’mod predefinit. Il-modalità avvanzata turi oqsma addizzjonali "
                 L"fir-rapport.\r\nFormati magħrufa / Codecs magħrufa / Parametri magħrufa — "
                 L"MediaInfo.dll.\r\nAnaliżi sħiħa teżamina l-fajl kollu u tista’ tieħu aktar żmien. Dawn "
                 L"l-għażliet tar-rapport u Livell ta’ traċċar huma separati għal kull tab; bidla taġġorna "
@@ -6958,7 +7681,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"tikkanċella Issejvja bħala. Ma tbiddilx il-fowlders ta’ Iftaħ u Esporta u ma tissejvjax "
                 L"il-fowlder tagħha fl-issettjar tal-applikazzjoni. Kull djalogu Issejvja bħala jibda "
                 L"fil-fowlder tal-fajl tad-dħul magħżul bħalissa, irrispettivament mid-destinazzjoni "
-                L"preċedenti.\r\n\r\nPREFERENZI U LINGWI\r\nIl-preferenzi (Issettjar > Preferenzi, Ctrl+G) "
+                L"preċedenti.\r\n\r\nPREFERENZI U LINGWI\r\nIl-preferenzi (Għażliet > Preferenzi, Ctrl+G) "
                 L"fihom il-mogħdijiet tal-libreriji, il-font tar-rapport, l-antialiasing u l-lingwi. "
                 L"L-interfaċċa għandha 36 varjant u inizjalment issegwi Windows. Ir-rapporti dejjem jużaw "
                 L"l-Ingliż oriġinali tal-librerija b’mod predefinit, indipendentement minn Windows u "
@@ -6974,8 +7697,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"awtomatiku hija permessa istanza waħda biss u tnedijiet sussegwenti jibagħtu l-fajls "
                 L"lit-tieqa miftuħa. Fil-preferenzi tista’ tippermetti diversi istanzi. B’diversi twieqi, "
                 L"l-ewwel tieqa ta’ kull tip ta’ tieqa biss tirrestawra l-pożizzjoni ssejvjata; it-twieqi "
-                L"ta’ "
-                L"wara jirrestawraw biss id-daqs."
+                L"ta’ wara jirrestawraw biss id-daqs.\r\n\r\nEditja > Sib (Ctrl+F) ifittex fit-tab attiva. "
+                L"F3 jirrepeti t-tfittxija; Shift+F3 jaqleb id-direzzjoni tagħha. Meta jintlaħaq tarf "
+                L"tat-test, it-tfittxija tkompli mit-tarf l-ieħor. Għażliet > Kebbeb il-kliem japplika biss "
+                L"għat-tab attiva; il-marka ssegwi t-tab magħżula. It-tieqa tat-tfittxija tista’ tiġi "
+                L"minimizzata u jinbidel il-wisa’ tagħha; il-pożizzjoni u l-għażla Dejjem fuq nett "
+                L"jinżammu. Sa 30 test tat-tfittxija bl-għażliet tagħhom jinżammu biss sakemm tingħalaq "
+                L"l-applikazzjoni. L-għażliet tal-bidu u tat-tmiem japplikaw għal-linji loġiċi. "
+                L"L-espressjonijiet regolari jużaw is-sintassi ta’ PCRE2. Il-kmandi kollha fil-menu Editja "
+                L"japplikaw biss għat-tab attiva. Enter jibda t-tfittxija; Shift+Enter jaqleb id-direzzjoni "
+                L"magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri kbar u żgħar; “Fittex "
+                L"lura” tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja, jerġgħu jiġu "
+                L"applikati l-ħames għażliet tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet "
+                L"regolari; “Dejjem fuq nett” hija indipendenti. “Espressjoni regolari” tiddiżattiva "
+                L"“Il-linja tibda bi” u “Il-linja tispiċċa bi”. Meta ż-żewġ għażliet tat-truf tal-linja "
+                L"jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb il-kliem” tbiddel biss il-wiri."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7026,6 +7762,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Ikkopja l-&mogħdija sħiħa" },
             { TXT_OPEN_FILE, L"&Iftaħ il-fajl" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Iftaħ il-&fowlder li fih il-fajl" },
+            { TXT_EDIT_MENU, L"&Editja" },
+            { TXT_WORD_WRAP, L"&Kebbeb il-kliem" },
+            { TXT_WORD_WRAP_FAILED, L"It-tgeżwir tal-kliem ma setax jinbidel." },
+            { TXT_COPY_SELECTION, L"I&kkopja\tCtrl+C" },
+            { TXT_SELECT_ALL, L"&Agħżel kollox\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Sib…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Sib li &jmiss\tF3" },
+            { TXT_FIND_TITLE, L"%s — Sib" },
+            { TXT_FIND_WHAT, L"Test biex &issib:" },
+            { TXT_FIND_NEXT, L"Sib li &jmiss" },
+            { TXT_FIND_MATCH_CASE, L"Iddistingwi ittri kbar u &żgħar" },
+            { TXT_FIND_BACKWARD, L"Fittex &lura" },
+            { TXT_FIND_TOPMOST, L"Dejjem fuq &nett" },
+            { TXT_FIND_STARTS_WITH, L"Il-linja &tibda bi" },
+            { TXT_FIND_ENDS_WITH, L"Il-linja tispiċċa &bi" },
+            { TXT_FIND_REGEX, L"Espressjoni &regolari" },
+            { TXT_FIND_NOT_FOUND, L"It-test speċifikat ma nstabx." },
+            { TXT_FIND_FAILED, L"It-tfittxija ma setgħetx titlesta." },
+            { TXT_FIND_REGEX_ERROR, L"Żball fl-espressjoni regolari:\r\n\r\n%s" },
         }
     },
     {
@@ -7047,7 +7802,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"T&aal:" },
             { TXT_OPEN_WEBSITE, L"&Openen in standaardbrowser" },
             { TXT_OPEN, L"&Openen…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Instellingen" },
+            { TXT_OPTIONS_MENU, L"&Opties" },
             { TXT_PREFERENCES_MENU, L"&Voorkeuren…\tCtrl+G" },
             { TXT_ABOUT, L"&Info" },
             { TXT_ABOUT_TITLE, L"Info over %ls" },
@@ -7090,12 +7845,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"MediaInfo.dll-&pad:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll is niet geladen. Selecteer deze via Instellingen > Voorkeuren."
+                L"MediaInfo.dll is niet geladen. Selecteer deze via Opties > Voorkeuren."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll is niet geladen." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Geen compatibele externe of ingesloten MediaInfo.dll kon worden geladen. Selecteer deze "
-                L"via Instellingen > Voorkeuren."
+                L"via Opties > Voorkeuren."
             },
             { TXT_ANTIALIASING_NONE, L"Geen" },
             { TXT_OK, L"OK" },
@@ -7103,7 +7858,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Doelplatform:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Voorkeuren" },
-            { TXT_READY, L"Gereed." },
+            { TXT_READY, L"Gereed" },
             { TXT_FONT_REGULAR, L"Normaal" },
             { TXT_REPORT_LANGUAGE, L"&Rapporttaal:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Rapporttaaltabellen" },
@@ -7173,11 +7928,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Het bibliotheekproces is mislukt tijdens %s (code 0x%08lX). Selecteer een compatibele DLL "
-                L"via Instellingen > Voorkeuren."
+                L"via Opties > Voorkeuren."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
                 L"Het bibliotheekproces reageert niet meer tijdens %s. Selecteer een compatibele DLL via "
-                L"Instellingen > Voorkeuren."
+                L"Opties > Voorkeuren."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"De voorkeuren zijn toegepast, maar konden niet in het register worden opgeslagen."
@@ -7275,12 +8030,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"worden gebruikt door Openen en Exporteren, noch slaat het zijn eigen map op in de "
                 L"applicatie-instellingen. Elk dialoogvenster Opslaan als begint in de map van het "
                 L"momenteel geselecteerde invoerbestand, ongeacht de vorige "
-                L"opslagbestemming.\r\n\r\nVOORKEUREN EN TALEN\r\nVoorkeuren (Instellingen > Voorkeuren, "
-                L"Ctrl+G) bevatten bibliotheekpaden, rapportlettertype, anti-aliasing en talen. De "
-                L"interface heeft 36 varianten en volgt aanvankelijk Windows. Rapporten gebruiken standaard "
-                L"altijd het oorspronkelijke Engels van de bibliotheek, onafhankelijk van Windows en de "
-                L"interface. Alleen een handmatige keuze wijzigt de rapporttaal: Engels, 37 vertalingen of "
-                L"een eigen MediaInfo-CSV-tabel. OK of Toepassen bevestigt wijzigingen; Annuleren verwerpt "
+                L"opslagbestemming.\r\n\r\nVOORKEUREN EN TALEN\r\nVoorkeuren (Opties > Voorkeuren, Ctrl+G) "
+                L"bevatten bibliotheekpaden, rapportlettertype, anti-aliasing en talen. De interface heeft "
+                L"36 varianten en volgt aanvankelijk Windows. Rapporten gebruiken standaard altijd het "
+                L"oorspronkelijke Engels van de bibliotheek, onafhankelijk van Windows en de interface. "
+                L"Alleen een handmatige keuze wijzigt de rapporttaal: Engels, 37 vertalingen of een eigen "
+                L"MediaInfo-CSV-tabel. OK of Toepassen bevestigt wijzigingen; Annuleren verwerpt "
                 L"openstaande wijzigingen. Voorkeuren stellen de limiet voor tabnamen in (standaard 80) en "
                 L"wissen de lijst met recente bestanden. Lange namen behouden begin, einde en extensie met "
                 L"een weglatingsteken in het midden. Wissen verwijdert de lijst met recente bestanden "
@@ -7292,7 +8047,22 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"één exemplaar toegestaan en worden bestanden bij opnieuw starten naar het open venster "
                 L"gestuurd. In de voorkeuren kunnen meerdere exemplaren worden toegestaan. Bij meerdere "
                 L"vensters herstelt alleen het eerste venster van elk venstertype de opgeslagen positie; "
-                L"latere vensters herstellen alleen de grootte."
+                L"latere vensters herstellen alleen de grootte.\r\n\r\nBewerken > Zoeken (Ctrl+F) doorzoekt "
+                L"het actieve tabblad. F3 herhaalt de zoekopdracht; Shift+F3 keert de richting om. Aan het "
+                L"einde van de tekst gaat het zoeken verder vanaf het andere uiteinde. Opties > "
+                L"Automatische terugloop geldt alleen voor het actieve tabblad; het vinkje volgt het "
+                L"geselecteerde tabblad. Het zoekvenster kan worden geminimaliseerd en in de breedte worden "
+                L"aangepast; de positie en de instelling Altijd bovenop worden onthouden. Maximaal 30 "
+                L"zoekteksten met hun opties blijven alleen bewaard totdat de toepassing wordt afgesloten. "
+                L"De begin- en eindopties gelden voor logische regels. Reguliere expressies gebruiken "
+                L"PCRE2-syntaxis. Alle opdrachten in Bewerken gelden alleen voor het actieve tabblad. Enter "
+                L"start het zoeken; Shift+Enter keert de gekozen richting om. \"Hoofdlettergevoelig\" maakt "
+                L"onderscheid tussen hoofdletters en kleine letters; \"Achteruit zoeken\" zoekt naar het "
+                L"begin van de tekst. Een keuze uit de geschiedenis herstelt alle vijf zoekopties, ook de "
+                L"stand van de modus voor reguliere expressies; \"Altijd bovenop\" staat hier los van. "
+                L"\"Reguliere expressie\" schakelt \"Regel begint met\" en \"Regel eindigt op\" uit. Als "
+                L"beide opties voor de regeluiteinden aanstaan, volstaat een overeenkomst aan één uiteinde. "
+                L"\"Automatische terugloop\" verandert alleen de weergave."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7346,6 +8116,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Volledig bestands&pad kopiëren" },
             { TXT_OPEN_FILE, L"Bestand &openen" },
             { TXT_OPEN_CONTAINING_FOLDER, L"&Bestandslocatie openen" },
+            { TXT_EDIT_MENU, L"Be&werken" },
+            { TXT_WORD_WRAP, L"A&utomatische terugloop" },
+            { TXT_WORD_WRAP_FAILED, L"Automatische terugloop kon niet worden gewijzigd." },
+            { TXT_COPY_SELECTION, L"&Kopiëren\tCtrl+C" },
+            { TXT_SELECT_ALL, L"&Alles selecteren\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Zoeken…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"&Volgende zoeken\tF3" },
+            { TXT_FIND_TITLE, L"%s — Zoeken" },
+            { TXT_FIND_WHAT, L"Zoeken &naar:" },
+            { TXT_FIND_NEXT, L"&Volgende zoeken" },
+            { TXT_FIND_MATCH_CASE, L"&Hoofdlettergevoelig" },
+            { TXT_FIND_BACKWARD, L"&Achteruit zoeken" },
+            { TXT_FIND_TOPMOST, L"Altijd &bovenop" },
+            { TXT_FIND_STARTS_WITH, L"Regel be&gint met" },
+            { TXT_FIND_ENDS_WITH, L"Regel &eindigt op" },
+            { TXT_FIND_REGEX, L"&Reguliere expressie" },
+            { TXT_FIND_NOT_FOUND, L"De opgegeven tekst is niet gevonden." },
+            { TXT_FIND_FAILED, L"De zoekopdracht kon niet worden voltooid." },
+            { TXT_FIND_REGEX_ERROR, L"Fout in reguliere expressie:\r\n\r\n%s" },
         }
     },
     {
@@ -7367,7 +8156,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Limbă:" },
             { TXT_OPEN_WEBSITE, L"&Deschidere în browserul implicit" },
             { TXT_OPEN, L"&Deschide…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Setări" },
+            { TXT_OPTIONS_MENU, L"&Opțiuni" },
             { TXT_PREFERENCES_MENU, L"&Preferințe…\tCtrl+G" },
             { TXT_ABOUT, L"&Despre" },
             { TXT_ABOUT_TITLE, L"Despre %ls" },
@@ -7411,11 +8200,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Cale către MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nu este încărcat. Selectați-l în Setări > Preferințe." },
+            { TXT_MEDIALIB_REQUIRED,
+                L"MediaInfo.dll nu este încărcat. Selectați-l în Opțiuni > Preferințe."
+            },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nu este încărcat." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Nu s-a putut încărca un MediaInfo.dll extern sau încorporat compatibil. Selectați-l în "
-                L"Setări > Preferințe."
+                L"Opțiuni > Preferințe."
             },
             { TXT_ANTIALIASING_NONE, L"Fără" },
             { TXT_OK, L"OK" },
@@ -7423,7 +8214,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Platformă țintă:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Preferințe" },
-            { TXT_READY, L"Pregătit." },
+            { TXT_READY, L"Pregătit" },
             { TXT_FONT_REGULAR, L"Normal" },
             { TXT_REPORT_LANGUAGE, L"Li&mba raportului:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Tabele de limbă pentru rapoarte" },
@@ -7490,11 +8281,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Procesul bibliotecii a eșuat în timpul %s (cod 0x%08lX). Selectați un DLL compatibil în "
-                L"Setări > Preferințe."
+                L"Opțiuni > Preferințe."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Procesul bibliotecii nu mai răspunde în timpul %s. Selectați un DLL compatibil în Setări > "
-                L"Preferințe."
+                L"Procesul bibliotecii nu mai răspunde în timpul %s. Selectați un DLL compatibil în Opțiuni "
+                L"> Preferințe."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Preferințele au fost aplicate, dar nu au putut fi salvate în registru."
@@ -7587,7 +8378,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"dacă Salvare ca este anulată. Nu modifică folderele folosite de Deschide și Exportă și "
                 L"nici nu își salvează propriul folder în setările aplicației. Fiecare dialog Salvare ca "
                 L"începe în folderul fișierului de intrare selectat curent, indiferent de destinația "
-                L"anterioară de salvare.\r\n\r\nPREFERINȚE ȘI LIMBI\r\nPreferințele (Setări > Preferințe, "
+                L"anterioară de salvare.\r\n\r\nPREFERINȚE ȘI LIMBI\r\nPreferințele (Opțiuni > Preferințe, "
                 L"Ctrl+G) conțin căile bibliotecilor, fontul raportului, netezirea și limbile. Interfața "
                 L"are 36 de variante și urmează inițial Windows. Rapoartele folosesc întotdeauna implicit "
                 L"engleza originală a bibliotecii, independent de Windows și interfață. Doar o alegere "
@@ -7602,7 +8393,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ferestrei este salvată. În mod implicit este permisă o singură instanță, iar pornirile "
                 L"ulterioare trimit fișierele la fereastra deschisă. Preferințele permit activarea mai "
                 L"multor instanțe. Cu mai multe ferestre, doar prima fereastră a fiecărui tip de fereastră "
-                L"restabilește poziția salvată; celelalte restabilesc doar dimensiunea."
+                L"restabilește poziția salvată; celelalte restabilesc doar dimensiunea.\r\n\r\nEditare > "
+                L"Găsire (Ctrl+F) caută în fila activă. F3 repetă căutarea; Shift+F3 îi inversează "
+                L"direcția. La capătul textului, căutarea continuă din celălalt capăt. Opțiuni > Încadrare "
+                L"cuvinte se aplică numai filei active; bifa corespunde filei selectate. Fereastra de "
+                L"căutare poate fi minimizată și redimensionată orizontal; poziția și opțiunea Întotdeauna "
+                L"deasupra sunt memorate. Până la 30 de texte căutate și opțiunile lor sunt păstrate numai "
+                L"până la închiderea aplicației. Opțiunile de început și sfârșit se aplică liniilor logice. "
+                L"Expresiile regulate folosesc sintaxa PCRE2. Toate comenzile din Editare se aplică numai "
+                L"filei active. Enter pornește căutarea; Shift+Enter inversează direcția aleasă. „Potrivire "
+                L"litere mari și mici” deosebește literele mari de cele mici; „Căutare înapoi” caută spre "
+                L"începutul textului. Alegerea unei intrări din istoric restabilește toate cele cinci "
+                L"opțiuni de căutare, inclusiv starea modului de expresii regulate; „Întotdeauna deasupra” "
+                L"este independentă. „Expresie regulată” dezactivează „Linia începe cu” și „Linia se "
+                L"termină cu”. Dacă ambele opțiuni pentru capetele liniei sunt active, este suficientă o "
+                L"potrivire la oricare capăt. „Încadrare cuvinte” schimbă numai afișarea."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7654,6 +8459,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Copiază &calea completă" },
             { TXT_OPEN_FILE, L"&Deschide fișierul" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Deschide &locația fișierului" },
+            { TXT_EDIT_MENU, L"&Editare" },
+            { TXT_WORD_WRAP, L"Î&ncadrare cuvinte" },
+            { TXT_WORD_WRAP_FAILED, L"Încadrarea cuvintelor nu a putut fi schimbată." },
+            { TXT_COPY_SELECTION, L"&Copiere\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Selectare &totală\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Găsire…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Găsire &următor\tF3" },
+            { TXT_FIND_TITLE, L"%s — Găsire" },
+            { TXT_FIND_WHAT, L"Text de &găsit:" },
+            { TXT_FIND_NEXT, L"Găsire &următor" },
+            { TXT_FIND_MATCH_CASE, L"&Potrivire litere mari și mici" },
+            { TXT_FIND_BACKWARD, L"Căutare î&napoi" },
+            { TXT_FIND_TOPMOST, L"Întotdeauna &deasupra" },
+            { TXT_FIND_STARTS_WITH, L"Linia începe &cu" },
+            { TXT_FIND_ENDS_WITH, L"Linia se &termină cu" },
+            { TXT_FIND_REGEX, L"Expresie &regulată" },
+            { TXT_FIND_NOT_FOUND, L"Textul specificat nu a fost găsit." },
+            { TXT_FIND_FAILED, L"Căutarea nu a putut fi finalizată." },
+            { TXT_FIND_REGEX_ERROR, L"Eroare în expresia regulată:\r\n\r\n%s" },
         }
     },
     {
@@ -7675,7 +8499,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"Γ&λώσσα:" },
             { TXT_OPEN_WEBSITE, L"&Άνοιγμα στο προεπιλεγμένο πρόγραμμα περιήγησης" },
             { TXT_OPEN, L"&Άνοιγμα…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Ρυθμίσεις" },
+            { TXT_OPTIONS_MENU, L"Ε&πιλογές" },
             { TXT_PREFERENCES_MENU, L"&Προτιμήσεις…\tCtrl+G" },
             { TXT_ABOUT, L"&Πληροφορίες" },
             { TXT_ABOUT_TITLE, L"Πληροφορίες για το %ls" },
@@ -7723,11 +8547,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Διαδρομή MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"Το MediaInfo.dll δεν έχει φορτωθεί. Επιλέξτε το από Ρυθμίσεις > Προτιμήσεις."
+                L"Το MediaInfo.dll δεν έχει φορτωθεί. Επιλέξτε το από Επιλογές > Προτιμήσεις."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"Το MediaInfo.dll δεν έχει φορτωθεί." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Δεν φορτώθηκε συμβατό εξωτερικό ή ενσωματωμένο MediaInfo.dll. Επιλέξτε το από Ρυθμίσεις > "
+                L"Δεν φορτώθηκε συμβατό εξωτερικό ή ενσωματωμένο MediaInfo.dll. Επιλέξτε το από Επιλογές > "
                 L"Προτιμήσεις."
             },
             { TXT_ANTIALIASING_NONE, L"Καμία" },
@@ -7736,7 +8560,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Πλατφόρμα προορισμού:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Προτιμήσεις" },
-            { TXT_READY, L"Έτοιμο." },
+            { TXT_READY, L"Έτοιμο" },
             { TXT_FONT_REGULAR, L"Κανονικό" },
             { TXT_REPORT_LANGUAGE, L"Γλώσσα αναφο&ράς:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Πίνακες γλώσσας αναφορών" },
@@ -7806,10 +8630,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Η διεργασία βιβλιοθήκης απέτυχε κατά %s (κωδικός 0x%08lX). Επιλέξτε συμβατή DLL από "
-                L"Ρυθμίσεις > Προτιμήσεις."
+                L"Επιλογές > Προτιμήσεις."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Η διεργασία βιβλιοθήκης δεν αποκρίνεται κατά %s. Επιλέξτε συμβατή DLL από Ρυθμίσεις > "
+                L"Η διεργασία βιβλιοθήκης δεν αποκρίνεται κατά %s. Επιλέξτε συμβατή DLL από Επιλογές > "
                 L"Προτιμήσεις."
             },
             { TXT_PREFERENCES_SAVE_FAILED,
@@ -7909,23 +8733,38 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Εξαγωγή ούτε αποθηκεύει τον δικό του φάκελο στις ρυθμίσεις της εφαρμογής. Κάθε διάλογος "
                 L"Αποθήκευση ως ξεκινά στο φάκελο του τρέχοντος επιλεγμένου αρχείου εισόδου, ανεξάρτητα από "
                 L"τον προηγούμενο προορισμό αποθήκευσης.\r\n\r\nΠΡΟΤΙΜΗΣΕΙΣ ΚΑΙ ΓΛΩΣΣΕΣ\r\nΟι Προτιμήσεις "
-                L"(Ρυθμίσεις > Προτιμήσεις, Ctrl+G) περιέχουν διαδρομές βιβλιοθηκών, γραμματοσειρά "
-                L"αναφοράς, εξομάλυνση και γλώσσες. Η διεπαφή έχει 36 παραλλαγές και αρχικά ακολουθεί τα "
-                L"Windows. Οι αναφορές χρησιμοποιούν πάντα εξ ορισμού τα αρχικά αγγλικά της βιβλιοθήκης, "
-                L"ανεξάρτητα από Windows και διεπαφή. Μόνο χειροκίνητη επιλογή αλλάζει τη γλώσσα: αγγλικά, "
-                L"37 μεταφράσεις ή προσαρμοσμένος πίνακας CSV MediaInfo. Το OK ή η Εφαρμογή επιβεβαιώνει "
-                L"τις αλλαγές· το Άκυρο απορρίπτει τις εκκρεμείς αλλαγές. Στις Προτιμήσεις ορίζεται το όριο "
-                L"ονόματος καρτέλας (προεπιλογή 80) και εκκαθαρίζεται η λίστα πρόσφατων αρχείων. Τα μεγάλα "
-                L"ονόματα διατηρούν αρχή, τέλος και επέκταση με αποσιωπητικά στη μέση. Η Εκκαθάριση αφαιρεί "
-                L"αμέσως τη λίστα πρόσφατων αρχείων, ακόμη και αν οι Προτιμήσεις κλείσουν στη συνέχεια με "
+                L"(Επιλογές > Προτιμήσεις, Ctrl+G) περιέχουν διαδρομές βιβλιοθηκών, γραμματοσειρά αναφοράς, "
+                L"εξομάλυνση και γλώσσες. Η διεπαφή έχει 36 παραλλαγές και αρχικά ακολουθεί τα Windows. Οι "
+                L"αναφορές χρησιμοποιούν πάντα εξ ορισμού τα αρχικά αγγλικά της βιβλιοθήκης, ανεξάρτητα από "
+                L"Windows και διεπαφή. Μόνο χειροκίνητη επιλογή αλλάζει τη γλώσσα: αγγλικά, 37 μεταφράσεις "
+                L"ή προσαρμοσμένος πίνακας CSV MediaInfo. Το OK ή η Εφαρμογή επιβεβαιώνει τις αλλαγές· το "
+                L"Άκυρο απορρίπτει τις εκκρεμείς αλλαγές. Στις Προτιμήσεις ορίζεται το όριο ονόματος "
+                L"καρτέλας (προεπιλογή 80) και εκκαθαρίζεται η λίστα πρόσφατων αρχείων. Τα μεγάλα ονόματα "
+                L"διατηρούν αρχή, τέλος και επέκταση με αποσιωπητικά στη μέση. Η Εκκαθάριση αφαιρεί αμέσως "
+                L"τη λίστα πρόσφατων αρχείων, ακόμη και αν οι Προτιμήσεις κλείσουν στη συνέχεια με "
                 L"Άκυρο.\r\n\r\nΒΙΒΛΙΟΘΗΚΕΣ ΚΑΙ ΠΑΡΑΘΥΡΑ\r\nΤο πρόγραμμα περιλαμβάνει MediaInfo 26.10, "
                 L"21.03 και 0.7.60, που δοκιμάζονται από τη νεότερη μετά τις εξωτερικές βιβλιοθήκες. Οι δύο "
                 L"νεότερες έχουν αντίστοιχη libcurl· η 0.7.60 δεν την αποσυμπιέζει ποτέ. Η θέση του "
                 L"παραθύρου αποθηκεύεται. Από προεπιλογή επιτρέπεται μόνο μία παρουσία και οι επόμενες "
                 L"εκκινήσεις στέλνουν τα αρχεία στο ανοιχτό παράθυρο. Στις προτιμήσεις μπορούν να "
                 L"επιτραπούν πολλές παρουσίες. Με πολλά παράθυρα, μόνο το πρώτο παράθυρο κάθε τύπου "
-                L"παραθύρου "
-                L"επαναφέρει την αποθηκευμένη θέση· τα επόμενα επαναφέρουν μόνο το μέγεθος."
+                L"παραθύρου επαναφέρει την αποθηκευμένη θέση· τα επόμενα επαναφέρουν μόνο το "
+                L"μέγεθος.\r\n\r\nΗ Επεξεργασία > Εύρεση (Ctrl+F) αναζητά στην ενεργή καρτέλα. Το F3 "
+                L"επαναλαμβάνει την αναζήτηση, ενώ το Shift+F3 αντιστρέφει την κατεύθυνσή της. Στο τέλος "
+                L"του κειμένου, η αναζήτηση συνεχίζεται από το άλλο άκρο. Η επιλογή Επιλογές > Αναδίπλωση "
+                L"λέξεων αφορά μόνο την ενεργή καρτέλα· η ένδειξη επιλογής ακολουθεί την επιλεγμένη "
+                L"καρτέλα. Το παράθυρο αναζήτησης μπορεί να ελαχιστοποιηθεί και να αλλάξει πλάτος· η θέση "
+                L"του και η επιλογή Πάντα σε πρώτο πλάνο αποθηκεύονται. Έως 30 κείμενα αναζήτησης και οι "
+                L"επιλογές τους διατηρούνται μόνο μέχρι το κλείσιμο της εφαρμογής. Οι επιλογές αρχής και "
+                L"τέλους αφορούν λογικές γραμμές. Οι κανονικές εκφράσεις χρησιμοποιούν τη σύνταξη PCRE2. "
+                L"Όλες οι εντολές του μενού Επεξεργασία αφορούν μόνο την ενεργή καρτέλα. Το Enter ξεκινά "
+                L"την αναζήτηση· το Shift+Enter αντιστρέφει την επιλεγμένη κατεύθυνση. Η επιλογή «Διάκριση "
+                L"πεζών-κεφαλαίων» ξεχωρίζει πεζά και κεφαλαία· η «Αναζήτηση προς τα πίσω» αναζητά προς την "
+                L"αρχή του κειμένου. Η επιλογή μιας εγγραφής ιστορικού επαναφέρει και τις πέντε επιλογές "
+                L"αναζήτησης, συμπεριλαμβανομένης της κατάστασης των κανονικών εκφράσεων· η «Πάντα σε πρώτο "
+                L"πλάνο» είναι ανεξάρτητη. Η «Κανονική έκφραση» απενεργοποιεί τις «Η γραμμή αρχίζει από» "
+                L"και «Η γραμμή τελειώνει σε». Όταν είναι ενεργές και οι δύο επιλογές άκρων γραμμής, αρκεί "
+                L"αντιστοιχία σε ένα άκρο. Η «Αναδίπλωση λέξεων» αλλάζει μόνο την εμφάνιση."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7979,6 +8818,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Αντιγραφή πλήρους &διαδρομής" },
             { TXT_OPEN_FILE, L"Ά&νοιγμα αρχείου" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Άνοιγμα &θέσης αρχείου" },
+            { TXT_EDIT_MENU, L"Επε&ξεργασία" },
+            { TXT_WORD_WRAP, L"Α&ναδίπλωση λέξεων" },
+            { TXT_WORD_WRAP_FAILED, L"Δεν ήταν δυνατή η αλλαγή της αναδίπλωσης λέξεων." },
+            { TXT_COPY_SELECTION, L"&Αντιγραφή\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Επιλογή ό&λων\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Εύρεση…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Εύρεση επό&μενου\tF3" },
+            { TXT_FIND_TITLE, L"%s — Εύρεση" },
+            { TXT_FIND_WHAT, L"Εύ&ρεση:" },
+            { TXT_FIND_NEXT, L"Εύρεση επό&μενου" },
+            { TXT_FIND_MATCH_CASE, L"&Διάκριση πεζών-κεφαλαίων" },
+            { TXT_FIND_BACKWARD, L"Αναζήτηση προς τα &πίσω" },
+            { TXT_FIND_TOPMOST, L"Πάντα σε πρώτο π&λάνο" },
+            { TXT_FIND_STARTS_WITH, L"Η γραμμή &αρχίζει από" },
+            { TXT_FIND_ENDS_WITH, L"Η γραμμή τελειώνει &σε" },
+            { TXT_FIND_REGEX, L"Κανονική έκ&φραση" },
+            { TXT_FIND_NOT_FOUND, L"Το καθορισμένο κείμενο δεν βρέθηκε." },
+            { TXT_FIND_FAILED, L"Δεν ήταν δυνατή η ολοκλήρωση της αναζήτησης." },
+            { TXT_FIND_REGEX_ERROR, L"Σφάλμα κανονικής έκφρασης:\r\n\r\n%s" },
         }
     },
     {
@@ -8000,7 +8858,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Jezik:" },
             { TXT_OPEN_WEBSITE, L"&Otvori u podrazumijevanom pregledniku" },
             { TXT_OPEN, L"&Otvori…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"Po&stavke" },
+            { TXT_OPTIONS_MENU, L"&Opcije" },
             { TXT_PREFERENCES_MENU, L"&Postavke…\tCtrl+G" },
             { TXT_ABOUT, L"&O programu" },
             { TXT_ABOUT_TITLE, L"O programu %ls" },
@@ -8040,11 +8898,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Putanja do MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nije učitana. Izaberite je u Postavke > Postavke." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nije učitana. Izaberite je u Opcije > Postavke." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nije učitana." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Nije moguće učitati kompatibilnu vanjsku ili ugrađenu MediaInfo.dll. Izaberite je u "
-                L"Postavke > Postavke."
+                L"Opcije > Postavke."
             },
             { TXT_ANTIALIASING_NONE, L"Nema" },
             { TXT_OK, L"U redu" },
@@ -8052,7 +8910,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Ciljna platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Postavke" },
-            { TXT_READY, L"Spreman." },
+            { TXT_READY, L"Spreman" },
             { TXT_FONT_REGULAR, L"Obično" },
             { TXT_REPORT_LANGUAGE, L"Jezik &izvještaja:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jezičke tabele izvještaja" },
@@ -8117,11 +8975,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Biblioteka ne izvozi potrebne Unicode funkcije biblioteke MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Proces biblioteke nije uspio tokom %s (kod 0x%08lX). Izaberite kompatibilnu DLL u Postavke "
+                L"Proces biblioteke nije uspio tokom %s (kod 0x%08lX). Izaberite kompatibilnu DLL u Opcije "
                 L"> Postavke."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces biblioteke ne odgovara tokom %s. Izaberite kompatibilnu DLL u Postavke > Postavke."
+                L"Proces biblioteke ne odgovara tokom %s. Izaberite kompatibilnu DLL u Opcije > Postavke."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Postavke su primijenjene, ali nisu sačuvane u registru." },
             { TXT_REPORT_START_FAILED, L"Nema dovoljno memorije za pokretanje izvještaja." },
@@ -8189,8 +9047,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"statusne trake prikazuje putanje datoteka i tok učitavanja, a desna verziju učitane "
                 L"MediaInfo.dll biblioteke. Duge putanje skraćuju se trotačkom prema dostupnom "
                 L"prostoru.\r\n\r\nIZVOZ\r\nCtrl+E izvozi cijeli izvještaj, uključujući skriveni tekst. "
-                L"TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja fascikla i "
-                L"format izvoza se pamte.\r\nTXT nudi ANSI, UTF-8, UTF-8 s BOM-om, UTF-16 BE s BOM-om i "
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja fascikla "
+                L"i format izvoza se pamte.\r\nTXT nudi ANSI, UTF-8, UTF-8 s BOM-om, UTF-16 BE s BOM-om i "
                 L"UTF-16 LE s BOM-om. Podrazumijevana je druga stavka, UTF-8 bez BOM-a. Čuvaju se cijeli "
                 L"tekst izvještaja i izvorni završeci redova.\r\n\r\nNAPRAVI DATOTEKU ZAGLAVLJA\r\nMeni "
                 L"Alati je treći na traci menija. Njegova komanda Napravi datoteku zaglavlja… otvara jednu "
@@ -8210,7 +9068,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Sačuvaj kao otkazano. Ne mijenja fascikle koje koriste Otvori i Izvezi niti čuva svoju "
                 L"fasciklu u postavkama aplikacije. Svaki dijalog Sačuvaj kao počinje u fascikli trenutno "
                 L"odabrane ulazne datoteke, bez obzira na prethodno odredište za čuvanje.\r\n\r\nPOSTAVKE I "
-                L"JEZICI\r\nPostavke (Postavke > Postavke, Ctrl+G) sadrže putanje biblioteka, font "
+                L"JEZICI\r\nPostavke (Opcije > Postavke, Ctrl+G) sadrže putanje biblioteka, font "
                 L"izvještaja, izglađivanje i jezike. Sučelje ima 36 varijanti i početno prati Windows. "
                 L"Izvještaji uvijek podrazumijevano koriste izvorni engleski biblioteke, nezavisno od "
                 L"Windowsa i sučelja. To mijenja samo ručni izbor jezika: engleski, 37 prijevoda ili "
@@ -8224,7 +9082,19 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"raspakuje. Položaj prozora se čuva. Podrazumijevano je dozvoljena samo jedna instanca, a "
                 L"naredna pokretanja šalju datoteke otvorenom prozoru. U postavkama se može dozvoliti više "
                 L"instanci. Kada postoji više prozora, samo prvi prozor svakog tipa prozora vraća sačuvani "
-                L"položaj; ostali vraćaju samo veličinu."
+                L"položaj; ostali vraćaju samo veličinu.\r\n\r\nUređivanje > Pronađi (Ctrl+F) pretražuje "
+                L"aktivnu karticu. F3 ponavlja pretragu, a Shift+F3 mijenja njen smjer. Na kraju teksta "
+                L"pretraga se nastavlja s drugog kraja. Opcije > Prelamanje redova važi samo za aktivnu "
+                L"karticu; oznaka prati odabranu karticu. Prozor pretrage može se minimizirati i mijenjati "
+                L"mu se širina; položaj i opcija Uvijek na vrhu se pamte. Do 30 tekstova pretrage s "
+                L"njihovim opcijama čuva se samo do zatvaranja aplikacije. Opcije početka i kraja odnose se "
+                L"na logičke redove. Regularni izrazi koriste PCRE2 sintaksu. Sve komande menija Uređivanje "
+                L"odnose se samo na aktivnu karticu. Enter pokreće pretragu, a Shift+Enter obrće odabrani "
+                L"smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala slova; „Traži unazad“ traži "
+                L"prema početku teksta. Izbor stavke historije vraća svih pet opcija pretrage, uključujući "
+                L"stanje režima regularnih izraza; „Uvijek na vrhu“ je nezavisna opcija. „Regularni izraz“ "
+                L"onemogućava „Red počinje sa“ i „Red završava sa“. Kada su uključene obje opcije krajeva "
+                L"reda, dovoljno je poklapanje na jednom kraju. „Prelamanje redova“ mijenja samo prikaz."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -8274,6 +9144,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiraj punu &putanju" },
             { TXT_OPEN_FILE, L"&Otvori datoteku" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Otvori &fasciklu koja sadrži datoteku" },
+            { TXT_EDIT_MENU, L"&Uređivanje" },
+            { TXT_WORD_WRAP, L"P&relamanje redova" },
+            { TXT_WORD_WRAP_FAILED, L"Prelamanje redova nije moguće promijeniti." },
+            { TXT_COPY_SELECTION, L"&Kopiraj\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Odaberi &sve\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Pronađi…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Pronađi s&ljedeće\tF3" },
+            { TXT_FIND_TITLE, L"%s — Pronađi" },
+            { TXT_FIND_WHAT, L"&Traži:" },
+            { TXT_FIND_NEXT, L"Pronađi s&ljedeće" },
+            { TXT_FIND_MATCH_CASE, L"Razlikuj velika i &mala slova" },
+            { TXT_FIND_BACKWARD, L"Traži &unazad" },
+            { TXT_FIND_TOPMOST, L"Uvijek na &vrhu" },
+            { TXT_FIND_STARTS_WITH, L"Red počinje &sa" },
+            { TXT_FIND_ENDS_WITH, L"Red završava s&a" },
+            { TXT_FIND_REGEX, L"&Regularni izraz" },
+            { TXT_FIND_NOT_FOUND, L"Navedeni tekst nije pronađen." },
+            { TXT_FIND_FAILED, L"Pretragu nije moguće dovršiti." },
+            { TXT_FIND_REGEX_ERROR, L"Greška u regularnom izrazu:\r\n\r\n%s" },
         }
     },
     {
@@ -8295,7 +9184,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Jezik:" },
             { TXT_OPEN_WEBSITE, L"&Otvori u zadanom pregledniku" },
             { TXT_OPEN, L"&Otvori…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"Po&stavke" },
+            { TXT_OPTIONS_MENU, L"&Mogućnosti" },
             { TXT_PREFERENCES_MENU, L"&Postavke…\tCtrl+G" },
             { TXT_ABOUT, L"&O programu" },
             { TXT_ABOUT_TITLE, L"O programu %ls" },
@@ -8335,11 +9224,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Putanja do MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nije učitana. Odaberite je u Postavke > Postavke." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nije učitana. Odaberite je u Mogućnosti > Postavke." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nije učitana." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Nije moguće učitati kompatibilnu vanjsku ili ugrađenu MediaInfo.dll. Odaberite je u "
-                L"Postavke > Postavke."
+                L"Mogućnosti > Postavke."
             },
             { TXT_ANTIALIASING_NONE, L"Nema" },
             { TXT_OK, L"U redu" },
@@ -8347,7 +9236,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Ciljna platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Postavke" },
-            { TXT_READY, L"Spreman." },
+            { TXT_READY, L"Spreman" },
             { TXT_FONT_REGULAR, L"Obično" },
             { TXT_REPORT_LANGUAGE, L"Jezik &izvješća:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jezične tablice izvješća" },
@@ -8413,10 +9302,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Proces knjižnice nije uspio tijekom %s (kod 0x%08lX). Odaberite kompatibilnu DLL u "
-                L"Postavke > Postavke."
+                L"Mogućnosti > Postavke."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces knjižnice ne odgovara tijekom %s. Odaberite kompatibilnu DLL u Postavke > Postavke."
+                L"Proces knjižnice ne odgovara tijekom %s. Odaberite kompatibilnu DLL u Mogućnosti > "
+                L"Postavke."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Postavke su primijenjene, ali nisu spremljene u registru." },
             { TXT_REPORT_START_FAILED, L"Nema dovoljno memorije za pokretanje izvješća." },
@@ -8504,7 +9394,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"i ako se Spremi kao otkaže. Ne mijenja mape koje koriste Otvori i Izvezi niti sprema "
                 L"vlastitu mapu u postavke aplikacije. Svaki dijaloški okvir Spremi kao počinje u mapi "
                 L"trenutno odabrane ulazne datoteke, bez obzira na prethodno odredište "
-                L"spremanja.\r\n\r\nPOSTAVKE I JEZICI\r\nPostavke (Postavke > Postavke, Ctrl+G) sadrže "
+                L"spremanja.\r\n\r\nPOSTAVKE I JEZICI\r\nPostavke (Mogućnosti > Postavke, Ctrl+G) sadrže "
                 L"putanje knjižnica, font izvješća, izglađivanje i jezike. Sučelje ima 36 inačica i početno "
                 L"prati Windows. Izvješća uvijek zadano koriste izvorni engleski knjižnice, neovisno o "
                 L"Windowsu i sučelju. To mijenja samo ručni odabir jezika: engleski, 37 prijevoda ili "
@@ -8518,8 +9408,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"raspakirava. Položaj prozora se sprema. Prema zadanim postavkama dopuštena je samo jedna "
                 L"instanca, a sljedeća pokretanja šalju datoteke otvorenom prozoru. U postavkama se može "
                 L"dopustiti više instanci. Kada postoji više prozora, samo prvi prozor svakog tipa prozora "
-                L"vraća "
-                L"spremljeni položaj; ostali vraćaju samo veličinu."
+                L"vraća spremljeni položaj; ostali vraćaju samo veličinu.\r\n\r\nUređivanje > Pronađi "
+                L"(Ctrl+F) pretražuje aktivnu karticu. F3 ponavlja pretraživanje, a Shift+F3 mijenja njegov "
+                L"smjer. Na kraju teksta pretraživanje se nastavlja s drugog kraja. Mogućnosti > Prelamanje "
+                L"redaka vrijedi samo za aktivnu karticu; oznaka prati odabranu karticu. Prozor "
+                L"pretraživanja može se minimizirati i mijenjati mu se širina; položaj i mogućnost Uvijek "
+                L"na vrhu pamte se. Do 30 tekstova pretraživanja s njihovim mogućnostima čuva se samo do "
+                L"zatvaranja aplikacije. Mogućnosti početka i kraja odnose se na logičke retke. Regularni "
+                L"izrazi koriste sintaksu PCRE2. Sve naredbe izbornika Uređivanje odnose se samo na aktivnu "
+                L"karticu. Enter pokreće pretraživanje, a Shift+Enter obrće odabrani smjer. „Razlikuj "
+                L"velika i mala slova“ razlikuje velika i mala slova; „Traži unatrag“ pretražuje prema "
+                L"početku teksta. Odabir stavke povijesti vraća svih pet mogućnosti pretraživanja, "
+                L"uključujući postavku regularnih izraza; „Uvijek na vrhu“ neovisna je mogućnost. "
+                L"„Regularni izraz“ onemogućuje „Redak počinje s“ i „Redak završava s“. Kada su uključene "
+                L"obje mogućnosti krajeva retka, dovoljno je podudaranje na jednom kraju. „Prelamanje "
+                L"redaka“ mijenja samo prikaz."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -8569,6 +9472,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiraj punu &putanju" },
             { TXT_OPEN_FILE, L"&Otvori datoteku" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Otvori &mjesto datoteke" },
+            { TXT_EDIT_MENU, L"&Uređivanje" },
+            { TXT_WORD_WRAP, L"P&relamanje redaka" },
+            { TXT_WORD_WRAP_FAILED, L"Prelamanje redaka nije moguće promijeniti." },
+            { TXT_COPY_SELECTION, L"&Kopiraj\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Odaberi &sve\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Pronađi…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Pronađi s&ljedeće\tF3" },
+            { TXT_FIND_TITLE, L"%s — Pronađi" },
+            { TXT_FIND_WHAT, L"&Traži:" },
+            { TXT_FIND_NEXT, L"Pronađi s&ljedeće" },
+            { TXT_FIND_MATCH_CASE, L"Razlikuj velika i &mala slova" },
+            { TXT_FIND_BACKWARD, L"Traži &unatrag" },
+            { TXT_FIND_TOPMOST, L"Uvijek na &vrhu" },
+            { TXT_FIND_STARTS_WITH, L"Redak počinje &s" },
+            { TXT_FIND_ENDS_WITH, L"Redak završav&a s" },
+            { TXT_FIND_REGEX, L"&Regularni izraz" },
+            { TXT_FIND_NOT_FOUND, L"Navedeni tekst nije pronađen." },
+            { TXT_FIND_FAILED, L"Pretraživanje nije moguće dovršiti." },
+            { TXT_FIND_REGEX_ERROR, L"Pogreška u regularnom izrazu:\r\n\r\n%s" },
         }
     },
     {
@@ -8590,7 +9512,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Jezik:" },
             { TXT_OPEN_WEBSITE, L"&Odpri v privzetem brskalniku" },
             { TXT_OPEN, L"&Odpri…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Nastavitve" },
+            { TXT_OPTIONS_MENU, L"&Možnosti" },
             { TXT_PREFERENCES_MENU, L"&Nastavitve…\tCtrl+G" },
             { TXT_ABOUT, L"&O programu" },
             { TXT_ABOUT_TITLE, L"O programu %ls" },
@@ -8630,10 +9552,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Pot do MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll ni naložena. Izberite jo v Nastavitve > Nastavitve." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll ni naložena. Izberite jo v Možnosti > Nastavitve." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll ni naložena." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Združljive zunanje ali vgrajene MediaInfo.dll ni mogoče naložiti. Izberite jo v Nastavitve "
+                L"Združljive zunanje ali vgrajene MediaInfo.dll ni mogoče naložiti. Izberite jo v Možnosti "
                 L"> Nastavitve."
             },
             { TXT_ANTIALIASING_NONE, L"Brez" },
@@ -8642,7 +9564,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Ciljna platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Nastavitve" },
-            { TXT_READY, L"Pripravljen." },
+            { TXT_READY, L"Pripravljen" },
             { TXT_FONT_REGULAR, L"Navadno" },
             { TXT_REPORT_LANGUAGE, L"Jezik p&oročila:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jezikovne tabele poročil" },
@@ -8704,11 +9626,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Knjižnica ne izvaža zahtevanih funkcij Unicode knjižnice MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Proces knjižnice je odpovedal med %s (koda 0x%08lX). Izberite združljivo DLL v Nastavitve "
-                L"> Nastavitve."
+                L"Proces knjižnice je odpovedal med %s (koda 0x%08lX). Izberite združljivo DLL v Možnosti > "
+                L"Nastavitve."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces knjižnice se ne odziva med %s. Izberite združljivo DLL v Nastavitve > Nastavitve."
+                L"Proces knjižnice se ne odziva med %s. Izberite združljivo DLL v Možnosti > Nastavitve."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Nastavitve so uveljavljene, vendar niso shranjene v register." },
             { TXT_REPORT_START_FAILED, L"Za zagon poročila ni dovolj pomnilnika." },
@@ -8795,7 +9717,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"če je možnost Shrani kot preklicana. Ne spremeni niti map, ki jih uporabljata Odpri in "
                 L"Izvozi, niti ne shrani lastne mape v nastavitve aplikacije. Vsako pogovorno okno Shrani "
                 L"kot se začne v mapi trenutno izbrane vhodne datoteke, ne glede na prejšnji cilj "
-                L"shranjevanja.\r\n\r\nNASTAVITVE IN JEZIKI\r\nNastavitve (Nastavitve > Nastavitve, Ctrl+G) "
+                L"shranjevanja.\r\n\r\nNASTAVITVE IN JEZIKI\r\nNastavitve (Možnosti > Nastavitve, Ctrl+G) "
                 L"vsebujejo poti knjižnic, pisavo poročila, glajenje in jezike. Vmesnik ima 36 različic in "
                 L"sprva sledi Windowsu. Poročila vedno privzeto uporabljajo izvirno angleščino knjižnice, "
                 L"neodvisno od Windowsa in vmesnika. To spremeni samo ročna izbira jezika: angleščina, 37 "
@@ -8808,7 +9730,19 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"imata ustrezni libcurl; 0.7.60 ga nikoli ne razširi. Položaj okna se shrani. Privzeto je "
                 L"dovoljen samo en primerek, poznejši zagoni pa pošljejo datoteke odprtemu oknu. V "
                 L"nastavitvah lahko dovolite več primerkov. Pri več oknih le prvo okno vsake vrste okna "
-                L"obnovi shranjeni položaj; poznejša okna obnovijo samo velikost."
+                L"obnovi shranjeni položaj; poznejša okna obnovijo samo velikost.\r\n\r\nUredi > Najdi "
+                L"(Ctrl+F) išče na aktivnem zavihku. F3 ponovi iskanje, Shift+F3 pa obrne njegovo smer. Na "
+                L"koncu besedila se iskanje nadaljuje z drugega konca. Možnosti > Prelom vrstic velja le za "
+                L"aktivni zavihek; kljukica sledi izbranemu zavihku. Iskalno okno je mogoče minimizirati in "
+                L"mu spreminjati širino; položaj in možnost Vedno na vrhu se shranita. Do 30 iskalnih "
+                L"besedil z možnostmi se hrani le do zaprtja programa. Možnosti začetka in konca veljata za "
+                L"logične vrstice. Regularni izrazi uporabljajo sintakso PCRE2. Vsi ukazi menija Uredi "
+                L"veljajo samo za aktivni zavihek. Enter začne iskanje, Shift+Enter pa obrne izbrano smer. "
+                L"»Razlikuj velike in male črke« razlikuje velike in male črke; »Išči nazaj« išče proti "
+                L"začetku besedila. Izbira vnosa iz zgodovine obnovi vseh pet možnosti iskanja, vključno s "
+                L"stanjem regularnih izrazov; »Vedno na vrhu« je neodvisna možnost. »Regularni izraz« "
+                L"onemogoči »Vrstica se začne z« in »Vrstica se konča z«. Če sta vključeni obe možnosti "
+                L"robov vrstice, zadostuje ujemanje na enem robu. »Prelom vrstic« spremeni samo prikaz."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -8860,6 +9794,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiraj celotno &pot" },
             { TXT_OPEN_FILE, L"&Odpri datoteko" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Odpri &mesto datoteke" },
+            { TXT_EDIT_MENU, L"&Uredi" },
+            { TXT_WORD_WRAP, L"P&relom vrstic" },
+            { TXT_WORD_WRAP_FAILED, L"Preloma vrstic ni bilo mogoče spremeniti." },
+            { TXT_COPY_SELECTION, L"&Kopiraj\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Izberi &vse\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Najdi…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Najdi na&slednje\tF3" },
+            { TXT_FIND_TITLE, L"%s — Najdi" },
+            { TXT_FIND_WHAT, L"&Išči:" },
+            { TXT_FIND_NEXT, L"Najdi na&slednje" },
+            { TXT_FIND_MATCH_CASE, L"Razlikuj velike in &male črke" },
+            { TXT_FIND_BACKWARD, L"Išči n&azaj" },
+            { TXT_FIND_TOPMOST, L"Vedno na &vrhu" },
+            { TXT_FIND_STARTS_WITH, L"Vrstica se za&čne z" },
+            { TXT_FIND_ENDS_WITH, L"Vrstica se &konča z" },
+            { TXT_FIND_REGEX, L"&Regularni izraz" },
+            { TXT_FIND_NOT_FOUND, L"Navedenega besedila ni bilo mogoče najti." },
+            { TXT_FIND_FAILED, L"Iskanja ni bilo mogoče dokončati." },
+            { TXT_FIND_REGEX_ERROR, L"Napaka v regularnem izrazu:\r\n\r\n%s" },
         }
     },
     {
@@ -8881,7 +9834,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Jezik:" },
             { TXT_OPEN_WEBSITE, L"&Otvori u podrazumijevanom pregledaču" },
             { TXT_OPEN, L"&Otvori…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"P&odešavanja" },
+            { TXT_OPTIONS_MENU, L"&Opcije" },
             { TXT_PREFERENCES_MENU, L"&Podešavanja…\tCtrl+G" },
             { TXT_ABOUT, L"&O programu" },
             { TXT_ABOUT_TITLE, L"O programu %ls" },
@@ -8921,13 +9874,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Putanja do MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll nije učitana. Izaberite je u Podešavanja > Podešavanja."
-            },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll nije učitana. Izaberite je u Opcije > Podešavanja." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll nije učitana." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Nije moguće učitati kompatibilnu spoljašnju ili ugrađenu MediaInfo.dll. Izaberite je u "
-                L"Podešavanja > Podešavanja."
+                L"Opcije > Podešavanja."
             },
             { TXT_ANTIALIASING_NONE, L"Nema" },
             { TXT_OK, L"U redu" },
@@ -8935,7 +9886,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Ciljna platforma:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Podešavanja" },
-            { TXT_READY, L"Spreman." },
+            { TXT_READY, L"Spreman" },
             { TXT_FONT_REGULAR, L"Obično" },
             { TXT_REPORT_LANGUAGE, L"Jezik &izvještaja:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Jezičke tabele izvještaja" },
@@ -9001,12 +9952,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Biblioteka ne izvozi potrebne Unicode funkcije biblioteke MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Proces biblioteke nije uspio tokom %s (kod 0x%08lX). Izaberite kompatibilnu DLL u "
-                L"Podešavanja > Podešavanja."
+                L"Proces biblioteke nije uspio tokom %s (kod 0x%08lX). Izaberite kompatibilnu DLL u Opcije "
+                L"> Podešavanja."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Proces biblioteke ne odgovara tokom %s. Izaberite kompatibilnu DLL u Podešavanja > "
-                L"Podešavanja."
+                L"Proces biblioteke ne odgovara tokom %s. Izaberite kompatibilnu DLL u Opcije > Podešavanja."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Podešavanja su primijenjena, ali nisu sačuvana u registru." },
             { TXT_REPORT_START_FAILED, L"Nema dovoljno memorije za pokretanje izvještaja." },
@@ -9095,22 +10045,34 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"aplikacije, čak i ako otkažete Sačuvaj kao. Ne mijenja fascikle komandi Otvori i Izvezi "
                 L"niti čuva svoju fasciklu u podešavanjima aplikacije. Svaki dijalog Sačuvaj kao počinje u "
                 L"fascikli trenutno izabrane ulazne datoteke, bez obzira na prethodno odredište "
-                L"čuvanja.\r\n\r\nPODEŠAVANJA I JEZICI\r\nPodešavanja (Podešavanja > Podešavanja, Ctrl+G) "
-                L"sadrže putanje biblioteka, font izvještaja, umekšavanje i jezike. Interfejs ima 36 "
-                L"varijanti i početno prati Windows. Izvještaji uvijek podrazumijevano koriste izvorni "
-                L"engleski biblioteke, nezavisno od Windowsa i interfejsa. To mijenja samo ručni izbor "
-                L"jezika: engleski, 37 prevoda ili sopstvena MediaInfo CSV tabela. U redu ili Primijeni "
-                L"potvrđuje promjene; Otkaži odbacuje nepotvrđene promjene. Podešavanja određuju granicu "
-                L"naziva kartice (podrazumijevano 80) i brišu listu nedavnih datoteka. Dugi nazivi "
-                L"zadržavaju početak, kraj i ekstenziju s trotačkom u sredini. Očisti odmah uklanja listu "
-                L"nedavnih datoteka, čak i ako zatim zatvorite Podešavanja dugmetom "
-                L"Otkaži.\r\n\r\nBIBLIOTEKE I PROZORI\r\nProgram sadrži MediaInfo 26.10, 21.03 i 0.7.60, "
-                L"koje se pokušavaju od najnovije nakon spoljnih biblioteka. Dvije novije verzije imaju "
-                L"odgovarajući libcurl; 0.7.60 ga nikada ne raspakuje. Položaj prozora se čuva. "
-                L"Podrazumijevano je dozvoljena samo jedna instanca, a naredna pokretanja šalju datoteke "
-                L"otvorenom prozoru. U podešavanjima se može dozvoliti više instanci. Kada postoji više "
-                L"prozora, samo prvi prozor svakog tipa prozora vraća sačuvani položaj; ostali vraćaju samo "
-                L"veličinu."
+                L"čuvanja.\r\n\r\nPODEŠAVANJA I JEZICI\r\nPodešavanja (Opcije > Podešavanja, Ctrl+G) sadrže "
+                L"putanje biblioteka, font izvještaja, umekšavanje i jezike. Interfejs ima 36 varijanti i "
+                L"početno prati Windows. Izvještaji uvijek podrazumijevano koriste izvorni engleski "
+                L"biblioteke, nezavisno od Windowsa i interfejsa. To mijenja samo ručni izbor jezika: "
+                L"engleski, 37 prevoda ili sopstvena MediaInfo CSV tabela. U redu ili Primijeni potvrđuje "
+                L"promjene; Otkaži odbacuje nepotvrđene promjene. Podešavanja određuju granicu naziva "
+                L"kartice (podrazumijevano 80) i brišu listu nedavnih datoteka. Dugi nazivi zadržavaju "
+                L"početak, kraj i ekstenziju s trotačkom u sredini. Očisti odmah uklanja listu nedavnih "
+                L"datoteka, čak i ako zatim zatvorite Podešavanja dugmetom Otkaži.\r\n\r\nBIBLIOTEKE I "
+                L"PROZORI\r\nProgram sadrži MediaInfo 26.10, 21.03 i 0.7.60, koje se pokušavaju od "
+                L"najnovije nakon spoljnih biblioteka. Dvije novije verzije imaju odgovarajući libcurl; "
+                L"0.7.60 ga nikada ne raspakuje. Položaj prozora se čuva. Podrazumijevano je dozvoljena "
+                L"samo jedna instanca, a naredna pokretanja šalju datoteke otvorenom prozoru. U "
+                L"podešavanjima se može dozvoliti više instanci. Kada postoji više prozora, samo prvi "
+                L"prozor svakog tipa prozora vraća sačuvani položaj; ostali vraćaju samo "
+                L"veličinu.\r\n\r\nUređivanje > Pronađi (Ctrl+F) pretražuje aktivnu karticu. F3 ponavlja "
+                L"pretragu, a Shift+F3 mijenja njen smjer. Na kraju teksta pretraga se nastavlja s drugog "
+                L"kraja. Opcije > Prelamanje redova važi samo za aktivnu karticu; oznaka prati izabranu "
+                L"karticu. Prozor pretrage može se minimizirati i mijenjati mu se širina; položaj i opcija "
+                L"Uvijek na vrhu se pamte. Do 30 tekstova pretrage s njihovim opcijama čuva se samo do "
+                L"zatvaranja aplikacije. Opcije početka i kraja odnose se na logičke redove. Regularni "
+                L"izrazi koriste PCRE2 sintaksu. Sve komande menija Uređivanje odnose se samo na aktivnu "
+                L"karticu. Enter pokreće pretragu, a Shift+Enter obrće izabrani smjer. „Razlikuj velika i "
+                L"mala slova“ razlikuje velika i mala slova; „Traži unazad“ traži prema početku teksta. "
+                L"Izbor stavke istorije vraća svih pet opcija pretrage, uključujući stanje režima "
+                L"regularnih izraza; „Uvijek na vrhu“ je nezavisna opcija. „Regularni izraz“ onemogućava "
+                L"„Red počinje sa“ i „Red se završava sa“. Kada su uključene obje opcije krajeva reda, "
+                L"dovoljno je poklapanje na jednom kraju. „Prelamanje redova“ mijenja samo prikaz."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -9163,6 +10125,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Kopiraj punu &putanju" },
             { TXT_OPEN_FILE, L"&Otvori datoteku" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Otvori &lokaciju datoteke" },
+            { TXT_EDIT_MENU, L"&Uređivanje" },
+            { TXT_WORD_WRAP, L"P&relamanje redova" },
+            { TXT_WORD_WRAP_FAILED, L"Prelamanje redova nije moguće promijeniti." },
+            { TXT_COPY_SELECTION, L"&Kopiraj\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Izaberi &sve\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Pronađi…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Pronađi s&ljedeće\tF3" },
+            { TXT_FIND_TITLE, L"%s — Pronađi" },
+            { TXT_FIND_WHAT, L"&Traži:" },
+            { TXT_FIND_NEXT, L"Pronađi s&ljedeće" },
+            { TXT_FIND_MATCH_CASE, L"Razlikuj velika i &mala slova" },
+            { TXT_FIND_BACKWARD, L"Traži &unazad" },
+            { TXT_FIND_TOPMOST, L"Uvijek na &vrhu" },
+            { TXT_FIND_STARTS_WITH, L"Red počinje &sa" },
+            { TXT_FIND_ENDS_WITH, L"Red se završava s&a" },
+            { TXT_FIND_REGEX, L"&Regularni izraz" },
+            { TXT_FIND_NOT_FOUND, L"Navedeni tekst nije pronađen." },
+            { TXT_FIND_FAILED, L"Pretragu nije moguće dovršiti." },
+            { TXT_FIND_REGEX_ERROR, L"Greška u regularnom izrazu:\r\n\r\n%s" },
         }
     },
     {
@@ -9184,7 +10165,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Мова:" },
             { TXT_OPEN_WEBSITE, L"&Адкрыць у прадвызначаным браўзеры" },
             { TXT_OPEN, L"&Адкрыць…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Налады" },
+            { TXT_OPTIONS_MENU, L"П&араметры" },
             { TXT_PREFERENCES_MENU, L"&Налады…\tCtrl+G" },
             { TXT_ABOUT, L"&Пра праграму" },
             { TXT_ABOUT_TITLE, L"Пра праграму %ls" },
@@ -9226,11 +10207,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Шлях да MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll не загружана. Выберыце яе ў Налады > Налады." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll не загружана. Выберыце яе ў Параметры > Налады." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll не загружана." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Не ўдалося загрузіць сумяшчальную знешнюю або ўбудаваную MediaInfo.dll. Выберыце яе ў "
-                L"Налады > Налады."
+                L"Параметры > Налады."
             },
             { TXT_ANTIALIASING_NONE, L"Няма" },
             { TXT_OK, L"OK" },
@@ -9238,7 +10219,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Мэтавая платформа:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Налады" },
-            { TXT_READY, L"Гатовы." },
+            { TXT_READY, L"Гатовы" },
             { TXT_FONT_REGULAR, L"Звычайны" },
             { TXT_REPORT_LANGUAGE, L"Мова &справаздачы:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Моўныя табліцы справаздач" },
@@ -9302,11 +10283,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Бібліятэка не экспартуе патрэбныя функцыі Unicode бібліятэкі MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Працэс бібліятэкі завяршыўся памылкай падчас %s (код 0x%08lX). Выберыце сумяшчальную DLL у "
-                L"Налады > Налады."
+                L"Працэс бібліятэкі завяршыўся памылкай падчас %s (код 0x%08lX). Выберыце сумяшчальную DLL "
+                L"у Параметры > Налады."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Працэс бібліятэкі не адказвае падчас %s. Выберыце сумяшчальную DLL у Налады > Налады."
+                L"Працэс бібліятэкі не адказвае падчас %s. Выберыце сумяшчальную DLL у Параметры > Налады."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Налады ўжытыя, але іх не ўдалося захаваць у рэестр." },
             { TXT_REPORT_START_FAILED, L"Недастаткова памяці для запуску справаздачы." },
@@ -9393,21 +10374,34 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"адменена. Ён не змяняе папкі, якія выкарыстоўваюцца Адкрыць і Экспартаваць, і не захоўвае "
                 L"ўласную папку ў наладах прыкладання. Кожнае дыялогавае акно «Захаваць як» пачынаецца ў "
                 L"папцы выбранага ўваходнага файла, незалежна ад папярэдняга месца захавання.\r\n\r\nНАЛАДЫ "
-                L"І МОВЫ\r\nНалады (Налады > Налады, Ctrl+G) змяшчаюць шляхі бібліятэк, шрыфт справаздачы, "
-                L"згладжванне і мовы. Інтэрфейс мае 36 варыянтаў і спачатку адпавядае Windows. Справаздачы "
-                L"заўсёды па змоўчанні выкарыстоўваюць зыходную англійскую бібліятэкі, незалежна ад Windows "
-                L"і інтэрфейсу. Гэта змяняе толькі ручны выбар: англійская, 37 перакладаў або ўласная "
-                L"табліца MediaInfo CSV. OK або Ужыць пацвярджае змены; Скасаваць адкідае непацверджаныя "
-                L"змены. У наладах задаецца мяжа назвы ўкладкі (па змоўчанні 80) і ачышчаецца спіс апошніх "
-                L"файлаў. Доўгія назвы захоўваюць пачатак, канец і пашырэнне са шматкроп’ем пасярэдзіне. "
-                L"Ачысціць адразу выдаляе спіс апошніх файлаў, нават калі пасля гэтага закрыць налады "
-                L"кнопкай Скасаваць.\r\n\r\nБІБЛІЯТЭКІ І ВОКНЫ\r\nПраграма змяшчае MediaInfo 26.10, 21.03 і "
-                L"0.7.60, якія правяраюцца ад найноўшай пасля знешніх бібліятэк. Дзве навейшыя версіі маюць "
-                L"адпаведную libcurl; 0.7.60 ніколі яе не распакоўвае. Становішча акна захоўваецца. Паводле "
-                L"прадвызначэння дазволены толькі адзін асобнік, а наступныя запускі перадаюць файлы "
-                L"адкрытаму акну. У наладах можна дазволіць некалькі асобнікаў. Пры некалькіх вокнах толькі "
-                L"першае акно кожнага тыпу акна аднаўляе захаванае становішча; астатнія аднаўляюць толькі "
-                L"памер."
+                L"І МОВЫ\r\nНалады (Параметры > Налады, Ctrl+G) змяшчаюць шляхі бібліятэк, шрыфт "
+                L"справаздачы, згладжванне і мовы. Інтэрфейс мае 36 варыянтаў і спачатку адпавядае Windows. "
+                L"Справаздачы заўсёды па змоўчанні выкарыстоўваюць зыходную англійскую бібліятэкі, "
+                L"незалежна ад Windows і інтэрфейсу. Гэта змяняе толькі ручны выбар: англійская, 37 "
+                L"перакладаў або ўласная табліца MediaInfo CSV. OK або Ужыць пацвярджае змены; Скасаваць "
+                L"адкідае непацверджаныя змены. У наладах задаецца мяжа назвы ўкладкі (па змоўчанні 80) і "
+                L"ачышчаецца спіс апошніх файлаў. Доўгія назвы захоўваюць пачатак, канец і пашырэнне са "
+                L"шматкроп’ем пасярэдзіне. Ачысціць адразу выдаляе спіс апошніх файлаў, нават калі пасля "
+                L"гэтага закрыць налады кнопкай Скасаваць.\r\n\r\nБІБЛІЯТЭКІ І ВОКНЫ\r\nПраграма змяшчае "
+                L"MediaInfo 26.10, 21.03 і 0.7.60, якія правяраюцца ад найноўшай пасля знешніх бібліятэк. "
+                L"Дзве навейшыя версіі маюць адпаведную libcurl; 0.7.60 ніколі яе не распакоўвае. "
+                L"Становішча акна захоўваецца. Паводле прадвызначэння дазволены толькі адзін асобнік, а "
+                L"наступныя запускі перадаюць файлы адкрытаму акну. У наладах можна дазволіць некалькі "
+                L"асобнікаў. Пры некалькіх вокнах толькі першае акно кожнага тыпу акна аднаўляе захаванае "
+                L"становішча; астатнія аднаўляюць толькі памер.\r\n\r\nПраўка > Знайсці (Ctrl+F) шукае ў "
+                L"актыўнай укладцы. F3 паўтарае пошук, а Shift+F3 змяняе яго кірунак. На мяжы тэксту пошук "
+                L"працягваецца з супрацьлеглага канца. Параметры > Перанос радкоў дзейнічае толькі ў "
+                L"актыўнай укладцы; адзнака адпавядае выбранай укладцы. Акно пошуку можна згарнуць і "
+                L"змяняць яго шырыню; пазіцыя і налада Заўсёды зверху захоўваюцца. Да 30 пошукавых тэкстаў "
+                L"з іх параметрамі захоўваюцца толькі да закрыцця праграмы. Параметры пачатку і канца "
+                L"тычацца лагічных радкоў. Рэгулярныя выразы выкарыстоўваюць сінтаксіс PCRE2. Усе каманды "
+                L"меню Праўка дзейнічаюць толькі ў актыўнай укладцы. Enter запускае пошук, а Shift+Enter "
+                L"змяняе выбраны кірунак на супрацьлеглы. «Улічваць рэгістр» адрознівае вялікія і малыя "
+                L"літары; «Шукаць назад» шукае ў бок пачатку тэксту. Выбар запісу гісторыі аднаўляе ўсе "
+                L"пяць параметраў пошуку, у тым ліку стан рэжыму рэгулярных выразаў; «Заўсёды зверху» — "
+                L"незалежны параметр. «Рэгулярны выраз» выключае «Радок пачынаецца з» і «Радок сканчаецца "
+                L"на». Калі ўключаны абодва параметры краёў радка, дастаткова супадзення на адным краі. "
+                L"«Перанос радкоў» змяняе толькі адлюстраванне."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -9459,6 +10453,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Капіяваць поўны &шлях" },
             { TXT_OPEN_FILE, L"&Адкрыць файл" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Адкрыць &папку размяшчэння" },
+            { TXT_EDIT_MENU, L"&Праўка" },
+            { TXT_WORD_WRAP, L"П&еранос радкоў" },
+            { TXT_WORD_WRAP_FAILED, L"Не ўдалося змяніць перанос радкоў." },
+            { TXT_COPY_SELECTION, L"&Капіяваць\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Выбраць &усё\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Знайсці…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Знайсці &далей\tF3" },
+            { TXT_FIND_TITLE, L"%s — Знайсці" },
+            { TXT_FIND_WHAT, L"&Шукаць:" },
+            { TXT_FIND_NEXT, L"Знайсці &далей" },
+            { TXT_FIND_MATCH_CASE, L"Улічваць &рэгістр" },
+            { TXT_FIND_BACKWARD, L"Шукаць &назад" },
+            { TXT_FIND_TOPMOST, L"З&аўсёды зверху" },
+            { TXT_FIND_STARTS_WITH, L"Радок &пачынаецца з" },
+            { TXT_FIND_ENDS_WITH, L"Радок скан&чаецца на" },
+            { TXT_FIND_REGEX, L"Рэгулярны &выраз" },
+            { TXT_FIND_NOT_FOUND, L"Зададзены тэкст не знойдзены." },
+            { TXT_FIND_FAILED, L"Не ўдалося завяршыць пошук." },
+            { TXT_FIND_REGEX_ERROR, L"Памылка рэгулярнага выразу:\r\n\r\n%s" },
         }
     },
     {
@@ -9480,7 +10493,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"Е&зик:" },
             { TXT_OPEN_WEBSITE, L"&Отвори в браузъра по подразбиране" },
             { TXT_OPEN, L"&Отвори…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Настройки" },
+            { TXT_OPTIONS_MENU, L"&Опции" },
             { TXT_PREFERENCES_MENU, L"&Предпочитания…\tCtrl+G" },
             { TXT_ABOUT, L"&За програмата" },
             { TXT_ABOUT_TITLE, L"За програмата %ls" },
@@ -9524,13 +10537,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Път до MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll не е заредена. Изберете я от Настройки > Предпочитания."
-            },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll не е заредена. Изберете я от Опции > Предпочитания." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll не е заредена." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Не може да се зареди съвместима външна или вградена MediaInfo.dll. Изберете я от Настройки "
-                L"> Предпочитания."
+                L"Не може да се зареди съвместима външна или вградена MediaInfo.dll. Изберете я от Опции > "
+                L"Предпочитания."
             },
             { TXT_ANTIALIASING_NONE, L"Няма" },
             { TXT_OK, L"OK" },
@@ -9538,7 +10549,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Целева платформа:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Предпочитания" },
-            { TXT_READY, L"Готов." },
+            { TXT_READY, L"Готов" },
             { TXT_FONT_REGULAR, L"Обикновен" },
             { TXT_REPORT_LANGUAGE, L"Език на о&тчета:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Езикови таблици за отчети" },
@@ -9609,10 +10620,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Процесът на библиотеката се провали при %s (код 0x%08lX). Изберете съвместима DLL от "
-                L"Настройки > Предпочитания."
+                L"Опции > Предпочитания."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Процесът на библиотеката не отговаря при %s. Изберете съвместима DLL от Настройки > "
+                L"Процесът на библиотеката не отговаря при %s. Изберете съвместима DLL от Опции > "
                 L"Предпочитания."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Настройките са приложени, но не са записани в регистъра." },
@@ -9703,9 +10714,9 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"папките, използвани от Отвори и Експортирай, нито запазва собствената си папка в "
                 L"настройките на приложението. Всеки диалогов прозорец Запиши като започва в папката на "
                 L"текущо избрания входен файл, независимо от предишната дестинация за "
-                L"запис.\r\n\r\nПРЕДПОЧИТАНИЯ И ЕЗИЦИ\r\nПредпочитанията (Настройки > Предпочитания, "
-                L"Ctrl+G) съдържат пътища до библиотеки, шрифт на отчета, изглаждане и езици. Интерфейсът "
-                L"има 36 варианта и първоначално следва Windows. Отчетите винаги използват по подразбиране "
+                L"запис.\r\n\r\nПРЕДПОЧИТАНИЯ И ЕЗИЦИ\r\nПредпочитанията (Опции > Предпочитания, Ctrl+G) "
+                L"съдържат пътища до библиотеки, шрифт на отчета, изглаждане и езици. Интерфейсът има 36 "
+                L"варианта и първоначално следва Windows. Отчетите винаги използват по подразбиране "
                 L"оригиналния английски на библиотеката, независимо от Windows и интерфейса. Това се "
                 L"променя само ръчно: английски, 37 превода или собствена таблица MediaInfo CSV. OK или "
                 L"Приложи потвърждава промените; Отказ отхвърля чакащите промени. Предпочитанията задават "
@@ -9717,8 +10728,23 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"версии имат подходящ libcurl; 0.7.60 никога не го разархивира. Положението на прозореца "
                 L"се запазва. По подразбиране е разрешен само един екземпляр, а следващите стартирания "
                 L"изпращат файловете към отворения прозорец. В предпочитанията може да се разрешат няколко "
-                L"екземпляра. При няколко прозореца само първият прозорец на всеки тип прозорец възстановява "
-                L"запазената позиция; останалите възстановяват само размера."
+                L"екземпляра. При няколко прозореца само първият прозорец на всеки тип прозорец "
+                L"възстановява запазената позиция; останалите възстановяват само "
+                L"размера.\r\n\r\nРедактиране > Намери (Ctrl+F) търси в активния раздел. F3 повтаря "
+                L"търсенето, а Shift+F3 обръща посоката му. При достигане на края на текста търсенето "
+                L"продължава от другия край. Опции > Пренасяне на нов ред засяга само активния раздел; "
+                L"отметката следва избрания раздел. Прозорецът за търсене може да се минимизира и да се "
+                L"променя ширината му; позицията и настройката Винаги отгоре се запомнят. До 30 текста за "
+                L"търсене с техните опции се пазят само до затварянето на приложението. Опциите за начало и "
+                L"край се отнасят за логически редове. Регулярните изрази използват синтаксиса на PCRE2. "
+                L"Всички команди в менюто Редактиране се отнасят само за активния раздел. Enter стартира "
+                L"търсенето, а Shift+Enter обръща избраната посока. „Различавай главни и малки букви“ "
+                L"различава главни и малки букви; „Търси назад“ търси към началото на текста. Избирането на "
+                L"запис от историята възстановява всичките пет опции за търсене, включително състоянието на "
+                L"режима за регулярни изрази; „Винаги отгоре“ е независима опция. „Регулярен израз“ "
+                L"изключва „Редът започва с“ и „Редът завършва с“. Когато и двете опции за краищата на реда "
+                L"са включени, е достатъчно съвпадение на единия край. „Пренасяне на нов ред“ променя само "
+                L"показването."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -9770,6 +10796,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Копирай пълния &път" },
             { TXT_OPEN_FILE, L"&Отвори файла" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Отвори &местоположението на файла" },
+            { TXT_EDIT_MENU, L"&Редактиране" },
+            { TXT_WORD_WRAP, L"Пр&енасяне на нов ред" },
+            { TXT_WORD_WRAP_FAILED, L"Пренасянето на нов ред не може да бъде променено." },
+            { TXT_COPY_SELECTION, L"&Копирай\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Избери &всичко\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Намери…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Намери &следващ\tF3" },
+            { TXT_FIND_TITLE, L"%s — Намиране" },
+            { TXT_FIND_WHAT, L"&Търси:" },
+            { TXT_FIND_NEXT, L"Намери &следващ" },
+            { TXT_FIND_MATCH_CASE, L"Различавай &главни и малки букви" },
+            { TXT_FIND_BACKWARD, L"Търси &назад" },
+            { TXT_FIND_TOPMOST, L"Винаги &отгоре" },
+            { TXT_FIND_STARTS_WITH, L"Редът за&почва с" },
+            { TXT_FIND_ENDS_WITH, L"Редът за&вършва с" },
+            { TXT_FIND_REGEX, L"&Регулярен израз" },
+            { TXT_FIND_NOT_FOUND, L"Указаният текст не е намерен." },
+            { TXT_FIND_FAILED, L"Търсенето не можа да бъде завършено." },
+            { TXT_FIND_REGEX_ERROR, L"Грешка в регулярния израз:\r\n\r\n%s" },
         }
     },
     {
@@ -9791,7 +10836,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Јазик:" },
             { TXT_OPEN_WEBSITE, L"&Отвори во стандардниот прелистувач" },
             { TXT_OPEN, L"&Отвори…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"По&ставки" },
+            { TXT_OPTIONS_MENU, L"&Опции" },
             { TXT_PREFERENCES_MENU, L"&Претпочитувања…\tCtrl+G" },
             { TXT_ABOUT, L"&За програмата" },
             { TXT_ABOUT_TITLE, L"За програмата %ls" },
@@ -9832,13 +10877,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Патека до MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll не е вчитана. Изберете ја во Поставки > Претпочитувања."
-            },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll не е вчитана. Изберете ја во Опции > Претпочитувања." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll не е вчитана." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Не може да се вчита компатибилна надворешна или вградена MediaInfo.dll. Изберете ја во "
-                L"Поставки > Претпочитувања."
+                L"Опции > Претпочитувања."
             },
             { TXT_ANTIALIASING_NONE, L"Нема" },
             { TXT_OK, L"Во ред" },
@@ -9846,7 +10889,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Целна платформа:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Претпочитувања" },
-            { TXT_READY, L"Подготвен." },
+            { TXT_READY, L"Подготвен" },
             { TXT_FONT_REGULAR, L"Обично" },
             { TXT_REPORT_LANGUAGE, L"Јазик на &извештајот:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Јазични табели за извештаи" },
@@ -9919,10 +10962,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Процесот на библиотеката не успеа при %s (код 0x%08lX). Изберете компатибилна DLL во "
-                L"Поставки > Претпочитувања."
+                L"Опции > Претпочитувања."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Процесот на библиотеката не одговара при %s. Изберете компатибилна DLL во Поставки > "
+                L"Процесот на библиотеката не одговара при %s. Изберете компатибилна DLL во Опции > "
                 L"Претпочитувања."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Поставките се применети, но не се зачувани во регистарот." },
@@ -9976,8 +11019,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"затвора картичка; Затвори ги сите ги затвора сите. Менито Датотека памети осум "
                 L"неодамнешни датотеки.\r\nОтвори папка… ги отвора датотеките непосредно во избраната "
                 L"папка, секоја во сопствена картичка. Потпапките не се вклучени.\r\nОтвори и Отвори папка "
-                L"ја "
-                L"делат последната избрана папка. Извозот памети посебна папка, стандардно Документи. "
+                L"ја делат последната избрана папка. Извозот памети посебна папка, стандардно Документи. "
                 L"Напредниот режим прикажува дополнителни полиња во извештајот.\r\nПознати формати / "
                 L"Познати кодеци / Познати параметри — MediaInfo.dll.\r\nЦелосна анализа ја испитува целата "
                 L"датотека и може да потрае подолго. Овие опции за извештај и Ниво на следење припаѓаат на "
@@ -10016,23 +11058,37 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"менува папките што ги користат Отвори и Извези ниту ја зачувува сопствената папка во "
                 L"поставките на апликацијата. Секој дијалог Зачувај како започнува во папката на моментално "
                 L"избраната влезна датотека, без оглед на претходната дестинација за "
-                L"зачувување.\r\n\r\nПРЕТПОЧИТУВАЊА И ЈАЗИЦИ\r\nПретпочитувањата (Поставки > "
-                L"Претпочитувања, Ctrl+G) содржат патеки до библиотеки, фонт на извештајот, измазнување и "
-                L"јазици. Интерфејсот има 36 варијанти и првично го следи Windows. Извештаите секогаш "
-                L"стандардно го користат изворниот англиски на библиотеката, независно од Windows и "
-                L"интерфејсот. Тоа се менува само рачно: англиски, 37 преводи или сопствена MediaInfo CSV "
-                L"табела. Во ред или Примени ги потврдува промените; Откажи ги отфрла непотврдените "
-                L"промени. Претпочитувањата го одредуваат ограничувањето на должината на името на "
-                L"картичката (стандардно 80 знаци) и го чистат списокот на неодамнешни датотеки. Долгите "
-                L"имиња ги задржуваат почетокот, крајот и наставката со три точки во средината. Исчисти "
-                L"веднаш го отстранува списокот на неодамнешни датотеки, дури и ако потоа ги затворите "
-                L"претпочитувањата со Откажи.\r\n\r\nБИБЛИОТЕКИ И ПРОЗОРЦИ\r\nПрограмата содржи MediaInfo "
-                L"26.10, 21.03 и 0.7.60, испробани од најновата по надворешните библиотеки. Двете понови "
-                L"верзии имаат соодветна libcurl; 0.7.60 никогаш не ја отпакува. Положбата на прозорецот се "
-                L"зачувува. Стандардно е дозволена само една инстанца, а следните стартувања ги испраќаат "
-                L"датотеките до отворениот прозорец. Во претпочитувањата може да се дозволат повеќе "
-                L"инстанци. Кога има повеќе прозорци, само првиот прозорец од секој тип прозорец ја враќа "
-                L"зачуваната положба; останатите ја враќаат само големината."
+                L"зачувување.\r\n\r\nПРЕТПОЧИТУВАЊА И ЈАЗИЦИ\r\nПретпочитувањата (Опции > Претпочитувања, "
+                L"Ctrl+G) содржат патеки до библиотеки, фонт на извештајот, измазнување и јазици. "
+                L"Интерфејсот има 36 варијанти и првично го следи Windows. Извештаите секогаш стандардно го "
+                L"користат изворниот англиски на библиотеката, независно од Windows и интерфејсот. Тоа се "
+                L"менува само рачно: англиски, 37 преводи или сопствена MediaInfo CSV табела. Во ред или "
+                L"Примени ги потврдува промените; Откажи ги отфрла непотврдените промени. Претпочитувањата "
+                L"го одредуваат ограничувањето на должината на името на картичката (стандардно 80 знаци) и "
+                L"го чистат списокот на неодамнешни датотеки. Долгите имиња ги задржуваат почетокот, крајот "
+                L"и наставката со три точки во средината. Исчисти веднаш го отстранува списокот на "
+                L"неодамнешни датотеки, дури и ако потоа ги затворите претпочитувањата со "
+                L"Откажи.\r\n\r\nБИБЛИОТЕКИ И ПРОЗОРЦИ\r\nПрограмата содржи MediaInfo 26.10, 21.03 и "
+                L"0.7.60, испробани од најновата по надворешните библиотеки. Двете понови верзии имаат "
+                L"соодветна libcurl; 0.7.60 никогаш не ја отпакува. Положбата на прозорецот се зачувува. "
+                L"Стандардно е дозволена само една инстанца, а следните стартувања ги испраќаат датотеките "
+                L"до отворениот прозорец. Во претпочитувањата може да се дозволат повеќе инстанци. Кога има "
+                L"повеќе прозорци, само првиот прозорец од секој тип прозорец ја враќа зачуваната положба; "
+                L"останатите ја враќаат само големината.\r\n\r\nУреди > Најди (Ctrl+F) пребарува во "
+                L"активната картичка. F3 го повторува пребарувањето, а Shift+F3 ја менува неговата насока. "
+                L"На крајот на текстот пребарувањето продолжува од другиот крај. Опции > Пренесување редови "
+                L"важи само за активната картичка; ознаката ја следи избраната картичка. Прозорецот за "
+                L"пребарување може да се минимизира и да му се менува ширината; положбата и опцијата "
+                L"Секогаш на врвот се паметат. До 30 текстови за пребарување со нивните опции се чуваат "
+                L"само до затворањето на апликацијата. Опциите за почеток и крај важат за логичките редови. "
+                L"Регуларните изрази користат синтакса на PCRE2. Сите команди во менито Уреди важат само за "
+                L"активната картичка. Enter го започнува пребарувањето, а Shift+Enter ја превртува "
+                L"избраната насока. „Разликувај големи и мали букви“ разликува големи и мали букви; „Барај "
+                L"наназад“ пребарува кон почетокот на текстот. Изборот на запис од историјата ги враќа сите "
+                L"пет опции за пребарување, вклучувајќи ја состојбата на режимот за регуларни изрази; "
+                L"„Секогаш на врвот“ е независна опција. „Регуларен израз“ ги исклучува „Редот почнува со“ "
+                L"и „Редот завршува со“. Кога се вклучени двете опции за краевите на редот, доволно е "
+                L"совпаѓање на едниот крај. „Пренесување редови“ го менува само приказот."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -10085,6 +11141,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Копирај ја целосната &патека" },
             { TXT_OPEN_FILE, L"&Отвори датотека" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Отвори ја папката што ја &содржи датотеката" },
+            { TXT_EDIT_MENU, L"&Уреди" },
+            { TXT_WORD_WRAP, L"П&ренесување редови" },
+            { TXT_WORD_WRAP_FAILED, L"Пренесувањето редови не може да се промени." },
+            { TXT_COPY_SELECTION, L"&Копирај\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Избери &сè\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Најди…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Најди сл&едно\tF3" },
+            { TXT_FIND_TITLE, L"%s — Најди" },
+            { TXT_FIND_WHAT, L"&Барај:" },
+            { TXT_FIND_NEXT, L"Најди &следно" },
+            { TXT_FIND_MATCH_CASE, L"Разликувај големи и &мали букви" },
+            { TXT_FIND_BACKWARD, L"Барај на&назад" },
+            { TXT_FIND_TOPMOST, L"Секогаш на &врвот" },
+            { TXT_FIND_STARTS_WITH, L"Редот &почнува со" },
+            { TXT_FIND_ENDS_WITH, L"Редот завршув&а со" },
+            { TXT_FIND_REGEX, L"&Регуларен израз" },
+            { TXT_FIND_NOT_FOUND, L"Наведениот текст не е пронајден." },
+            { TXT_FIND_FAILED, L"Пребарувањето не може да се доврши." },
+            { TXT_FIND_REGEX_ERROR, L"Грешка во регуларниот израз:\r\n\r\n%s" },
         }
     },
     {
@@ -10106,7 +11181,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Језик:" },
             { TXT_OPEN_WEBSITE, L"&Отвори у подразумеваном прегледачу" },
             { TXT_OPEN, L"&Отвори…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"П&одешавања" },
+            { TXT_OPTIONS_MENU, L"&Опције" },
             { TXT_PREFERENCES_MENU, L"&Подешавања…\tCtrl+G" },
             { TXT_ABOUT, L"&О програму" },
             { TXT_ABOUT_TITLE, L"О програму %ls" },
@@ -10146,11 +11221,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Путања до MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll није учитана. Изаберите је у Подешавања > Подешавања." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll није учитана. Изаберите је у Опције > Подешавања." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll није учитана." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Није могуће учитати компатибилну спољашњу или уграђену MediaInfo.dll. Изаберите је у "
-                L"Подешавања > Подешавања."
+                L"Опције > Подешавања."
             },
             { TXT_ANTIALIASING_NONE, L"Нема" },
             { TXT_OK, L"У реду" },
@@ -10158,7 +11233,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Циљна платформа:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Подешавања" },
-            { TXT_READY, L"Спреман." },
+            { TXT_READY, L"Спреман" },
             { TXT_FONT_REGULAR, L"Обично" },
             { TXT_REPORT_LANGUAGE, L"Језик &извештаја:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Језичке табеле извештаја" },
@@ -10220,12 +11295,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Библиотека не извози потребне Unicode функције библиотеке MediaInfo."
             },
             { TXT_LIBRARY_WORKER_FAILED,
-                L"Процес библиотеке није успео током %s (код 0x%08lX). Изаберите компатибилну DLL у "
-                L"Подешавања > Подешавања."
+                L"Процес библиотеке није успео током %s (код 0x%08lX). Изаберите компатибилну DLL у Опције "
+                L"> Подешавања."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Процес библиотеке не одговара током %s. Изаберите компатибилну DLL у Подешавања > "
-                L"Подешавања."
+                L"Процес библиотеке не одговара током %s. Изаберите компатибилну DLL у Опције > Подешавања."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Подешавања су примењена, али нису сачувана у регистру." },
             { TXT_REPORT_START_FAILED, L"Нема довољно меморије за покретање извештаја." },
@@ -10312,7 +11386,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ако откажете Сачувај као. Не мења фасцикле команди Отвори и Извези нити чува своју "
                 L"фасциклу у подешавањима апликације. Сваки дијалог Сачувај као почиње у фасцикли тренутно "
                 L"изабране улазне датотеке, без обзира на претходно одредиште чувања.\r\n\r\nПОДЕШАВАЊА И "
-                L"ЈЕЗИЦИ\r\nПодешавања (Подешавања > Подешавања, Ctrl+G) садрже путање библиотека, фонт "
+                L"ЈЕЗИЦИ\r\nПодешавања (Опције > Подешавања, Ctrl+G) садрже путање библиотека, фонт "
                 L"извештаја, умекшавање и језике. Интерфејс има 36 варијанти и почетно прати Windows. "
                 L"Извештаји увек подразумевано користе изворни енглески библиотеке, независно од Windows-а "
                 L"и интерфејса. То мења само ручни избор језика: енглески, 37 превода или сопствена "
@@ -10326,7 +11400,19 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Подразумевано је дозвољена само једна инстанца, а наредна покретања шаљу датотеке "
                 L"отвореном прозору. У подешавањима се може дозволити више инстанци. Када постоји више "
                 L"прозора, само први прозор сваког типа прозора враћа сачувани положај; остали враћају само "
-                L"величину."
+                L"величину.\r\n\r\nУређивање > Пронађи (Ctrl+F) претражује активну картицу. F3 понавља "
+                L"претрагу, а Shift+F3 мења њен смер. На крају текста претрага се наставља с другог краја. "
+                L"Опције > Преламање редова важи само за активну картицу; ознака прати изабрану картицу. "
+                L"Прозор претраге може се умањити и мењати му се ширина; положај и опција Увек на врху се "
+                L"памте. До 30 текстова претраге с њиховим опцијама чува се само до затварања апликације. "
+                L"Опције почетка и краја односе се на логичке редове. Регуларни изрази користе синтаксу "
+                L"PCRE2. Све команде менија Уређивање односе се само на активну картицу. Enter покреће "
+                L"претрагу, а Shift+Enter обрће изабрани смер. „Разликуј велика и мала слова“ разликује "
+                L"велика и мала слова; „Тражи уназад“ тражи према почетку текста. Избор ставке историје "
+                L"враћа свих пет опција претраге, укључујући стање режима регуларних израза; „Увек на врху“ "
+                L"је независна опција. „Регуларни израз“ онемогућава „Ред почиње са“ и „Ред се завршава "
+                L"са“. Када су укључене обе опције крајева реда, довољно је поклапање на једном крају. "
+                L"„Преламање редова“ мења само приказ."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -10377,6 +11463,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Копирај пуну &путању" },
             { TXT_OPEN_FILE, L"&Отвори датотеку" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Отвори &локацију датотеке" },
+            { TXT_EDIT_MENU, L"&Уређивање" },
+            { TXT_WORD_WRAP, L"П&реламање редова" },
+            { TXT_WORD_WRAP_FAILED, L"Преламање редова није могуће променити." },
+            { TXT_COPY_SELECTION, L"&Копирај\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Изабери &све\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Пронађи…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Пронађи с&ледеће\tF3" },
+            { TXT_FIND_TITLE, L"%s — Пронађи" },
+            { TXT_FIND_WHAT, L"&Тражи:" },
+            { TXT_FIND_NEXT, L"Пронађи с&ледеће" },
+            { TXT_FIND_MATCH_CASE, L"Разликуј велика и &мала слова" },
+            { TXT_FIND_BACKWARD, L"Тражи &уназад" },
+            { TXT_FIND_TOPMOST, L"Увек на &врху" },
+            { TXT_FIND_STARTS_WITH, L"Ред &почиње са" },
+            { TXT_FIND_ENDS_WITH, L"Ред се завршава с&а" },
+            { TXT_FIND_REGEX, L"&Регуларни израз" },
+            { TXT_FIND_NOT_FOUND, L"Наведени текст није пронађен." },
+            { TXT_FIND_FAILED, L"Претрагу није могуће довршити." },
+            { TXT_FIND_REGEX_ERROR, L"Грешка у регуларном изразу:\r\n\r\n%s" },
         }
     },
     {
@@ -10398,7 +11503,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Мова:" },
             { TXT_OPEN_WEBSITE, L"&Відкрити в типовому браузері" },
             { TXT_OPEN, L"&Відкрити…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Налаштування" },
+            { TXT_OPTIONS_MENU, L"&Параметри" },
             { TXT_PREFERENCES_MENU, L"&Налаштування…\tCtrl+G" },
             { TXT_ABOUT, L"&Про програму" },
             { TXT_ABOUT_TITLE, L"Про програму %ls" },
@@ -10441,12 +11546,12 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Шлях до MediaInfo.dll:" },
             { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll не завантажено. Виберіть її в Налаштування > Налаштування."
+                L"MediaInfo.dll не завантажено. Виберіть її в Параметри > Налаштування."
             },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll не завантажено." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Не вдалося завантажити сумісну зовнішню чи вбудовану MediaInfo.dll. Виберіть її в "
-                L"Налаштування > Налаштування."
+                L"Параметри > Налаштування."
             },
             { TXT_ANTIALIASING_NONE, L"Немає" },
             { TXT_OK, L"Гаразд" },
@@ -10454,7 +11559,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Цільова платформа:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Налаштування" },
-            { TXT_READY, L"Готовий." },
+            { TXT_READY, L"Готовий" },
             { TXT_FONT_REGULAR, L"Звичайний" },
             { TXT_REPORT_LANGUAGE, L"Мова з&віту:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Мовні таблиці звітів" },
@@ -10519,10 +11624,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Процес бібліотеки завершився помилкою під час %s (код 0x%08lX). Виберіть сумісну DLL у "
-                L"Налаштування > Налаштування."
+                L"Параметри > Налаштування."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Процес бібліотеки не відповідає під час %s. Виберіть сумісну DLL у Налаштування > "
+                L"Процес бібліотеки не відповідає під час %s. Виберіть сумісну DLL у Параметри > "
                 L"Налаштування."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Налаштування застосовано, але не збережено в реєстрі." },
@@ -10610,7 +11715,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"папки, які використовуються Відкрити і Експортувати, і не зберігає власну папку в "
                 L"налаштуваннях програми. Кожне діалогове вікно «Зберегти як» починається в папці поточного "
                 L"вибраного вхідного файлу, незалежно від попереднього місця "
-                L"збереження.\r\n\r\nНАЛАШТУВАННЯ ТА МОВИ\r\nНалаштування (Налаштування > Налаштування, "
+                L"збереження.\r\n\r\nНАЛАШТУВАННЯ ТА МОВИ\r\nНалаштування (Параметри > Налаштування, "
                 L"Ctrl+G) містять шляхи бібліотек, шрифт звіту, згладжування та мови. Інтерфейс має 36 "
                 L"варіантів і спочатку відповідає Windows. Звіти завжди типово використовують початкову "
                 L"англійську бібліотеки, незалежно від Windows та інтерфейсу. Це змінює лише ручний вибір: "
@@ -10625,7 +11730,20 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"За замовчуванням дозволено лише один екземпляр, а наступні запуски передають файли "
                 L"відкритому вікну. У налаштуваннях можна дозволити кілька екземплярів. За наявності "
                 L"кількох вікон лише перше вікно кожного типу вікна відновлює збережене розташування; решта "
-                L"відновлюють лише розмір."
+                L"відновлюють лише розмір.\r\n\r\nРедагування > Знайти (Ctrl+F) шукає в активній вкладці. "
+                L"F3 повторює пошук, а Shift+F3 змінює його напрямок. На межі тексту пошук продовжується з "
+                L"протилежного кінця. Параметри > Перенесення слів діє лише в активній вкладці; позначка "
+                L"відповідає вибраній вкладці. Вікно пошуку можна згорнути та змінювати його ширину; "
+                L"положення і налаштування Завжди зверху зберігаються. До 30 пошукових текстів із "
+                L"параметрами зберігаються лише до закриття програми. Параметри початку та кінця стосуються "
+                L"логічних рядків. Регулярні вирази використовують синтаксис PCRE2. Усі команди меню "
+                L"Редагування стосуються лише активної вкладки. Enter запускає пошук, а Shift+Enter змінює "
+                L"вибраний напрямок на протилежний. «Враховувати регістр» розрізняє великі й малі літери; "
+                L"«Шукати назад» шукає в напрямку початку тексту. Вибір запису історії відновлює всі п’ять "
+                L"параметрів пошуку, зокрема стан режиму регулярних виразів; «Завжди зверху» — незалежний "
+                L"параметр. «Регулярний вираз» вимикає «Рядок починається з» і «Рядок закінчується на». "
+                L"Якщо ввімкнено обидва параметри країв рядка, достатньо збігу на одному краї. «Перенесення "
+                L"слів» змінює лише відображення."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -10675,6 +11793,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Копіювати повний &шлях" },
             { TXT_OPEN_FILE, L"&Відкрити файл" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Відкрити &розташування файлу" },
+            { TXT_EDIT_MENU, L"&Редагування" },
+            { TXT_WORD_WRAP, L"П&еренесення слів" },
+            { TXT_WORD_WRAP_FAILED, L"Не вдалося змінити перенесення слів." },
+            { TXT_COPY_SELECTION, L"&Копіювати\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Виділити &все\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Знайти…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Знайти &далі\tF3" },
+            { TXT_FIND_TITLE, L"%s — Пошук" },
+            { TXT_FIND_WHAT, L"&Шукати:" },
+            { TXT_FIND_NEXT, L"Знайти &далі" },
+            { TXT_FIND_MATCH_CASE, L"Враховувати &регістр" },
+            { TXT_FIND_BACKWARD, L"Шукати &назад" },
+            { TXT_FIND_TOPMOST, L"З&авжди зверху" },
+            { TXT_FIND_STARTS_WITH, L"Рядок &починається з" },
+            { TXT_FIND_ENDS_WITH, L"Рядок за&кінчується на" },
+            { TXT_FIND_REGEX, L"Регулярний &вираз" },
+            { TXT_FIND_NOT_FOUND, L"Зазначений текст не знайдено." },
+            { TXT_FIND_FAILED, L"Не вдалося завершити пошук." },
+            { TXT_FIND_REGEX_ERROR, L"Помилка регулярного виразу:\r\n\r\n%s" },
         }
     },
     {
@@ -10696,7 +11833,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Язык:" },
             { TXT_OPEN_WEBSITE, L"&Открыть в браузере по умолчанию" },
             { TXT_OPEN, L"&Открыть…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Настройки" },
+            { TXT_OPTIONS_MENU, L"П&араметры" },
             { TXT_PREFERENCES_MENU, L"&Настройки…\tCtrl+G" },
             { TXT_ABOUT, L"&О программе" },
             { TXT_ABOUT_TITLE, L"О программе %ls" },
@@ -10736,11 +11873,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Путь к библиотеке MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll не загружена. Выберите её в Настройки > Настройки." },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll не загружена. Выберите её в Параметры > Настройки." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll не загружена." },
             { TXT_NO_COMPATIBLE_MEDIALIB,
                 L"Не удалось загрузить совместимую внешнюю или встроенную MediaInfo.dll. Выберите её в "
-                L"Настройки > Настройки."
+                L"Параметры > Настройки."
             },
             { TXT_ANTIALIASING_NONE, L"Нет" },
             { TXT_OK, L"ОК" },
@@ -10748,7 +11885,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PLATFORM, L"Целевая платформа:" },
             { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
             { TXT_PREFERENCES_TITLE, L"Настройки" },
-            { TXT_READY, L"Готов." },
+            { TXT_READY, L"Готов" },
             { TXT_FONT_REGULAR, L"Обычный" },
             { TXT_REPORT_LANGUAGE, L"Язык о&тчёта:" },
             { TXT_REPORT_LANGUAGE_TABLES, L"Языковые таблицы отчётов" },
@@ -10813,10 +11950,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_WORKER_FAILED,
                 L"Процесс библиотеки завершился ошибкой при %s (код 0x%08lX). Выберите совместимую DLL в "
-                L"Настройки > Настройки."
+                L"Параметры > Настройки."
             },
             { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Процесс библиотеки не отвечает при %s. Выберите совместимую DLL в Настройки > Настройки."
+                L"Процесс библиотеки не отвечает при %s. Выберите совместимую DLL в Параметры > Настройки."
             },
             { TXT_PREFERENCES_SAVE_FAILED, L"Настройки применены, но не сохранены в реестре." },
             { TXT_REPORT_START_FAILED, L"Недостаточно памяти для запуска отчёта." },
@@ -10905,7 +12042,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"используемые Открыть и Экспортировать, и не сохраняет свою собственную папку в настройках "
                 L"приложения. Каждое диалоговое окно «Сохранить как» начинается в папке текущего выбранного "
                 L"входного файла, независимо от предыдущего места сохранения.\r\n\r\nНАСТРОЙКИ И "
-                L"ЯЗЫКИ\r\nНастройки (Настройки > Настройки, Ctrl+G) содержат пути библиотек, шрифт отчёта, "
+                L"ЯЗЫКИ\r\nНастройки (Параметры > Настройки, Ctrl+G) содержат пути библиотек, шрифт отчёта, "
                 L"сглаживание и языки. Интерфейс имеет 36 вариантов и изначально следует Windows. Отчёты "
                 L"всегда по умолчанию используют исходный английский библиотеки, независимо от Windows и "
                 L"интерфейса. Это меняет только ручной выбор: английский, 37 переводов или собственная "
@@ -10919,7 +12056,21 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"распаковывает. Положение окна сохраняется. По умолчанию разрешён только один экземпляр, а "
                 L"последующие запуски передают файлы открытому окну. В настройках можно разрешить несколько "
                 L"экземпляров. При нескольких окнах только первое окно каждого типа окна восстанавливает "
-                L"сохранённое положение; остальные восстанавливают только размер."
+                L"сохранённое положение; остальные восстанавливают только размер.\r\n\r\nПравка > Найти "
+                L"(Ctrl+F) ищет в активной вкладке. F3 повторяет поиск, а Shift+F3 меняет его направление. "
+                L"На границе текста поиск продолжается с противоположного конца. Параметры > Перенос по "
+                L"словам действует только в активной вкладке; флажок соответствует выбранной вкладке. Окно "
+                L"поиска можно свернуть и изменять его ширину; положение и настройка Поверх остальных окон "
+                L"сохраняются. До 30 поисковых текстов с параметрами хранятся только до закрытия "
+                L"приложения. Параметры начала и конца относятся к логическим строкам. Регулярные выражения "
+                L"используют синтаксис PCRE2. Все команды меню Правка относятся только к активной вкладке. "
+                L"Enter запускает поиск, а Shift+Enter меняет выбранное направление на противоположное. "
+                L"«Учитывать регистр» различает прописные и строчные буквы; «Искать назад» ищет в сторону "
+                L"начала текста. Выбор записи истории восстанавливает все пять параметров поиска, включая "
+                L"состояние режима регулярных выражений; «Поверх остальных окон» — независимый параметр. "
+                L"«Регулярное выражение» отключает «Строка начинается с» и «Строка заканчивается на». Если "
+                L"включены оба параметра краёв строки, достаточно совпадения на одном краю. «Перенос по "
+                L"словам» меняет только отображение."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -10972,6 +12123,25 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_COPY_FULL_PATH, L"Копировать полный п&уть" },
             { TXT_OPEN_FILE, L"&Открыть файл" },
             { TXT_OPEN_CONTAINING_FOLDER, L"Открыть &расположение файла" },
+            { TXT_EDIT_MENU, L"&Правка" },
+            { TXT_WORD_WRAP, L"П&еренос по словам" },
+            { TXT_WORD_WRAP_FAILED, L"Не удалось изменить перенос по словам." },
+            { TXT_COPY_SELECTION, L"&Копировать\tCtrl+C" },
+            { TXT_SELECT_ALL, L"Выделить &всё\tCtrl+A" },
+            { TXT_FIND_MENU, L"&Найти…\tCtrl+F" },
+            { TXT_FIND_NEXT_MENU, L"Найти &далее\tF3" },
+            { TXT_FIND_TITLE, L"%s — Поиск" },
+            { TXT_FIND_WHAT, L"Най&ти:" },
+            { TXT_FIND_NEXT, L"Найти &далее" },
+            { TXT_FIND_MATCH_CASE, L"Учитывать &регистр" },
+            { TXT_FIND_BACKWARD, L"Искать н&азад" },
+            { TXT_FIND_TOPMOST, L"Поверх &остальных окон" },
+            { TXT_FIND_STARTS_WITH, L"Строка &начинается с" },
+            { TXT_FIND_ENDS_WITH, L"Строка закан&чивается на" },
+            { TXT_FIND_REGEX, L"Регулярное &выражение" },
+            { TXT_FIND_NOT_FOUND, L"Указанный текст не найден." },
+            { TXT_FIND_FAILED, L"Не удалось завершить поиск." },
+            { TXT_FIND_REGEX_ERROR, L"Ошибка регулярного выражения:\r\n\r\n%s" },
         }
     },
 };

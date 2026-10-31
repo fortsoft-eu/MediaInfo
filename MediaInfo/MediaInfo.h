@@ -91,7 +91,7 @@ enum TextId {
     TXT_LANGUAGE,
     TXT_OPEN_WEBSITE,
     TXT_OPEN,
-    TXT_SETTINGS_MENU,
+    TXT_OPTIONS_MENU,
     TXT_PREFERENCES_MENU,
     TXT_ABOUT,
     TXT_ABOUT_TITLE,
@@ -244,6 +244,25 @@ enum TextId {
     TXT_COPY_FULL_PATH,
     TXT_OPEN_FILE,
     TXT_OPEN_CONTAINING_FOLDER,
+    TXT_EDIT_MENU,
+    TXT_WORD_WRAP,
+    TXT_WORD_WRAP_FAILED,
+    TXT_COPY_SELECTION,
+    TXT_SELECT_ALL,
+    TXT_FIND_MENU,
+    TXT_FIND_NEXT_MENU,
+    TXT_FIND_TITLE,
+    TXT_FIND_WHAT,
+    TXT_FIND_NEXT,
+    TXT_FIND_MATCH_CASE,
+    TXT_FIND_BACKWARD,
+    TXT_FIND_TOPMOST,
+    TXT_FIND_STARTS_WITH,
+    TXT_FIND_ENDS_WITH,
+    TXT_FIND_REGEX,
+    TXT_FIND_NOT_FOUND,
+    TXT_FIND_FAILED,
+    TXT_FIND_REGEX_ERROR,
     TXT_COUNT
 };
 
@@ -267,6 +286,10 @@ static const int applicationLanguageCount = LANG_COUNT;
 /// Main-window identity and the signature used to recognize cross-instance file requests.
 extern const wchar_t viewerWindowClass[];
 static const ULONG_PTR instanceFileRequest = 0x4D494E46;
+
+/// Main-form notifications used by its modeless search form.
+static const UINT findVisibilityChangedMessage = WM_APP + 6;
+static const UINT findMatchMessage = WM_APP + 7;
 
 /// Passes absolute Unicode file paths to the existing viewer, or reactivates it for an empty launch.
 bool ForwardInstanceFiles(HWND target, int count, wchar_t** arguments);

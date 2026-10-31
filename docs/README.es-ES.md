@@ -11,6 +11,10 @@ lectura.
 
 Abra MediaInfo.sln en Visual Studio 2015 con el conjunto de herramientas Visual C++ v140 instalado. Elija Release | Win32 y cree la solución. La única plataforma de aplicación es Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, enlace estático, BSD-3-Clause.
+[license.txt](../license.txt). [Código fuente](../MediaInfo/PCRE2/).
+PCRE2 está integrada en el ejecutable y no requiere una DLL independiente ni una instalación adicional.
+
 Salidas:
 
 - Release\MediaInfo.exe
@@ -64,16 +68,29 @@ Windows 95 no es actualmente un tiempo de ejecución compatible.
   completa.
 - La rueda del mouse sobre los encabezados de pestañas desbordados desplaza la tira del encabezado una pestaña
   por mensaje sin cambiar la selección o el enfoque.
-- Ctrl+Tab y Ctrl+Shift+Tab cambian las pestañas; Ctrl+W cierra la pestaña activa. Al hacer clic con el botón
+- Ctrl+Tab y Ctrl+Mayús+Tab cambian las pestañas; Ctrl+W cierra la pestaña activa. Al hacer clic con el botón
   central en el encabezado de una pestaña, se cierra esa pestaña y se conserva cualquier otra pestaña activa.
   Archivo > Cerrar todo cierra todas las pestañas, incluidos los informes en cola. Archivo > Salir (Alt+F4)
   cierra la aplicación.
 - Al hacer doble clic se selecciona una palabra. Al hacer triple clic se selecciona una línea lógica.
   Arrastrar amplía la selección por palabras o líneas.
 - Ctrl+A selecciona el informe; Ctrl+C lo copia.
-- Configuración > Preferencias (Ctrl+G) abre un cuadro de diálogo de preferencias único para las rutas
-  MediaInfo y curl, la fuente del informe, el suavizado de fuente, el idioma de la interfaz y el idioma del
-  informe. Una ruta DLL vacía permite el descubrimiento automático.
+- Edición > Buscar (Ctrl+F) busca en la pestaña activa. F3 repite la búsqueda; Mayús+F3 invierte su dirección.
+  Al llegar a un extremo del texto, la búsqueda continúa desde el otro. Opciones > Ajuste de línea solo afecta
+  a la pestaña activa; la marca cambia según la pestaña seleccionada. La ventana de búsqueda se puede
+  minimizar y redimensionar horizontalmente; se recuerdan su posición y la opción Siempre visible. Se
+  conservan hasta 30 búsquedas y sus opciones solo hasta que se cierra la aplicación. Las opciones de
+  principio y final se aplican a las líneas lógicas. Las expresiones regulares usan la sintaxis de PCRE2.
+  Todos los comandos de Edición afectan solo a la pestaña activa. Entrar inicia la búsqueda; Mayús+Entrar
+  invierte la dirección elegida. «Coincidir mayúsculas y minúsculas» distingue mayúsculas y minúsculas;
+  «Buscar hacia atrás» busca hacia el principio del texto. Elegir una entrada del historial restaura las cinco
+  opciones de búsqueda, incluido el estado del modo de expresión regular; «Siempre visible» es independiente.
+  «Expresión regular» desactiva «La línea empieza por» y «La línea termina en». Si ambas opciones de extremos
+  de línea están activadas, basta con que coincida uno de ellos. «Ajuste de línea» solo cambia la
+  visualización.
+- Opciones > Preferencias (Ctrl+G) abre un cuadro de diálogo de preferencias único para las rutas MediaInfo y
+  curl, la fuente del informe, el suavizado de fuente, el idioma de la interfaz y el idioma del informe. Una
+  ruta DLL vacía permite el descubrimiento automático.
 - El botón de fuente muestra la familia, el tamaño en puntos y el estilo y abre el cuadro de diálogo de fuente
   estándar Windows. El valor predeterminado restaura Consolas o Courier New si Consolas no está disponible; el
   botón Predeterminado está deshabilitado mientras se selecciona el valor predeterminado. Las fuentes
@@ -113,7 +130,7 @@ espacio disponible.
 
 ## Crear archivo de encabezado
 
-El menú Herramientas es el tercero de la barra de menús. Su comando Crear archivo de encabezado… abre un
+El menú Herramientas es el cuarto de la barra de menús. Su comando Crear archivo de encabezado… abre un
 archivo de origen independientemente de las pestañas del informe y copia sus primeros 524288 bytes (512 KiB).
 Un archivo más corto se copia en su totalidad; un archivo vacío produce una salida vacía. Esta es una lectura
 de archivos binarios normal, sin analizar el contenido con MediaInfo ni necesitar MediaInfo.dll. La
@@ -179,7 +196,7 @@ WebP: 16383 × 16383 px.
 
 ## Idiomas de interfaz y de informes
 
-Las preferencias (Configuración > Preferencias, Ctrl+G) contienen rutas de bibliotecas, fuente del informe,
+Las preferencias (Opciones > Preferencias, Ctrl+G) contienen rutas de bibliotecas, fuente del informe,
 suavizado e idiomas. La interfaz ofrece 36 variantes y sigue inicialmente a Windows. Los informes usan siempre
 el inglés original de la biblioteca, independientemente de Windows y de la interfaz. Solo una selección manual
 cambia su idioma: inglés, 37 traducciones o una tabla CSV de MediaInfo propia.

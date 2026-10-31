@@ -11,6 +11,11 @@ comhad.
 
 Oscail MediaInfo.sln in Visual Studio 2015 agus an tacar uirlisí Visual C++ v140 suiteáilte. Roghnaigh Release | Win32 agus tóg an réiteach. Is é an t-aon ardán iarratais ná Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, nasctha go statach,
+BSD-3-Clause. [Cód foinseach](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+Tá PCRE2 ionsuite sa chomhad EXE agus ní theastaíonn DLL ar leith ná suiteáil bhreise uaithi.
+
 Aschuir:
 
 - Release\MediaInfo.exe
@@ -69,7 +74,20 @@ Ní am rite tacaithe é Windows 95 faoi láthair.
 - Roghnaíonn dhá chliceáil focal. Roghnaíonn trí chliceáil líne loighciúil. Leathnaíonn tarraingt an rogha trí
   fhocail nó línte.
 - roghnaíonn Ctrl+A an tuairisc; Déanann Ctrl+C cóipeáil air.
-- Socruithe > Sainroghanna (Ctrl+G) osclaíonn dialóg roghanna amháin le haghaidh cosáin MediaInfo agus curl,
+- Déanann Eagar > Aimsigh (Ctrl+F) cuardach sa chluaisín gníomhach. Déanann F3 an cuardach arís agus
+  aisiompaíonn Shift+F3 an treo. Ag ceann an téacs, leanann an cuardach ón gceann eile. Ní bhaineann Roghanna
+  > Timfhilleadh Focal ach leis an gcluaisín gníomhach; leanann an tic an cluaisín roghnaithe. Is féidir an
+  fhuinneog chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh agus an socrú Ar barr i
+  gcónaí. Ní choinnítear suas le 30 téacs cuardaigh agus a gcuid roghanna ach go dtí go ndúntar an
+  feidhmchlár. Baineann na roghanna tosaigh agus deiridh le línte loighciúla. Úsáideann sloinn rialta comhréir
+  PCRE2. Ní bhaineann aon ordú sa roghchlár Eagar ach leis an gcluaisín gníomhach. Tosaíonn Enter cuardach;
+  aisiompaíonn Shift+Enter an treo roghnaithe. Déanann “Meaitseáil an cás” idirdhealú idir cás uachtair agus
+  cás íochtair; cuardaíonn “Cuardaigh ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú iontrála staire na
+  cúig rogha cuardaigh uile, lena n-áirítear staid mhód na slonn rialta; tá “Ar barr i gcónaí” neamhspleách.
+  Díchumasaíonn “Slonn rialta” na roghanna “Tosaíonn an líne le” agus “Críochnaíonn an líne le”. Má tá an dá
+  rogha imill líne cumasaithe, is leor meaitseáil ag ceachtar imeall. Ní athraíonn “Timfhilleadh Focal” ach an
+  taispeáint.
+- Roghanna > Sainroghanna (Ctrl+G) osclaíonn dialóg roghanna amháin le haghaidh cosáin MediaInfo agus curl,
   cló tuairisce, frith-ailiasú cló, teanga comhéadain agus teanga tuairisce. Ligeann cosán folamh DLL
   fionnachtain uathoibríoch.
 - Taispeánann an cnaipe cló an teaghlach, méid an phointe agus an stíl agus osclaíonn sé an dialóg chló
@@ -111,7 +129,7 @@ fáil.
 
 ## Cruthaigh Comhad Ceanntáisc
 
-Is é Uirlisí an tríú roghchlár ar an mbarra roghchláir. Osclaíonn an t-ordú Cruthaigh Comhad Ceanntáisc…
+Is é Uirlisí an ceathrú roghchlár ar an mbarra roghchláir. Osclaíonn an t-ordú Cruthaigh Comhad Ceanntáisc…
 comhad foinse amháin go neamhspleách ar na cluaisíní tuairisce agus cóipeann sé a chéad 524288 beart (512
 KiB). Déantar comhad níos giorra a chóipeáil ina iomláine; táirgeann comhad folamh aschur folamh. Is
 gnáthléamh comhaid dhénártha é seo, gan anailís MediaInfo ná gá le MediaInfo.dll. Fágann an uirlis cluaisíní
@@ -178,7 +196,7 @@ WebP: 16383 × 16383 px.
 
 ## Teangacha an chomhéadain agus na dtuairiscí
 
-Tá conairí leabharlainne, cló na tuairisce, frithailiasáil agus teangacha i Roghanna (Socruithe > Roghanna,
+Tá conairí leabharlainne, cló na tuairisce, frithailiasáil agus teangacha i Roghanna (Roghanna > Roghanna,
 Ctrl+G). Tá 36 leagan den chomhéadan ann agus leanann sé Windows ar dtús. Úsáideann tuairiscí bun-Bhéarla na
 leabharlainne i gcónaí mar réamhshocrú, neamhspleách ar Windows agus ar an gcomhéadan. Ní athraíonn é sin ach
 rogha láimhe: Béarla, 37 aistriúchán nó tábla CSV MediaInfo saincheaptha.

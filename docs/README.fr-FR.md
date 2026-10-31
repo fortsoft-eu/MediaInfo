@@ -11,6 +11,10 @@ lecture seule.
 
 Ouvrez MediaInfo.sln dans Visual Studio 2015 avec le jeu d'outils Visual C++ v140 installé. Choisissez Release | Win32 et construisez la solution. La seule plate-forme d'application est Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, lié statiquement,
+BSD-3-Clause. [license.txt](../license.txt). [Code source](../MediaInfo/PCRE2/).
+PCRE2 est intégrée à l’exécutable et ne nécessite ni DLL distincte ni installation supplémentaire.
+
 Sorties :
 
 - Release\MediaInfo.exe
@@ -64,16 +68,29 @@ Windows 95 n'est actuellement pas un moteur d'exécution pris en charge.
   chemin complet.
 - La molette de la souris sur les en-têtes d'onglets débordants fait défiler la bande d'en-tête d'un onglet
   par message sans modifier la sélection ou le focus.
-- Onglets de commutation Ctrl+Tab et Ctrl+Shift+Tab ; Ctrl+W ferme l'onglet actif. Un clic central sur
-  l'en-tête d'un onglet ferme cet onglet tout en préservant tout autre onglet actif. Fichier > Fermer tout
-  ferme tous les onglets, y compris les rapports en file d'attente. Fichier > Quitter (Alt+F4) ferme
-  l'application.
+- Onglets de commutation Ctrl+Tab et Ctrl+Maj+Tab ; Ctrl+W ferme l'onglet actif. Un clic central sur l'en-tête
+  d'un onglet ferme cet onglet tout en préservant tout autre onglet actif. Fichier > Fermer tout ferme tous
+  les onglets, y compris les rapports en file d'attente. Fichier > Quitter (Alt+F4) ferme l'application.
 - Un double-clic sélectionne un mot. Un triple-clic sélectionne une ligne logique. Le glisser étend la
   sélection par mots ou lignes.
 - Ctrl+A sélectionne le rapport ; Ctrl+C le copie.
-- Paramètres > Préférences (Ctrl+G) ouvre une boîte de dialogue de préférences unique pour les chemins
-  MediaInfo et curl, la police du rapport, l'anticrénelage des polices, la langue de l'interface et la langue
-  du rapport. Un chemin DLL vide permet la découverte automatique.
+- Édition > Rechercher (Ctrl+F) effectue une recherche dans l’onglet actif. F3 répète la recherche ; Maj+F3
+  inverse son sens. Aux extrémités du texte, la recherche reprend à l’autre extrémité. Options > Retour
+  automatique à la ligne concerne uniquement l’onglet actif ; la coche suit l’onglet sélectionné. La fenêtre
+  de recherche peut être réduite et redimensionnée horizontalement ; sa position et l’option Toujours au
+  premier plan sont mémorisées. Jusqu’à 30 recherches et leurs options sont conservées uniquement jusqu’à la
+  fermeture de l’application. Les options de début et de fin s’appliquent aux lignes logiques. Les expressions
+  régulières utilisent la syntaxe PCRE2. Toutes les commandes du menu Édition concernent uniquement l’onglet
+  actif. Entrée lance la recherche ; Maj+Entrée inverse le sens choisi. « Respecter la casse » distingue les
+  majuscules des minuscules ; « Rechercher vers l’arrière » recherche vers le début du texte. Choisir une
+  entrée de l’historique rétablit les cinq options de recherche, y compris l’état du mode d’expression
+  régulière ; « Toujours au premier plan » est indépendante. « Expression régulière » désactive « La ligne
+  commence par » et « La ligne se termine par ». Si les deux options de début et de fin de ligne sont
+  activées, une correspondance à l’une des extrémités suffit. « Retour automatique à la ligne » modifie
+  uniquement l’affichage.
+- Options > Préférences (Ctrl+G) ouvre une boîte de dialogue de préférences unique pour les chemins MediaInfo
+  et curl, la police du rapport, l'anticrénelage des polices, la langue de l'interface et la langue du
+  rapport. Un chemin DLL vide permet la découverte automatique.
 - Le bouton de police affiche la famille, la taille en points et le style et ouvre la boîte de dialogue de
   police standard Windows. La valeur par défaut restaure Consolas ou Courier New si Consolas n'est pas
   disponible ; le bouton Par défaut est désactivé lorsque la valeur par défaut est sélectionnée. Les polices
@@ -113,7 +130,7 @@ de suspension selon l’espace disponible.
 
 ## Créer un fichier d’en-tête
 
-Le menu Outils est le troisième menu de la barre de menus. Sa commande Créer un fichier d’en-tête… ouvre un
+Le menu Outils est le quatrième menu de la barre de menus. Sa commande Créer un fichier d’en-tête… ouvre un
 fichier source indépendamment des onglets du rapport et copie ses 524288 premiers octets (512 KiB). Un fichier
 plus court est copié dans son intégralité ; un fichier vide produit une sortie vide. Il s'agit d'une lecture
 de fichier binaire ordinaire, sans analyse MediaInfo ni nécessité de MediaInfo.dll. L’outil ne modifie ni les
@@ -182,7 +199,7 @@ WebP: 16383 × 16383 px.
 
 ## Langues de l’interface et des rapports
 
-Les préférences (Paramètres > Préférences, Ctrl+G) regroupent les chemins des bibliothèques, la police du
+Les préférences (Options > Préférences, Ctrl+G) regroupent les chemins des bibliothèques, la police du
 rapport, le lissage et les langues. L’interface possède 36 variantes et suit initialement Windows. Les
 rapports utilisent toujours l’anglais d’origine de la bibliothèque, indépendamment de Windows et de
 l’interface. Seul un choix manuel change leur langue : anglais, 37 traductions ou une table CSV MediaInfo

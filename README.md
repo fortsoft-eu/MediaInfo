@@ -10,6 +10,10 @@ Native x86 Windows viewer for MediaInfo.dll reports. Each file has its own read-
 
 Open MediaInfo.sln in Visual Studio 2015 with the Visual C++ v140 toolset installed. Choose Release | Win32 and build the solution. The only application platform is Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statically linked,
+BSD-3-Clause. [license.txt](license.txt). [Source code](MediaInfo/PCRE2/).
+PCRE2 is built into the executable and requires no separate DLL or installation.
+
 Outputs:
 
 - Release\MediaInfo.exe
@@ -62,7 +66,17 @@ Windows 95 is not currently a supported runtime.
 - Double-click selects a word. Triple-click selects a logical line. Dragging extends the selection by words or
   lines.
 - Ctrl+A selects the report; Ctrl+C copies it.
-- Settings > Preferences (Ctrl+G) opens a single preferences dialog for MediaInfo and curl paths, report font,
+- Edit > Find (Ctrl+F) searches the active tab. F3 repeats the search; Shift+F3 reverses its direction.
+  Searching wraps at the ends of the text. Options > Word Wrap affects only the active tab, and its check mark
+  follows the selected tab. The search window can be minimized and resized horizontally; its position and
+  Always on Top setting are remembered. Up to 30 search texts and their options are retained only until the
+  application exits. Starts with and Ends with match the edges of logical lines. Regular expressions use PCRE2
+  syntax. All commands in Edit affect only the active tab. Enter searches; Shift+Enter reverses the selected
+  direction. "Case sensitive" distinguishes uppercase and lowercase; "Backward" searches toward the start of
+  the text. Choosing a history entry restores all five search options, including the saved regular-expression
+  mode; "Always on top" is independent. "Regular expression" disables "Starts with" and "Ends with". With both
+  line-edge options enabled, either edge can match. "Word Wrap" changes only the display.
+- Options > Preferences (Ctrl+G) opens a single preferences dialog for MediaInfo and curl paths, report font,
   font antialiasing, interface language and report language. An empty DLL path enables automatic discovery.
 - The font button displays the family, point size and style and opens the standard Windows font dialog.
   Default restores Consolas, or Courier New if Consolas is unavailable; the Default button is disabled while
@@ -98,7 +112,7 @@ version. Long paths are shortened with an ellipsis to fit the available space.
 
 ## Create a Header File
 
-Tools is the third main menu. Its Create a Header File… command opens one source file independently of the
+Tools is the fourth main menu. Its Create a Header File… command opens one source file independently of the
 report tabs and copies its first 524288 bytes (512 KiB). A shorter file is copied in full; an empty file
 produces an empty output. This is ordinary binary file reading, without MediaInfo analysis or a requirement
 for MediaInfo.dll. The tool leaves report tabs and the viewer's recent-files list unchanged.
@@ -160,7 +174,7 @@ WebP: 16383 × 16383 px.
 
 ## Interface and report languages
 
-Preferences (Settings > Preferences, Ctrl+G) contains library paths, report font, antialiasing and language
+Preferences (Options > Preferences, Ctrl+G) contains library paths, report font, antialiasing and language
 choices. The interface has 36 variants and initially follows Windows. Reports always default to the library’s
 original English, independently of Windows and the interface. Only a manual report-language choice changes
 this: English, 37 translations or a custom MediaInfo CSV table.

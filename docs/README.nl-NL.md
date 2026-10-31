@@ -11,6 +11,11 @@ worden gelezen.
 
 Open MediaInfo.sln in Visual Studio 2015 met de Visual C++ v140 toolset geïnstalleerd. Kies Release | Win32 en bouw de oplossing. Het enige applicatieplatform is Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statisch gekoppeld,
+BSD-3-Clause. [Broncode](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 is in het EXE-bestand ingebouwd en vereist geen afzonderlijke DLL of extra installatie.
+
 Uitgangen:
 
 - Release\MediaInfo.exe
@@ -71,7 +76,20 @@ Windows 95 is momenteel geen ondersteunde runtime.
 - Dubbelklikken selecteert een woord. Driemaal klikken selecteert een logische lijn. Door te slepen wordt de
   selectie uitgebreid met woorden of regels.
 - Ctrl+A selecteert het rapport; Ctrl+C kopieert het.
-- Instellingen > Voorkeuren (Ctrl+G) opent één dialoogvenster met voorkeuren voor MediaInfo en curl paden,
+- Bewerken > Zoeken (Ctrl+F) doorzoekt het actieve tabblad. F3 herhaalt de zoekopdracht; Shift+F3 keert de
+  richting om. Aan het einde van de tekst gaat het zoeken verder vanaf het andere uiteinde. Opties >
+  Automatische terugloop geldt alleen voor het actieve tabblad; het vinkje volgt het geselecteerde tabblad.
+  Het zoekvenster kan worden geminimaliseerd en in de breedte worden aangepast; de positie en de instelling
+  Altijd bovenop worden onthouden. Maximaal 30 zoekteksten met hun opties blijven alleen bewaard totdat de
+  toepassing wordt afgesloten. De begin- en eindopties gelden voor logische regels. Reguliere expressies
+  gebruiken PCRE2-syntaxis. Alle opdrachten in Bewerken gelden alleen voor het actieve tabblad. Enter start
+  het zoeken; Shift+Enter keert de gekozen richting om. "Hoofdlettergevoelig" maakt onderscheid tussen
+  hoofdletters en kleine letters; "Achteruit zoeken" zoekt naar het begin van de tekst. Een keuze uit de
+  geschiedenis herstelt alle vijf zoekopties, ook de stand van de modus voor reguliere expressies; "Altijd
+  bovenop" staat hier los van. "Reguliere expressie" schakelt "Regel begint met" en "Regel eindigt op" uit.
+  Als beide opties voor de regeluiteinden aanstaan, volstaat een overeenkomst aan één uiteinde. "Automatische
+  terugloop" verandert alleen de weergave.
+- Opties > Voorkeuren (Ctrl+G) opent één dialoogvenster met voorkeuren voor MediaInfo en curl paden,
   rapportlettertype, lettertype-anti-aliasing, interfacetaal en rapporttaal. Een leeg DLL pad maakt
   automatische detectie mogelijk.
 - De lettertypeknop geeft de familie, puntgrootte en stijl weer en opent het standaard Windows
@@ -111,7 +129,7 @@ geladen MediaInfo.dll. Lange paden worden met een weglatingsteken ingekort tot d
 
 ## Headerbestand maken
 
-Het menu Extra is het derde menu op de menubalk. De opdracht Headerbestand maken… opent één bronbestand,
+Het menu Extra is het vierde menu op de menubalk. De opdracht Headerbestand maken… opent één bronbestand,
 onafhankelijk van de rapporttabbladen, en kopieert de eerste 524288 bytes (512 KiB). Een korter bestand wordt
 volledig gekopieerd; een leeg bestand produceert een lege uitvoer. Dit is het gewone lezen van binaire
 bestanden, zonder MediaInfo-analyse of een vereiste voor MediaInfo.dll. De tool laat rapporttabbladen en de
@@ -178,8 +196,8 @@ WebP: 16383 × 16383 px.
 
 ## Interface- en rapporttalen
 
-Voorkeuren (Instellingen > Voorkeuren, Ctrl+G) bevatten bibliotheekpaden, rapportlettertype, anti-aliasing en
-talen. De interface heeft 36 varianten en volgt aanvankelijk Windows. Rapporten gebruiken standaard altijd het
+Voorkeuren (Opties > Voorkeuren, Ctrl+G) bevatten bibliotheekpaden, rapportlettertype, anti-aliasing en talen.
+De interface heeft 36 varianten en volgt aanvankelijk Windows. Rapporten gebruiken standaard altijd het
 oorspronkelijke Engels van de bibliotheek, onafhankelijk van Windows en de interface. Alleen een handmatige
 keuze wijzigt de rapporttaal: Engels, 37 vertalingen of een eigen MediaInfo-CSV-tabel.
 

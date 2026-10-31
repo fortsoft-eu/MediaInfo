@@ -10,6 +10,11 @@ Izvorni Windows x86 pregledač izvještaja MediaInfo.dll. Svaka datoteka ima svo
 
 Otvorite MediaInfo.sln u Visual Studio 2015 sa instaliranim skupom alata Visual C++ v140. Odaberite Release | Win32 i izgraditi rješenje. Jedina aplikacijska platforma je Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statički povezano,
+BSD-3-Clause. [Izvorni kod](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 je ugrađena u EXE i ne zahtijeva zasebnu DLL datoteku ni dodatnu instalaciju.
+
 Izlazi:
 
 - Release\MediaInfo.exe
@@ -67,6 +72,17 @@ Windows 95 trenutno nije podržano vrijeme izvođenja.
 - Dvostruki klik odabire riječ. Trostruki klik odabire logičku liniju. Prevlačenjem se proširuje izbor
   riječima ili linijama.
 - Ctrl+A bira izvještaj; Ctrl+C kopira.
+- Uređivanje > Pronađi (Ctrl+F) pretražuje aktivnu karticu. F3 ponavlja pretragu, a Shift+F3 mijenja njen
+  smjer. Na kraju teksta pretraga se nastavlja s drugog kraja. Opcije > Prelamanje redova važi samo za aktivnu
+  karticu; oznaka prati izabranu karticu. Prozor pretrage može se minimizirati i mijenjati mu se širina;
+  položaj i opcija Uvijek na vrhu se pamte. Do 30 tekstova pretrage s njihovim opcijama čuva se samo do
+  zatvaranja aplikacije. Opcije početka i kraja odnose se na logičke redove. Regularni izrazi koriste PCRE2
+  sintaksu. Sve komande menija Uređivanje odnose se samo na aktivnu karticu. Enter pokreće pretragu, a
+  Shift+Enter obrće izabrani smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala slova; „Traži
+  unazad“ traži prema početku teksta. Izbor stavke istorije vraća svih pet opcija pretrage, uključujući stanje
+  režima regularnih izraza; „Uvijek na vrhu“ je nezavisna opcija. „Regularni izraz“ onemogućava „Red počinje
+  sa“ i „Red se završava sa“. Kada su uključene obje opcije krajeva reda, dovoljno je poklapanje na jednom
+  kraju. „Prelamanje redova“ mijenja samo prikaz.
 - Postavke > Preference (Ctrl+G) otvara jedan dijalog postavki za MediaInfo i curl putanje, font izvještaja,
   antialiasing fonta, jezik interfejsa i jezik izvještaja. Prazna staza DLL omogućava automatsko otkrivanje.
 - Dugme fonta prikazuje porodicu, veličinu tačke i stil i otvara standardni dijalog Windows fonta. Zadano
@@ -104,7 +120,7 @@ MediaInfo.dll. Duge putanje skraćuju se trotačkom prema dostupnom prostoru.
 
 ## Napravi datoteku zaglavlja
 
-Meni Alati je treći na traci menija. Komanda Napravi datoteku zaglavlja… otvara jednu ulaznu datoteku
+Meni Alati je četvrti na traci menija. Komanda Napravi datoteku zaglavlja… otvara jednu ulaznu datoteku
 nezavisno od kartica izvještaja i kopira njenih prvih 524288 bajtova (512 KiB). Kraća datoteka se kopira u
 cjelini; prazna datoteka daje praznu izlaznu datoteku. To je obično binarno čitanje datoteke, bez analize
 pomoću MediaInfo i bez potrebe za MediaInfo.dll. Kartice izvještaja i spisak nedavnih datoteka ostaju
@@ -167,10 +183,10 @@ WebP: 16383 × 16383 px.
 
 ## Jezici interfejsa i izvještaja
 
-Podešavanja (Podešavanja > Podešavanja, Ctrl+G) sadrže putanje biblioteka, font izvještaja, umekšavanje i
-jezike. Interfejs ima 36 varijanti i početno prati Windows. Izvještaji uvijek podrazumijevano koriste izvorni
-engleski biblioteke, nezavisno od Windowsa i interfejsa. To mijenja samo ručni izbor jezika: engleski, 37
-prevoda ili sopstvena MediaInfo CSV tabela.
+Podešavanja (Opcije > Podešavanja, Ctrl+G) sadrže putanje biblioteka, font izvještaja, umekšavanje i jezike.
+Interfejs ima 36 varijanti i početno prati Windows. Izvještaji uvijek podrazumijevano koriste izvorni engleski
+biblioteke, nezavisno od Windowsa i interfejsa. To mijenja samo ručni izbor jezika: engleski, 37 prevoda ili
+sopstvena MediaInfo CSV tabela.
 
 U redu ili Primijeni potvrđuje promjene; Otkaži odbacuje nepotvrđene promjene. Podešavanja određuju granicu
 naziva kartice (podrazumijevano 80) i brišu listu nedavnih datoteka. Dugi nazivi zadržavaju početak, kraj i

@@ -10,6 +10,11 @@ Natywna przeglądarka raportów MediaInfo.dll dla Windows x86. Każdy plik ma w�
 
 Otwórz MediaInfo.sln w Visual Studio 2015 z zainstalowanym zestawem narzędzi Visual C++ v140. Wybierz Release | Win32 i zbuduj rozwiązanie. Jedyną platformą aplikacji jest Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, połączono statycznie,
+BSD-3-Clause. [Kod źródłowy](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 jest wbudowana w plik EXE i nie wymaga osobnej biblioteki DLL ani dodatkowej instalacji.
+
 Wyjścia:
 
 - Release\MediaInfo.exe
@@ -65,9 +70,21 @@ Windows 95 nie jest obecnie obsługiwanym środowiskiem wykonawczym.
 - Podwójne kliknięcie zaznacza słowo. Potrójne kliknięcie wybiera linię logiczną. Przeciąganie rozszerza
   zaznaczenie o słowa lub linie.
 - Ctrl+A wybiera raport; Ctrl+C kopiuje to.
-- Ustawienia > Preferencje (Ctrl+G) otwiera pojedyncze okno dialogowe preferencji dla ścieżek MediaInfo i
-  curl, czcionki raportu, wygładzania czcionek, języka interfejsu i języka raportów. Pusta ścieżka DLL
-  umożliwia automatyczne wykrywanie.
+- Edycja > Znajdź (Ctrl+F) wyszukuje w aktywnej karcie. F3 powtarza wyszukiwanie, a Shift+F3 odwraca jego
+  kierunek. Po dotarciu do końca tekstu wyszukiwanie jest kontynuowane od drugiego końca. Opcje > Zawijanie
+  wierszy dotyczy tylko aktywnej karty; zaznaczenie odpowiada wybranej karcie. Okno wyszukiwania można
+  zminimalizować i zmieniać jego szerokość; położenie oraz ustawienie Zawsze na wierzchu są zapamiętywane. Do
+  30 wyszukiwanych tekstów z opcjami pozostaje w pamięci tylko do zamknięcia aplikacji. Opcje początku i końca
+  dotyczą logicznych wierszy. Wyrażenia regularne używają składni PCRE2. Wszystkie polecenia menu Edycja
+  dotyczą tylko aktywnej karty. Enter uruchamia wyszukiwanie, a Shift+Enter odwraca wybrany kierunek.
+  „Uwzględnij wielkość liter” rozróżnia wielkie i małe litery; „Szukaj wstecz” wyszukuje w kierunku początku
+  tekstu. Wybranie wpisu historii przywraca wszystkie pięć opcji wyszukiwania, w tym stan trybu wyrażeń
+  regularnych; „Zawsze na wierzchu” jest niezależne. „Wyrażenie regularne” wyłącza opcje „Wiersz zaczyna się
+  od” i „Wiersz kończy się na”. Gdy obie opcje krańców wiersza są włączone, wystarczy dopasowanie na jednym z
+  nich. „Zawijanie wierszy” zmienia tylko sposób wyświetlania.
+- Opcje > Preferencje (Ctrl+G) otwiera pojedyncze okno dialogowe preferencji dla ścieżek MediaInfo i curl,
+  czcionki raportu, wygładzania czcionek, języka interfejsu i języka raportów. Pusta ścieżka DLL umożliwia
+  automatyczne wykrywanie.
 - Przycisk czcionki wyświetla rodzinę, rozmiar czcionki i styl oraz otwiera standardowe okno dialogowe
   czcionki Windows. Domyślnie przywraca Consolas lub Courier New, jeśli Consolas jest niedostępne; przycisk
   Domyślne jest wyłączony, gdy wybrane jest ustawienie domyślne. Czcionki wybrane przez użytkownika są
@@ -104,7 +121,7 @@ MediaInfo.dll. Długie ścieżki są skracane wielokropkiem stosownie do dostęp
 
 ## Utwórz plik nagłówka
 
-Menu Narzędzia jest trzecim menu na pasku menu. Polecenie Utwórz plik nagłówka… otwiera jeden plik źródłowy
+Menu Narzędzia jest czwartym menu na pasku menu. Polecenie Utwórz plik nagłówka… otwiera jeden plik źródłowy
 niezależnie od kart raportów i kopiuje jego pierwsze 524288 bajtów (512 KiB). Krótszy plik jest kopiowany w
 całości; pusty plik generuje puste dane wyjściowe. Jest to zwykły odczyt pliku binarnego, bez analizy
 MediaInfo ani konieczności używania MediaInfo.dll. Narzędzie pozostawia karty raportów i listę ostatnich
@@ -171,8 +188,8 @@ WebP: 16383 × 16383 px.
 
 ## Języki interfejsu i raportów
 
-Preferencje (Ustawienia > Preferencje, Ctrl+G) zawierają ścieżki bibliotek, czcionkę raportu, wygładzanie i
-języki. Interfejs ma 36 wariantów i początkowo korzysta z języka Windows. Raporty zawsze domyślnie używają
+Preferencje (Opcje > Preferencje, Ctrl+G) zawierają ścieżki bibliotek, czcionkę raportu, wygładzanie i języki.
+Interfejs ma 36 wariantów i początkowo korzysta z języka Windows. Raporty zawsze domyślnie używają
 oryginalnego angielskiego biblioteki, niezależnie od Windows i interfejsu. Zmienia to wyłącznie ręczny wybór:
 angielski, 37 tłumaczeń lub własna tabela CSV MediaInfo.
 

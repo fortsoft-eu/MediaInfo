@@ -10,6 +10,11 @@ Vietējais Windows x86 skatītājs MediaInfo.dll pārskatiem. Katram failam ir s
 
 Atveriet MediaInfo.sln mapē Visual Studio 2015 ar instalētu rīku kopu Visual C++ v140. Izvēlieties Release | Win32 un izveidojiet risinājumu. Vienīgā lietojumprogrammu platforma ir Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statiski saistīts,
+BSD-3-Clause. [Pirmkods](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 ir iebūvēta EXE failā, un tai nav nepieciešams atsevišķs DLL fails vai papildu instalēšana.
+
 Izvades:
 
 - Release\MediaInfo.exe
@@ -65,7 +70,18 @@ Windows 95 pašlaik netiek atbalstīts izpildlaiks.
 - Veicot dubultklikšķi, tiek atlasīts vārds. Trīsreiz noklikšķinot, tiek atlasīta loģiskā līnija. Vilkšana
   paplašina atlasi pēc vārdiem vai rindiņām.
 - Ctrl+A atlasa atskaiti; Ctrl+C to kopē.
-- Iestatījumi > Iestatījumi (Ctrl+G) atver vienu preferenču dialoglodziņu MediaInfo un curl ceļiem, atskaites
+- Rediģēt > Atrast (Ctrl+F) meklē aktīvajā cilnē. F3 atkārto meklēšanu, bet Shift+F3 maina tās virzienu.
+  Sasniedzot teksta malu, meklēšana turpinās no otras malas. Opcijas > Teksta aplaušana attiecas tikai uz
+  aktīvo cilni; atzīme mainās atbilstoši atlasītajai cilnei. Meklēšanas logu var minimizēt un mainīt tā
+  platumu; tiek atcerēta atrašanās vieta un opcija Vienmēr virspusē. Līdz 30 meklēšanas tekstiem ar opcijām
+  tiek saglabāti tikai līdz lietotnes aizvēršanai. Sākuma un beigu opcijas attiecas uz loģiskajām rindām.
+  Regulārās izteiksmes izmanto PCRE2 sintaksi. Visas izvēlnes Rediģēt komandas attiecas tikai uz aktīvo cilni.
+  Enter sāk meklēšanu; Shift+Enter apgriež izvēlēto virzienu. “Atšķirt lielos un mazos burtus” atšķir lielos
+  un mazos burtus; “Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures ieraksta izvēle atjauno visas
+  piecas meklēšanas opcijas, tostarp regulārās izteiksmes režīma stāvokli; “Vienmēr virspusē” ir neatkarīga
+  opcija. “Regulārā izteiksme” atspējo “Rinda sākas ar” un “Rinda beidzas ar”. Ja abas rindas malu opcijas ir
+  ieslēgtas, pietiek ar atbilstību vienā malā. “Teksta aplaušana” maina tikai attēlojumu.
+- Opcijas > Iestatījumi (Ctrl+G) atver vienu preferenču dialoglodziņu MediaInfo un curl ceļiem, atskaites
   fontam, fontu antialiasingam, saskarnes valodai un atskaites valodai. Tukšs DLL ceļš nodrošina automātisku
   atklāšanu.
 - Fonta poga parāda saimi, punkta lielumu un stilu un atver standarta Windows fontu dialoglodziņu. Pēc
@@ -104,9 +120,9 @@ versija. Gari ceļi tiek saīsināti ar daudzpunkti atbilstoši pieejamajai viet
 
 ## Izveidot galvenes failu
 
-Rīki ir trešā izvēlne izvēļņu joslā. Tā komanda Izveidot galvenes failu… atver vienu avota failu neatkarīgi no
-pārskatu cilnēm un kopē tā pirmos 524288 baitus (512 KiB). Īsāks fails tiek kopēts pilnībā; tukšs fails rada
-tukšu izvadi. Tā ir parasta bināro failu lasīšana bez MediaInfo analīzes vai MediaInfo.dll prasības. Rīks
+Rīki ir ceturtā izvēlne izvēļņu joslā. Tā komanda Izveidot galvenes failu… atver vienu avota failu neatkarīgi
+no pārskatu cilnēm un kopē tā pirmos 524288 baitus (512 KiB). Īsāks fails tiek kopēts pilnībā; tukšs fails
+rada tukšu izvadi. Tā ir parasta bināro failu lasīšana bez MediaInfo analīzes vai MediaInfo.dll prasības. Rīks
 nemaina pārskatu cilnes vai programmas neseno failu sarakstu.
 
 Pēc izlasīšanas avota faila mapē sākas dialoglodziņš Saglabāt kā un piedāvā video.mp4.header priekš video.mp4:
@@ -167,8 +183,8 @@ WebP: 16383 × 16383 px.
 
 ## Interfeisa un atskaišu valodas
 
-Iestatījumi (Iestatījumi > Iestatījumi, Ctrl+G) ietver bibliotēku ceļus, pārskata fontu, fonta nogludināšanu
-un valodas. Saskarnei ir 36 varianti, un sākotnēji tā seko Windows valodai. Pārskati vienmēr pēc noklusējuma
+Iestatījumi (Opcijas > Iestatījumi, Ctrl+G) ietver bibliotēku ceļus, pārskata fontu, fonta nogludināšanu un
+valodas. Saskarnei ir 36 varianti, un sākotnēji tā seko Windows valodai. Pārskati vienmēr pēc noklusējuma
 izmanto bibliotēkas sākotnējo angļu valodu neatkarīgi no Windows un saskarnes. To maina tikai manuāla izvēle:
 angļu valoda, 37 tulkojumi vai sava MediaInfo CSV tabula.
 

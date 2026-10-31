@@ -10,6 +10,10 @@ Windows x86-fremviser til MediaInfo.dll-rapporter. Hver fil har sin egen skriveb
 
 Åbn MediaInfo.sln i Visual Studio 2015 med Visual C++ v140 værktøjssættet installeret. Vælg Release | Win32 og byg løsningen. Den eneste applikationsplatform er Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statisk linket, BSD-3-Clause.
+[license.txt](../license.txt). [Kildekode](../MediaInfo/PCRE2/).
+PCRE2 er indbygget i EXE-filen og kræver ingen separat DLL eller installation.
+
 Udgange:
 
 - Release\MediaInfo.exe
@@ -58,12 +62,23 @@ Windows 95 er i øjeblikket ikke en understøttet runtime.
   den fulde sti.
 - Musehjulet over overfyldte faneoverskrifter ruller overskriftstrimlen én fane pr. besked uden at ændre valg
   eller fokus.
-- Ctrl+Tab og Ctrl+Shift+Tab skifte faner; Ctrl+W lukker den aktive fane. Midtklik på en faneoverskrift lukker
+- Ctrl+Tab og Ctrl+Skift+Tab skifte faner; Ctrl+W lukker den aktive fane. Midtklik på en faneoverskrift lukker
   denne fane, mens enhver anden aktiv fane bevares. Filer > Luk alle lukker alle faner, inklusive rapporter i
   kø. Fil > Afslut (Alt+F4) lukker programmet.
 - Dobbeltklik vælger et ord. Tredobbelt-klik vælger en logisk linje. Træk udvider markeringen med ord eller
   linjer.
 - Ctrl+A vælger rapporten; Ctrl+C kopierer det.
+- Rediger > Søg (Ctrl+F) søger i den aktive fane. F3 gentager søgningen; Skift+F3 vender retningen. Ved
+  tekstens ender fortsætter søgningen fra den modsatte ende. Indstillinger > Tekstombrydning gælder kun den
+  aktive fane; markeringen følger den valgte fane. Søgevinduet kan minimeres og ændres i bredden; placeringen
+  og indstillingen Altid øverst huskes. Op til 30 søgetekster med deres indstillinger gemmes kun, indtil
+  programmet lukkes. Indstillingerne for start og slutning gælder logiske linjer. Regulære udtryk bruger
+  PCRE2-syntaks. Alle kommandoer i Rediger gælder kun den aktive fane. Enter starter søgningen; Skift+Enter
+  vender den valgte retning. „Forskel på store og små bogstaver“ skelner mellem store og små bogstaver; „Søg
+  bagud“ søger mod tekstens begyndelse. Valg af en historikpost gendanner alle fem søgeindstillinger, herunder
+  tilstanden for regulære udtryk; „Altid øverst“ er uafhængig. „Regulært udtryk“ deaktiverer „Linjen starter
+  med“ og „Linjen slutter med“. Er begge indstillinger for linjens ender slået til, er et match ved én ende
+  nok. „Tekstombrydning“ ændrer kun visningen.
 - Indstillinger > Præferencer (Ctrl+G) åbner en enkelt præferencedialog for MediaInfo og curl stier,
   rapportskrifttype, skrifttypeudligning, grænsefladesprog og rapportsprog. En tom DLL-sti muliggør automatisk
   opdagelse.
@@ -102,7 +117,7 @@ MediaInfo.dll. Lange stier forkortes med udeladelsesprikker, så de passer til d
 
 ## Opret en header-fil
 
-Menuen Værktøjer er den tredje på menulinjen. Dens Opret en header-fil…-kommando åbner én kildefil uafhængigt
+Menuen Værktøjer er den fjerde på menulinjen. Dens Opret en header-fil…-kommando åbner én kildefil uafhængigt
 af rapportfanerne og kopierer dens første 524288 bytes (512 KiB). En kortere fil kopieres i sin helhed; en tom
 fil producerer et tomt output. Dette er almindelig binær fillæsning uden MediaInfo-analyse eller et krav om
 MediaInfo.dll. Værktøjet efterlader rapportfaner og programmets liste over seneste filer uændret.

@@ -10,6 +10,11 @@ Izvorni Windows x86 preglednik izvješća MediaInfo.dll. Svaka datoteka ima vlas
 
 Otvorite MediaInfo.sln u Visual Studio 2015 s instaliranim skupom alata Visual C++ v140. Odaberite Release | Win32 i izradite rješenje. Jedina aplikacijska platforma je Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, statički povezano,
+BSD-3-Clause. [Izvorni kod](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 je ugrađena u EXE i ne zahtijeva zasebnu DLL datoteku ni dodatnu instalaciju.
+
 Izlazi:
 
 - Release\MediaInfo.exe
@@ -67,8 +72,20 @@ Windows 95 trenutno nije podržano runtime.
 - Dupli klik odabire riječ. Trostruki klik odabire logičnu liniju. Povlačenjem se odabir proširuje riječima
   ili retcima.
 - Ctrl+A odabire izvješće; Ctrl+C ga kopira.
-- Postavke > Postavke (Ctrl+G) otvara jedan dijaloški okvir postavki za staze MediaInfo i curl, font izvješća,
-  antialiasing fonta, jezik sučelja i jezik izvješća. Prazna staza DLL omogućuje automatsko otkrivanje.
+- Uređivanje > Pronađi (Ctrl+F) pretražuje aktivnu karticu. F3 ponavlja pretraživanje, a Shift+F3 mijenja
+  njegov smjer. Na kraju teksta pretraživanje se nastavlja s drugog kraja. Mogućnosti > Prelamanje redaka
+  vrijedi samo za aktivnu karticu; oznaka prati odabranu karticu. Prozor pretraživanja može se minimizirati i
+  mijenjati mu se širina; položaj i mogućnost Uvijek na vrhu pamte se. Do 30 tekstova pretraživanja s njihovim
+  mogućnostima čuva se samo do zatvaranja aplikacije. Mogućnosti početka i kraja odnose se na logičke retke.
+  Regularni izrazi koriste sintaksu PCRE2. Sve naredbe izbornika Uređivanje odnose se samo na aktivnu karticu.
+  Enter pokreće pretraživanje, a Shift+Enter obrće odabrani smjer. „Razlikuj velika i mala slova“ razlikuje
+  velika i mala slova; „Traži unatrag“ pretražuje prema početku teksta. Odabir stavke povijesti vraća svih pet
+  mogućnosti pretraživanja, uključujući postavku regularnih izraza; „Uvijek na vrhu“ neovisna je mogućnost.
+  „Regularni izraz“ onemogućuje „Redak počinje s“ i „Redak završava s“. Kada su uključene obje mogućnosti
+  krajeva retka, dovoljno je podudaranje na jednom kraju. „Prelamanje redaka“ mijenja samo prikaz.
+- Mogućnosti > Postavke (Ctrl+G) otvara jedan dijaloški okvir postavki za staze MediaInfo i curl, font
+  izvješća, antialiasing fonta, jezik sučelja i jezik izvješća. Prazna staza DLL omogućuje automatsko
+  otkrivanje.
 - Gumb fonta prikazuje obitelj, veličinu i stil fonta i otvara standardni dijaloški okvir Windows fonta.
   Zadana vrijednost vraća Consolas ili Courier New ako Consolas nije dostupan; gumb Zadano je onemogućen dok
   je odabrano zadano. Fontovi koje je odabrao korisnik zadržavaju se bez zamjene kodom aplikacije.
@@ -102,7 +119,7 @@ MediaInfo.dll. Duge putanje skraćuju se trotočkom prema dostupnom prostoru.
 
 ## Kreirati zaglavnu datoteku
 
-Izbornik Alati je treći na traci izbornika. Njegova naredba Kreirati zaglavnu datoteku… otvara jednu izvornu
+Izbornik Alati je četvrti na traci izbornika. Njegova naredba Kreirati zaglavnu datoteku… otvara jednu izvornu
 datoteku neovisno o karticama izvješća i kopira njenih prvih 524288 bajtova (512 KiB). Kraća datoteka kopira
 se u cijelosti; prazna datoteka daje prazan izlaz. Ovo je obično čitanje binarne datoteke, bez MediaInfo
 analize ili zahtjeva za MediaInfo.dll. Alat ostavlja nepromijenjene kartice izvješća i preglednikov popis
@@ -165,10 +182,10 @@ WebP: 16383 × 16383 px.
 
 ## Jezici sučelja i izvješća
 
-Postavke (Postavke > Postavke, Ctrl+G) sadrže putanje knjižnica, font izvješća, izglađivanje i jezike. Sučelje
-ima 36 inačica i početno prati Windows. Izvješća uvijek zadano koriste izvorni engleski knjižnice, neovisno o
-Windowsu i sučelju. To mijenja samo ručni odabir jezika: engleski, 37 prijevoda ili vlastita MediaInfo CSV
-tablica.
+Postavke (Mogućnosti > Postavke, Ctrl+G) sadrže putanje knjižnica, font izvješća, izglađivanje i jezike.
+Sučelje ima 36 inačica i početno prati Windows. Izvješća uvijek zadano koriste izvorni engleski knjižnice,
+neovisno o Windowsu i sučelju. To mijenja samo ručni odabir jezika: engleski, 37 prijevoda ili vlastita
+MediaInfo CSV tablica.
 
 U redu ili Primijeni potvrđuje promjene; Odustani odbacuje nepotvrđene promjene. Postavke određuju ograničenje
 naziva kartice (zadano 80) i brišu popis nedavnih datoteka. Dugi nazivi zadržavaju početak, kraj i nastavak s

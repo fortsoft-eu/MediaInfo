@@ -10,6 +10,11 @@ Visualizzatore nativo Windows x86 dei rapporti MediaInfo.dll. Ogni file dispone 
 
 Apri MediaInfo.sln in Visual Studio 2015 con il set di strumenti Visual C++ v140 installato. Scegli Release | Win32 e crea la soluzione. L'unica piattaforma applicativa è Win32 (x86).
 
+[PCRE2 10.49](https://github.com/PCRE2Project/pcre2/tree/pcre2-10.49) — UTF-16, collegamento statico,
+BSD-3-Clause. [Codice sorgente](../MediaInfo/PCRE2/).
+[license.txt](../license.txt).
+PCRE2 è integrata nell’eseguibile e non richiede una DLL separata né un’installazione aggiuntiva.
+
 Uscite:
 
 - Release\MediaInfo.exe
@@ -62,15 +67,28 @@ Windows 95 non è attualmente un runtime supportato.
   registro; Non lo conserva. La richiesta include il percorso completo.
 - La rotellina del mouse sulle intestazioni delle schede straripanti fa scorrere la striscia di intestazione
   di una scheda per messaggio senza modificare la selezione o il focus.
-- Ctrl+Tab e Ctrl+Shift+Tab cambiano scheda; Ctrl+W chiude la scheda attiva. Facendo clic con il tasto
+- Ctrl+Tab e Ctrl+Maiusc+Tab cambiano scheda; Ctrl+W chiude la scheda attiva. Facendo clic con il tasto
   centrale sull'intestazione di una scheda si chiude la scheda preservando qualsiasi altra scheda attiva. File
   > Chiudi tutto chiude tutte le schede, compresi i report in coda. File > Esci (Alt+F4) chiude
   l'applicazione.
 - Fare doppio clic per selezionare una parola. Il triplo clic seleziona una linea logica. Il trascinamento
   estende la selezione di parole o linee.
 - Ctrl+A seleziona il resoconto; Ctrl+C lo copia.
-- Impostazioni > Preferenze (Ctrl+G) apre un'unica finestra di dialogo delle preferenze per percorsi MediaInfo
-  e curl, carattere del report, antialiasing dei caratteri, lingua dell'interfaccia e lingua del report. Un
+- Modifica > Trova (Ctrl+F) cerca nella scheda attiva. F3 ripete la ricerca; Maiusc+F3 ne inverte la
+  direzione. Alle estremità del testo, la ricerca riprende dall’estremità opposta. Opzioni > A capo automatico
+  riguarda solo la scheda attiva; il segno di spunta segue la scheda selezionata. La finestra di ricerca può
+  essere ridotta a icona e ridimensionata orizzontalmente; la posizione e l’opzione Sempre in primo piano
+  vengono memorizzate. Fino a 30 ricerche e le relative opzioni vengono conservate solo fino alla chiusura
+  dell’applicazione. Le opzioni di inizio e fine si riferiscono alle righe logiche. Le espressioni regolari
+  usano la sintassi PCRE2. Tutti i comandi di Modifica riguardano solo la scheda attiva. Invio avvia la
+  ricerca; Maiusc+Invio inverte la direzione scelta. «Maiuscole/minuscole» distingue le lettere maiuscole
+  dalle minuscole; «Cerca all’indietro» cerca verso l’inizio del testo. La scelta di una voce della cronologia
+  ripristina tutte e cinque le opzioni di ricerca, compreso lo stato del modo per le espressioni regolari;
+  «Sempre in primo piano» è indipendente. «Espressione regolare» disattiva «La riga inizia con» e «La riga
+  termina con». Se entrambe le opzioni di inizio e fine riga sono attive, è sufficiente una corrispondenza a
+  una delle estremità. «A capo automatico» modifica solo la visualizzazione.
+- Opzioni > Preferenze (Ctrl+G) apre un'unica finestra di dialogo delle preferenze per percorsi MediaInfo e
+  curl, carattere del report, antialiasing dei caratteri, lingua dell'interfaccia e lingua del report. Un
   percorso DLL vuoto consente il rilevamento automatico.
 - Il pulsante del carattere visualizza la famiglia, la dimensione in punti e lo stile e apre la finestra di
   dialogo del carattere standard Windows. Ripristina l'impostazione predefinita Consolas o Courier New se
@@ -112,7 +130,7 @@ sospensione in base allo spazio disponibile.
 
 ## Crea intestazione file
 
-Il menu Strumenti è il terzo nella barra dei menu. Il suo comando Crea intestazione file… apre un file di
+Il menu Strumenti è il quarto nella barra dei menu. Il suo comando Crea intestazione file… apre un file di
 origine indipendentemente dalle schede dei rapporti e ne copia i primi 524288 byte (512 KiB). Un file più
 breve viene copiato per intero; un file vuoto produce un output vuoto. Si tratta di una normale lettura di
 file binari, senza analisi MediaInfo né necessità di MediaInfo.dll. Lo strumento lascia invariate le schede
@@ -178,7 +196,7 @@ WebP: 16383 × 16383 px.
 
 ## Lingue dell’interfaccia e dei report
 
-Le preferenze (Impostazioni > Preferenze, Ctrl+G) contengono percorsi delle librerie, carattere del rapporto,
+Le preferenze (Opzioni > Preferenze, Ctrl+G) contengono percorsi delle librerie, carattere del rapporto,
 antialiasing e lingue. L’interfaccia ha 36 varianti e inizialmente segue Windows. I rapporti usano sempre
 l’inglese originale della libreria, indipendentemente da Windows e dall’interfaccia. Solo una scelta manuale
 cambia la lingua: inglese, 37 traduzioni o una tabella CSV MediaInfo personalizzata.
