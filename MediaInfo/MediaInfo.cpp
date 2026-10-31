@@ -837,6 +837,31 @@ void UpdateEditMetrics(HWND edit) {
     }
 }
 
+/// Copies Unicode text to the clipboard, transferring buffer ownership only after a successful copy.
+bool CopyTextToClipboard(HWND owner, const wchar_t* text) {
+    SIZE_T bytes = (static_cast<SIZE_T>(lstrlenW(text)) + 1) * sizeof(wchar_t);
+    HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, bytes);
+    if (!memory) {
+        return false;
+    }
+    void* destination = GlobalLock(memory);
+    if (!destination) {
+        GlobalFree(memory);
+        return false;
+    }
+    CopyMemory(destination, text, bytes);
+    GlobalUnlock(memory);
+    bool success = false;
+    if (OpenClipboard(owner)) {
+        success = EmptyClipboard() && SetClipboardData(CF_UNICODETEXT, memory);
+        CloseClipboard();
+    }
+    if (!success) {
+        GlobalFree(memory);
+    }
+    return success;
+}
+
 /// Copies control text into a null-terminated process-heap buffer owned by the caller.
 wchar_t* CopyControlText(HWND control) {
     int length = GetWindowTextLengthW(control);

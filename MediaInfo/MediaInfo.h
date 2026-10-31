@@ -239,6 +239,11 @@ enum TextId {
     TXT_HEADER_FORMAT,
     TXT_HEADER_READ_FAILED,
     TXT_HEADER_SAVE_FAILED,
+    TXT_COPY,
+    TXT_COPY_FILE_NAME,
+    TXT_COPY_FULL_PATH,
+    TXT_OPEN_FILE,
+    TXT_OPEN_CONTAINING_FOLDER,
     TXT_COUNT
 };
 
@@ -361,6 +366,9 @@ void UpdateEditMetrics(HWND edit);
 
 /// Reads text metrics with the font currently assigned to a native control.
 bool ReadControlMetrics(HWND control, TEXTMETRICW* metrics);
+
+/// Copies Unicode text to the clipboard, transferring ownership only after a successful copy.
+bool CopyTextToClipboard(HWND owner, const wchar_t* text);
 
 /// Copies control text into a null-terminated process-heap buffer owned by the caller.
 wchar_t* CopyControlText(HWND control);

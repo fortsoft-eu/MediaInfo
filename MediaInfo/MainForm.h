@@ -207,6 +207,16 @@ private:
     /// Places current paths and messages on the left and shows the loaded DLL version when space permits.
     void UpdateStatus();
 
+    /// Shows Copy for the clicked status pane and copies its complete Unicode text.
+    void ShowStatusContextMenu(POINT point);
+
+    /// Shows file commands for the tab header selected by the mouse or keyboard.
+    void ShowTabContextMenu(POINT point);
+
+    /// Invokes the file's default Shell action or selects it in Windows Explorer, retaining native error
+    /// dialogs.
+    void OpenTabFile(const wchar_t* path, bool containingFolder);
+
     /// Displays the selected report edit and refreshes its status information.
     void SelectTab(int index);
 

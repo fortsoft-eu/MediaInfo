@@ -224,31 +224,6 @@ static wchar_t* LicenseText() {
     return text;
 }
 
-/// Copies Unicode text to the clipboard, transferring buffer ownership only after a successful copy.
-static bool CopyText(HWND owner, const wchar_t* text) {
-    SIZE_T bytes = (static_cast<SIZE_T>(lstrlenW(text)) + 1) * sizeof(wchar_t);
-    HGLOBAL memory = GlobalAlloc(GMEM_MOVEABLE, bytes);
-    if (!memory) {
-        return false;
-    }
-    void* destination = GlobalLock(memory);
-    if (!destination) {
-        GlobalFree(memory);
-        return false;
-    }
-    CopyMemory(destination, text, bytes);
-    GlobalUnlock(memory);
-    bool success = false;
-    if (OpenClipboard(owner)) {
-        success = EmptyClipboard() && SetClipboardData(CF_UNICODETEXT, memory);
-        CloseClipboard();
-    }
-    if (!success) {
-        GlobalFree(memory);
-    }
-    return success;
-}
-
 /// Initializes an unopened modal About form and its owned resources.
 AboutForm::AboutForm()
     : window(nullptr), tooltip(nullptr), uiFont(nullptr), textFont(nullptr), linkFont(nullptr), hand(nullptr),
@@ -720,7 +695,7 @@ void AboutForm::CopyInformation() {
         lstrcpyW(text, product);
         lstrcatW(text, label);
         lstrcatW(text, websiteUrl);
-        if (!CopyText(window, text)) {
+        if (!CopyTextToClipboard(window, text)) {
             MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
         }
         HeapFree(GetProcessHeap(), 0, text);
@@ -752,7 +727,7 @@ void AboutForm::ShowContextMenu(HWND source, LPARAM location) {
     if (command == openWebsiteCommand) {
         OpenWebsite();
     } else if (command == copyUrlCommand) {
-        if (!CopyText(window, websiteUrl)) {
+        if (!CopyTextToClipboard(window, websiteUrl)) {
             MessageBoxW(window, T(TXT_COPY_URL_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
         }
     } else if (command == copyInformationCommand) {

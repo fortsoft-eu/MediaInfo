@@ -32,6 +32,7 @@
 #include "resource.h"
 #include <commctrl.h>
 #include <commdlg.h>
+#include <objbase.h>
 #include <shellapi.h>
 #include <windowsx.h>
 
@@ -71,6 +72,15 @@ static const UINT reportCompleteMessage = WM_APP + 1;
 static const UINT instanceFilesMessage = WM_APP + 3;
 static const UINT initializeLibraryMessage = WM_APP + 4;
 static const UINT printCompleteMessage = WM_APP + 5;
+
+/// Command returned by the status pane context menu.
+static const UINT statusCopyCommand = 1;
+
+/// Commands returned by a file tab context menu.
+static const UINT tabCopyNameCommand = 1;
+static const UINT tabCopyPathCommand = 2;
+static const UINT tabOpenFileCommand = 3;
+static const UINT tabOpenFolderCommand = 4;
 
 /// Reads file identity, size and write time without reading its media content.
 static bool GetReportFileInfo(const wchar_t* path, BY_HANDLE_FILE_INFORMATION& information) {
@@ -420,6 +430,127 @@ void MainForm::UpdateStatus() {
             | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     }
     InvalidateRect(status, nullptr, FALSE);
+}
+
+/// Shows Copy for the clicked status pane and copies its complete Unicode text.
+void MainForm::ShowStatusContextMenu(POINT point) {
+    POINT clientPoint = point;
+    ScreenToClient(status, &clientPoint);
+    int parts = static_cast<int>(SendMessageW(status, SB_GETPARTS, 0, 0));
+    for (int part = 0; part < parts; ++part) {
+        RECT bounds = RECT{};
+        if (!SendMessageW(status, SB_GETRECT, part, reinterpret_cast<LPARAM>(&bounds))
+                || !PtInRect(&bounds, clientPoint)) {
+            continue;
+        }
+        const wchar_t* caption = reinterpret_cast<const wchar_t*>(SendMessageA(status, SB_GETTEXTA, part, 0));
+        if (!caption) {
+            return;
+        }
+        wchar_t text[MAX_PATH + 512];
+        if (part == 0
+                && activeJob
+                && activeJob->command == LibraryCommand::Read
+                && caption == T(TXT_LOADING)) {
+            wsprintfW(text, T(TXT_LOADING_FILE), activeJob->path);
+        } else {
+            lstrcpynW(text, caption, ARRAYSIZE(text));
+        }
+        HMENU menu = CreatePopupMenu();
+        if (!menu) {
+            return;
+        }
+        AppendMenuW(menu, MF_STRING | (text[0] ? MF_ENABLED : MF_GRAYED), statusCopyCommand, T(TXT_COPY));
+        UINT command =
+            TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+        DestroyMenu(menu);
+        if (command == statusCopyCommand && !CopyTextToClipboard(window, text)) {
+            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        }
+        return;
+    }
+}
+
+/// Shows file commands for the tab header selected by the mouse or keyboard.
+void MainForm::ShowTabContextMenu(POINT point) {
+    int index = -1;
+    if (point.x == -1 && point.y == -1) {
+        index = TabCtrl_GetCurSel(tabs);
+        RECT bounds = RECT{};
+        if (index < 0 || !TabCtrl_GetItemRect(tabs, index, &bounds)) {
+            return;
+        }
+        point = POINT{ bounds.left, bounds.bottom };
+        ClientToScreen(tabs, &point);
+    } else {
+        TCHITTESTINFO hit = TCHITTESTINFO{};
+        hit.pt = point;
+        ScreenToClient(tabs, &hit.pt);
+        index = TabCtrl_HitTest(tabs, &hit);
+        if (index < 0 || !(hit.flags & TCHT_ONITEM)) {
+            return;
+        }
+    }
+    FileTab* file = files;
+    for (int tab = 0; file && tab < index; ++tab) {
+        file = file->next;
+    }
+    if (!file || file->command != LibraryCommand::Read) {
+        return;
+    }
+    wchar_t path[MAX_PATH];
+    lstrcpynW(path, file->path, ARRAYSIZE(path));
+    HMENU menu = CreatePopupMenu();
+    if (!menu) {
+        return;
+    }
+    AppendMenuW(menu, MF_STRING, tabCopyNameCommand, T(TXT_COPY_FILE_NAME));
+    AppendMenuW(menu, MF_STRING, tabCopyPathCommand, T(TXT_COPY_FULL_PATH));
+    AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(menu, MF_STRING, tabOpenFileCommand, T(TXT_OPEN_FILE));
+    AppendMenuW(menu, MF_STRING, tabOpenFolderCommand, T(TXT_OPEN_CONTAINING_FOLDER));
+    UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+    DestroyMenu(menu);
+    if (command == tabCopyNameCommand || command == tabCopyPathCommand) {
+        wchar_t name[MAX_PATH];
+        FormatFileNameCaption(path, MAX_PATH, name, ARRAYSIZE(name));
+        const wchar_t* text = command == tabCopyNameCommand ? name : path;
+        if (!CopyTextToClipboard(window, text)) {
+            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        }
+    } else if (command == tabOpenFileCommand || command == tabOpenFolderCommand) {
+        OpenTabFile(path, command == tabOpenFolderCommand);
+    }
+}
+
+/// Invokes the file's default Shell action or selects it in Windows Explorer, retaining native error dialogs.
+void MainForm::OpenTabFile(const wchar_t* path, bool containingFolder) {
+    SHELLEXECUTEINFOW execute = SHELLEXECUTEINFOW{};
+    execute.cbSize = sizeof(execute);
+    execute.fMask = SEE_MASK_FLAG_DDEWAIT;
+    execute.hwnd = window;
+    execute.lpFile = path;
+    execute.nShow = SW_SHOWNORMAL;
+    wchar_t explorer[MAX_PATH];
+    wchar_t parameters[MAX_PATH + 12];
+    if (containingFolder) {
+        UINT length = GetWindowsDirectoryW(explorer, ARRAYSIZE(explorer));
+        if (!length || length + ARRAYSIZE(L"\\explorer.exe") > ARRAYSIZE(explorer)) {
+            wchar_t error[MAX_PATH + 128];
+            wsprintfW(error, T(TXT_FILE_OPEN_FAILED), path);
+            MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+            return;
+        }
+        lstrcatW(explorer, L"\\explorer.exe");
+        wsprintfW(parameters, L"/select,\"%s\"", path);
+        execute.lpFile = explorer;
+        execute.lpParameters = parameters;
+    }
+    HRESULT initialized = CoInitialize(nullptr);
+    ShellExecuteExW(&execute);
+    if (SUCCEEDED(initialized)) {
+        CoUninitialize();
+    }
 }
 
 /// Displays the selected report edit and refreshes its status information.
@@ -1064,9 +1195,22 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
         case WM_SIZE:
             owner->Layout();
             return 0;
+        case WM_CONTEXTMENU:
+            if (reinterpret_cast<HWND>(wParam) == owner->tabs) {
+                POINT point = POINT{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
+                owner->ShowTabContextMenu(point);
+                return 0;
+            }
+            break;
         case WM_NOTIFY:
         {
             NMHDR* notification = reinterpret_cast<NMHDR*>(lParam);
+            if (notification->hwndFrom == owner->status && notification->code == NM_RCLICK) {
+                DWORD position = GetMessagePos();
+                POINT point = POINT{ GET_X_LPARAM(position), GET_Y_LPARAM(position) };
+                owner->ShowStatusContextMenu(point);
+                return TRUE;
+            }
             if (notification->hwndFrom == owner->tabs && notification->code == TCN_SELCHANGE) {
                 owner->SelectTab(TabCtrl_GetCurSel(owner->tabs));
                 return 0;

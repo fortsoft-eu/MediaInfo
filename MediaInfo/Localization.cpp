@@ -83,7 +83,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Multimediální soubory" },
             { TXT_APPLICATION_DESCRIPTION, L"Prohlížeč informací o médiích" },
             { TXT_HELP_TITLE, L"MediaInfo — Nápověda" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nemůže vytvořit popisovač souboru." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nemůže inicializovat analýzu souboru." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo nemůže otevřít nebo rozpoznat tento soubor." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -172,9 +172,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Pro spuštění reportu není dostatek paměti." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Obrázek reportu nelze vytvořit." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Jazykovou tabulku nelze načíst. Vyberte platný soubor MediaInfo CSV v UTF-8 nebo Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Jazykovou tabulku nelze načíst. Vyberte platný soubor "
+                L"MediaInfo CSV v UTF-8 nebo UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Vlákno reportu nelze spustit." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Vybraná MediaInfo.dll odmítla jazyk reportu." },
             { TXT_INVALID_WINDOWS_DLL, L"Vybraný soubor není platná knihovna DLL systému Windows." },
@@ -265,7 +264,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"mají odpovídající libcurl; 0.7.60 libcurl nikdy nerozbaluje. Umístění okna se ukládá. Ve "
                 L"výchozím stavu je povolena pouze jedna instance a další spuštění předá soubory otevřenému "
                 L"oknu. V předvolbách lze povolit více instancí. Při více oknech se uložená pozice obnoví "
-                L"jen prvnímu oknu daného formuláře; další převezmou pouze uloženou velikost."
+                L"jen prvnímu oknu daného typu; další převezmou pouze uloženou velikost."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -310,6 +309,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Soubor hlavičky (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Hlavičku souboru nelze přečíst:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Soubor hlavičky nelze uložit:\n\n%s" },
+            { TXT_COPY, L"&Kopírovat" },
+            { TXT_COPY_FILE_NAME, L"Kopírovat &název souboru" },
+            { TXT_COPY_FULL_PATH, L"Kopírovat název souboru včetně &cesty" },
+            { TXT_OPEN_FILE, L"&Otevřít soubor" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Otevřít &umístění souboru" },
         }
     },
     {
@@ -366,7 +370,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Media Files" },
             { TXT_APPLICATION_DESCRIPTION, L"Media information viewer" },
             { TXT_HELP_TITLE, L"MediaInfo Help" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo could not create a file handle." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo could not initialize media analysis." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo could not open or recognize this file." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo Library" },
@@ -460,10 +464,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"The report could not be started: insufficient memory." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"The report image could not be created." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"The report language table could not be loaded. Select a valid UTF-8 or Unicode MediaInfo "
-                L"CSV file."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"The report language table could not be loaded. Select a "
+                L"valid UTF-8 or UTF-16 MediaInfo CSV file." },
             { TXT_REPORT_THREAD_START_FAILED, L"The report thread could not be started." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"The selected MediaInfo.dll rejected the report language." },
             { TXT_INVALID_WINDOWS_DLL, L"The selected file is not a valid Windows DLL." },
@@ -556,7 +558,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"have matching libcurl libraries; 0.7.60 never extracts libcurl. Window placement is "
                 L"saved. By default, only one instance is allowed and later launches send files to the open "
                 L"window. Preferences can allow multiple instances. With multiple windows, only the first "
-                L"window of each form restores its saved position; later windows restore size only."
+                L"window of each window type restores its saved position; later windows restore size only."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -601,6 +603,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Header File (*.header)" },
             { TXT_HEADER_READ_FAILED, L"The file header could not be read:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"The header file could not be saved:\n\n%s" },
+            { TXT_COPY, L"&Copy" },
+            { TXT_COPY_FILE_NAME, L"&Copy File Name" },
+            { TXT_COPY_FULL_PATH, L"Copy Full &Path" },
+            { TXT_OPEN_FILE, L"&Open File" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Open Containing &Folder" },
         }
     },
     {
@@ -657,7 +664,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Media Files" },
             { TXT_APPLICATION_DESCRIPTION, L"Media information viewer" },
             { TXT_HELP_TITLE, L"MediaInfo Help" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo could not create a file handle." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo could not initialise media analysis." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo could not open or recognise this file." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo Library" },
@@ -751,10 +758,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"The report could not be started: insufficient memory." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"The report image could not be created." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"The report language table could not be loaded. Select a valid UTF-8 or Unicode MediaInfo "
-                L"CSV file."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"The report language table could not be loaded. Select a "
+                L"valid UTF-8 or UTF-16 MediaInfo CSV file." },
             { TXT_REPORT_THREAD_START_FAILED, L"The report thread could not be started." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"The selected MediaInfo.dll rejected the report language." },
             { TXT_INVALID_WINDOWS_DLL, L"The selected file is not a valid Windows DLL." },
@@ -847,7 +852,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"have matching libcurl libraries; 0.7.60 never extracts libcurl. Window placement is "
                 L"saved. By default, only one instance is allowed and later launches send files to the open "
                 L"window. Preferences can allow multiple instances. With multiple windows, only the first "
-                L"window of each form restores its saved position; later windows restore size only."
+                L"window of each window type restores its saved position; later windows restore size only."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -892,6 +897,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Header File (*.header)" },
             { TXT_HEADER_READ_FAILED, L"The file header could not be read:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"The header file could not be saved:\n\n%s" },
+            { TXT_COPY, L"&Copy" },
+            { TXT_COPY_FILE_NAME, L"&Copy File Name" },
+            { TXT_COPY_FULL_PATH, L"Copy Full &Path" },
+            { TXT_OPEN_FILE, L"&Open File" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Open Containing &Folder" },
         }
     },
     {
@@ -948,7 +958,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Media Files" },
             { TXT_APPLICATION_DESCRIPTION, L"Media information viewer" },
             { TXT_HELP_TITLE, L"MediaInfo Help" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo could not create a file handle." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo could not initialise media analysis." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo could not open or recognise this file." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo Library" },
@@ -1042,10 +1052,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"The report could not be started: insufficient memory." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"The report image could not be created." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"The report language table could not be loaded. Select a valid UTF-8 or Unicode MediaInfo "
-                L"CSV file."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"The report language table could not be loaded. Select a "
+                L"valid UTF-8 or UTF-16 MediaInfo CSV file." },
             { TXT_REPORT_THREAD_START_FAILED, L"The report thread could not be started." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"The selected MediaInfo.dll rejected the report language." },
             { TXT_INVALID_WINDOWS_DLL, L"The selected file is not a valid Windows DLL." },
@@ -1138,7 +1146,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"have matching libcurl libraries; 0.7.60 never extracts libcurl. Window placement is "
                 L"saved. By default, only one instance is allowed and later launches send files to the open "
                 L"window. Preferences can allow multiple instances. With multiple windows, only the first "
-                L"window of each form restores its saved position; later windows restore size only."
+                L"window of each window type restores its saved position; later windows restore size only."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1183,6 +1191,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Header File (*.header)" },
             { TXT_HEADER_READ_FAILED, L"The file header could not be read:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"The header file could not be saved:\n\n%s" },
+            { TXT_COPY, L"&Copy" },
+            { TXT_COPY_FILE_NAME, L"&Copy File Name" },
+            { TXT_COPY_FULL_PATH, L"Copy Full &Path" },
+            { TXT_OPEN_FILE, L"&Open File" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Open Containing &Folder" },
         }
     },
     {
@@ -1243,7 +1256,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Mediendateien" },
             { TXT_APPLICATION_DESCRIPTION, L"Betrachter für Medieninformationen" },
             { TXT_HELP_TITLE, L"MediaInfo — Hilfe" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kann kein Dateihandle erstellen." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo konnte die Medienanalyse nicht initialisieren." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo kann diese Datei nicht öffnen oder erkennen." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -1349,10 +1362,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Nicht genügend Speicher zum Starten des Berichts." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Das Berichtsbild kann nicht erstellt werden." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Die Sprachtabelle kann nicht geladen werden. Wählen Sie eine gültige MediaInfo-CSV-Datei "
-                L"in UTF-8 oder Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Die Sprachtabelle kann nicht geladen werden. Wählen Sie "
+                L"eine gültige MediaInfo-CSV-Datei in UTF-8 oder UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Der Berichtsthread kann nicht gestartet werden." },
             { TXT_REPORT_LANGUAGE_REJECTED,
                 L"Die ausgewählte MediaInfo.dll hat die Berichtssprache abgelehnt."
@@ -1461,7 +1472,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"entpackt libcurl niemals. Die Fensterposition wird gespeichert. Standardmäßig ist nur "
                 L"eine Instanz erlaubt; weitere Starts übergeben Dateien an das offene Fenster. In den "
                 L"Voreinstellungen lassen sich mehrere Instanzen zulassen. Bei mehreren Fenstern wird die "
-                L"gespeicherte Position nur für das erste Fenster jedes Formulars wiederhergestellt; "
+                L"gespeicherte Position nur für das erste Fenster jedes Fenstertyps wiederhergestellt; "
                 L"weitere Fenster übernehmen nur die Größe."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -1514,6 +1525,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Header-Datei (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Der Dateiheader konnte nicht gelesen werden:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Die Header-Datei konnte nicht gespeichert werden:\n\n%s" },
+            { TXT_COPY, L"&Kopieren" },
+            { TXT_COPY_FILE_NAME, L"Datei&namen kopieren" },
+            { TXT_COPY_FULL_PATH, L"Vollständigen Datei&pfad kopieren" },
+            { TXT_OPEN_FILE, L"&Datei öffnen" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Dateispeicher&ort öffnen" },
         }
     },
     {
@@ -1574,7 +1590,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Fichiers multimédias" },
             { TXT_APPLICATION_DESCRIPTION, L"Visionneuse d’informations multimédias" },
             { TXT_HELP_TITLE, L"MediaInfo — Aide" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ne peut pas créer de descripteur de fichier." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo n’a pas pu initialiser l’analyse du fichier." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ne peut pas ouvrir ou reconnaître ce fichier." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -1678,10 +1694,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Mémoire insuffisante pour démarrer le rapport." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Impossible de créer l’image du rapport." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Impossible de charger la table de langue. Sélectionnez un fichier CSV MediaInfo valide en "
-                L"UTF-8 ou Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Impossible de charger la table de langue. Sélectionnez "
+                L"un fichier CSV MediaInfo valide en UTF-8 ou UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Impossible de démarrer le thread du rapport." },
             { TXT_REPORT_LANGUAGE_REJECTED,
                 L"La bibliothèque MediaInfo.dll sélectionnée a refusé la langue du rapport."
@@ -1795,7 +1809,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"position de la fenêtre est enregistrée. Par défaut, une seule instance est autorisée et "
                 L"les lancements suivants transmettent les fichiers à la fenêtre ouverte. Les préférences "
                 L"permettent d’autoriser plusieurs instances. Si plusieurs fenêtres sont autorisées, seule "
-                L"la première de chaque formulaire retrouve sa position enregistrée ; les suivantes ne "
+                L"la première de chaque type de fenêtre retrouve sa position enregistrée ; les suivantes ne "
                 L"reprennent que la taille."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -1846,6 +1860,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Fichier d’en-tête (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Impossible de lire l’en-tête du fichier :\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Impossible d’enregistrer le fichier d’en-tête :\n\n%s" },
+            { TXT_COPY, L"&Copier" },
+            { TXT_COPY_FILE_NAME, L"Copier le &nom du fichier" },
+            { TXT_COPY_FULL_PATH, L"Copier le &chemin complet" },
+            { TXT_OPEN_FILE, L"&Ouvrir le fichier" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Ouvrir l’&emplacement du fichier" },
         }
     },
     {
@@ -1906,7 +1925,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Archivos multimedia" },
             { TXT_APPLICATION_DESCRIPTION, L"Visor de información multimedia" },
             { TXT_HELP_TITLE, L"MediaInfo — Ayuda" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo no puede crear un identificador de archivo." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo no pudo inicializar el análisis del archivo." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo no puede abrir o reconocer este archivo." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -2011,10 +2030,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"No hay memoria suficiente para iniciar el informe." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"No se puede crear la imagen del informe." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"No se puede cargar la tabla de idioma. Seleccione un CSV de MediaInfo válido en UTF-8 o "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"No se puede cargar la tabla de idioma. Seleccione un CSV "
+                L"de MediaInfo válido en UTF-8 o UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"No se puede iniciar el hilo del informe." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"La MediaInfo.dll seleccionada rechazó el idioma del informe." },
             { TXT_INVALID_WINDOWS_DLL, L"El archivo seleccionado no es una DLL válida de Windows." },
@@ -2117,7 +2134,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"nuevas tienen su libcurl; 0.7.60 nunca la extrae. Se guarda la posición de la ventana. De "
                 L"forma predeterminada, solo se permite una instancia y los siguientes inicios envían los "
                 L"archivos a la ventana abierta. En Preferencias se pueden permitir varias instancias. Si "
-                L"hay varias ventanas, solo la primera de cada formulario recupera su posición guardada; "
+                L"hay varias ventanas, solo la primera de cada tipo de ventana recupera su posición "
+                L"guardada; "
                 L"las siguientes recuperan únicamente el tamaño."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -2168,6 +2186,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Archivo de encabezado (*.header)" },
             { TXT_HEADER_READ_FAILED, L"No se pudo leer el encabezado del archivo:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"No se pudo guardar el archivo de encabezado:\n\n%s" },
+            { TXT_COPY, L"&Copiar" },
+            { TXT_COPY_FILE_NAME, L"Copiar el &nombre del archivo" },
+            { TXT_COPY_FULL_PATH, L"Copiar la &ruta completa" },
+            { TXT_OPEN_FILE, L"&Abrir archivo" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Abrir &ubicación del archivo" },
         }
     },
     {
@@ -2228,7 +2251,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"File multimediali" },
             { TXT_APPLICATION_DESCRIPTION, L"Visualizzatore di informazioni multimediali" },
             { TXT_HELP_TITLE, L"MediaInfo — Guida" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo non può creare un handle di file." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo non può inizializzare l’analisi del file." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo non può aprire o riconoscere questo file." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -2330,10 +2353,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Memoria insufficiente per avviare il rapporto." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Impossibile creare l’immagine del rapporto." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Impossibile caricare la tabella linguistica. Selezionare un CSV MediaInfo valido in UTF-8 "
-                L"o Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Impossibile caricare la tabella linguistica. Selezionare "
+                L"un CSV MediaInfo valido in UTF-8 o UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Impossibile avviare il thread del rapporto." },
             { TXT_REPORT_LANGUAGE_REJECTED,
                 L"La MediaInfo.dll selezionata ha rifiutato la lingua del rapporto."
@@ -2417,7 +2438,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L".header viene aggiunto al nome originale completo. È possibile modificare sia il nome che "
                 L"la cartella di destinazione. L'annullamento di una delle finestre di dialogo non scrive "
                 L"alcun output. La sostituzione di una destinazione esistente richiede conferma. Il file di "
-                L"origine rimane invariata; un salvataggio fallito conserva la destinazione precedente. Per "
+                L"origine rimane invariato; un salvataggio fallito conserva la destinazione precedente. Per "
                 L"aprire e salvare vengono usate le finestre di dialogo di sistema più moderne disponibili "
                 L"nella versione di Windows in uso.\r\n\r\nAll'avvio dell'applicazione, lo strumento prende "
                 L"la cartella di input iniziale da File > Apri. Se non è stata salvata alcuna cartella, "
@@ -2442,7 +2463,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"mai. La posizione della finestra viene salvata. Per impostazione predefinita è consentita "
                 L"una sola istanza e gli avvii successivi inviano i file alla finestra aperta. Nelle "
                 L"preferenze è possibile consentire più istanze. Con più finestre, solo la prima di ciascun "
-                L"modulo ripristina la posizione salvata; le successive ripristinano solo le dimensioni."
+                L"tipo di finestra ripristina la posizione salvata; le successive ripristinano solo le "
+                L"dimensioni."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2492,6 +2514,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"File di intestazione (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Impossibile leggere l’intestazione del file:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Impossibile salvare il file di intestazione:\n\n%s" },
+            { TXT_COPY, L"&Copia" },
+            { TXT_COPY_FILE_NAME, L"Copia &nome file" },
+            { TXT_COPY_FULL_PATH, L"Copia &percorso completo" },
+            { TXT_OPEN_FILE, L"&Apri file" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Apri percorso &file" },
         }
     },
     {
@@ -2552,7 +2579,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Ficheiros multimédia" },
             { TXT_APPLICATION_DESCRIPTION, L"Visualizador de informações multimédia" },
             { TXT_HELP_TITLE, L"MediaInfo — Ajuda" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"O MediaInfo não consegue criar um identificador de ficheiro." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"O MediaInfo não conseguiu inicializar a análise do ficheiro." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"O MediaInfo não consegue abrir ou reconhecer este ficheiro." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -2656,10 +2683,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Memória insuficiente para iniciar o relatório." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Não é possível criar a imagem do relatório." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Não é possível carregar a tabela de idioma. Selecione um CSV MediaInfo válido em UTF-8 ou "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Não é possível carregar a tabela de idioma. Selecione um "
+                L"CSV MediaInfo válido em UTF-8 ou UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Não é possível iniciar a thread do relatório." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"A MediaInfo.dll selecionada rejeitou o idioma do relatório." },
             { TXT_INVALID_WINDOWS_DLL, L"O ficheiro selecionado não é uma DLL Windows válida." },
@@ -2732,13 +2757,13 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"independentemente dos separadores do relatório e copia os seus primeiros 524288 bytes "
                 L"(512 KiB). Um ficheiro mais curto é copiado por completo; um ficheiro vazio produz uma "
                 L"saída vazia. Esta é uma leitura comum de ficheiro binário, sem análise MediaInfo nem "
-                L"necessidade de MediaInfo.dll. A ferramenta deixa inalteradas os separadores do relatório "
+                L"necessidade de MediaInfo.dll. A ferramenta deixa inalterados os separadores do relatório "
                 L"e a lista de ficheiros recentes do visualizador.\r\n\r\nApós a leitura, a caixa de "
                 L"diálogo Guardar como inicia-se na pasta do ficheiro de origem e sugere video.mp4.header "
                 L"para video.mp4: .header é anexado ao nome original completo. Pode alterar o nome e a "
                 L"pasta de destino. Cancelar qualquer caixa de diálogo não grava qualquer saída. A "
                 L"substituição de um destino existente requer confirmação. O ficheiro de origem permanece "
-                L"inalterada; uma falha ao guardar preserva o destino anterior. Para abrir e guardar são "
+                L"inalterado; uma falha ao guardar preserva o destino anterior. Para abrir e guardar são "
                 L"utilizadas as caixas de diálogo do sistema mais modernas disponíveis nessa versão do "
                 L"Windows.\r\n\r\nNa inicialização da aplicação, a ferramenta obtém a sua pasta de entrada "
                 L"inicial de Ficheiro > Abrir. Se não tiver sido guardada nenhuma pasta, o Windows escolhe "
@@ -2761,8 +2786,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"externas. As duas versões recentes têm a respetiva libcurl; 0.7.60 nunca a extrai. A "
                 L"posição da janela é guardada. Por predefinição, só é permitida uma instância e os "
                 L"arranques seguintes enviam os ficheiros para a janela aberta. Nas preferências, é "
-                L"possível permitir várias instâncias. Com várias janelas, apenas a primeira de cada "
-                L"formulário recupera a posição guardada; as seguintes recuperam apenas o tamanho."
+                L"possível permitir várias instâncias. Com várias janelas, apenas a primeira de cada tipo de "
+                L"janela recupera a posição guardada; as seguintes recuperam apenas o tamanho."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2812,6 +2837,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Ficheiro de cabeçalho (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Não foi possível ler o cabeçalho do ficheiro:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Não foi possível guardar o ficheiro de cabeçalho:\n\n%s" },
+            { TXT_COPY, L"&Copiar" },
+            { TXT_COPY_FILE_NAME, L"Copiar &nome do ficheiro" },
+            { TXT_COPY_FULL_PATH, L"Copiar &caminho completo" },
+            { TXT_OPEN_FILE, L"&Abrir ficheiro" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Abrir &localização do ficheiro" },
         }
     },
     {
@@ -2872,7 +2902,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Pliki multimedialne" },
             { TXT_APPLICATION_DESCRIPTION, L"Przeglądarka informacji o multimediach" },
             { TXT_HELP_TITLE, L"MediaInfo — Pomoc" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nie może utworzyć uchwytu pliku." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nie może zainicjować analizy pliku." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo nie może otworzyć lub rozpoznać tego pliku." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -2966,10 +2996,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Preferencje zastosowano, ale nie zapisano ich w rejestrze." },
             { TXT_REPORT_START_FAILED, L"Za mało pamięci, aby uruchomić raport." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Nie można utworzyć obrazu raportu." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Nie można załadować tabeli języka. Wybierz prawidłowy plik CSV MediaInfo w UTF-8 lub "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Nie można załadować tabeli języka. Wybierz prawidłowy "
+                L"plik CSV MediaInfo w UTF-8 lub UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Nie można uruchomić wątku raportu." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Wybrana MediaInfo.dll odrzuciła język raportu." },
             { TXT_INVALID_WINDOWS_DLL, L"Wybrany plik nie jest prawidłową biblioteką DLL systemu Windows." },
@@ -3044,7 +3072,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"dołączany do pełnej oryginalnej nazwy. Można zmienić zarówno nazwę, jak i folder "
                 L"docelowy. Anulowanie któregokolwiek okna dialogowego nie powoduje zapisywania danych "
                 L"wyjściowych. Zastąpienie istniejącego miejsca docelowego wymaga potwierdzenia. Plik "
-                L"źródłowy pozostaje niezmienione; nieudane zapisanie powoduje zachowanie poprzedniego "
+                L"źródłowy pozostaje niezmieniony; nieudane zapisanie powoduje zachowanie poprzedniego "
                 L"miejsca docelowego. Do otwierania i zapisywania używane są najnowsze systemowe okna "
                 L"dialogowe dostępne w danej wersji systemu Windows.\r\n\r\nPodczas uruchamiania aplikacji "
                 L"narzędzie pobiera początkowy folder wejściowy z Plik > Otwórz. Jeśli żaden folder nie "
@@ -3068,7 +3096,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Dwie nowsze wersje mają odpowiednią libcurl; 0.7.60 nigdy jej nie rozpakowuje. Położenie "
                 L"okna jest zapisywane. Domyślnie dozwolona jest tylko jedna instancja, a kolejne "
                 L"uruchomienia przekazują pliki do otwartego okna. W ustawieniach można zezwolić na wiele "
-                L"instancji. Przy wielu oknach tylko pierwsze okno każdego formularza przywraca zapisaną "
+                L"instancji. Przy wielu oknach tylko pierwsze okno każdego typu przywraca zapisaną "
                 L"pozycję; następne przywracają jedynie rozmiar."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -3114,6 +3142,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Plik nagłówka (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Nie można odczytać nagłówka pliku:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Nie można zapisać pliku nagłówka:\n\n%s" },
+            { TXT_COPY, L"&Kopiuj" },
+            { TXT_COPY_FILE_NAME, L"Kopiuj &nazwę pliku" },
+            { TXT_COPY_FULL_PATH, L"Kopiuj pełną &ścieżkę" },
+            { TXT_OPEN_FILE, L"&Otwórz plik" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Otwórz &lokalizację pliku" },
         }
     },
     {
@@ -3170,7 +3203,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Multimediálne súbory" },
             { TXT_APPLICATION_DESCRIPTION, L"Prehliadač informácií o médiách" },
             { TXT_HELP_TITLE, L"MediaInfo — Pomoc" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nemôže vytvoriť popisovač súboru." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nemôže inicializovať analýzu súboru." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo nemôže otvoriť alebo rozpoznať tento súbor." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -3262,9 +3295,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Na spustenie reportu nie je dostatok pamäte." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Obrázok reportu nemožno vytvoriť." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Jazykovú tabuľku nemožno načítať. Vyberte platný súbor MediaInfo CSV v UTF-8 alebo Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Jazykovú tabuľku nemožno načítať. Vyberte platný súbor "
+                L"MediaInfo CSV v UTF-8 alebo UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Vlákno reportu nemožno spustiť." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Vybraná MediaInfo.dll odmietla jazyk reportu." },
             { TXT_INVALID_WINDOWS_DLL, L"Vybraný súbor nie je platná knižnica DLL systému Windows." },
@@ -3357,7 +3389,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"libcurl; 0.7.60 ju nikdy nerozbaľuje. Poloha okna sa ukladá. Predvolene je povolená iba "
                 L"jedna inštancia a ďalšie spustenie odovzdá súbory otvorenému oknu. V Predvoľbách možno "
                 L"povoliť viac inštancií. Pri viacerých oknách sa uložená poloha obnoví len prvému oknu "
-                L"daného formulára; ďalšie prevezmú iba uloženú veľkosť."
+                L"daného typu; ďalšie prevezmú iba uloženú veľkosť."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -3402,6 +3434,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Súbor hlavičky (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Hlavičku súboru sa nepodarilo prečítať:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Súbor hlavičky sa nepodarilo uložiť:\n\n%s" },
+            { TXT_COPY, L"&Kopírovať" },
+            { TXT_COPY_FILE_NAME, L"Kopírovať &názov súboru" },
+            { TXT_COPY_FULL_PATH, L"Kopírovať úplnú &cestu" },
+            { TXT_OPEN_FILE, L"&Otvoriť súbor" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Otvoriť &umiestnenie súboru" },
         }
     },
     {
@@ -3458,7 +3495,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Mediefiler" },
             { TXT_APPLICATION_DESCRIPTION, L"Visning af medieoplysninger" },
             { TXT_HELP_TITLE, L"MediaInfo — Hjælp" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kan ikke oprette et filhåndtag." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kunne ikke initialisere analysen af filen." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo kan ikke åbne eller genkende denne fil." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -3548,9 +3585,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Ikke nok hukommelse til at starte rapporten." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Rapportbilledet kan ikke oprettes." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Sprogtabellen kan ikke indlæses. Vælg en gyldig MediaInfo-CSV-fil i UTF-8 eller Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Sprogtabellen kan ikke indlæses. Vælg en gyldig "
+                L"MediaInfo-CSV-fil i UTF-8 eller UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Rapporttråden kan ikke startes." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Den valgte MediaInfo.dll afviste rapportsproget." },
             { TXT_INVALID_WINDOWS_DLL, L"Den valgte fil er ikke en gyldig Windows-DLL." },
@@ -3643,7 +3679,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"versioner har passende libcurl; 0.7.60 pakker aldrig libcurl ud. Vinduesplaceringen "
                 L"gemmes. Som standard tillades kun én instans, og senere starter sender filer til det åbne "
                 L"vindue. Flere instanser kan tillades i præferencerne. Ved flere vinduer gendannes den "
-                L"gemte placering kun for det første vindue af hver formular; senere vinduer gendanner kun "
+                L"gemte placering kun for det første vindue af hver vinduestype; senere vinduer gendanner "
+                L"kun "
                 L"størrelsen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -3690,6 +3727,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Headerfil (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Filens header kunne ikke læses:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Headerfilen kunne ikke gemmes:\n\n%s" },
+            { TXT_COPY, L"&Kopiér" },
+            { TXT_COPY_FILE_NAME, L"Kopiér fil&navn" },
+            { TXT_COPY_FULL_PATH, L"Kopiér fuld &sti" },
+            { TXT_OPEN_FILE, L"&Åbn fil" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Åbn &filplacering" },
         }
     },
     {
@@ -3746,7 +3788,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Mediatiedostot" },
             { TXT_APPLICATION_DESCRIPTION, L"Mediatietojen katseluohjelma" },
             { TXT_HELP_TITLE, L"MediaInfo — Ohje" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ei voi luoda tiedostokahvaa." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ei voinut alustaa tiedoston analysointia." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ei voi avata tai tunnistaa tiedostoa." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -3840,10 +3882,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Muisti ei riitä raportin käynnistämiseen." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Raportin kuvaa ei voi luoda." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Kielitaulukkoa ei voi ladata. Valitse kelvollinen UTF-8- tai Unicode-muotoinen "
-                L"MediaInfo-CSV-tiedosto."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Kielitaulukkoa ei voi ladata. Valitse kelvollinen UTF-8- "
+                L"tai UTF-16-muotoinen MediaInfo-CSV-tiedosto." },
             { TXT_REPORT_THREAD_START_FAILED, L"Raporttisäiettä ei voi käynnistää." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Valittu MediaInfo.dll hylkäsi raportin kielen." },
             { TXT_INVALID_WINDOWS_DLL, L"Valittu tiedosto ei ole kelvollinen Windows-DLL." },
@@ -3944,7 +3984,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Kahdella uudemmalla on sopiva libcurl; 0.7.60 ei koskaan pura sitä. Ikkunan sijainti "
                 L"tallennetaan. Oletuksena sallitaan vain yksi esiintymä, ja myöhemmät käynnistykset "
                 L"lähettävät tiedostot avoimeen ikkunaan. Asetuksissa voi sallia useita esiintymiä. Kun "
-                L"ikkunoita on useita, vain kunkin lomakkeen ensimmäinen ikkuna palauttaa tallennetun "
+                L"ikkunoita on useita, vain kunkin ikkunatyypin ensimmäinen ikkuna palauttaa tallennetun "
                 L"sijaintinsa; myöhemmät ikkunat palauttavat vain koon."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -3991,6 +4031,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Otsaketiedosto (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Tiedoston otsaketta ei voitu lukea:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Otsaketiedostoa ei voitu tallentaa:\n\n%s" },
+            { TXT_COPY, L"&Kopioi" },
+            { TXT_COPY_FILE_NAME, L"Kopioi tiedoston &nimi" },
+            { TXT_COPY_FULL_PATH, L"Kopioi koko tiedosto&polku" },
+            { TXT_OPEN_FILE, L"&Avaa tiedosto" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Avaa tiedosto&sijainti" },
         }
     },
     {
@@ -4049,7 +4094,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Miðlaskrár" },
             { TXT_APPLICATION_DESCRIPTION, L"Skoðari fyrir miðlaupplýsingar" },
             { TXT_HELP_TITLE, L"MediaInfo — Hjálp" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo getur ekki búið til skráarhandfang." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo gat ekki frumstillt greiningu skrárinnar." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo getur ekki opnað eða greint þessa skrá." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -4134,10 +4179,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Stillingarnar voru virkjaðar en ekki vistaðar í skrásetningu." },
             { TXT_REPORT_START_FAILED, L"Ekki er nægt minni til að ræsa skýrsluna." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Ekki er hægt að búa til mynd skýrslunnar." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Ekki er hægt að hlaða tungumálatöflunni. Veldu gilda MediaInfo CSV-skrá í UTF-8 eða "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Ekki er hægt að hlaða tungumálatöflunni. Veldu gilda "
+                L"MediaInfo CSV-skrá í UTF-8 eða UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Ekki er hægt að ræsa skýrsluþráðinn." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Valið MediaInfo.dll hafnaði tungumáli skýrslunnar." },
             { TXT_INVALID_WINDOWS_DLL, L"Valin skrá er ekki gilt Windows DLL-safn." },
@@ -4231,7 +4274,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"libcurl; 0.7.60 afþjappar því aldrei. Staðsetning gluggans er vistuð. Sjálfgefið er "
                 L"aðeins eitt tilvik leyft og síðari ræsingar senda skrár til opna gluggans. Í stillingum "
                 L"má leyfa mörg tilvik. Ef fleiri gluggar eru leyfðir endurheimtir aðeins fyrsti gluggi "
-                L"hvers eyðublaðs vistaða staðsetningu; síðari gluggar endurheimta aðeins stærðina."
+                L"hverrar gluggategundar vistaða staðsetningu; síðari gluggar endurheimta aðeins stærðina."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4277,6 +4320,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Hausaskrá (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Ekki tókst að lesa haus skrárinnar:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Ekki tókst að vista hausaskrána:\n\n%s" },
+            { TXT_COPY, L"&Afrita" },
+            { TXT_COPY_FILE_NAME, L"&Afrita skráarheiti" },
+            { TXT_COPY_FULL_PATH, L"Afrita alla &slóðina" },
+            { TXT_OPEN_FILE, L"&Opna skrá" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Sýna í &möppu" },
         }
     },
     {
@@ -4333,7 +4381,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Mediefiler" },
             { TXT_APPLICATION_DESCRIPTION, L"Viser for medieinformasjon" },
             { TXT_HELP_TITLE, L"MediaInfo — Hjelp" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kan ikke opprette et filhåndtak." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kunne ikke initialisere filanalysen." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo kan ikke åpne eller gjenkjenne denne filen." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -4422,9 +4470,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Innstillingene ble brukt, men kunne ikke lagres i registeret." },
             { TXT_REPORT_START_FAILED, L"Ikke nok minne til å starte rapporten." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Rapportbildet kan ikke opprettes." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Språktabellen kan ikke lastes. Velg en gyldig MediaInfo-CSV-fil i UTF-8 eller Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Språktabellen kan ikke lastes. Velg en gyldig "
+                L"MediaInfo-CSV-fil i UTF-8 eller UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Rapporttråden kan ikke startes." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Den valgte MediaInfo.dll avviste rapportspråket." },
             { TXT_INVALID_WINDOWS_DLL, L"Den valgte filen er ikke en gyldig Windows-DLL." },
@@ -4516,7 +4563,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"0.7.60 pakker aldri ut libcurl. Vindusplasseringen lagres. Som standard tillates bare én "
                 L"forekomst, og senere oppstarter sender filer til det åpne vinduet. Flere forekomster kan "
                 L"tillates i preferansene. Ved flere vinduer gjenopprettes lagret plassering bare for det "
-                L"første vinduet i hvert skjema; senere vinduer gjenoppretter bare størrelsen."
+                L"første vinduet av hver vindustype; senere vinduer gjenoppretter bare størrelsen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4562,6 +4609,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Headerfil (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Filhodet kunne ikke leses:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Headerfilen kunne ikke lagres:\n\n%s" },
+            { TXT_COPY, L"&Kopier" },
+            { TXT_COPY_FILE_NAME, L"Kopier fil&navn" },
+            { TXT_COPY_FULL_PATH, L"Kopier fullstendig fil&bane" },
+            { TXT_OPEN_FILE, L"&Åpne fil" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Åpne &filplassering" },
         }
     },
     {
@@ -4618,7 +4670,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Mediefiler" },
             { TXT_APPLICATION_DESCRIPTION, L"Visare för medieinformation" },
             { TXT_HELP_TITLE, L"MediaInfo — Hjälp" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kan inte skapa ett filhandtag." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kunde inte initiera filanalysen." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo kan inte öppna eller identifiera den här filen." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -4713,9 +4765,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Otillräckligt minne för att starta rapporten." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Rapportbilden kan inte skapas." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Språktabellen kan inte läsas in. Välj en giltig MediaInfo-CSV-fil i UTF-8 eller Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Språktabellen kan inte läsas in. Välj en giltig "
+                L"MediaInfo-CSV-fil i UTF-8 eller UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Rapporttråden kan inte startas." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Vald MediaInfo.dll avvisade rapportspråket." },
             { TXT_INVALID_WINDOWS_DLL, L"Den valda filen är inte en giltig Windows-DLL." },
@@ -4811,7 +4862,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"upp libcurl. Fönsterplaceringen sparas. Som standard tillåts bara en instans och senare "
                 L"starter skickar filer till det öppna fönstret. Flera instanser kan tillåtas i "
                 L"preferenserna. Med flera fönster återställs den sparade positionen bara för det första "
-                L"fönstret av varje formulär; senare fönster återställer bara storleken."
+                L"fönstret av varje fönstertyp; senare fönster återställer bara storleken."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4856,6 +4907,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Headerfil (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Filens huvud kunde inte läsas:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Headerfilen kunde inte sparas:\n\n%s" },
+            { TXT_COPY, L"&Kopiera" },
+            { TXT_COPY_FILE_NAME, L"Kopiera fil&namn" },
+            { TXT_COPY_FULL_PATH, L"Kopiera fullständig &sökväg" },
+            { TXT_OPEN_FILE, L"&Öppna fil" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Öppna &filsökväg" },
         }
     },
     {
@@ -4916,7 +4972,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Medya dosyaları" },
             { TXT_APPLICATION_DESCRIPTION, L"Medya bilgisi görüntüleyicisi" },
             { TXT_HELP_TITLE, L"MediaInfo — Yardım" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo dosya tanıtıcısı oluşturamıyor." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo dosya analizini başlatamadı." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo bu dosyayı açamıyor veya tanıyamıyor." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -5000,9 +5056,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Tercihler uygulandı ancak kayıt defterine kaydedilemedi." },
             { TXT_REPORT_START_FAILED, L"Raporu başlatmak için yeterli bellek yok." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Rapor görüntüsü oluşturulamıyor." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Dil tablosu yüklenemiyor. Geçerli bir UTF-8 veya Unicode MediaInfo CSV dosyası seçin."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Dil tablosu yüklenemiyor. Geçerli bir UTF-8 veya UTF-16 "
+                L"MediaInfo CSV dosyası seçin." },
             { TXT_REPORT_THREAD_START_FAILED, L"Rapor iş parçacığı başlatılamıyor." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Seçili MediaInfo.dll rapor dilini reddetti." },
             { TXT_INVALID_WINDOWS_DLL, L"Seçili dosya geçerli bir Windows DLL dosyası değil." },
@@ -5097,7 +5152,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"eskiye doğru denenir. İki yeni sürümün uygun libcurl kitaplıkları vardır; 0.7.60 "
                 L"libcurl’ü asla çıkartmaz. Pencere konumu kaydedilir. Varsayılan olarak yalnızca tek "
                 L"örneğe izin verilir ve sonraki başlatmalar dosyaları açık pencereye gönderir. Tercihlerde "
-                L"birden fazla örneğe izin verilebilir. Birden fazla pencere olduğunda, her formun yalnızca "
+                L"birden fazla örneğe izin verilebilir. Birden fazla pencere olduğunda, her pencere türünün "
+                L"yalnızca "
                 L"ilk penceresi kayıtlı konumunu geri yükler; sonraki pencereler yalnızca boyutu geri "
                 L"yükler."
             },
@@ -5142,6 +5198,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Üst bilgi dosyası (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Dosyanın üst bilgisi okunamadı:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Üst bilgi dosyası kaydedilemedi:\n\n%s" },
+            { TXT_COPY, L"&Kopyala" },
+            { TXT_COPY_FILE_NAME, L"Dosya &adını kopyala" },
+            { TXT_COPY_FULL_PATH, L"Tam dosya &yolunu kopyala" },
+            { TXT_OPEN_FILE, L"Dosyayı a&ç" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Dosya &konumunu aç" },
         }
     },
     {
@@ -5198,7 +5259,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Meediafailid" },
             { TXT_APPLICATION_DESCRIPTION, L"Meediateabe vaatur" },
             { TXT_HELP_TITLE, L"MediaInfo — Spikker" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ei saa luua failipidet." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ei saanud faili analüüsi lähtestada." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ei saa faili avada ega tuvastada." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -5279,9 +5340,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Sätted rakendati, kuid registrisse salvestamine nurjus." },
             { TXT_REPORT_START_FAILED, L"Aruande käivitamiseks pole piisavalt mälu." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Aruande pilti ei saa luua." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Keeletabelit ei saa laadida. Valige kehtiv UTF-8 või Unicode’i MediaInfo CSV-fail."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Keeletabelit ei saa laadida. Valige kehtiv UTF-8 või "
+                L"UTF-16 MediaInfo CSV-fail." },
             { TXT_REPORT_THREAD_START_FAILED, L"Aruande lõime ei saa käivitada." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Valitud MediaInfo.dll lükkas aruande keele tagasi." },
             { TXT_INVALID_WINDOWS_DLL, L"Valitud fail pole kehtiv Windowsi DLL." },
@@ -5372,7 +5432,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"proovitakse uusimast pärast väliseid teeke. Kahel uuemal on sobiv libcurl; 0.7.60 ei paki "
                 L"seda kunagi lahti. Akna asukoht salvestatakse. Vaikimisi on lubatud ainult üks eksemplar "
                 L"ja järgmised käivitused saadavad failid avatud aknasse. Eelistustes saab lubada mitu "
-                L"eksemplari. Mitme akna korral taastab salvestatud asukoha ainult iga vormi esimene aken; "
+                L"eksemplari. Mitme akna korral taastab salvestatud asukoha ainult iga aknatüübi esimene "
+                L"aken; "
                 L"järgmised aknad taastavad ainult suuruse."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -5417,6 +5478,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Päisefail (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Faili päist ei saanud lugeda:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Päisefaili ei saanud salvestada:\n\n%s" },
+            { TXT_COPY, L"&Kopeeri" },
+            { TXT_COPY_FILE_NAME, L"Kopeeri faili &nimi" },
+            { TXT_COPY_FULL_PATH, L"Kopeeri täielik faili&tee" },
+            { TXT_OPEN_FILE, L"&Ava fail" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Ava faili a&sukoht" },
         }
     },
     {
@@ -5477,7 +5543,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Comhaid mheán" },
             { TXT_APPLICATION_DESCRIPTION, L"Amharcán faisnéise meán" },
             { TXT_HELP_TITLE, L"MediaInfo — Cabhair" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"Ní féidir le MediaInfo hanla comhaid a chruthú." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"Níorbh fhéidir le MediaInfo anailís an chomhaid a thúsú." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"Ní féidir le MediaInfo an comhad seo a oscailt ná a aithint." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -5581,10 +5647,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Níl dóthain cuimhne ann chun an tuairisc a thosú." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Ní féidir íomhá na tuairisce a chruthú." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Ní féidir an tábla teanga a lódáil. Roghnaigh comhad bailí MediaInfo CSV in UTF-8 nó "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Ní féidir an tábla teanga a lódáil. Roghnaigh comhad "
+                L"bailí MediaInfo CSV in UTF-8 nó UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Ní féidir snáithe na tuairisce a thosú." },
             { TXT_REPORT_LANGUAGE_REJECTED,
                 L"Dhiúltaigh an MediaInfo.dll roghnaithe do theanga na tuairisce."
@@ -5689,7 +5753,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"amach riamh. Sábháiltear suíomh na fuinneoige. De réir réamhshocraithe, ní cheadaítear "
                 L"ach ásc amháin agus seolann seoltaí eile na comhaid chuig an bhfuinneog oscailte. Is "
                 L"féidir áscanna iolracha a cheadú sna socruithe. Má tá roinnt fuinneog ann, ní "
-                L"athchóirítear an suíomh sábháilte ach don chéad fhuinneog de gach foirm; ní athchóirítear "
+                L"athchóirítear an suíomh sábháilte ach don chéad fhuinneog de gach cineál fuinneoige; ní "
+                L"athchóirítear "
                 L"ach an méid do na fuinneoga eile."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -5738,6 +5803,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Comhad Ceanntáisc (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Níorbh fhéidir ceanntásc an chomhaid a léamh:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Níorbh fhéidir an comhad ceanntáisc a shábháil:\n\n%s" },
+            { TXT_COPY, L"&Cóipeáil" },
+            { TXT_COPY_FILE_NAME, L"&Cóipeáil ainm an chomhaid" },
+            { TXT_COPY_FULL_PATH, L"Cóipeáil an chonair &iomlán" },
+            { TXT_OPEN_FILE, L"&Oscail an comhad" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Taispeáin san &Fhillteán" },
         }
     },
     {
@@ -5796,7 +5866,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Medijos failai" },
             { TXT_APPLICATION_DESCRIPTION, L"Medijos informacijos peržiūros programa" },
             { TXT_HELP_TITLE, L"MediaInfo — Žinynas" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo negali sukurti failo deskriptoriaus." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nepavyko inicijuoti failo analizės." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo negali atidaryti ar atpažinti šio failo." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -5886,10 +5956,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Nuostatos pritaikytos, bet jų nepavyko įrašyti į registrą." },
             { TXT_REPORT_START_FAILED, L"Ataskaitai paleisti nepakanka atminties." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Nepavyko sukurti ataskaitos vaizdo." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Nepavyko įkelti kalbos lentelės. Pasirinkite tinkamą UTF-8 arba Unicode MediaInfo CSV "
-                L"failą."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Nepavyko įkelti kalbos lentelės. Pasirinkite tinkamą "
+                L"UTF-8 arba UTF-16 MediaInfo CSV failą." },
             { TXT_REPORT_THREAD_START_FAILED, L"Nepavyko paleisti ataskaitos gijos." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Pasirinkta MediaInfo.dll atmetė ataskaitos kalbą." },
             { TXT_INVALID_WINDOWS_DLL, L"Pasirinktas failas nėra tinkama Windows DLL." },
@@ -5915,10 +5983,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_CURL_LOAD_OPERATION, L"libcurl.dll įkėlimą" },
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll atlaisvinimą" },
             { TXT_APPLY, L"Taik&yti" },
-            { TXT_TAB_NAME_LENGTH, L"Kortelės pavadinimo &ilgis:" },
+            { TXT_TAB_NAME_LENGTH, L"Skirtuko pavadinimo &ilgis:" },
             { TXT_RECENT_FILES, L"Paskutiniai failai:" },
             { TXT_CLEAR_RECENT_FILES, L"Iš&valyti" },
-            { TXT_TAB_NAME_LENGTH_INVALID, L"Kortelės pavadinimo ilgis turi būti nuo 8 iki 255." },
+            { TXT_TAB_NAME_LENGTH_INVALID, L"Skirtuko pavadinimo ilgis turi būti nuo 8 iki 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Paskutinių failų sąrašas išvalytas, bet jo nepavyko įrašyti į registrą."
             },
@@ -5927,10 +5995,10 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LOADING, L"Įkeliama…" },
             { TXT_LOADING_FILE, L"Įkeliamas failas %s…" },
             { TXT_APPLICATION_HELP,
-                L"FAILAI IR KORTELĖS\r\nSavoji Windows x86 peržiūros programa MediaInfo.dll ataskaitoms. "
-                L"Kiekvienas failas turi atskirą tik skaitomą kortelę. Atverkite naudodami Ctrl+O arba "
-                L"vilkdami. Atvėrus pakartotinai pasirenkama esama kortelė. Ctrl+W arba vidurinis pelės "
-                L"mygtukas užveria kortelę; Uždaryti viską užveria visas. Failo meniu įsimena aštuonis "
+                L"FAILAI IR SKIRTUKAI\r\nSavoji Windows x86 peržiūros programa MediaInfo.dll ataskaitoms. "
+                L"Kiekvienas failas turi atskirą tik skaitomą skirtuką. Atverkite naudodami Ctrl+O arba "
+                L"vilkdami. Atvėrus pakartotinai pasirenkamas esamas skirtukas. Ctrl+W arba vidurinis pelės "
+                L"mygtukas užveria skirtuką; Uždaryti viską užveria visas. Failo meniu įsimena aštuonis "
                 L"paskutinius failus.\r\nAtidaryti aplanką… atveria tiesiogiai pasirinktame aplanke "
                 L"esančius failus, kiekvieną atskirame skirtuke. Poaplankiai neįtraukiami.\r\nAtidaryti ir "
                 L"Atidaryti aplanką naudoja bendrą paskutinį pasirinktą aplanką. Eksportas įsimena atskirą "
@@ -5976,7 +6044,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"kalbos. Ataskaitoms visada numatyta originali bibliotekos anglų kalba, nepriklausomai nuo "
                 L"Windows ir sąsajos. Tai pakeičia tik rankinis pasirinkimas: anglų kalba, 37 vertimai arba "
                 L"savas MediaInfo CSV žodynas. Gerai arba Taikyti patvirtina pakeitimus; Atšaukti atmeta "
-                L"laukiančius pakeitimus. Nuostatose galima riboti kortelių pavadinimus (numatyta 80) ir "
+                L"laukiančius pakeitimus. Nuostatose galima riboti skirtukų pavadinimus (numatyta 80) ir "
                 L"išvalyti paskutinių failų sąrašą. Ilgi pavadinimai išlaiko pradžią, pabaigą ir plėtinį, o "
                 L"viduryje įterpiamas daugtaškis. Išvalyti iš karto pašalina paskutinių failų sąrašą, net "
                 L"jei nuostatos vėliau uždaromos mygtuku Atšaukti.\r\n\r\nBIBLIOTEKOS IR "
@@ -5985,7 +6053,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"niekada neišpakuoja. Lango padėtis išsaugoma. Pagal numatytąsias nuostatas leidžiamas tik "
                 L"vienas egzempliorius, o vėlesni paleidimai perduoda failus atvertam langui. Nuostatose "
                 L"galima leisti kelis egzempliorius. Kai langų yra keli, išsaugota vieta atkuriama tik "
-                L"pirmajam kiekvienos formos langui; kiti langai atkuria tik dydį."
+                L"pirmajam kiekvieno lango tipo langui; kiti langai atkuria tik dydį."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6030,6 +6098,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Antraštės failas (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Nepavyko perskaityti failo antraštės:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Nepavyko įrašyti antraštės failo:\n\n%s" },
+            { TXT_COPY, L"&Kopijuoti" },
+            { TXT_COPY_FILE_NAME, L"Kopijuoti failo &vardą" },
+            { TXT_COPY_FULL_PATH, L"Kopijuoti visą &kelią" },
+            { TXT_OPEN_FILE, L"&Atidaryti failą" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Atidaryti &failo vietą" },
         }
     },
     {
@@ -6090,7 +6163,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Multivides faili" },
             { TXT_APPLICATION_DESCRIPTION, L"Multivides informācijas skatītājs" },
             { TXT_HELP_TITLE, L"MediaInfo — Palīdzība" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nevar izveidot faila turētāju." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nevarēja inicializēt faila analīzi." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo nevar atvērt vai atpazīt šo failu." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -6178,9 +6251,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Nepietiek atmiņas pārskata palaišanai." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Nevar izveidot pārskata attēlu." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Nevar ielādēt valodas tabulu. Atlasiet derīgu UTF-8 vai Unicode MediaInfo CSV failu."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Nevar ielādēt valodas tabulu. Atlasiet derīgu UTF-8 vai "
+                L"UTF-16 MediaInfo CSV failu." },
             { TXT_REPORT_THREAD_START_FAILED, L"Nevar palaist pārskata pavedienu." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Atlasītā MediaInfo.dll noraidīja pārskata valodu." },
             { TXT_INVALID_WINDOWS_DLL, L"Atlasītais fails nav derīga Windows DLL." },
@@ -6241,7 +6313,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"paslēpto tekstu. TXT, BMP, GIF, JPEG, PNG, TIFF un WebP tiek piedāvāti atbilstoši "
                 L"pieejamībai. Tiek atcerēta pēdējā eksporta mape un formāts.\r\nTXT piedāvā ANSI, UTF-8, "
                 L"UTF-8 ar BOM, UTF-16 BE ar BOM un UTF-16 LE ar BOM. Noklusējums ir otrais ieraksts, UTF-8 "
-                L"bez BOM. Tiek saglabāts pilns atskaites teksts un tā sākotnējās rindu "
+                L"bez BOM. Tiek saglabāts pilns pārskata teksts un tā sākotnējās rindu "
                 L"beigas.\r\n\r\nIZVEIDOT GALVENES FAILU\r\nRīki ir trešā izvēlne izvēļņu joslā. Tā komanda "
                 L"Izveidot galvenes failu… atver vienu avota failu neatkarīgi no pārskatu cilnēm un kopē tā "
                 L"pirmos 524288 baitus (512 KiB). Īsāks fails tiek kopēts pilnībā; tukšs fails rada tukšu "
@@ -6273,7 +6345,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"libcurl; 0.7.60 to nekad neizpako. Loga novietojums tiek saglabāts. Pēc noklusējuma ir "
                 L"atļauta tikai viena instance, un turpmākās palaišanas nodod failus atvērtajam logam. "
                 L"Iestatījumos var atļaut vairākas instances. Ja ir vairāki logi, saglabātā pozīcija tiek "
-                L"atjaunota tikai katras formas pirmajam logam; pārējiem logiem tiek atjaunots tikai izmērs."
+                L"atjaunota tikai katra loga tipa pirmajam logam; pārējiem logiem tiek atjaunots tikai "
+                L"izmērs."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6319,6 +6392,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Galvenes fails (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Neizdevās nolasīt faila galveni:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Neizdevās saglabāt galvenes failu:\n\n%s" },
+            { TXT_COPY, L"&Kopēt" },
+            { TXT_COPY_FILE_NAME, L"Kopēt faila &nosaukumu" },
+            { TXT_COPY_FULL_PATH, L"Kopēt pilnu &ceļu" },
+            { TXT_OPEN_FILE, L"&Atvērt failu" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Atvērt faila atrašanās &vietu" },
         }
     },
     {
@@ -6379,7 +6457,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Médiafájlok" },
             { TXT_APPLICATION_DESCRIPTION, L"Médiainformáció-megjelenítő" },
             { TXT_HELP_TITLE, L"MediaInfo — Súgó" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"A MediaInfo nem tud fájlleírót létrehozni." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"A MediaInfo nem tudta inicializálni a fájl elemzését." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"A MediaInfo nem tudja megnyitni vagy felismerni a fájlt." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -6479,10 +6557,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Nincs elegendő memória a jelentés indításához." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"A jelentés képe nem hozható létre." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"A nyelvi táblázat nem tölthető be. Válasszon érvényes UTF-8 vagy Unicode MediaInfo "
-                L"CSV-fájlt."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"A nyelvi táblázat nem tölthető be. Válasszon érvényes "
+                L"UTF-8 vagy UTF-16 MediaInfo CSV-fájlt." },
             { TXT_REPORT_THREAD_START_FAILED, L"A jelentés szála nem indítható el." },
             { TXT_REPORT_LANGUAGE_REJECTED,
                 L"A kiválasztott MediaInfo.dll elutasította a jelentés nyelvét."
@@ -6567,7 +6643,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"veszi. Ha még nincs mentett mappa, a Windows kiválasztja a kezdeti helyet. A bemeneti "
                 L"fájl kiválasztása után az eszköz csak a saját mappájára emlékszik az alkalmazás "
                 L"kilépéséig, még akkor is, ha megszakítja a Mentés másként párbeszédpanelt. Nem módosítja "
-                L"az Megnyitás és Exportálás által használt mappákat, és nem menti el saját mappáját az "
+                L"a Megnyitás és Exportálás által használt mappákat, és nem menti el saját mappáját az "
                 L"alkalmazás beállításaihoz. Minden Mentés másként párbeszédablak az aktuálisan "
                 L"kiválasztott beviteli fájl mappájában kezdődik, függetlenül az előző mentési "
                 L"céltól.\r\n\r\nBEÁLLÍTÁSOK ÉS NYELVEK\r\nA Beállítások (Beállítások > Beállítások, "
@@ -6584,7 +6660,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"könyvtárak után a legújabbtól próbálja őket. A két újabbhoz megfelelő libcurl tartozik; a "
                 L"0.7.60 soha nem bontja ki. Az ablak helyzete megmarad. Alapértelmezés szerint csak egy "
                 L"példány engedélyezett, és a későbbi indítások átadják a fájlokat a nyitott ablaknak. A "
-                L"beállításokban több példány is engedélyezhető. Több ablak esetén csak az egyes űrlapok "
+                L"beállításokban több példány is engedélyezhető. Több ablak esetén csak az egyes "
+                L"ablaktípusok "
                 L"első ablaka állítja vissza a mentett pozíciót; a továbbiak csak a méretet."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -6632,6 +6709,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Fejlécfájl (*.header)" },
             { TXT_HEADER_READ_FAILED, L"A fájl fejléce nem olvasható:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"A fejlécfájl nem menthető:\n\n%s" },
+            { TXT_COPY, L"&Másolás" },
+            { TXT_COPY_FILE_NAME, L"Fájl&név másolása" },
+            { TXT_COPY_FULL_PATH, L"Teljes elérési &út másolása" },
+            { TXT_OPEN_FILE, L"Fájl &megnyitása" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Fájl &helyének megnyitása" },
         }
     },
     {
@@ -6653,7 +6735,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LANGUAGE, L"&Lingwa:" },
             { TXT_OPEN_WEBSITE, L"&Iftaħ fil-brawżer predefinit" },
             { TXT_OPEN, L"&Iftaħ…\tCtrl+O" },
-            { TXT_SETTINGS_MENU, L"&Settings" },
+            { TXT_SETTINGS_MENU, L"&Issettjar" },
             { TXT_PREFERENCES_MENU, L"&Preferenzi…\tCtrl+G" },
             { TXT_ABOUT, L"&Dwar" },
             { TXT_ABOUT_TITLE, L"Dwar %ls" },
@@ -6690,21 +6772,18 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LICENSE_UNAVAILABLE, L"Ir-riżorsa tal-liċenzja mhijiex disponibbli." },
             { TXT_MEDIA_FILES, L"Fajls tal-midja" },
-            { TXT_APPLICATION_DESCRIPTION, L"Werrej tal-informazzjoni tal-midja" },
+            { TXT_APPLICATION_DESCRIPTION, L"Viżwalizzatur tal-informazzjoni tal-midja" },
             { TXT_HELP_TITLE, L"MediaInfo — Għajnuna" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ma jistax joħloq identifikatur ta’ fajl." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ma setax jinizjalizza l-analiżi tal-fajl." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ma jistax jiftaħ jew jagħraf dan il-fajl." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
             { TXT_MEDIALIB_PATH, L"&Mogħdija ta’ MediaInfo.dll:" },
-            { TXT_MEDIALIB_REQUIRED,
-                L"MediaInfo.dll mhijiex mgħobbija. Agħżilha minn Settings > Preferenzi."
-            },
+            { TXT_MEDIALIB_REQUIRED, L"MediaInfo.dll mhijiex mgħobbija. Agħżilha minn Issettjar > "
+                L"Preferenzi." },
             { TXT_MEDIALIB_NOT_LOADED, L"MediaInfo.dll mhijiex mgħobbija." },
-            { TXT_NO_COMPATIBLE_MEDIALIB,
-                L"Ma setgħetx titgħabba MediaInfo.dll esterna jew inkorporata kompatibbli. Agħżilha minn "
-                L"Settings > Preferenzi."
-            },
+            { TXT_NO_COMPATIBLE_MEDIALIB, L"Ma setgħetx titgħabba MediaInfo.dll esterna jew inkorporata "
+                L"kompatibbli. Agħżilha minn Issettjar > Preferenzi." },
             { TXT_ANTIALIASING_NONE, L"Xejn" },
             { TXT_OK, L"OK" },
             { TXT_OPEN_TITLE, L"Iftaħ fajls tal-midja" },
@@ -6730,7 +6809,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Il-proċess tal-librerija ma jistax jinbeda (żball ta’ Windows %lu)."
             },
             { TXT_REPORT_COPY_FAILED, L"Ir-rapport MediaInfo ma jistax jiġi kkupjat fil-memorja." },
-            { TXT_VIEWER_CREATE_FAILED, L"Il-werrej MediaInfo ma jistax jinħoloq." },
+            { TXT_VIEWER_CREATE_FAILED, L"Il-viżwalizzatur MediaInfo ma jistax jinħoloq." },
             { TXT_MEDIALIB_PATH_INVALID,
                 L"Il-mogħdija ta’ MediaInfo.dll mhijiex valida jew hija twila wisq."
             },
@@ -6743,9 +6822,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"l-ispazju fuq id-diska."
             },
             { TXT_COPY_URL_FAILED, L"Il-URL ma setax jiġi kkupjat fil-clipboard." },
-            { TXT_LIBRARY_REQUIRES_X86,
-                L"Il-werrej Win32 jeħtieġ %s ta’ 32 bit. Agħżel il-librerija x86/i386."
-            },
+            { TXT_LIBRARY_REQUIRES_X86, L"Il-viżwalizzatur Win32 jeħtieġ %s ta’ 32 bit. Agħżel "
+                L"il-librerija x86/i386." },
             { TXT_LIBRARY_EXTRACTION_FAILED,
                 L"Il-librerija inkorporata ma tistax tinkiteb f’AppData, fil-profil tal-utent, f’Program "
                 L"Files jew fil-fowlder temporanju."
@@ -6781,23 +6859,17 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_EXPORTS_MISSING,
                 L"Il-librerija ma tesportax il-funzjonijiet Unicode meħtieġa ta’ MediaInfo."
             },
-            { TXT_LIBRARY_WORKER_FAILED,
-                L"Il-proċess tal-librerija falla waqt %s (kodiċi 0x%08lX). Agħżel DLL kompatibbli minn "
-                L"Settings > Preferenzi."
-            },
-            { TXT_LIBRARY_WORKER_TIMEOUT,
-                L"Il-proċess tal-librerija ma jirrispondix waqt %s. Agħżel DLL kompatibbli minn Settings > "
-                L"Preferenzi."
-            },
+            { TXT_LIBRARY_WORKER_FAILED, L"Il-proċess tal-librerija falla waqt %s (kodiċi 0x%08lX). "
+                L"Agħżel DLL kompatibbli minn Issettjar > Preferenzi." },
+            { TXT_LIBRARY_WORKER_TIMEOUT, L"Il-proċess tal-librerija ma jirrispondix waqt %s. Agħżel DLL "
+                L"kompatibbli minn Issettjar > Preferenzi." },
             { TXT_PREFERENCES_SAVE_FAILED,
                 L"Il-preferenzi ġew applikati iżda ma ġewx issejvjati fir-reġistru."
             },
             { TXT_REPORT_START_FAILED, L"M’hemmx memorja biżżejjed biex jinbeda r-rapport." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"L-immaġni tar-rapport ma tistax tinħoloq." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"It-tabella tal-lingwa ma tistax titgħabba. Agħżel fajl MediaInfo CSV validu f’UTF-8 jew "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"It-tabella tal-lingwa ma tistax titgħabba. Agħżel fajl "
+                L"MediaInfo CSV validu f’UTF-8 jew UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Il-ħajta tar-rapport ma tistax tinbeda." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Il-MediaInfo.dll magħżula rrifjutat il-lingwa tar-rapport." },
             { TXT_INVALID_WINDOWS_DLL, L"Il-fajl magħżul mhuwiex DLL valida ta’ Windows." },
@@ -6838,16 +6910,18 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_LOADING, L"Qed jitgħabba…" },
             { TXT_LOADING_FILE, L"Qed jitgħabba l-fajl %s…" },
             { TXT_APPLICATION_HELP,
-                L"FAJLS U TABS\r\nWerrej nattiv ta’ Windows x86 għar-rapporti ta’ MediaInfo.dll. Kull fajl "
+                L"FAJLS U TABS\r\nViżwalizzatur nattiv ta’ Windows x86 għar-rapporti ta’ MediaInfo.dll. Kull "
+                L"fajl "
                 L"għandu tab tiegħu għall-qari biss. Iftaħ b’Ctrl+O jew iddreggja l-fajls fit-tieqa. "
                 L"Il-ftuħ mill-ġdid jagħżel it-tab eżistenti. B’Ctrl+W jew bil-buttuna tan-nofs tal-maws "
                 L"tista’ tagħlaq tab; Agħlaq kollox jagħlaq it-tabs kollha. Il-menu Fajl jiftakar tmien "
-                L"fajls riċenti.\r\nIftaħ folder… jiftaħ il-fajls li jinsabu direttament fil-folder "
-                L"magħżul, kull wieħed fit-tab tiegħu. Is-subfolders mhumiex inklużi.\r\nIftaħ u Iftaħ "
-                L"folder jużaw l-istess folder magħżul l-aħħar. L-esportazzjoni tiftakar il-folder tagħha, "
+                L"fajls riċenti.\r\nIftaħ fowlder… jiftaħ il-fajls li jinsabu direttament fil-fowlder "
+                L"magħżul, kull wieħed fit-tab tiegħu. Is-subfowlders mhumiex inklużi.\r\nIftaħ u Iftaħ "
+                L"fowlder jużaw l-istess fowlder magħżul l-aħħar. L-esportazzjoni tiftakar il-fowlder "
+                L"tagħha, "
                 L"Dokumenti b’mod predefinit. Il-modalità avvanzata turi oqsma addizzjonali "
                 L"fir-rapport.\r\nFormati magħrufa / Codecs magħrufa / Parametri magħrufa — "
-                L"MediaInfo.dll.\r\nAnaliżi sħiħa jeżamina l-fajl kollu u jista’ jieħu aktar żmien. Dawn "
+                L"MediaInfo.dll.\r\nAnaliżi sħiħa teżamina l-fajl kollu u tista’ tieħu aktar żmien. Dawn "
                 L"l-għażliet tar-rapport u Livell ta’ traċċar huma separati għal kull tab; bidla taġġorna "
                 L"biss it-tab attiva. L-aħħar kombinazzjoni magħżula manwalment tiġi ssejvjata għal tabs "
                 L"ġodda u għall-ftuħ tal-applikazzjoni li jmiss. Rapport korrispondenti fil-cache jerġa’ "
@@ -6862,7 +6936,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"mgħobbija. Mogħdijiet twal jitqassru b’punti ta’ sospensjoni skont l-ispazju "
                 L"disponibbli.\r\n\r\nESPORTAZZJONI\r\nCtrl+E jesporta r-rapport kollu, inkluż it-test "
                 L"moħbi. TXT, BMP, GIF, JPEG, PNG, TIFF u WebP jidhru meta jkunu disponibbli. L-aħħar "
-                L"folder u format tal-esportazzjoni jinżammu.\r\nTXT joffri ANSI, UTF-8, UTF-8 b’BOM, "
+                L"fowlder u format tal-esportazzjoni jinżammu.\r\nTXT joffri ANSI, UTF-8, UTF-8 b’BOM, "
                 L"UTF-16 BE b’BOM u UTF-16 LE b’BOM. It-tieni għażla, UTF-8 mingħajr BOM, hija dik "
                 L"predefinita. It-test sħiħ tar-rapport u t-truf tal-linji oriġinali jinżammu.\r\n\r\nOĦLOQ "
                 L"FAJL TAL-INTESTATURA\r\nIl-menu Għodod huwa t-tielet fil-bar tal-menus. Il-kmand Oħloq "
@@ -6882,9 +6956,9 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"fowlder issejvjat, Windows jagħżel il-post inizjali. Wara li jintgħażel fajl tad-dħul, "
                 L"l-għodda tiftakar il-fowlder tagħha biss sakemm tingħalaq l-applikazzjoni, anki jekk "
                 L"tikkanċella Issejvja bħala. Ma tbiddilx il-fowlders ta’ Iftaħ u Esporta u ma tissejvjax "
-                L"il-fowlder tagħha fis-settings tal-applikazzjoni. Kull djalogu Issejvja bħala jibda "
+                L"il-fowlder tagħha fl-issettjar tal-applikazzjoni. Kull djalogu Issejvja bħala jibda "
                 L"fil-fowlder tal-fajl tad-dħul magħżul bħalissa, irrispettivament mid-destinazzjoni "
-                L"preċedenti.\r\n\r\nPREFERENZI U LINGWI\r\nIl-preferenzi (Settings > Preferenzi, Ctrl+G) "
+                L"preċedenti.\r\n\r\nPREFERENZI U LINGWI\r\nIl-preferenzi (Issettjar > Preferenzi, Ctrl+G) "
                 L"fihom il-mogħdijiet tal-libreriji, il-font tar-rapport, l-antialiasing u l-lingwi. "
                 L"L-interfaċċa għandha 36 varjant u inizjalment issegwi Windows. Ir-rapporti dejjem jużaw "
                 L"l-Ingliż oriġinali tal-librerija b’mod predefinit, indipendentement minn Windows u "
@@ -6899,7 +6973,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"adattata; 0.7.60 qatt ma toħroġ libcurl. Il-pożizzjoni tat-tieqa tinżamm. B’mod "
                 L"awtomatiku hija permessa istanza waħda biss u tnedijiet sussegwenti jibagħtu l-fajls "
                 L"lit-tieqa miftuħa. Fil-preferenzi tista’ tippermetti diversi istanzi. B’diversi twieqi, "
-                L"l-ewwel tieqa ta’ kull formola biss tirrestawra l-pożizzjoni ssejvjata; it-twieqi ta’ "
+                L"l-ewwel tieqa ta’ kull tip ta’ tieqa biss tirrestawra l-pożizzjoni ssejvjata; it-twieqi "
+                L"ta’ "
                 L"wara jirrestawraw biss id-daqs."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -6915,9 +6990,9 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Ir-rapport ma jistax jiġi ssejvjat b’din il-kodifikazzjoni mingħajr telf ta’ karattri. "
                 L"Agħżel kodifikazzjoni oħra."
             },
-            { TXT_OPEN_FOLDER, L"Iftaħ &folder…" },
-            { TXT_OPEN_FOLDER_TITLE, L"Iftaħ folder" },
-            { TXT_FOLDER_READ_FAILED, L"Il-folder ma setax jinqara:\n\n%s\n\nŻball tal-Windows %lu." },
+            { TXT_OPEN_FOLDER, L"Iftaħ &fowlder…" },
+            { TXT_OPEN_FOLDER_TITLE, L"Iftaħ fowlder" },
+            { TXT_FOLDER_READ_FAILED, L"Il-fowlder ma setax jinqara:\n\n%s\n\nŻball tal-Windows %lu." },
             { TXT_ADVANCED_MODE, L"Modalità &avvanzata" },
             { TXT_REPORT_DETAIL_REJECTED,
                 L"Il-MediaInfo.dll magħżula rrifjutat l-issettjar tad-dettall tar-rapport."
@@ -6937,10 +7012,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TRACE_LEVEL_10, L"Livell ta’ traċċar &10" },
             { TXT_PRINT, L"&Stampa…\tCtrl+P" },
             { TXT_PRINTING, L"Qed jistampa…" },
-            { TXT_PRINT_FAILED,
-                L"Ir-rapport ma setax jiġi stampat. Iċċekkja l-printer, is-settings tiegħu u l-memorja "
-                L"disponibbli."
-            },
+            { TXT_PRINT_FAILED, L"Ir-rapport ma setax jiġi stampat. Iċċekkja l-printer, l-issettjar "
+                L"tiegħu u l-memorja disponibbli." },
             { TXT_TOOLS_MENU, L"Għ&odod" },
             { TXT_CREATE_HEADER, L"Oħloq Fajl tal-&Intestatura…" },
             { TXT_CREATE_HEADER_OPEN_TITLE, L"Oħloq Fajl tal-Intestatura - Iftaħ" },
@@ -6948,6 +7021,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Fajl tal-Intestatura (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Ma setgħetx tinqara l-intestatura tal-fajl:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Ma setax jiġi ssejvjat il-fajl tal-intestatura:\n\n%s" },
+            { TXT_COPY, L"&Ikkopja" },
+            { TXT_COPY_FILE_NAME, L"Ikkopja i&sem il-fajl" },
+            { TXT_COPY_FULL_PATH, L"Ikkopja l-&mogħdija sħiħa" },
+            { TXT_OPEN_FILE, L"&Iftaħ il-fajl" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Iftaħ il-&fowlder li fih il-fajl" },
         }
     },
     {
@@ -7006,7 +7084,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Mediabestanden" },
             { TXT_APPLICATION_DESCRIPTION, L"Viewer voor media-informatie" },
             { TXT_HELP_TITLE, L"MediaInfo — Help" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kan geen bestandshandle maken." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo kon de bestandsanalyse niet initialiseren." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo kan dit bestand niet openen of herkennen." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -7106,10 +7184,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Onvoldoende geheugen om het rapport te starten." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Kan de rapportafbeelding niet maken." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Kan de taaltabel niet laden. Selecteer een geldig MediaInfo-CSV-bestand in UTF-8 of "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Kan de taaltabel niet laden. Selecteer een geldig "
+                L"MediaInfo-CSV-bestand in UTF-8 of UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Kan de rapportthread niet starten." },
             { TXT_REPORT_LANGUAGE_REJECTED,
                 L"De geselecteerde MediaInfo.dll heeft de rapporttaal geweigerd."
@@ -7215,7 +7291,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"0.7.60 pakt libcurl nooit uit. De vensterpositie wordt opgeslagen. Standaard is slechts "
                 L"één exemplaar toegestaan en worden bestanden bij opnieuw starten naar het open venster "
                 L"gestuurd. In de voorkeuren kunnen meerdere exemplaren worden toegestaan. Bij meerdere "
-                L"vensters herstelt alleen het eerste venster van elk formulier de opgeslagen positie; "
+                L"vensters herstelt alleen het eerste venster van elk venstertype de opgeslagen positie; "
                 L"latere vensters herstellen alleen de grootte."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -7265,6 +7341,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Headerbestand (*.header)" },
             { TXT_HEADER_READ_FAILED, L"De bestandsheader kon niet worden gelezen:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Het headerbestand kon niet worden opgeslagen:\n\n%s" },
+            { TXT_COPY, L"&Kopiëren" },
+            { TXT_COPY_FILE_NAME, L"Bestands&naam kopiëren" },
+            { TXT_COPY_FULL_PATH, L"Volledig bestands&pad kopiëren" },
+            { TXT_OPEN_FILE, L"Bestand &openen" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"&Bestandslocatie openen" },
         }
     },
     {
@@ -7325,7 +7406,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Fișiere multimedia" },
             { TXT_APPLICATION_DESCRIPTION, L"Vizualizator de informații multimedia" },
             { TXT_HELP_TITLE, L"MediaInfo — Ajutor" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nu poate crea un identificator de fișier." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nu a putut inițializa analiza fișierului." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo nu poate deschide sau recunoaște acest fișier." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -7420,10 +7501,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Memorie insuficientă pentru pornirea raportului." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Imaginea raportului nu poate fi creată." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Tabelul de limbă nu poate fi încărcat. Selectați un CSV MediaInfo valid în UTF-8 sau "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Tabelul de limbă nu poate fi încărcat. Selectați un CSV "
+                L"MediaInfo valid în UTF-8 sau UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Firul raportului nu poate fi pornit." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"MediaInfo.dll selectat a respins limba raportului." },
             { TXT_INVALID_WINDOWS_DLL, L"Fișierul selectat nu este un DLL Windows valid." },
@@ -7522,7 +7601,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"versiuni mai noi au libcurl corespunzătoare; 0.7.60 nu extrage niciodată libcurl. Poziția "
                 L"ferestrei este salvată. În mod implicit este permisă o singură instanță, iar pornirile "
                 L"ulterioare trimit fișierele la fereastra deschisă. Preferințele permit activarea mai "
-                L"multor instanțe. Cu mai multe ferestre, doar prima fereastră a fiecărui formular "
+                L"multor instanțe. Cu mai multe ferestre, doar prima fereastră a fiecărui tip de fereastră "
                 L"restabilește poziția salvată; celelalte restabilesc doar dimensiunea."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -7570,6 +7649,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Fișier antet (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Antetul fișierului nu a putut fi citit:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Fișierul antet nu a putut fi salvat:\n\n%s" },
+            { TXT_COPY, L"&Copiere" },
+            { TXT_COPY_FILE_NAME, L"Copiază &numele fișierului" },
+            { TXT_COPY_FULL_PATH, L"Copiază &calea completă" },
+            { TXT_OPEN_FILE, L"&Deschide fișierul" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Deschide &locația fișierului" },
         }
     },
     {
@@ -7630,9 +7714,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Αρχεία πολυμέσων" },
             { TXT_APPLICATION_DESCRIPTION, L"Προβολή πληροφοριών πολυμέσων" },
             { TXT_HELP_TITLE, L"MediaInfo — Βοήθεια" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED,
-                L"Το MediaInfo δεν μπορεί να δημιουργήσει δείκτη χειρισμού αρχείου."
-            },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"Το MediaInfo δεν μπόρεσε να αρχικοποιήσει την ανάλυση του "
+                L"αρχείου." },
             { TXT_MEDIA_FILE_UNRECOGNIZED,
                 L"Το MediaInfo δεν μπορεί να ανοίξει ή να αναγνωρίσει αυτό το αρχείο."
             },
@@ -7734,9 +7817,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_REPORT_START_FAILED, L"Δεν υπάρχει αρκετή μνήμη για την εκκίνηση της αναφοράς." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Αδυναμία δημιουργίας εικόνας της αναφοράς." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Αδυναμία φόρτωσης πίνακα γλώσσας. Επιλέξτε έγκυρο αρχείο CSV MediaInfo σε UTF-8 ή Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Αδυναμία φόρτωσης πίνακα γλώσσας. Επιλέξτε έγκυρο αρχείο "
+                L"CSV MediaInfo σε UTF-8 ή UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Αδυναμία εκκίνησης του νήματος αναφοράς." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Το επιλεγμένο MediaInfo.dll απέρριψε τη γλώσσα αναφοράς." },
             { TXT_INVALID_WINDOWS_DLL, L"Το επιλεγμένο αρχείο δεν είναι έγκυρη DLL των Windows." },
@@ -7841,7 +7923,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"νεότερες έχουν αντίστοιχη libcurl· η 0.7.60 δεν την αποσυμπιέζει ποτέ. Η θέση του "
                 L"παραθύρου αποθηκεύεται. Από προεπιλογή επιτρέπεται μόνο μία παρουσία και οι επόμενες "
                 L"εκκινήσεις στέλνουν τα αρχεία στο ανοιχτό παράθυρο. Στις προτιμήσεις μπορούν να "
-                L"επιτραπούν πολλές παρουσίες. Με πολλά παράθυρα, μόνο το πρώτο παράθυρο κάθε φόρμας "
+                L"επιτραπούν πολλές παρουσίες. Με πολλά παράθυρα, μόνο το πρώτο παράθυρο κάθε τύπου "
+                L"παραθύρου "
                 L"επαναφέρει την αποθηκευμένη θέση· τα επόμενα επαναφέρουν μόνο το μέγεθος."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -7891,6 +7974,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Αρχείο κεφαλίδας (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Δεν ήταν δυνατή η ανάγνωση της κεφαλίδας του αρχείου:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Δεν ήταν δυνατή η αποθήκευση του αρχείου κεφαλίδας:\n\n%s" },
+            { TXT_COPY, L"&Αντιγραφή" },
+            { TXT_COPY_FILE_NAME, L"Αντιγραφή &ονόματος αρχείου" },
+            { TXT_COPY_FULL_PATH, L"Αντιγραφή πλήρους &διαδρομής" },
+            { TXT_OPEN_FILE, L"Ά&νοιγμα αρχείου" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Άνοιγμα &θέσης αρχείου" },
         }
     },
     {
@@ -7947,7 +8035,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Medijske datoteke" },
             { TXT_APPLICATION_DESCRIPTION, L"Preglednik informacija o medijima" },
             { TXT_HELP_TITLE, L"MediaInfo — Pomoć" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ne može napraviti identifikator datoteke." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nije mogao inicijalizirati analizu datoteke." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ne može otvoriti ili prepoznati ovu datoteku." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -8038,9 +8126,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Postavke su primijenjene, ali nisu sačuvane u registru." },
             { TXT_REPORT_START_FAILED, L"Nema dovoljno memorije za pokretanje izvještaja." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Nije moguće napraviti sliku izvještaja." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Nije moguće učitati jezičku tabelu. Izaberite ispravan MediaInfo CSV u UTF-8 ili Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Nije moguće učitati jezičku tabelu. Izaberite ispravan "
+                L"MediaInfo CSV u UTF-8 ili UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Nije moguće pokrenuti nit izvještaja." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Izabrana MediaInfo.dll odbila je jezik izvještaja." },
             { TXT_INVALID_WINDOWS_DLL, L"Izabrana datoteka nije ispravna Windows DLL." },
@@ -8102,7 +8189,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"statusne trake prikazuje putanje datoteka i tok učitavanja, a desna verziju učitane "
                 L"MediaInfo.dll biblioteke. Duge putanje skraćuju se trotačkom prema dostupnom "
                 L"prostoru.\r\n\r\nIZVOZ\r\nCtrl+E izvozi cijeli izvještaj, uključujući skriveni tekst. "
-                L"TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja mapa i "
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja fascikla i "
                 L"format izvoza se pamte.\r\nTXT nudi ANSI, UTF-8, UTF-8 s BOM-om, UTF-16 BE s BOM-om i "
                 L"UTF-16 LE s BOM-om. Podrazumijevana je druga stavka, UTF-8 bez BOM-a. Čuvaju se cijeli "
                 L"tekst izvještaja i izvorni završeci redova.\r\n\r\nNAPRAVI DATOTEKU ZAGLAVLJA\r\nMeni "
@@ -8117,8 +8204,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"kojeg dijaloga ne upisuje izlaz. Zamjena postojećeg odredišta zahtijeva potvrdu. Izvor "
                 L"ostaje nepromijenjen; neuspješno čuvanje čuva prethodnu destinaciju. Otvaranje i čuvanje "
                 L"koriste najnovije sistemske dijaloge dostupne u toj verziji Windowsa.\r\n\r\nPrilikom "
-                L"pokretanja aplikacije, alat preuzima svoj početnu ulaznu fasciklu iz Datoteka > Otvori. "
-                L"Ako nijedna fascikla nije sačuvan, Windows bira početnu lokaciju. Nakon odabira ulazne "
+                L"pokretanja aplikacije, alat preuzima svoju početnu ulaznu fasciklu iz Datoteka > Otvori. "
+                L"Ako nijedna fascikla nije sačuvana, Windows bira početnu lokaciju. Nakon odabira ulazne "
                 L"datoteke, alat pamti svoju fasciklu samo dok se aplikacija ne zatvori, čak i ako je "
                 L"Sačuvaj kao otkazano. Ne mijenja fascikle koje koriste Otvori i Izvezi niti čuva svoju "
                 L"fasciklu u postavkama aplikacije. Svaki dijalog Sačuvaj kao počinje u fascikli trenutno "
@@ -8136,7 +8223,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"biblioteka. Dvije novije verzije imaju odgovarajući libcurl; 0.7.60 ga nikada ne "
                 L"raspakuje. Položaj prozora se čuva. Podrazumijevano je dozvoljena samo jedna instanca, a "
                 L"naredna pokretanja šalju datoteke otvorenom prozoru. U postavkama se može dozvoliti više "
-                L"instanci. Kada postoji više prozora, samo prvi prozor svakog obrasca vraća sačuvani "
+                L"instanci. Kada postoji više prozora, samo prvi prozor svakog tipa prozora vraća sačuvani "
                 L"položaj; ostali vraćaju samo veličinu."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -8182,6 +8269,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Datoteka zaglavlja (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Nije moguće pročitati zaglavlje datoteke:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Nije moguće sačuvati datoteku zaglavlja:\n\n%s" },
+            { TXT_COPY, L"&Kopiraj" },
+            { TXT_COPY_FILE_NAME, L"Kopiraj &naziv datoteke" },
+            { TXT_COPY_FULL_PATH, L"Kopiraj punu &putanju" },
+            { TXT_OPEN_FILE, L"&Otvori datoteku" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Otvori &fasciklu koja sadrži datoteku" },
         }
     },
     {
@@ -8238,7 +8330,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Medijske datoteke" },
             { TXT_APPLICATION_DESCRIPTION, L"Preglednik informacija o medijima" },
             { TXT_HELP_TITLE, L"MediaInfo — Pomoć" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ne može napraviti identifikator datoteke." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nije mogao inicijalizirati analizu datoteke." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ne može otvoriti ili prepoznati ovu datoteku." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -8329,9 +8421,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Postavke su primijenjene, ali nisu spremljene u registru." },
             { TXT_REPORT_START_FAILED, L"Nema dovoljno memorije za pokretanje izvješća." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Nije moguće napraviti sliku izvješća." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Nije moguće učitati jezičnu tablicu. Odaberite ispravan MediaInfo CSV u UTF-8 ili Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Nije moguće učitati jezičnu tablicu. Odaberite ispravan "
+                L"MediaInfo CSV u UTF-8 ili UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Nije moguće pokrenuti nit izvješća." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Odabrana MediaInfo.dll odbila je jezik izvješća." },
             { TXT_INVALID_WINDOWS_DLL, L"Odabrana datoteka nije ispravna Windows DLL." },
@@ -8389,7 +8480,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"odvija u pozadini.\r\nPovucite jednu ili više datoteka u prozor, na ikonu EXE datoteke "
                 L"ili njezin prečac ili predajte njihove putanje putem naredbenog retka. Ako više instanci "
                 L"nije dopušteno, datoteke se otvaraju u već pokrenutom prozoru.\r\nLijeva strana trake "
-                L"stanja prikazuje putanje datoteka i tijek učitavanja, a desna verziju učitane biblioteke "
+                L"stanja prikazuje putanje datoteka i tijek učitavanja, a desna verziju učitane knjižnice "
                 L"MediaInfo.dll. Duge putanje skraćuju se trotočkom prema dostupnom "
                 L"prostoru.\r\n\r\nIZVOZ\r\nCtrl+E izvozi cijelo izvješće, uključujući skriveni tekst. TXT, "
                 L"BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja mapa i oblik "
@@ -8426,7 +8517,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"knjižnica. Dvije novije inačice imaju odgovarajući libcurl; 0.7.60 ga nikada ne "
                 L"raspakirava. Položaj prozora se sprema. Prema zadanim postavkama dopuštena je samo jedna "
                 L"instanca, a sljedeća pokretanja šalju datoteke otvorenom prozoru. U postavkama se može "
-                L"dopustiti više instanci. Kada postoji više prozora, samo prvi prozor svakog obrasca vraća "
+                L"dopustiti više instanci. Kada postoji više prozora, samo prvi prozor svakog tipa prozora "
+                L"vraća "
                 L"spremljeni položaj; ostali vraćaju samo veličinu."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -8472,6 +8564,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Datoteka zaglavlja (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Nije moguće pročitati zaglavlje datoteke:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Nije moguće spremiti datoteku zaglavlja:\n\n%s" },
+            { TXT_COPY, L"&Kopiraj" },
+            { TXT_COPY_FILE_NAME, L"Kopiraj &naziv datoteke" },
+            { TXT_COPY_FULL_PATH, L"Kopiraj punu &putanju" },
+            { TXT_OPEN_FILE, L"&Otvori datoteku" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Otvori &mjesto datoteke" },
         }
     },
     {
@@ -8528,7 +8625,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Predstavnostne datoteke" },
             { TXT_APPLICATION_DESCRIPTION, L"Pregledovalnik informacij o predstavnosti" },
             { TXT_HELP_TITLE, L"MediaInfo — Pomoč" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ne more ustvariti ročice datoteke." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ni mogel inicializirati analize datoteke." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ne more odpreti ali prepoznati te datoteke." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -8616,10 +8713,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Nastavitve so uveljavljene, vendar niso shranjene v register." },
             { TXT_REPORT_START_FAILED, L"Za zagon poročila ni dovolj pomnilnika." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Slike poročila ni mogoče ustvariti." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Jezikovne tabele ni mogoče naložiti. Izberite veljavno datoteko MediaInfo CSV v UTF-8 ali "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Jezikovne tabele ni mogoče naložiti. Izberite veljavno "
+                L"datoteko MediaInfo CSV v UTF-8 ali UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Niti poročila ni mogoče zagnati." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Izbrana MediaInfo.dll je zavrnila jezik poročila." },
             { TXT_INVALID_WINDOWS_DLL, L"Izbrana datoteka ni veljavna Windows DLL." },
@@ -8678,7 +8773,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"podajte njihove poti v ukazni vrstici. Če več primerkov ni dovoljenih, se datoteke "
                 L"odprejo v že delujočem oknu.\r\nLevi del vrstice stanja prikazuje poti datotek in potek "
                 L"nalaganja, desni pa različico naložene knjižnice MediaInfo.dll. Dolge poti se skrajšajo s "
-                L"tripičjem glede na razpoložljivi prostor.\r\n\r\nIZVOZ\r\nCtrl+E izvozi celotno poročilo, "
+                L"tropičjem glede na razpoložljivi prostor.\r\n\r\nIZVOZ\r\nCtrl+E izvozi celotno poročilo, "
                 L"tudi skrito besedilo. TXT, BMP, GIF, JPEG, PNG, TIFF in WebP se prikažejo, ko so na "
                 L"voljo. Zadnja izvozna mapa in oblika se shranita.\r\nTXT ponuja ANSI, UTF-8, UTF-8 z BOM, "
                 L"UTF-16 BE z BOM in UTF-16 LE z BOM. Privzeta je druga možnost, UTF-8 brez BOM. Ohranijo "
@@ -8712,7 +8807,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"21.03 in 0.7.60, ki jih po zunanjih knjižnicah preizkuša od najnovejše. Novejši različici "
                 L"imata ustrezni libcurl; 0.7.60 ga nikoli ne razširi. Položaj okna se shrani. Privzeto je "
                 L"dovoljen samo en primerek, poznejši zagoni pa pošljejo datoteke odprtemu oknu. V "
-                L"nastavitvah lahko dovolite več primerkov. Pri več oknih le prvo okno vsakega obrazca "
+                L"nastavitvah lahko dovolite več primerkov. Pri več oknih le prvo okno vsake vrste okna "
                 L"obnovi shranjeni položaj; poznejša okna obnovijo samo velikost."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -8760,6 +8855,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Datoteka glave (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Glave datoteke ni bilo mogoče prebrati:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Datoteke glave ni bilo mogoče shraniti:\n\n%s" },
+            { TXT_COPY, L"&Kopiraj" },
+            { TXT_COPY_FILE_NAME, L"Kopiraj &ime datoteke" },
+            { TXT_COPY_FULL_PATH, L"Kopiraj celotno &pot" },
+            { TXT_OPEN_FILE, L"&Odpri datoteko" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Odpri &mesto datoteke" },
         }
     },
     {
@@ -8816,7 +8916,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Medijske datoteke" },
             { TXT_APPLICATION_DESCRIPTION, L"Pregledač informacija o medijima" },
             { TXT_HELP_TITLE, L"MediaInfo — Pomoć" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo ne može napraviti identifikator datoteke." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo nije mogao inicijalizovati analizu datoteke." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo ne može otvoriti ili prepoznati ovu datoteku." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -8911,9 +9011,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Podešavanja su primijenjena, ali nisu sačuvana u registru." },
             { TXT_REPORT_START_FAILED, L"Nema dovoljno memorije za pokretanje izvještaja." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Nije moguće napraviti sliku izvještaja." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Nije moguće učitati jezičku tabelu. Izaberite ispravan MediaInfo CSV u UTF-8 ili Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Nije moguće učitati jezičku tabelu. Izaberite ispravan "
+                L"MediaInfo CSV u UTF-8 ili UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Nije moguće pokrenuti nit izvještaja." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Izabrana MediaInfo.dll odbila je jezik izvještaja." },
             { TXT_INVALID_WINDOWS_DLL, L"Izabrana datoteka nije ispravna Windows DLL." },
@@ -9010,7 +9109,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"odgovarajući libcurl; 0.7.60 ga nikada ne raspakuje. Položaj prozora se čuva. "
                 L"Podrazumijevano je dozvoljena samo jedna instanca, a naredna pokretanja šalju datoteke "
                 L"otvorenom prozoru. U podešavanjima se može dozvoliti više instanci. Kada postoji više "
-                L"prozora, samo prvi prozor svakog obrasca vraća sačuvani položaj; ostali vraćaju samo "
+                L"prozora, samo prvi prozor svakog tipa prozora vraća sačuvani položaj; ostali vraćaju samo "
                 L"veličinu."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -9059,6 +9158,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Datoteka zaglavlja (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Nije moguće pročitati zaglavlje datoteke:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Nije moguće sačuvati datoteku zaglavlja:\n\n%s" },
+            { TXT_COPY, L"&Kopiraj" },
+            { TXT_COPY_FILE_NAME, L"Kopiraj &naziv datoteke" },
+            { TXT_COPY_FULL_PATH, L"Kopiraj punu &putanju" },
+            { TXT_OPEN_FILE, L"&Otvori datoteku" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Otvori &lokaciju datoteke" },
         }
     },
     {
@@ -9117,7 +9221,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Медыяфайлы" },
             { TXT_APPLICATION_DESCRIPTION, L"Прагляд інфармацыі пра медыя" },
             { TXT_HELP_TITLE, L"MediaInfo — Даведка" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не можа стварыць дэскрыптар файла." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не змагла ініцыялізаваць аналіз файла." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo не можа адкрыць або распазнаць гэты файл." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -9207,10 +9311,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Налады ўжытыя, але іх не ўдалося захаваць у рэестр." },
             { TXT_REPORT_START_FAILED, L"Недастаткова памяці для запуску справаздачы." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Немагчыма стварыць выяву справаздачы." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Немагчыма загрузіць моўную табліцу. Выберыце правільны файл MediaInfo CSV у UTF-8 або "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Немагчыма загрузіць моўную табліцу. Выберыце правільны "
+                L"файл MediaInfo CSV у UTF-8 або UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Немагчыма запусціць паток справаздачы." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Выбраная MediaInfo.dll адхіліла мову справаздачы." },
             { TXT_INVALID_WINDOWS_DLL, L"Выбраны файл не з’яўляецца правільнай DLL Windows." },
@@ -9282,7 +9384,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"адкрыецца дыялогавае акно \"Захаваць як\", якое прапануе video.mp4.header для video.mp4: "
                 L".header дадаецца да поўнай зыходнай назвы. Вы можаце змяніць як назву, так і папку "
                 L"прызначэння. Скасаванне любога дыялогу не прыводзіць да вываду. Замена існуючага "
-                L"прызначэння патрабуе пацверджання. Уваходны файл застаецца нязменнай; няўдалае захаванне "
+                L"прызначэння патрабуе пацверджання. Уваходны файл застаецца нязменным; няўдалае захаванне "
                 L"захоўвае папярэдні пункт прызначэння. Для адкрыцця і захавання выкарыстоўваюцца найноўшыя "
                 L"сістэмныя дыялогавыя вокны, даступныя ў гэтай версіі Windows.\r\n\r\nПры запуску праграмы "
                 L"інструмент бярэ пачатковую папку ўводу з Файл > Адкрыць. Калі папка не была захавана, "
@@ -9304,7 +9406,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"адпаведную libcurl; 0.7.60 ніколі яе не распакоўвае. Становішча акна захоўваецца. Паводле "
                 L"прадвызначэння дазволены толькі адзін асобнік, а наступныя запускі перадаюць файлы "
                 L"адкрытаму акну. У наладах можна дазволіць некалькі асобнікаў. Пры некалькіх вокнах толькі "
-                L"першае акно кожнай формы аднаўляе захаванае становішча; астатнія аднаўляюць толькі памер."
+                L"першае акно кожнага тыпу акна аднаўляе захаванае становішча; астатнія аднаўляюць толькі "
+                L"памер."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -9351,6 +9454,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Файл загалоўка (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Не ўдалося прачытаць загаловак файла:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Не ўдалося захаваць файл загалоўка:\n\n%s" },
+            { TXT_COPY, L"&Капіяваць" },
+            { TXT_COPY_FILE_NAME, L"Капіяваць &імя файла" },
+            { TXT_COPY_FULL_PATH, L"Капіяваць поўны &шлях" },
+            { TXT_OPEN_FILE, L"&Адкрыць файл" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Адкрыць &папку размяшчэння" },
         }
     },
     {
@@ -9411,7 +9519,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Мултимедийни файлове" },
             { TXT_APPLICATION_DESCRIPTION, L"Програма за преглед на мултимедийна информация" },
             { TXT_HELP_TITLE, L"MediaInfo — Помощ" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не може да създаде манипулатор на файл." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не можа да инициализира анализа на файла." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo не може да отвори или разпознае този файл." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -9510,10 +9618,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Настройките са приложени, но не са записани в регистъра." },
             { TXT_REPORT_START_FAILED, L"Недостатъчна памет за стартиране на отчета." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Изображението на отчета не може да се създаде." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Езиковата таблица не може да се зареди. Изберете валиден MediaInfo CSV файл в UTF-8 или "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Езиковата таблица не може да се зареди. Изберете валиден "
+                L"MediaInfo CSV файл в UTF-8 или UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Нишката на отчета не може да се стартира." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Избраната MediaInfo.dll отхвърли езика на отчета." },
             { TXT_INVALID_WINDOWS_DLL, L"Избраният файл не е валидна Windows DLL." },
@@ -9611,7 +9717,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"версии имат подходящ libcurl; 0.7.60 никога не го разархивира. Положението на прозореца "
                 L"се запазва. По подразбиране е разрешен само един екземпляр, а следващите стартирания "
                 L"изпращат файловете към отворения прозорец. В предпочитанията може да се разрешат няколко "
-                L"екземпляра. При няколко прозореца само първият прозорец на всеки формуляр възстановява "
+                L"екземпляра. При няколко прозореца само първият прозорец на всеки тип прозорец възстановява "
                 L"запазената позиция; останалите възстановяват само размера."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -9659,6 +9765,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Файл със заглавна част (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Заглавната част на файла не може да бъде прочетена:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Файлът със заглавна част не може да бъде записан:\n\n%s" },
+            { TXT_COPY, L"&Копирай" },
+            { TXT_COPY_FILE_NAME, L"Копирай &името на файла" },
+            { TXT_COPY_FULL_PATH, L"Копирай пълния &път" },
+            { TXT_OPEN_FILE, L"&Отвори файла" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Отвори &местоположението на файла" },
         }
     },
     {
@@ -9715,7 +9826,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Медиумски датотеки" },
             { TXT_APPLICATION_DESCRIPTION, L"Прегледувач на медиумски информации" },
             { TXT_HELP_TITLE, L"MediaInfo — Помош" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не може да создаде ракувач со датотека." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не можеше да ја иницијализира анализата на "
+                L"датотеката." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo не може да ја отвори или препознае датотеката." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -9816,10 +9928,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Поставките се применети, но не се зачувани во регистарот." },
             { TXT_REPORT_START_FAILED, L"Нема доволно меморија за стартување на извештајот." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Сликата на извештајот не може да се создаде." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Јазичната табела не може да се вчита. Изберете важечка MediaInfo CSV датотека во UTF-8 или "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Јазичната табела не може да се вчита. Изберете важечка "
+                L"MediaInfo CSV датотека во UTF-8 или UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Нишката на извештајот не може да се стартува." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Избраната MediaInfo.dll го одби јазикот на извештајот." },
             { TXT_INVALID_WINDOWS_DLL, L"Избраната датотека не е важечка Windows DLL." },
@@ -9862,19 +9972,20 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_APPLICATION_HELP,
                 L"ДАТОТЕКИ И КАРТИЧКИ\r\nИзворен Windows x86 прегледувач за извештаи од MediaInfo.dll. "
                 L"Секоја датотека има своја картичка само за читање. Отворете со Ctrl+O или со влечење. "
-                L"Повторното отворање го избира постојната картичка. Ctrl+W или средното копче на глувчето "
+                L"Повторното отворање ја избира постојната картичка. Ctrl+W или средното копче на глувчето "
                 L"затвора картичка; Затвори ги сите ги затвора сите. Менито Датотека памети осум "
                 L"неодамнешни датотеки.\r\nОтвори папка… ги отвора датотеките непосредно во избраната "
-                L"папка, секоја во сопствено јазиче. Потпапките не се вклучени.\r\nОтвори и Отвори папка ја "
+                L"папка, секоја во сопствена картичка. Потпапките не се вклучени.\r\nОтвори и Отвори папка "
+                L"ја "
                 L"делат последната избрана папка. Извозот памети посебна папка, стандардно Документи. "
                 L"Напредниот режим прикажува дополнителни полиња во извештајот.\r\nПознати формати / "
                 L"Познати кодеци / Познати параметри — MediaInfo.dll.\r\nЦелосна анализа ја испитува целата "
                 L"датотека и може да потрае подолго. Овие опции за извештај и Ниво на следење припаѓаат на "
-                L"секоја картичка; промената го освежува само активната картичка. Последната рачно избрана "
+                L"секоја картичка; промената ја освежува само активната картичка. Последната рачно избрана "
                 L"комбинација е зачувана за нови картички и следното стартување. Соодветниот кеширан "
                 L"извештај повторно се користи додека датотеката останува непроменета.\r\nНиво на следење: "
                 L"0 / 5 / 9 / 10.\r\nПечати… (Ctrl+P) го отвора системскиот дијалог за избор на печатач и "
-                L"го печати целото активно јазиче без преглед. Се користи фонтот на извештајот; долгите "
+                L"ја печати целата активна картичка без преглед. Се користи фонтот на извештајот; долгите "
                 L"редови се прекршуваат и текстот се дели на страници. Печатењето се одвива во "
                 L"заднина.\r\nПовлечете една или повеќе датотеки во прозорецот, врз иконата на EXE или "
                 L"неговата кратенка или задајте ги патеките преку командната линија. Ако не се дозволени "
@@ -9920,7 +10031,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"верзии имаат соодветна libcurl; 0.7.60 никогаш не ја отпакува. Положбата на прозорецот се "
                 L"зачувува. Стандардно е дозволена само една инстанца, а следните стартувања ги испраќаат "
                 L"датотеките до отворениот прозорец. Во претпочитувањата може да се дозволат повеќе "
-                L"инстанци. Кога има повеќе прозорци, само првиот прозорец од секој формулар ја враќа "
+                L"инстанци. Кога има повеќе прозорци, само првиот прозорец од секој тип прозорец ја враќа "
                 L"зачуваната положба; останатите ја враќаат само големината."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -9969,6 +10080,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Датотека со заглавие (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Не може да се прочита заглавието на датотеката:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Не може да се зачува датотеката со заглавие:\n\n%s" },
+            { TXT_COPY, L"&Копирај" },
+            { TXT_COPY_FILE_NAME, L"Копирај го &името на датотеката" },
+            { TXT_COPY_FULL_PATH, L"Копирај ја целосната &патека" },
+            { TXT_OPEN_FILE, L"&Отвори датотека" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Отвори ја папката што ја &содржи датотеката" },
         }
     },
     {
@@ -10025,7 +10141,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Медијске датотеке" },
             { TXT_APPLICATION_DESCRIPTION, L"Прегледач информација о медијима" },
             { TXT_HELP_TITLE, L"MediaInfo — Помоћ" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не може направити идентификатор датотеке." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo није могао да иницијализује анализу датотеке." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo не може отворити или препознати ову датотеку." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -10114,9 +10230,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Подешавања су примењена, али нису сачувана у регистру." },
             { TXT_REPORT_START_FAILED, L"Нема довољно меморије за покретање извештаја." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Није могуће направити слику извештаја." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Није могуће учитати језичку табелу. Изаберите исправан MediaInfo CSV у UTF-8 или Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Није могуће учитати језичку табелу. Изаберите исправан "
+                L"MediaInfo CSV у UTF-8 или UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Није могуће покренути нит извештаја." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Изабрана MediaInfo.dll одбила је језик извештаја." },
             { TXT_INVALID_WINDOWS_DLL, L"Изабрана датотека није исправна Windows DLL." },
@@ -10210,7 +10325,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"имају одговарајући libcurl; 0.7.60 га никада не распакује. Положај прозора се чува. "
                 L"Подразумевано је дозвољена само једна инстанца, а наредна покретања шаљу датотеке "
                 L"отвореном прозору. У подешавањима се може дозволити више инстанци. Када постоји више "
-                L"прозора, само први прозор сваког обрасца враћа сачувани положај; остали враћају само "
+                L"прозора, само први прозор сваког типа прозора враћа сачувани положај; остали враћају само "
                 L"величину."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -10257,6 +10372,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Датотека заглавља (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Није могуће прочитати заглавље датотеке:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Није могуће сачувати датотеку заглавља:\n\n%s" },
+            { TXT_COPY, L"&Копирај" },
+            { TXT_COPY_FILE_NAME, L"Копирај &назив датотеке" },
+            { TXT_COPY_FULL_PATH, L"Копирај пуну &путању" },
+            { TXT_OPEN_FILE, L"&Отвори датотеку" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Отвори &локацију датотеке" },
         }
     },
     {
@@ -10315,7 +10435,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Медіафайли" },
             { TXT_APPLICATION_DESCRIPTION, L"Переглядач інформації про медіа" },
             { TXT_HELP_TITLE, L"MediaInfo — Довідка" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не може створити дескриптор файлу." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не вдалося ініціалізувати аналіз файлу." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo не може відкрити або розпізнати цей файл." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -10408,10 +10528,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Налаштування застосовано, але не збережено в реєстрі." },
             { TXT_REPORT_START_FAILED, L"Недостатньо пам’яті для запуску звіту." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Не вдається створити зображення звіту." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Не вдається завантажити мовну таблицю. Виберіть дійсний файл MediaInfo CSV у UTF-8 або "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Не вдається завантажити мовну таблицю. Виберіть дійсний "
+                L"файл MediaInfo CSV у UTF-8 або UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Не вдається запустити потік звіту." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Вибрана MediaInfo.dll відхилила мову звіту." },
             { TXT_INVALID_WINDOWS_DLL, L"Вибраний файл не є дійсною DLL Windows." },
@@ -10506,7 +10624,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"мають відповідну libcurl; 0.7.60 ніколи її не розпаковує. Положення вікна зберігається. "
                 L"За замовчуванням дозволено лише один екземпляр, а наступні запуски передають файли "
                 L"відкритому вікну. У налаштуваннях можна дозволити кілька екземплярів. За наявності "
-                L"кількох вікон лише перше вікно кожної форми відновлює збережене розташування; решта "
+                L"кількох вікон лише перше вікно кожного типу вікна відновлює збережене розташування; решта "
                 L"відновлюють лише розмір."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -10552,6 +10670,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Файл заголовка (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Не вдалося прочитати заголовок файлу:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Не вдалося зберегти файл заголовка:\n\n%s" },
+            { TXT_COPY, L"&Копіювати" },
+            { TXT_COPY_FILE_NAME, L"Копіювати &ім’я файлу" },
+            { TXT_COPY_FULL_PATH, L"Копіювати повний &шлях" },
+            { TXT_OPEN_FILE, L"&Відкрити файл" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Відкрити &розташування файлу" },
         }
     },
     {
@@ -10608,7 +10731,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIA_FILES, L"Медиафайлы" },
             { TXT_APPLICATION_DESCRIPTION, L"Просмотр информации о медиа" },
             { TXT_HELP_TITLE, L"MediaInfo — Справка" },
-            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не может создать дескриптор файла." },
+            { TXT_MEDIA_FILE_HANDLE_FAILED, L"MediaInfo не удалось инициализировать анализ файла." },
             { TXT_MEDIA_FILE_UNRECOGNIZED, L"MediaInfo не может открыть или распознать этот файл." },
             { TXT_CSV_FORMAT, L"Comma Separated Values (*.csv)" },
             { TXT_MEDIALIB_TITLE, L"MediaInfo.dll" },
@@ -10698,10 +10821,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_PREFERENCES_SAVE_FAILED, L"Настройки применены, но не сохранены в реестре." },
             { TXT_REPORT_START_FAILED, L"Недостаточно памяти для запуска отчёта." },
             { TXT_REPORT_IMAGE_CREATE_FAILED, L"Не удаётся создать изображение отчёта." },
-            { TXT_REPORT_LANGUAGE_LOAD_FAILED,
-                L"Не удаётся загрузить языковую таблицу. Выберите допустимый файл MediaInfo CSV в UTF-8 или "
-                L"Unicode."
-            },
+            { TXT_REPORT_LANGUAGE_LOAD_FAILED, L"Не удаётся загрузить языковую таблицу. Выберите "
+                L"допустимый файл MediaInfo CSV в UTF-8 или UTF-16." },
             { TXT_REPORT_THREAD_START_FAILED, L"Не удаётся запустить поток отчёта." },
             { TXT_REPORT_LANGUAGE_REJECTED, L"Выбранная MediaInfo.dll отклонила язык отчёта." },
             { TXT_INVALID_WINDOWS_DLL, L"Выбранный файл не является допустимой DLL Windows." },
@@ -10797,7 +10918,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"библиотек. У двух новых версий есть соответствующая libcurl; 0.7.60 никогда её не "
                 L"распаковывает. Положение окна сохраняется. По умолчанию разрешён только один экземпляр, а "
                 L"последующие запуски передают файлы открытому окну. В настройках можно разрешить несколько "
-                L"экземпляров. При нескольких окнах только первое окно каждой формы восстанавливает "
+                L"экземпляров. При нескольких окнах только первое окно каждого типа окна восстанавливает "
                 L"сохранённое положение; остальные восстанавливают только размер."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -10846,6 +10967,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_HEADER_FORMAT, L"Файл заголовка (*.header)" },
             { TXT_HEADER_READ_FAILED, L"Не удалось прочитать заголовок файла:\n\n%s" },
             { TXT_HEADER_SAVE_FAILED, L"Не удалось сохранить файл заголовка:\n\n%s" },
+            { TXT_COPY, L"&Копировать" },
+            { TXT_COPY_FILE_NAME, L"Копировать &имя файла" },
+            { TXT_COPY_FULL_PATH, L"Копировать полный п&уть" },
+            { TXT_OPEN_FILE, L"&Открыть файл" },
+            { TXT_OPEN_CONTAINING_FOLDER, L"Открыть &расположение файла" },
         }
     },
 };
