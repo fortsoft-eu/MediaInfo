@@ -386,8 +386,8 @@ LONG ControlTextBaseline(HWND control);
 /// Moves one control so its rendered text baseline matches another control.
 void AlignControlBaseline(HWND control, HWND reference);
 
-/// Adapts only Preferences edit height and left text margin using current font, theme and native borders.
-void UpdateEditMetrics(HWND edit);
+/// Fits standalone edit height and aligns text with the native inset of its own or an enclosing combo frame.
+void UpdateEditMetrics(HWND edit, HWND enclosingCombo = nullptr);
 
 /// Reads text metrics with the font currently assigned to a native control.
 bool ReadControlMetrics(HWND control, TEXTMETRICW* metrics);

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.0
  */
 
 #include "FindForm.h"
@@ -207,6 +207,7 @@ void FindForm::Layout() {
     RECT comboBounds = ControlRect(combo, window);
     PlaceControl(combo, inputLeft, margin.cy, rightButton - gap.cx - inputLeft,
         comboBounds.bottom - comboBounds.top);
+    UpdateEditMetrics(::GetWindow(combo, GW_CHILD), combo);
     PlaceControl(next, rightButton, margin.cy, button.cx, button.cy);
     AlignControlBaseline(label, combo);
     AlignControlBaseline(next, combo);

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.0
  */
 
 #include "MediaInfo.h"
@@ -775,11 +775,12 @@ void AlignControlBaseline(HWND control, HWND reference) {
     }
 }
 
-/// Adapts only Preferences edit height and left text margin using current font, theme and native borders.
-void UpdateEditMetrics(HWND edit) {
+/// Fits standalone edit height and aligns text with the native inset of its own or an enclosing combo frame.
+void UpdateEditMetrics(HWND edit, HWND enclosingCombo) {
+    HWND frameWindow = enclosingCombo ? enclosingCombo : edit;
     RECT bounds = RECT{};
     POINT client = POINT{};
-    if (!GetWindowRect(edit, &bounds) || !ClientToScreen(edit, &client)) {
+    if (!GetWindowRect(frameWindow, &bounds) || !ClientToScreen(edit, &client)) {
         return;
     }
     TEXTMETRICW metrics = TEXTMETRICW{};
@@ -808,7 +809,7 @@ void UpdateEditMetrics(HWND edit) {
     ThemeContentFunction getContent = module
         ? reinterpret_cast<ThemeContentFunction>(GetProcAddress(module, "GetThemeBackgroundContentRect"))
         : nullptr;
-    if (getTheme && getTheme(edit) && openTheme && closeTheme && getContent) {
+    if (getTheme && getTheme(frameWindow) && openTheme && closeTheme && getContent) {
         HANDLE theme = openTheme(nullptr, L"Combobox");
         if (theme) {
             RECT frame = RECT{ 0, 0, bounds.right - bounds.left, bounds.bottom - bounds.top };
@@ -824,14 +825,14 @@ void UpdateEditMetrics(HWND edit) {
     if (module) {
         FreeLibrary(module);
     }
-    LONG borderWidth = client.x - bounds.left;
+    LONG borderWidth = client.x - bounds.left - (enclosingCombo ? GetSystemMetrics(SM_CXBORDER) : 0);
     LONG leftMargin = contentLeft > borderWidth ? contentLeft - borderWidth : 0;
     DWORD margins = static_cast<DWORD>(SendMessageW(edit, EM_GETMARGINS, 0, 0));
     if (LOWORD(margins) != leftMargin) {
         SendMessageW(edit, EM_SETMARGINS, EC_LEFTMARGIN, MAKELPARAM(leftMargin, 0));
     }
     LONG height = metrics.tmHeight + contentTop + contentBottom + 2 * GetSystemMetrics(SM_CYBORDER);
-    if (height != bounds.bottom - bounds.top) {
+    if (!enclosingCombo && height != bounds.bottom - bounds.top) {
         SetWindowPos(edit, nullptr, 0, 0, bounds.right - bounds.left, height,
             SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
     }
