@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #include "HelpForm.h"
@@ -43,8 +43,9 @@ HelpForm::~HelpForm() {
     }
 }
 
-/// Applies the current system message font to the text and Close button.
+/// Refreshes caption icons and applies the current system message font to the text and Close button.
 void HelpForm::SetFonts(bool updateUi) {
+    UpdateWindowIcons(window, IDI_MEDIAINFO);
     HFONT newUi = updateUi
         ? CreateUiFont(window)
         : reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
@@ -111,8 +112,6 @@ bool HelpForm::Initialize() {
     InstallInformationWordBreak(edit);
     SetWindowTextW(edit, LocalizedHelpText());
     RefreshLanguage();
-    SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(LoadApplicationIcon(false)));
-    SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(LoadApplicationIcon(true)));
     placement.SetSingleInstance(true);
     placement.SetUseWindowsDefaultSize(false);
     if (!placement.Attach(window, "HelpWindow")) {
@@ -161,6 +160,7 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             return TRUE;
         case WM_SETTINGCHANGE:
         case WM_THEMECHANGED:
+        case WM_DISPLAYCHANGE:
             owner->SetFonts(true);
             owner->Layout();
             return TRUE;
@@ -170,6 +170,7 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             owner->Close();
             return TRUE;
         case WM_NCDESTROY:
+            ClearWindowIcons(window);
             ResetInformationWordBreak();
             owner->window = nullptr;
             break;

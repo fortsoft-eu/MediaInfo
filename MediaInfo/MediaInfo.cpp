@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #include "MediaInfo.h"
@@ -45,7 +45,7 @@
 #undef small
 
 /// Dynamically resolved DPI and visual-style entry points.
-typedef UINT(WINAPI* GetDpiFunction)(HWND);
+typedef int(WINAPI* GetSystemMetricsForDpiFunction)(int, UINT);
 typedef BOOL(WINAPI* IsThemeActiveFunction)();
 typedef HANDLE(WINAPI* GetWindowThemeFunction)(HWND);
 typedef HANDLE(WINAPI* OpenThemeFunction)(HWND, LPCWSTR);
@@ -55,6 +55,14 @@ typedef HRESULT(WINAPI* ThemePartSizeFunction)(HANDLE, HDC, int, int, const RECT
 
 /// Optional system API used to detect the interface language.
 typedef LANGID(WINAPI* GetUserDefaultUiLanguageFunction)();
+
+/// Associates a caption icon slot with its native size metrics and per-window ownership property.
+struct WindowIconEntry {
+    int type;
+    int widthMetric;
+    int heightMetric;
+    const wchar_t* property;
+};
 
 /// Pairs an interface locale code with its Windows language identifier.
 struct ApplicationLanguageEntry {
@@ -185,9 +193,18 @@ static constexpr ApplicationLanguageEntry applicationLanguages[] = {
     { L"ru-RU", 0x0419 },
 };
 
-/// System-library path suffixes appended to the Windows system directory.
+/// System-library names and path suffixes used for dynamically resolved API entry points.
+static const wchar_t userLibraryName[] = L"user32.dll";
 static const wchar_t themeLibrarySuffix[] = L"\\uxtheme.dll";
 static const wchar_t uniscribeLibrarySuffix[] = L"\\usp10.dll";
+
+/// Native icon slots and the properties retaining only application-owned caption icon handles.
+static const WindowIconEntry windowIconEntries[] = {
+    { ICON_SMALL, SM_CXSMICON, SM_CYSMICON, L"MediaInfo.CaptionSmallIcon" },
+    { ICON_BIG, SM_CXICON, SM_CYICON, L"MediaInfo.CaptionLargeIcon" }
+};
+
+/// Native constants used to select a window's nearest monitor and effective display DPI.
 
 /// Native button-caption measurement message.
 static const UINT buttonGetIdealSize = 0x1601;
@@ -238,10 +255,10 @@ static const ExportChoice exportChoices[] = {
 };
 
 /// Native file-dialog filter templates whose captions use the interface translations.
+const wchar_t mediaFilePattern[] =
+    L"*.avi;*.mkv;*.mp4;*.mov;*.mpg;*.mpeg;*.ts;*.m2ts;*.wmv;*.webm;*.mp3;*.flac;*.wav;*.ogg;*.m4a;*.aac";
 const LocalizedFileFilter mediaFilters[] = {
-    { TXT_MEDIA_FILES,
-    L"*.avi;*.mkv;*.mp4;*.mov;*.mpg;*.mpeg;*.ts;*.m2ts;*.wmv;*.webm;*.mp3;*.flac;*.wav;*.ogg;*.m4a;"
-    L"*.aac" },
+    { TXT_MEDIA_FILES, mediaFilePattern },
     { TXT_ALL_FILES, L"*.*" },
     { TXT_COUNT, nullptr }
 };
@@ -478,19 +495,9 @@ void InstallInformationWordBreak(HWND edit) {
     SendMessageW(edit, EM_SETWORDBREAKPROC, 0, reinterpret_cast<LPARAM>(InformationWordBreakProc));
 }
 
-/// Reads the window DPI dynamically, retaining device-context metrics on older Windows.
+/// Reads per-window or per-monitor DPI dynamically, retaining device-context metrics on older Windows.
 UINT WindowDpi(HWND window) {
-    GetDpiFunction function =
-        reinterpret_cast<GetDpiFunction>(GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDpiForWindow"));
-    if (function && window) {
-        return function(window);
-    }
-    HDC dc = GetDC(window);
-    UINT dpi = dc ? GetDeviceCaps(dc, LOGPIXELSY) : 96;
-    if (dc) {
-        ReleaseDC(window, dc);
-    }
-    return dpi ? dpi : 96;
+    return GetSystemDialogDpi(window);
 }
 
 /// Reports whether visual styles are active for Windows and the current application.
@@ -516,17 +523,9 @@ bool AreVisualStylesActive() {
 
 /// Creates the current system message font at the window DPI.
 HFONT CreateUiFont(HWND window) {
-    NONCLIENTMETRICSW metrics = NONCLIENTMETRICSW{};
-    metrics.cbSize = sizeof(metrics);
-    if (SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, sizeof(metrics), &metrics, 0)) {
-        HDC dc = GetDC(nullptr);
-        int systemDpi = dc ? GetDeviceCaps(dc, LOGPIXELSY) : 96;
-        if (dc) {
-            ReleaseDC(nullptr, dc);
-        }
-        metrics.lfMessageFont.lfHeight =
-            MulDiv(metrics.lfMessageFont.lfHeight, WindowDpi(window), systemDpi ? systemDpi : 96);
-        return CreateFontIndirectW(&metrics.lfMessageFont);
+    HFONT systemFont = CreateSystemDialogFont(window);
+    if (systemFont) {
+        return systemFont;
     }
     LOGFONTW font = LOGFONTW{};
     font.lfHeight = -MulDiv(8, WindowDpi(window), 72);
@@ -614,12 +613,65 @@ HFONT CreateReportFont(HWND window, const LOGFONTW* saved, UINT savedDpi) {
     return CreateFontIndirectW(&font);
 }
 
-/// Loads the small or large application icon at the native system icon dimensions.
-HICON LoadApplicationIcon(bool small) {
-    int width = GetSystemMetrics(small ? SM_CXSMICON : SM_CXICON);
-    int height = GetSystemMetrics(small ? SM_CYSMICON : SM_CYICON);
-    return static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr),
-        MAKEINTRESOURCEW(IDI_MEDIAINFO), IMAGE_ICON, width, height, LR_SHARED));
+/// Loads owned caption and task-switcher icons for the window's current DPI and releases replaced icons.
+void UpdateWindowIcons(HWND window, UINT resource) {
+    if (!window) {
+        return;
+    }
+    HMODULE user = GetModuleHandleW(userLibraryName);
+    GetSystemMetricsForDpiFunction metricsForDpi =
+        reinterpret_cast<GetSystemMetricsForDpiFunction>(GetProcAddress(user, "GetSystemMetricsForDpi"));
+    UINT dpi = WindowDpi(window);
+    HDC dc = GetDC(nullptr);
+    int systemDpi = dc ? GetDeviceCaps(dc, LOGPIXELSY) : 96;
+    if (dc) {
+        ReleaseDC(nullptr, dc);
+    }
+    if (systemDpi <= 0) {
+        systemDpi = 96;
+    }
+    for (const WindowIconEntry& entry : windowIconEntries) {
+        int width = metricsForDpi
+            ? metricsForDpi(entry.widthMetric, dpi)
+            : MulDiv(GetSystemMetrics(entry.widthMetric), dpi, systemDpi);
+        int height = metricsForDpi
+            ? metricsForDpi(entry.heightMetric, dpi)
+            : MulDiv(GetSystemMetrics(entry.heightMetric), dpi, systemDpi);
+        if (width <= 0 || height <= 0) {
+            continue;
+        }
+        HICON icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(resource),
+            IMAGE_ICON, width, height, 0));
+        if (!icon && resource != IDI_MEDIAINFO) {
+            icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDI_MEDIAINFO),
+                IMAGE_ICON, width, height, 0));
+        }
+        if (icon) {
+            HICON previous = static_cast<HICON>(GetPropW(window, entry.property));
+            if (SetPropW(window, entry.property, icon)) {
+                SendMessageW(window, WM_SETICON, entry.type, reinterpret_cast<LPARAM>(icon));
+                if (previous) {
+                    DestroyIcon(previous);
+                }
+            } else {
+                DestroyIcon(icon);
+            }
+        }
+    }
+}
+
+/// Detaches and releases the owned small and large icons before their window is destroyed.
+void ClearWindowIcons(HWND window) {
+    if (!window) {
+        return;
+    }
+    for (const WindowIconEntry& entry : windowIconEntries) {
+        HICON icon = static_cast<HICON>(RemovePropW(window, entry.property));
+        if (icon) {
+            SendMessageW(window, WM_SETICON, entry.type, 0);
+            DestroyIcon(icon);
+        }
+    }
 }
 
 /// Converts dialog units using the supplied font metrics rather than fixed pixel assumptions.

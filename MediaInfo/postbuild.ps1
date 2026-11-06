@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Last modified for version 1.0.0.0
+Last modified for version 1.1.0.1
 #>
 
 param(
@@ -33,7 +33,8 @@ param(
 $ErrorActionPreference = 'Stop'
 $bytes = [IO.File]::ReadAllBytes($Path)
 $pe = [BitConverter]::ToInt32($bytes, 60)
-if ([BitConverter]::ToUInt32($bytes, $pe) -ne 0x4550 -or [BitConverter]::ToUInt16($bytes, $pe + 4) -ne 0x14C -or `
+if ([BitConverter]::ToUInt32($bytes, $pe) -ne 0x4550 -or
+    [BitConverter]::ToUInt16($bytes, $pe + 4) -ne 0x14C -or
     [BitConverter]::ToUInt16($bytes, $pe + 24) -ne 0x10B) {
     throw 'Expected a Win32 PE32 executable.'
 }
@@ -47,8 +48,10 @@ foreach ($relative in @(40, 48)) {
 if ($Library -and [IO.File]::Exists($Library)) {
     $dll = [IO.File]::ReadAllBytes($Library)
     $dllPe = [BitConverter]::ToInt32($dll, 60)
-    if ([BitConverter]::ToUInt32($dll, $dllPe) -eq 0x4550 -and [BitConverter]::ToUInt16($dll, $dllPe + 4) -eq 0x14C) {
-        Copy-Item -LiteralPath $Library -Destination (Join-Path (Split-Path -Parent $Path) 'MediaInfo.dll') -Force
+    if ([BitConverter]::ToUInt32($dll, $dllPe) -eq 0x4550 -and
+        [BitConverter]::ToUInt16($dll, $dllPe + 4) -eq 0x14C) {
+        Copy-Item -LiteralPath $Library `
+            -Destination (Join-Path (Split-Path -Parent $Path) 'MediaInfo.dll') -Force
     } else {
         Write-Host 'The solution-root MediaInfo.dll is not x86 and was not copied.'
     }

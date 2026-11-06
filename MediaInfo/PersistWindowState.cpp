@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #define NOMINMAX
@@ -186,7 +186,8 @@ static UINT NearestMonitorWorkArea(const RECT& bounds, const MonitorWorkArea* ar
         const RECT& monitor = areas[index].monitor;
         RECT intersection = RECT{};
         IntersectRect(&intersection, &bounds, &monitor);
-        LONGLONG area = __emul(intersection.right - intersection.left, intersection.bottom - intersection.top);
+        LONGLONG area =
+            __emul(intersection.right - intersection.left, intersection.bottom - intersection.top);
         LONG dx = bounds.right < monitor.left
             ? monitor.left - bounds.right
             : monitor.right < bounds.left ? bounds.left - monitor.right : 0;
@@ -476,9 +477,9 @@ PersistWindowState::PersistWindowState()
         disableSaveWindowState(false), fixHeight(false), fixWidth(false), placeOnScreenAfterLoad(true),
         singleInstance(false), useWindowsDefaultLocation(true), useWindowsDefaultSize(true), hasState(false),
         applying(false), restoredShowState(false), detectionOptions(WindowDetectionOptions::Default),
-        savingOptions(PersistWindowStateSavingOptions::Registry), registryPath(nullptr), initialTitle(nullptr),
-        errorCode(ERROR_SUCCESS), errorHandler(nullptr), loadedHandler(nullptr), savedHandler(nullptr),
-        errorContext(nullptr), loadedContext(nullptr), savedContext(nullptr) {
+        savingOptions(PersistWindowStateSavingOptions::Registry), registryPath(nullptr),
+        initialTitle(nullptr), errorCode(ERROR_SUCCESS), errorHandler(nullptr), loadedHandler(nullptr),
+        savedHandler(nullptr), errorContext(nullptr), loadedContext(nullptr), savedContext(nullptr) {
     identity[0] = 0;
     instanceProperty[0] = 0;
     InitializeRegistryPath();
@@ -527,7 +528,8 @@ void PersistWindowState::InitializeRegistryPath() {
             }
             SIZE_T characters =
                 static_cast<SIZE_T>(companyLength) + productLength + ARRAYSIZE(L"Software\\") - 1;
-            registryPath = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), 0, characters * sizeof(wchar_t)));
+            registryPath =
+                static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), 0, characters * sizeof(wchar_t)));
             if (!registryPath) {
                 ReportError(ERROR_NOT_ENOUGH_MEMORY);
                 break;
@@ -772,7 +774,8 @@ DWORD PersistWindowState::ReadValue(HKEY key, const wchar_t* suffix, DWORD type,
     if (result == ERROR_FILE_NOT_FOUND) {
         return result;
     }
-    if (result == ERROR_MORE_DATA || result == ERROR_SUCCESS && (actualType != type || actualBytes != bytes)) {
+    if (result == ERROR_MORE_DATA
+            || result == ERROR_SUCCESS && (actualType != type || actualBytes != bytes)) {
         result = ERROR_INVALID_DATA;
     }
     if (result != ERROR_SUCCESS) {
@@ -1145,8 +1148,8 @@ bool PersistWindowState::Attach(HWND target, const char* formIdentity) {
         UINT count = 0;
         DWORD result = ReadMonitorWorkAreas(&areas, &count);
         if (result == ERROR_SUCCESS) {
-            FitWindowToWorkAreas(&placed, areas, count, style & WS_THICKFRAME && !fixWidth,
-                style & WS_THICKFRAME && !fixHeight, SIZE{ limits.ptMinTrackSize.x, limits.ptMinTrackSize.y });
+            FitWindowToWorkAreas(&placed, areas, count, style & WS_THICKFRAME && !fixWidth, style
+                & WS_THICKFRAME && !fixHeight, SIZE{ limits.ptMinTrackSize.x, limits.ptMinTrackSize.y });
             HeapFree(GetProcessHeap(), 0, areas);
         } else {
             ReportError(result);

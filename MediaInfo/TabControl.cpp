@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #include "TabControl.h"
@@ -88,7 +88,6 @@ bool ScrollTabHeaders(HWND owner, HWND tabs, WPARAM wParam, LPARAM lParam) {
     if (!delta
             || !owner
             || !tabs
-            || GetActiveWindow() != owner
             || !IsWindowEnabled(owner)
             || !IsWindowVisible(tabs)) {
         return false;

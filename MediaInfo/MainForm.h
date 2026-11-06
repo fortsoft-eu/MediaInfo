@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #pragma once
@@ -205,7 +205,7 @@ private:
     /// Finds and loads a compatible library after the main window and its status bar are visible.
     void InitializeLibrary();
 
-    /// Recreates the interface and report fonts and applies them to existing controls.
+    /// Refreshes caption icons and recreates the interface and report fonts for the current window DPI.
     void RebuildFonts();
 
     /// Refreshes main-menu captions, recent files and information windows for the active interface language.

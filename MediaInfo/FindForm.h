@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #pragma once
@@ -74,7 +74,7 @@ private:
     /// Initializes the editable combo, native controls, icons and persisted form placement.
     bool Initialize();
 
-    /// Applies the system font and recalculates native font- and DPI-aware geometry.
+    /// Refreshes caption icons, applies the system font and recalculates native font- and DPI-aware geometry.
     void SetFonts(bool updateUi);
 
     /// Measures the minimum width and anchors controls without clipping localized option captions.

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Last modified for version 1.0.0.0
+Last modified for version 1.1.0.1
 #>
 
 param(
@@ -85,9 +85,9 @@ $line = "`r`n"
 $reportEntries = New-Object 'Collections.Generic.List[string]'
 $reportResources = New-Object 'Collections.Generic.List[string]'
 $reportOrder = @(
-    'cs', 'en', 'de', 'fr', 'es', 'it', 'pt', 'pt-BR', 'pl', 'sk', 'da', 'sv', 'tr', 'lt', 'hu', 'nl', 'ro', 'gr',
-    'hr', 'ca', 'eu', 'gl', 'sq', 'be', 'bg', 'uk', 'ru', 'ar', 'fa', 'hy', 'id', 'ja', 'ka', 'ko', 'th',
-    'zh-CN', 'zh-HK', 'zh-TW'
+    'cs', 'en', 'de', 'fr', 'es', 'it', 'pt', 'pt-BR', 'pl', 'sk', 'da', 'sv', 'tr', 'lt', 'hu', 'nl', 'ro',
+    'gr', 'hr', 'ca', 'eu', 'gl', 'sq', 'be', 'bg', 'uk', 'ru', 'ar', 'fa', 'hy', 'id', 'ja', 'ka', 'ko',
+    'th', 'zh-CN', 'zh-HK', 'zh-TW'
 )
 $reportDisplayNames = @{
     'sk' = 'Slovenčina'
@@ -124,8 +124,8 @@ foreach ($csv in $csvFiles) {
     $reportResources.Add($resource.ToString() + ' RCDATA "' + $filename + '"')
     ++$resource
 }
-$entries = 'static const ReportLanguageEntry reportLanguages[] = {' + $line + ($reportEntries -join (',' + $line)) + `
-    $line + '};' + $line
+$entries = 'static const ReportLanguageEntry reportLanguages[] = {' + $line +
+    ($reportEntries -join (',' + $line)) + $line + '};' + $line
 [IO.File]::WriteAllText((Join-Path $directory 'ReportLanguageData.inc'), $entries, [Text.Encoding]::ASCII)
-[IO.File]::WriteAllText((Join-Path $directory 'ReportLanguages.rc2'), ($reportResources -join $line) + $line, `
-    [Text.Encoding]::ASCII)
+[IO.File]::WriteAllText((Join-Path $directory 'ReportLanguages.rc2'),
+    ($reportResources -join $line) + $line, [Text.Encoding]::ASCII)

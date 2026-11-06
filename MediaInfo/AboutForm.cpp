@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.1
+ * Last modified for version 1.1.0.1
  */
 
 #include "AboutForm.h"
@@ -303,8 +303,9 @@ AboutForm::~AboutForm() {
     }
 }
 
-/// Applies current interface, license and fallback-link fonts and selects the appropriate icon size.
+/// Applies current fonts and refreshes the caption and body icons for the current window DPI.
 void AboutForm::SetFonts(bool updateUi) {
+    UpdateWindowIcons(window, IDI_MEDIAINFO);
     HFONT newUi = updateUi
         ? CreateUiFont(window)
         : reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
@@ -535,8 +536,6 @@ bool AboutForm::Initialize() {
     if (!AttachControls()) {
         return false;
     }
-    SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(LoadApplicationIcon(false)));
-    SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(LoadApplicationIcon(true)));
     Layout();
     return true;
 }
@@ -599,11 +598,9 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
         case WM_SIZE:
             owner->Layout(false);
             return TRUE;
-        case WM_DISPLAYCHANGE:
-            owner->Layout();
-            return TRUE;
         case WM_SETTINGCHANGE:
         case WM_THEMECHANGED:
+        case WM_DISPLAYCHANGE:
             owner->SetFonts(true);
             owner->Layout();
             return TRUE;
@@ -623,6 +620,7 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
             owner->DetachControls();
             return TRUE;
         case WM_NCDESTROY:
+            ClearWindowIcons(window);
             ResetInformationWordBreak();
             owner->window = nullptr;
             owner->initialized = false;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #include "Localization.h"
@@ -253,7 +253,7 @@ bool MainForm::Create() {
     cls.style = CS_DBLCLKS;
     cls.lpfnWndProc = WindowProc;
     cls.hInstance = instance;
-    cls.hIcon = LoadApplicationIcon(false);
+    cls.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_MEDIAINFO));
     cls.hCursor = LoadCursorW(nullptr, IDC_ARROW);
     cls.hbrBackground = GetSysColorBrush(COLOR_BTNFACE);
     cls.lpszClassName = viewerWindowClass;
@@ -269,7 +269,6 @@ bool MainForm::Create() {
         }
         return false;
     }
-    SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(LoadApplicationIcon(true)));
     if (!placement.Attach(window, "MainWindow")) {
         return false;
     }
@@ -350,8 +349,9 @@ void MainForm::ApplyLanguage() {
     UpdateStatus();
 }
 
-/// Recreates the interface and report fonts and applies them to existing controls.
+/// Refreshes caption icons and recreates the interface and report fonts for the current window DPI.
 void MainForm::RebuildFonts() {
+    UpdateWindowIcons(window, IDI_MEDIAINFO);
     HFONT newUi = CreateUiFont(window);
     HFONT newReport = CreateReportFont(window, &reportFontSpec, reportFontDpi);
     if (!newUi || !newReport) {
@@ -1801,6 +1801,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             return 0;
         case WM_SETTINGCHANGE:
         case WM_THEMECHANGED:
+        case WM_DISPLAYCHANGE:
             owner->visualStylesActive = AreVisualStylesActive();
             owner->RebuildFonts();
             owner->Layout();
@@ -1825,6 +1826,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
         case WM_DESTROY:
             return owner->HandleDestroy();
         case WM_NCDESTROY:
+            ClearWindowIcons(window);
             owner->window = nullptr;
             break;
         default:

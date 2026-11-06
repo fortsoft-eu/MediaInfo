@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #pragma once
@@ -52,7 +52,7 @@ private:
     wchar_t tooltipText[256];
     char ansiTooltipText[768];
 
-    /// Applies current interface, license and link fonts and selects the appropriate icon size.
+    /// Applies current fonts and refreshes the caption and body icons for the current window DPI.
     void SetFonts(bool updateUi);
 
     /// Builds the natural About layout, fits it to the work area and anchors controls on resize.

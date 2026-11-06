@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #pragma once
@@ -344,7 +344,7 @@ bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWOR
 bool SaveReportText(const wchar_t* report, const wchar_t* path, DWORD type, wchar_t* error,
     int errorCapacity);
 
-/// Reads the window DPI dynamically, retaining device-context metrics on older Windows.
+/// Reads per-window or per-monitor DPI dynamically, retaining device-context metrics on older Windows.
 UINT WindowDpi(HWND window);
 
 /// Reports whether visual styles are active for Windows and the current application.
@@ -362,8 +362,11 @@ HFONT CreateUiFont(HWND window);
 /// Creates the About license font using Consolas with Courier New as its availability fallback.
 HFONT CreateAboutFont(HWND window);
 
-/// Loads the small or large application icon at the native system icon dimensions.
-HICON LoadApplicationIcon(bool small);
+/// Loads owned caption and task-switcher icons for the window's current DPI and releases replaced icons.
+void UpdateWindowIcons(HWND window, UINT resource);
+
+/// Detaches and releases the owned small and large icons before their window is destroyed.
+void ClearWindowIcons(HWND window);
 
 /// Creates the chosen report font or default Consolas/Courier New at the current window DPI.
 HFONT CreateReportFont(HWND window, const LOGFONTW* saved, UINT savedDpi);

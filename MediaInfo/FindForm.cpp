@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #include "FindForm.h"
@@ -56,15 +56,6 @@ static LONG FindCaptionWidth(HWND control) {
         HeapFree(GetProcessHeap(), 0, text);
     }
     return bounds.right - bounds.left;
-}
-
-/// Loads the supplied Find icon group at the system caption or taskbar size.
-static HICON LoadFindIcon(bool small) {
-    int width = GetSystemMetrics(small ? SM_CXSMICON : SM_CXICON);
-    int height = GetSystemMetrics(small ? SM_CYSMICON : SM_CYICON);
-    HICON icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDI_FIND),
-        IMAGE_ICON, width, height, LR_SHARED));
-    return icon ? icon : LoadApplicationIcon(small);
 }
 
 /// Compares a complete literal query at a valid report position.
@@ -112,8 +103,9 @@ void FindForm::SetTarget(HWND edit) {
     UpdateFindButton();
 }
 
-/// Applies the system font and recalculates native font- and DPI-aware geometry.
+/// Refreshes caption icons, applies the system font and recalculates native font- and DPI-aware geometry.
 void FindForm::SetFonts(bool updateUi) {
+    UpdateWindowIcons(window, IDI_FIND);
     HFONT font = updateUi
         ? CreateUiFont(window)
         : reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
@@ -582,8 +574,6 @@ bool FindForm::Initialize() {
     ApplyOptions(Options());
     SetFonts(false);
     RefreshLanguage();
-    SendMessageW(window, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(LoadFindIcon(false)));
-    SendMessageW(window, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(LoadFindIcon(true)));
     RECT ownerBounds = RECT{};
     if (GetWindowRect(ownerWindow, &ownerBounds) && GetWindowRect(window, &bounds)) {
         int x = ownerBounds.left + (ownerBounds.right - ownerBounds.left - bounds.right + bounds.left) / 2;
@@ -785,11 +775,13 @@ INT_PTR CALLBACK FindForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             return owner->HandleMinMax(lParam);
         case WM_SETTINGCHANGE:
         case WM_THEMECHANGED:
+        case WM_DISPLAYCHANGE:
             owner->SetFonts(true);
             return TRUE;
         case WM_DPICHANGED:
             return owner->HandleDpiChange(lParam);
         case WM_NCDESTROY:
+            ClearWindowIcons(window);
             owner->window = nullptr;
             break;
     }

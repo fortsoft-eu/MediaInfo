@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.1.0.1
  */
 
 #pragma once
@@ -42,7 +42,7 @@ private:
     /// Help-window placement and cross-process instance handling.
     PersistWindowState placement;
 
-    /// Applies the current system message font to the text and Close button.
+    /// Refreshes caption icons and applies the current system message font to the text and Close button.
     void SetFonts(bool updateUi);
 
     /// Fits the Help edit, Close button and size grip to the current client area.
