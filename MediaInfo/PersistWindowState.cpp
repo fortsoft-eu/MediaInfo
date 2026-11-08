@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.0.1
  */
 
 #define NOMINMAX
@@ -333,7 +333,7 @@ static bool FitWindowToWorkAreas(RECT* bounds, const MonitorWorkArea* areas, UIN
 }
 
 /// Compares a requested span of Unicode title text without changing case or relying on the process main
-// window.
+/// window.
 static bool TitleSpanEqual(const wchar_t* first, const wchar_t* second, int length) {
     for (int index = 0; index < length; ++index) {
         if (first[index] != second[index]) {

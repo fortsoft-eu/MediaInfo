@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.0.1
  */
 
 #include "MediaInfo.h"
@@ -1028,9 +1028,9 @@ int DrawWordWrappedText(HDC dc, const wchar_t* text, const RECT& bounds, UINT fl
             continue;
         }
         while (position < length
-            && IsWrappingSpace(text[position])
-            && text[position] != L'\r'
-            && text[position] != L'\n') {
+                && IsWrappingSpace(text[position])
+                && text[position] != L'\r'
+                && text[position] != L'\n') {
             ++position;
         }
         int wordStart = position;
@@ -2223,7 +2223,9 @@ static bool ChooseSingleFile(HWND owner, wchar_t* path, const LocalizedFileFilte
     dialog.nMaxFile = MAX_PATH;
     dialog.lpstrTitle = title;
     dialog.lpstrDefExt = extension;
-    dialog.Flags = OFN_EXPLORER | OFN_HIDEREADONLY | OFN_NOCHANGEDIR
+    dialog.Flags = OFN_EXPLORER
+        | OFN_HIDEREADONLY
+        | OFN_NOCHANGEDIR
         | (saving ? OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT : OFN_FILEMUSTEXIST);
     bool selected = (saving ? GetSaveFileNameW(&dialog) : GetOpenFileNameW(&dialog)) != FALSE;
     if (!selected && CommDlgExtendedError()) {
@@ -2315,7 +2317,7 @@ void CreateHeaderFile(HWND owner, wchar_t* folder) {
         lstrcpyW(destination, source);
         lstrcatW(destination, L".header");
         if (ChooseSingleFile(owner, destination, headerOutputFilters,
-            T(TXT_CREATE_HEADER_SAVE_TITLE), true, L"header")) {
+                T(TXT_CREATE_HEADER_SAVE_TITLE), true, L"header")) {
             previous = SetCursor(LoadCursorW(nullptr, IDC_WAIT));
             success = SaveHeaderBytes(destination, bytes, size);
             SetCursor(previous);
@@ -2445,8 +2447,12 @@ bool ChooseExportFile(HWND owner, wchar_t* path, const wchar_t* title, DWORD* ty
     dialog.lpstrTitle = title;
     dialog.lpfnHook = ExportSaveHook;
     dialog.lCustData = reinterpret_cast<LPARAM>(&data);
-    dialog.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT
-        | OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_ENABLEHOOK;
+    dialog.Flags = OFN_EXPLORER
+        | OFN_PATHMUSTEXIST
+        | OFN_OVERWRITEPROMPT
+        | OFN_HIDEREADONLY
+        | OFN_NOCHANGEDIR
+        | OFN_ENABLEHOOK;
     if (!GetSaveFileNameW(&dialog)) {
         return false;
     }
@@ -2666,8 +2672,8 @@ static void FitPreferencesHeight(PreferencesData& data, int contentHeight) {
     bool scrolling = fullHeight > availableHeight;
     LONG_PTR style = GetWindowLongPtrW(data.window, GWL_STYLE);
     bool wasScrolling = (style & WS_VSCROLL) != 0;
-    int width = bounds.right - bounds.left +
-        (static_cast<int>(scrolling) - static_cast<int>(wasScrolling)) * GetSystemMetrics(SM_CXVSCROLL);
+    int width = bounds.right - bounds.left
+        + (static_cast<int>(scrolling) - static_cast<int>(wasScrolling)) * GetSystemMetrics(SM_CXVSCROLL);
     int height = scrolling ? availableHeight : fullHeight;
     if (scrolling != wasScrolling) {
         SetWindowLongPtrW(data.window, GWL_STYLE, scrolling ? style | WS_VSCROLL : style & ~WS_VSCROLL);
@@ -2919,9 +2925,11 @@ static LRESULT CALLBACK PreferencesControlProc(HWND window, UINT message, WPARAM
     if (message == WM_GETDLGCODE) {
         LRESULT result = CallWindowProcW(original, window, message, wParam, lParam);
         const MSG* key = reinterpret_cast<const MSG*>(lParam);
-        if (key && key->message == WM_SYSCHAR
-                && PreferenceMnemonicTarget(GetParent(window), static_cast<wchar_t>(key->wParam))) {
-            result |= DLGC_WANTMESSAGE;
+        if (key) {
+            if (key->message == WM_SYSCHAR
+                    && PreferenceMnemonicTarget(GetParent(window), static_cast<wchar_t>(key->wParam))) {
+                result |= DLGC_WANTMESSAGE;
+            }
         }
         return result;
     }

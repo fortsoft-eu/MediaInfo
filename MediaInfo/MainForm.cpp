@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.0.1
  */
 
 #include "Localization.h"
@@ -475,12 +475,10 @@ void MainForm::UpdateStatus() {
     if (showVersion) {
         SendMessageW(status, SB_SETTEXTA, 1 | SBT_OWNERDRAW, reinterpret_cast<LPARAM>(version));
     }
-    EnableMenuItem(GetMenu(window), ID_FILE_CLOSE, MF_BYCOMMAND
-        | (active ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(GetMenu(window), ID_FILE_CLOSE_ALL, MF_BYCOMMAND
-        | (files ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(GetMenu(window), ID_FILE_EXPORT, MF_BYCOMMAND
-        | (active && active->ready ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(GetMenu(window), ID_FILE_CLOSE, MF_BYCOMMAND | (active ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(GetMenu(window), ID_FILE_CLOSE_ALL, MF_BYCOMMAND | (files ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(GetMenu(window), ID_FILE_EXPORT,
+        MF_BYCOMMAND | (active && active->ready ? MF_ENABLED : MF_GRAYED));
     bool printable = active && active->ready || !files && helpForm.GetWindow();
     EnableMenuItem(GetMenu(window), ID_FILE_PRINT,
         MF_BYCOMMAND | (printable && !closing && !printDialogOpen && !printThread && !modernPrint
@@ -488,21 +486,20 @@ void MainForm::UpdateStatus() {
     EnableMenuItem(GetMenu(window), ID_FILE_PAGE_SETUP,
         MF_BYCOMMAND | (printable && !closing && !printDialogOpen && !printThread && !modernPrint
             ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(GetMenu(window), ID_PREFERENCES, MF_BYCOMMAND
-        | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
-    EnableMenuItem(GetMenu(window), ID_ADVANCED_MODE, MF_BYCOMMAND
-        | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
-    CheckMenuItem(GetMenu(window), ID_ADVANCED_MODE, MF_BYCOMMAND
-        | ((active ? active->advancedMode : advancedMode) ? MF_CHECKED : MF_UNCHECKED));
-    EnableMenuItem(GetMenu(window), ID_FULL_PARSING, MF_BYCOMMAND
-        | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
+    EnableMenuItem(GetMenu(window), ID_PREFERENCES,
+        MF_BYCOMMAND | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
+    EnableMenuItem(GetMenu(window), ID_ADVANCED_MODE,
+        MF_BYCOMMAND | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
+    CheckMenuItem(GetMenu(window), ID_ADVANCED_MODE,
+        MF_BYCOMMAND | ((active ? active->advancedMode : advancedMode) ? MF_CHECKED : MF_UNCHECKED));
+    EnableMenuItem(GetMenu(window), ID_FULL_PARSING,
+        MF_BYCOMMAND | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     CheckMenuItem(GetMenu(window), ID_FULL_PARSING,
         MF_BYCOMMAND | ((active ? active->fullParsing : fullParsing) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuRadioItem(GetSubMenu(GetMenu(window), 2), ID_TRACE_LEVEL_0, ID_TRACE_LEVEL_10,
         ID_TRACE_LEVEL_0 + (active ? active->traceLevel : traceLevel), MF_BYCOMMAND);
     for (UINT item = ID_TRACE_LEVEL_0; item <= ID_TRACE_LEVEL_10; ++item) {
-        EnableMenuItem(GetMenu(window), item, MF_BYCOMMAND
-            | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
+        EnableMenuItem(GetMenu(window), item, MF_BYCOMMAND | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     }
     InvalidateRect(status, nullptr, FALSE);
 }
@@ -743,8 +740,8 @@ void MainForm::SelectTab(int index) {
         MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
     }
     for (FileTab* file = files; file; file = file->next) {
-        SetWindowPos(file->edit, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE
-            | (file == selected ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
+        SetWindowPos(file->edit, HWND_TOP, 0, 0, 0, 0,
+            SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | (file == selected ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
     }
     Layout();
     if (selected) {
@@ -792,8 +789,13 @@ bool MainForm::SelectExistingTab(LibraryCommand command, const wchar_t* path) {
 
 /// Creates a report edit with the established selection handler and selected line-wrapping style.
 HWND MainForm::CreateReportEdit(bool wordWrap, bool showSelection) {
-    DWORD style = WS_CHILD | WS_TABSTOP | WS_CLIPSIBLINGS | WS_VSCROLL
-        | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL;
+    DWORD style = WS_CHILD
+        | WS_TABSTOP
+        | WS_CLIPSIBLINGS
+        | WS_VSCROLL
+        | ES_MULTILINE
+        | ES_READONLY
+        | ES_AUTOVSCROLL;
     if (!wordWrap) {
         style |= WS_HSCROLL | ES_AUTOHSCROLL;
     }
@@ -1402,7 +1404,8 @@ BOOL CALLBACK MainForm::FindPrintDialog(HWND candidate, LPARAM parameter) {
             owner->printDialog = candidate;
             return FALSE;
         }
-        if (parent == owner->helpForm.GetWindow() || parent == owner->aboutForm.GetWindow()
+        if (parent == owner->helpForm.GetWindow()
+                || parent == owner->aboutForm.GetWindow()
                 || parent == owner->findForm.GetWindow()) {
             break;
         }
@@ -1748,8 +1751,8 @@ LRESULT MainForm::HandleDrawItem(WPARAM wParam, LPARAM lParam) {
                 GetTextExtentPoint32W(item->hDC, loadingCaption, lstrlenW(loadingCaption), &extent);
                 width -= extent.cx;
             }
-            FormatPathCaption(item->hDC, loadingFormat ? activeJob->path : caption, width,
-                pathCaption, ARRAYSIZE(pathCaption));
+            FormatPathCaption(item->hDC, loadingFormat ? activeJob->path : caption, width, pathCaption,
+                ARRAYSIZE(pathCaption));
             caption = pathCaption;
             if (loadingFormat) {
                 wsprintfW(loadingCaption, loadingFormat, pathCaption);
@@ -1857,8 +1860,8 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             return 0;
         case WM_INITMENUPOPUP:
             if (reinterpret_cast<HMENU>(wParam) == GetSubMenu(GetMenu(window), 0)
-                    || owner->tabMenuContext
-                && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
+                || owner->tabMenuContext
+                    && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
                 owner->InitializeFileMenu(reinterpret_cast<HMENU>(wParam));
                 return 0;
             }
@@ -1908,7 +1911,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             break;
         case WM_COMMAND:
             if (LOWORD(wParam) >= ID_FILE_RECENT_FIRST
-                && LOWORD(wParam) < ID_FILE_RECENT_FIRST + RecentFiles::Capacity) {
+                    && LOWORD(wParam) < ID_FILE_RECENT_FIRST + RecentFiles::Capacity) {
                 int index = LOWORD(wParam) - ID_FILE_RECENT_FIRST;
                 const wchar_t* recent = owner->recentFiles.Get(index);
                 if (recent) {

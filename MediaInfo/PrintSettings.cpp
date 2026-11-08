@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.0.1
  */
 
 #include "PrintSettings.h"
@@ -170,8 +170,11 @@ static int PrintedLineLength(HDC dc, const wchar_t* text, int length, int width)
             last = count - 1;
         }
     }
-    if (first && text[first - 1] >= 0xD800 && text[first - 1] <= 0xDBFF
-        && text[first] >= 0xDC00 && text[first] <= 0xDFFF) {
+    if (first
+            && text[first - 1] >= 0xD800
+            && text[first - 1] <= 0xDBFF
+            && text[first] >= 0xDC00
+            && text[first] <= 0xDFFF) {
         --first;
     }
     if (first < length) {
