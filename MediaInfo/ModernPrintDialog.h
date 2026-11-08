@@ -115,6 +115,9 @@ private:
     /// Applies the stored paper size and orientation to the system print task options.
     void ApplySettings(Printing::IPrintTaskOptionsCore* options);
 
+    /// Uses the heap storage already allocated by Create without a C runtime allocation.
+    static void* operator new(size_t size, void* memory);
+
     /// Frees class storage from the process heap for the compiler's deleting destructors.
     static void operator delete(void* memory);
 

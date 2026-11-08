@@ -33,7 +33,6 @@
 #include <printmanagerinterop.h>
 #include <wincodec.h>
 #include <roapi.h>
-#include <new>
 #include <xmmintrin.h>
 
 using Microsoft::WRL::ComPtr;
@@ -292,6 +291,11 @@ ModernPrintDialog::~ModernPrintDialog() {
     HeapFree(GetProcessHeap(), 0, pages);
     FreePrintJob(job);
     DeleteCriticalSection(&lock);
+}
+
+/// Uses the heap storage already allocated by Create without a C runtime allocation.
+void* ModernPrintDialog::operator new(size_t, void* memory) {
+    return memory;
 }
 
 /// Frees class storage from the process heap for the compiler's deleting destructors.
