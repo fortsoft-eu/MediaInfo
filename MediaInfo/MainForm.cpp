@@ -1295,14 +1295,29 @@ void MainForm::PrintReport() {
     bool about = focused && focused == aboutForm.GetWindow();
     bool help = focused && focused == helpForm.GetWindow() || !about && !files && helpForm.GetWindow();
     HWND dialog = about ? focused : window;
-    HWND edit = about ? GetDlgItem(dialog, IDC_INFO_TEXT)
-        : help ? GetDlgItem(helpForm.GetWindow(), IDC_INFO_TEXT)
-        : active && active->ready ? active->edit : nullptr;
+    HWND edit = nullptr;
+    if (about) {
+        edit = GetDlgItem(dialog, IDC_INFO_TEXT);
+    } else if (help) {
+        edit = GetDlgItem(helpForm.GetWindow(), IDC_INFO_TEXT);
+    } else if (active && active->ready) {
+        edit = active->edit;
+    }
     if (closing || !edit || printThread) {
         return;
     }
-    const wchar_t* title = about ? T(TXT_ABOUT_TITLE) : help ? T(TXT_HELP_TITLE)
-        : active->command == LibraryCommand::Read ? active->path : KnownInformationTitle(active->command);
+    wchar_t aboutTitle[MAX_PATH] = L"";
+    const wchar_t* title;
+    if (about) {
+        GetWindowTextW(dialog, aboutTitle, ARRAYSIZE(aboutTitle));
+        title = aboutTitle;
+    } else if (help) {
+        title = T(TXT_HELP_TITLE);
+    } else if (active->command == LibraryCommand::Read) {
+        title = active->path;
+    } else {
+        title = KnownInformationTitle(active->command);
+    }
     printOwner = dialog;
     if (UseModernPrintDialog()) {
         PrintJob* snapshot = CapturePrintJob(window, edit, title, printSettings.GetMargins());

@@ -39,6 +39,7 @@ class ModernPrintDialog;
 #include <PrintPreview.h>
 #include <d2d1_1.h>
 #include <d3d11.h>
+#include <dwrite.h>
 #include <wrl/client.h>
 
 namespace Printing = ABI::Windows::Graphics::Printing;
@@ -51,19 +52,26 @@ typedef Foundation::ITypedEventHandler<Printing::PrintTask*,
 typedef Foundation::IAsyncOperation<bool> PrintUiOperation;
 typedef Foundation::IAsyncOperationCompletedHandler<bool> PrintUiCompletedHandler;
 
+/// Identifies the captured text range assigned to one printed page.
+struct ModernPrintPage {
+    UINT32 start;
+    UINT32 length;
+};
+
 class ModernPrintDialog : public Printing::IPrintDocumentSource, public IPrintDocumentPageSource,
     public IPrintPreviewPageCollection, public PrintRequestedHandler,
     public Printing::IPrintTaskSourceRequestedHandler, public PrintCompletedHandler,
     public PrintUiCompletedHandler {
 
 private:
-    HDC reference;
     LONG references;
     volatile LONG canceled;
     CRITICAL_SECTION lock;
     PrintJob* job;
     DEVMODEW deviceMode;
-    PrintLayout layout;
+    ModernPrintPage* pages;
+    UINT pageCount;
+    D2D1_RECT_F content;
     Printing::PrintPageDescription description;
     Microsoft::WRL::ComPtr<IUnknown> marshaler;
     Microsoft::WRL::ComPtr<Printing::IPrintManager> manager;
@@ -75,6 +83,9 @@ private:
     Microsoft::WRL::ComPtr<ID3D11Device> graphics;
     Microsoft::WRL::ComPtr<ID2D1Device> device;
     Microsoft::WRL::ComPtr<ID2D1DeviceContext> context;
+    Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> ink;
+    Microsoft::WRL::ComPtr<IDWriteFactory> textFactory;
+    Microsoft::WRL::ComPtr<IDWriteTextFormat> textFormat;
     EventRegistrationToken requestedToken;
     EventRegistrationToken completedToken;
     bool requested;
@@ -83,13 +94,19 @@ private:
     bool notified;
     bool failed;
 
-    /// Creates the software graphics device, Direct2D context and GDI reference context.
+    /// Creates the software graphics device, Direct2D context and DirectWrite text resources.
     HRESULT InitializeGraphics();
+
+    /// Matches the captured edit font and retains its size in device-independent units.
+    HRESULT InitializeTextFormat();
+
+    /// Groups complete DirectWrite lines into pages within the current printable area.
+    HRESULT BuildPages();
 
     /// Rebuilds pagination from the selected paper size, printable area, margins and edit font.
     HRESULT Prepare(IInspectable* options);
 
-    /// Records one zero-based document page into a Direct2D command list.
+    /// Records one zero-based document page as text glyphs in a Direct2D command list.
     HRESULT CreatePage(UINT page, ID2D1CommandList** result);
 
     /// Records the result and posts at most one completion message with its own source reference.
@@ -105,7 +122,7 @@ public:
     /// Adopts the print snapshot and copies the initial printer settings.
     ModernPrintDialog(PrintJob* snapshot, const PrintSettings& settings);
 
-    /// Releases the captured report, reference context and owned graphics resources.
+    /// Releases the captured report, page ranges and owned graphics resources.
     ~ModernPrintDialog();
 
     /// Takes ownership of a snapshot and returns its print source, or null on allocation failure.

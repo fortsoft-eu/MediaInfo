@@ -45,6 +45,7 @@ typedef HRESULT(WINAPI* CreateStringFunction)(PCNZWCH, UINT32, HSTRING*);
 typedef HRESULT(WINAPI* DeleteStringFunction)(HSTRING);
 typedef HRESULT(WINAPI* CreateD2DFactoryFunction)(D2D1_FACTORY_TYPE, REFIID,
     const D2D1_FACTORY_OPTIONS*, void**);
+typedef HRESULT(WINAPI* CreateDWriteFactoryFunction)(DWRITE_FACTORY_TYPE, REFIID, IUnknown**);
 typedef LONG(WINAPI* GetVersionFunction)(OSVERSIONINFOW*);
 
 struct PrintPaperMapping {
@@ -165,12 +166,14 @@ static const CLSID imagingFactoryId = {
 static HMODULE runtimeModule;
 static HMODULE graphicsModule;
 static HMODULE drawingModule;
+static HMODULE textModule;
 static InitializeRuntimeFunction initializeRuntime;
 static UninitializeRuntimeFunction uninitializeRuntime;
 static ActivationFactoryFunction activationFactory;
 static CreateStringFunction createString;
 static DeleteStringFunction deleteString;
 static CreateD2DFactoryFunction createFactory;
+static CreateDWriteFactoryFunction createTextFactory;
 static PFN_D3D11_CREATE_DEVICE createGraphics;
 static bool runtimeLoaded;
 
@@ -201,7 +204,10 @@ static HRESULT LoadPrintRuntime() {
     if (!drawingModule) {
         drawingModule = LoadLibraryExW(L"d2d1.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
     }
-    if (!runtimeModule || !graphicsModule || !drawingModule) {
+    if (!textModule) {
+        textModule = LoadLibraryExW(L"dwrite.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+    }
+    if (!runtimeModule || !graphicsModule || !drawingModule || !textModule) {
         return HRESULT_FROM_WIN32(ERROR_MOD_NOT_FOUND);
     }
     initializeRuntime = reinterpret_cast<InitializeRuntimeFunction>(GetProcAddress(runtimeModule,
@@ -218,13 +224,16 @@ static HRESULT LoadPrintRuntime() {
         "D3D11CreateDevice"));
     createFactory = reinterpret_cast<CreateD2DFactoryFunction>(GetProcAddress(drawingModule,
         "D2D1CreateFactory"));
+    createTextFactory = reinterpret_cast<CreateDWriteFactoryFunction>(GetProcAddress(textModule,
+        "DWriteCreateFactory"));
     runtimeLoaded = initializeRuntime
         && uninitializeRuntime
         && activationFactory
         && createString
         && deleteString
         && createGraphics
-        && createFactory;
+        && createFactory
+        && createTextFactory;
     return runtimeLoaded ? S_OK : HRESULT_FROM_WIN32(ERROR_PROC_NOT_FOUND);
 }
 
@@ -270,19 +279,17 @@ void ReleaseModernPrint(ModernPrintDialog* source) {
 
 /// Adopts the print snapshot and copies the initial printer settings.
 ModernPrintDialog::ModernPrintDialog(PrintJob* snapshot, const PrintSettings& settings)
-        : reference(nullptr), references(1), canceled(0), job(snapshot), deviceMode(DEVMODEW{}),
-        description(Printing::PrintPageDescription{}), requestedToken(EventRegistrationToken{}),
-        completedToken(EventRegistrationToken{}), requested(false), completed(false), apartment(false),
-        notified(false), failed(false) {
+        : references(1), canceled(0), job(snapshot), deviceMode(DEVMODEW{}), pages(nullptr), pageCount(0),
+        content(D2D1_RECT_F{}), description(Printing::PrintPageDescription{}),
+        requestedToken(EventRegistrationToken{}), completedToken(EventRegistrationToken{}), requested(false),
+        completed(false), apartment(false), notified(false), failed(false) {
     InitializeCriticalSection(&lock);
     settings.GetDeviceMode(deviceMode);
 }
 
-/// Releases the captured report, reference context and owned graphics resources.
+/// Releases the captured report, page ranges and owned graphics resources.
 ModernPrintDialog::~ModernPrintDialog() {
-    if (reference) {
-        DeleteDC(reference);
-    }
+    HeapFree(GetProcessHeap(), 0, pages);
     FreePrintJob(job);
     DeleteCriticalSection(&lock);
 }
@@ -544,39 +551,169 @@ HRESULT ModernPrintDialog::Invoke(PrintUiOperation* sender, Foundation::AsyncSta
     return S_OK;
 }
 
-/// Creates the software graphics device, Direct2D context and GDI reference context.
+/// Creates the software graphics device, Direct2D context and DirectWrite text resources.
 HRESULT ModernPrintDialog::InitializeGraphics() {
-    if (context && reference) {
+    if (context && ink && textFormat) {
         return S_OK;
     }
     D2D1_FACTORY_OPTIONS options = D2D1_FACTORY_OPTIONS{};
     HRESULT result = createFactory(D2D1_FACTORY_TYPE_MULTI_THREADED, __uuidof(ID2D1Factory1), &options,
-        reinterpret_cast<void**>(factory.GetAddressOf()));
+        reinterpret_cast<void**>(factory.ReleaseAndGetAddressOf()));
     if (SUCCEEDED(result)) {
         result = createGraphics(nullptr, D3D_DRIVER_TYPE_WARP, nullptr, D3D11_CREATE_DEVICE_BGRA_SUPPORT,
-            nullptr, 0, D3D11_SDK_VERSION, &graphics, nullptr, nullptr);
+            nullptr, 0, D3D11_SDK_VERSION, graphics.ReleaseAndGetAddressOf(), nullptr, nullptr);
     }
     ComPtr<IDXGIDevice> dxgi;
     if (SUCCEEDED(result)) {
         result = graphics.As(&dxgi);
     }
     if (SUCCEEDED(result)) {
-        result = factory->CreateDevice(dxgi.Get(), &device);
+        result = factory->CreateDevice(dxgi.Get(), device.ReleaseAndGetAddressOf());
     }
     if (SUCCEEDED(result)) {
-        result = device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, &context);
+        result = device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+            context.ReleaseAndGetAddressOf());
     }
     if (SUCCEEDED(result)) {
-        reference = CreateCompatibleDC(nullptr);
-        if (!reference) {
-            result = E_OUTOFMEMORY;
+        result = context->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black),
+            ink.ReleaseAndGetAddressOf());
+    }
+    if (SUCCEEDED(result)) {
+        result = createTextFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory),
+            reinterpret_cast<IUnknown**>(textFactory.ReleaseAndGetAddressOf()));
+    }
+    if (SUCCEEDED(result)) {
+        result = InitializeTextFormat();
+    }
+    return result;
+}
+
+/// Matches the captured edit font and retains its size in device-independent units.
+HRESULT ModernPrintDialog::InitializeTextFormat() {
+    if (!job->fontDpi) {
+        return E_INVALIDARG;
+    }
+    ComPtr<IDWriteGdiInterop> interop;
+    HRESULT result = textFactory->GetGdiInterop(&interop);
+    ComPtr<IDWriteFont> font;
+    if (SUCCEEDED(result)) {
+        result = interop->CreateFontFromLOGFONT(&job->font, &font);
+    }
+    ComPtr<IDWriteFontFamily> family;
+    if (SUCCEEDED(result)) {
+        result = font->GetFontFamily(&family);
+    }
+    ComPtr<IDWriteLocalizedStrings> names;
+    if (SUCCEEDED(result)) {
+        result = family->GetFamilyNames(&names);
+    }
+    UINT32 length = 0;
+    if (SUCCEEDED(result)) {
+        result = names->GetStringLength(0, &length);
+    }
+    wchar_t* name = nullptr;
+    if (SUCCEEDED(result)) {
+        if (length >= MAXDWORD / sizeof(wchar_t)) {
+            return E_OUTOFMEMORY;
+        }
+        name = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), 0, (length + 1) * sizeof(wchar_t)));
+        result = name ? names->GetString(0, name, length + 1) : E_OUTOFMEMORY;
+    }
+    if (SUCCEEDED(result)) {
+        DWRITE_FONT_METRICS metrics;
+        font->GetMetrics(&metrics);
+        float size = static_cast<float>(job->font.lfHeight) * 96.0f / job->fontDpi;
+        if (size < 0) {
+            size = -size;
+        } else if (size > 0) {
+            size *= static_cast<float>(metrics.designUnitsPerEm) / (metrics.ascent + metrics.descent);
         } else {
-            SetMapMode(reference, MM_ANISOTROPIC);
-            SetWindowExtEx(reference, 96, 96, nullptr);
-            SetViewportExtEx(reference, GetDeviceCaps(reference, LOGPIXELSX),
-                GetDeviceCaps(reference, LOGPIXELSY), nullptr);
+            size = 12.0f;
+        }
+        wchar_t locale[LOCALE_NAME_MAX_LENGTH] = L"";
+        GetLocaleInfoW(LOCALE_USER_DEFAULT, LOCALE_SNAME, locale, ARRAYSIZE(locale));
+        result = textFactory->CreateTextFormat(name, nullptr, font->GetWeight(), font->GetStyle(),
+            font->GetStretch(), size, locale, textFormat.ReleaseAndGetAddressOf());
+        ComPtr<IDWriteFontFace> face;
+        if (SUCCEEDED(result)) {
+            result = font->CreateFontFace(&face);
+        }
+        UINT32 space = L' ';
+        UINT16 glyph = 0;
+        DWRITE_GLYPH_METRICS advance = DWRITE_GLYPH_METRICS{};
+        if (SUCCEEDED(result)) {
+            result = face->GetGlyphIndices(&space, 1, &glyph);
+        }
+        if (SUCCEEDED(result)) {
+            result = face->GetDesignGlyphMetrics(&glyph, 1, &advance);
+        }
+        if (SUCCEEDED(result)) {
+            result = textFormat->SetIncrementalTabStop(8.0f * advance.advanceWidth * size
+                / metrics.designUnitsPerEm);
         }
     }
+    HeapFree(GetProcessHeap(), 0, name);
+    if (FAILED(result)) {
+        textFormat.Reset();
+    }
+    return result;
+}
+
+/// Groups complete DirectWrite lines into pages within the current printable area.
+HRESULT ModernPrintDialog::BuildPages() {
+    HeapFree(GetProcessHeap(), 0, pages);
+    pages = nullptr;
+    pageCount = 0;
+    float width = content.right - content.left;
+    float height = content.bottom - content.top;
+    if (width <= 0 || height <= 0) {
+        return E_INVALIDARG;
+    }
+    ComPtr<IDWriteTextLayout> layout;
+    HRESULT result = textFactory->CreateTextLayout(job->report, lstrlenW(job->report), textFormat.Get(),
+        width, height, &layout);
+    UINT32 count = 0;
+    if (SUCCEEDED(result)) {
+        result = layout->GetLineMetrics(nullptr, 0, &count);
+        if (result == HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)) {
+            result = S_OK;
+        }
+    }
+    DWRITE_LINE_METRICS* lines = nullptr;
+    if (SUCCEEDED(result)) {
+        if (!count || count > MAXDWORD / sizeof(DWRITE_LINE_METRICS)) {
+            return E_OUTOFMEMORY;
+        }
+        lines = static_cast<DWRITE_LINE_METRICS*>(HeapAlloc(GetProcessHeap(), 0,
+            count * sizeof(DWRITE_LINE_METRICS)));
+        pages = static_cast<ModernPrintPage*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY,
+            count * sizeof(ModernPrintPage)));
+        result = lines && pages ? layout->GetLineMetrics(lines, count, &count) : E_OUTOFMEMORY;
+    }
+    if (SUCCEEDED(result)) {
+        pageCount = 1;
+        float used = 0;
+        UINT32 position = 0;
+        for (UINT32 index = 0; index < count; ++index) {
+            const DWRITE_LINE_METRICS& line = lines[index];
+            if (!line.length && index) {
+                break;
+            }
+            if (line.height > height) {
+                result = E_INVALIDARG;
+                pageCount = 0;
+                break;
+            }
+            if (used > 0 && used + line.height > height) {
+                pages[pageCount++].start = position;
+                used = 0;
+            }
+            pages[pageCount - 1].length += line.length;
+            position += line.length;
+            used += line.height;
+        }
+    }
+    HeapFree(GetProcessHeap(), 0, lines);
     return result;
 }
 
@@ -592,22 +729,25 @@ HRESULT ModernPrintDialog::Prepare(IInspectable* options) {
     }
     if (SUCCEEDED(result)) {
         const auto& image = description.ImageableRect;
-        RECT area = RECT{
-            PrintCoordinate(image.X + 0.999f),
-            PrintCoordinate(image.Y + 0.999f),
-            PrintCoordinate(image.X + image.Width),
-            PrintCoordinate(image.Y + image.Height)
-        };
-        RECT margins = RECT{
-            MulDiv(job->margins.left, 96, 2540),
-            MulDiv(job->margins.top, 96, 2540),
-            PrintCoordinate(description.PageSize.Width) - MulDiv(job->margins.right, 96, 2540),
-            PrintCoordinate(description.PageSize.Height) - MulDiv(job->margins.bottom, 96, 2540)
-        };
-        IntersectRect(&area, &area, &margins);
-        if (!layout.Initialize(*job, reference, area, 96, 96)) {
-            result = E_FAIL;
+        D2D1_RECT_F margins = D2D1::RectF(
+            job->margins.left * 96.0f / 2540.0f,
+            job->margins.top * 96.0f / 2540.0f,
+            description.PageSize.Width - job->margins.right * 96.0f / 2540.0f,
+            description.PageSize.Height - job->margins.bottom * 96.0f / 2540.0f);
+        content = D2D1::RectF(image.X, image.Y, image.X + image.Width, image.Y + image.Height);
+        if (content.left < margins.left) {
+            content.left = margins.left;
         }
+        if (content.top < margins.top) {
+            content.top = margins.top;
+        }
+        if (content.right > margins.right) {
+            content.right = margins.right;
+        }
+        if (content.bottom > margins.bottom) {
+            content.bottom = margins.bottom;
+        }
+        result = BuildPages();
     }
     return result;
 }
@@ -620,7 +760,8 @@ HRESULT ModernPrintDialog::GetPreviewPageCollection(IPrintDocumentPackageTarget*
     }
     *collection = nullptr;
     EnterCriticalSection(&lock);
-    HRESULT result = canceled ? E_ABORT
+    HRESULT result = canceled
+        ? E_ABORT
         : target->GetPackageTarget(ID_PREVIEWPACKAGETARGET_DXGI, IID_PPV_ARGS(&preview));
     if (SUCCEEDED(result)) {
         *collection = static_cast<IPrintPreviewPageCollection*>(this);
@@ -635,50 +776,28 @@ HRESULT ModernPrintDialog::Paginate(UINT32, IInspectable* options) {
     EnterCriticalSection(&lock);
     HRESULT result = canceled ? E_ABORT : Prepare(options);
     if (SUCCEEDED(result) && preview) {
-        result = preview->SetJobPageCount(FinalPageCount, layout.GetPageCount());
+        result = preview->SetJobPageCount(FinalPageCount, pageCount);
     }
     LeaveCriticalSection(&lock);
     return result;
 }
 
-/// Records one zero-based document page into a Direct2D command list.
+/// Records one zero-based document page as text glyphs in a Direct2D command list.
 HRESULT ModernPrintDialog::CreatePage(UINT page, ID2D1CommandList** result) {
     *result = nullptr;
-    RECT frame = RECT{
-        0,
-        0,
-        PrintCoordinate(description.PageSize.Width * 2540.0f / 96.0f + 0.5f),
-        PrintCoordinate(description.PageSize.Height * 2540.0f / 96.0f + 0.5f)
-    };
-    HDC recording = CreateEnhMetaFileW(reference, nullptr, &frame, nullptr);
-    if (!recording) {
-        return E_OUTOFMEMORY;
+    if (page >= pageCount) {
+        return E_INVALIDARG;
     }
-    SetMapMode(recording, MM_ANISOTROPIC);
-    SetWindowExtEx(recording, GetDeviceCaps(reference, HORZSIZE) * 960,
-        GetDeviceCaps(reference, VERTSIZE) * 960, nullptr);
-    SetViewportExtEx(recording, GetDeviceCaps(reference, HORZRES) * 254,
-        GetDeviceCaps(reference, VERTRES) * 254, nullptr);
-    bool drawn = layout.DrawPage(recording, page);
-    HENHMETAFILE metafile = CloseEnhMetaFile(recording);
-    UINT size = metafile ? GetEnhMetaFileBits(metafile, 0, nullptr) : 0;
-    HGLOBAL memory = size ? GlobalAlloc(GMEM_MOVEABLE, size) : nullptr;
-    BYTE* bytes = memory ? static_cast<BYTE*>(GlobalLock(memory)) : nullptr;
-    bool copied = bytes && GetEnhMetaFileBits(metafile, size, bytes) == size;
-    if (bytes) {
-        GlobalUnlock(memory);
+    const ModernPrintPage& range = pages[page];
+    ComPtr<IDWriteTextLayout> layout;
+    HRESULT status = textFactory->CreateTextLayout(job->report + range.start, range.length, textFormat.Get(),
+        content.right - content.left, content.bottom - content.top, &layout);
+    DWRITE_TEXT_RANGE text = DWRITE_TEXT_RANGE{ 0, range.length };
+    if (SUCCEEDED(status) && job->font.lfUnderline) {
+        status = layout->SetUnderline(TRUE, text);
     }
-    if (metafile) {
-        DeleteEnhMetaFile(metafile);
-    }
-    ComPtr<IStream> stream;
-    HRESULT status = drawn && copied ? CreateStreamOnHGlobal(memory, TRUE, &stream) : E_FAIL;
-    if (FAILED(status) && memory) {
-        GlobalFree(memory);
-    }
-    ComPtr<ID2D1GdiMetafile> drawing;
-    if (SUCCEEDED(status)) {
-        status = factory->CreateGdiMetafile(stream.Get(), &drawing);
+    if (SUCCEEDED(status) && job->font.lfStrikeOut) {
+        status = layout->SetStrikethrough(TRUE, text);
     }
     ComPtr<ID2D1CommandList> commands;
     if (SUCCEEDED(status)) {
@@ -688,9 +807,15 @@ HRESULT ModernPrintDialog::CreatePage(UINT page, ID2D1CommandList** result) {
         context->SetTarget(commands.Get());
         context->SetDpi(96, 96);
         context->SetTransform(D2D1::Matrix3x2F::Identity());
+        context->SetTextAntialiasMode(job->font.lfQuality == NONANTIALIASED_QUALITY
+            ? D2D1_TEXT_ANTIALIAS_MODE_ALIASED
+            : D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
         context->BeginDraw();
         context->Clear(D2D1::ColorF(D2D1::ColorF::White));
-        context->DrawGdiMetafile(drawing.Get(), nullptr);
+        context->PushAxisAlignedClip(content, D2D1_ANTIALIAS_MODE_ALIASED);
+        context->DrawTextLayout(D2D1::Point2F(content.left, content.top), layout.Get(), ink.Get(),
+            D2D1_DRAW_TEXT_OPTIONS_NO_SNAP);
+        context->PopAxisAlignedClip();
         status = context->EndDraw();
         context->SetTarget(nullptr);
     }
@@ -768,7 +893,7 @@ HRESULT ModernPrintDialog::MakeDocument(IInspectable* options, IPrintDocumentPac
             D2D1::PrintControlProperties(D2D1_PRINT_FONT_SUBSET_MODE_DEFAULT, 300.0f, D2D1_COLOR_SPACE_SRGB);
         result = device->CreatePrintControl(imaging.Get(), target, &properties, &printing);
     }
-    for (UINT page = 0; SUCCEEDED(result) && page < layout.GetPageCount(); ++page) {
+    for (UINT page = 0; SUCCEEDED(result) && page < pageCount; ++page) {
         ComPtr<ID2D1CommandList> commands;
         result = canceled ? E_ABORT : CreatePage(page, &commands);
         if (SUCCEEDED(result)) {
