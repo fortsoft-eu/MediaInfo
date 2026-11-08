@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.1.0.2
  */
 
 #include "MediaInfo.h"
@@ -1646,8 +1646,8 @@ static bool SaveWebpImage(HANDLE file, BYTE* pixels, int width, int height) {
     return encoder.Save(file, pixels, width, height);
 }
 
-/// Renders the entire report in its selected font and saves it with the requested available encoder.
-bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWORD type, wchar_t* error,
+/// Renders the report in its selected font and saves it with the requested available encoder.
+bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
         int errorCapacity) {
     if (type < 6 || type > 11) {
         lstrcpynW(error, T(TXT_IMAGE_FORMAT_UNSUPPORTED), errorCapacity);
@@ -1666,24 +1666,47 @@ bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWOR
     int dpiY = GetDeviceCaps(dc, LOGPIXELSY);
     HFONT font = reinterpret_cast<HFONT>(SendMessageW(edit, WM_GETFONT, 0, 0));
     HGDIOBJ oldFont = SelectObject(dc, font);
-    RECT measured = RECT{ 0, 0, 1, 0 };
-    DrawTextW(dc, report, -1, &measured, DT_CALCRECT | DT_NOPREFIX | DT_EXPANDTABS);
     TEXTMETRICW metrics = TEXTMETRICW{};
     GetTextMetricsW(dc, &metrics);
     int margin = metrics.tmAveCharWidth;
-    int width = measured.right + 2 * margin;
-    int height = measured.bottom + 2 * margin;
-    if (width < 1
-            || height < 1
-            || width > 16384
-            || height > 32767
-            || width > 0x10000000 / 4 / height
-            || type == 11 && (width > 16383 || height > 16383)) {
+    int lineHeight = metrics.tmHeight;
+    wchar_t* text = CopyControlText(edit);
+    int textLength = text ? lstrlenW(text) : 0;
+    int lineCount = static_cast<int>(SendMessageW(edit, EM_GETLINECOUNT, 0, 0));
+    int lineWidth = 1;
+    bool validLines = text && lineHeight > 0 && lineCount > 0;
+    for (int line = 0; line < lineCount && validLines; ++line) {
+        int start = static_cast<int>(SendMessageW(edit, EM_LINEINDEX, line, 0));
+        int length = static_cast<int>(SendMessageW(edit, EM_LINELENGTH, start, 0));
+        if (start < 0 || length < 0 || start > textLength || length > textLength - start) {
+            validLines = false;
+            break;
+        }
+        RECT measured = RECT{ 0, 0, 1, 0 };
+        DrawTextW(dc, text + start, length, &measured,
+            DT_CALCRECT | DT_SINGLELINE | DT_NOPREFIX | DT_EXPANDTABS);
+        if (measured.right > lineWidth) {
+            lineWidth = measured.right;
+        }
+    }
+    LONGLONG measuredWidth = static_cast<LONGLONG>(lineWidth) + 2 * margin;
+    LONGLONG measuredHeight = static_cast<LONGLONG>(lineCount) * lineHeight + 2 * margin;
+    int maximumWidth = type == 11 ? 16383 : 16384;
+    int maximumHeight = type == 11 ? 16383 : 32767;
+    int width = measuredWidth > maximumWidth ? maximumWidth : static_cast<int>(measuredWidth);
+    int height = measuredHeight > maximumHeight ? maximumHeight : static_cast<int>(measuredHeight);
+    if (!validLines || width < 1 || height < 1) {
+        if (text) {
+            HeapFree(GetProcessHeap(), 0, text);
+        }
         SelectObject(dc, oldFont);
         DeleteDC(dc);
-        const wchar_t* message = T(TXT_REPORT_IMAGE_TOO_LARGE);
-        lstrcpynW(error, message, errorCapacity);
+        lstrcpynW(error, T(TXT_REPORT_IMAGE_CREATE_FAILED), errorCapacity);
         return false;
+    }
+    int memoryHeight = 0x10000000 / 4 / width;
+    if (height > memoryHeight) {
+        height = memoryHeight;
     }
     BITMAPINFO info = BITMAPINFO{};
     info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -1708,8 +1731,17 @@ bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWOR
         }
         FillRect(dc, &bounds, background);
         SetBkMode(dc, OPAQUE);
-        bounds = RECT{ margin, margin, width - margin, height - margin };
-        DrawTextW(dc, report, -1, &bounds, DT_NOPREFIX | DT_EXPANDTABS);
+        int right = measuredWidth > width ? width : width - margin;
+        int top = margin;
+        for (int line = 0; line < lineCount && top < height; ++line, top += lineHeight) {
+            int start = static_cast<int>(SendMessageW(edit, EM_LINEINDEX, line, 0));
+            int length = static_cast<int>(SendMessageW(edit, EM_LINELENGTH, start, 0));
+            RECT row = RECT{ margin, top, right, top + lineHeight };
+            if (row.bottom > height) {
+                row.bottom = height;
+            }
+            DrawTextW(dc, text + start, length, &row, DT_SINGLELINE | DT_NOPREFIX | DT_EXPANDTABS);
+        }
         GdiFlush();
         wchar_t fullPath[MAX_PATH];
         wchar_t temporary[MAX_PATH];
@@ -1761,6 +1793,7 @@ bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWOR
         SelectObject(dc, oldBitmap);
         DeleteObject(bitmap);
     }
+    HeapFree(GetProcessHeap(), 0, text);
     SelectObject(dc, oldFont);
     DeleteDC(dc);
     if (!success) {
@@ -3005,7 +3038,8 @@ static LRESULT CALLBACK PreferencesControlProc(HWND window, UINT message, WPARAM
     return CallWindowProcW(original, window, message, wParam, lParam);
 }
 
-/// Installs label mnemonic routing without replacing the tested edit selection handler or native Tab navigation.
+/// Installs label mnemonic routing without replacing the tested edit selection handler or native Tab
+/// navigation.
 static bool InstallPreferencesControlHandlers(HWND window) {
     for (HWND child = GetWindow(window, GW_CHILD); child; child = GetWindow(child, GW_HWNDNEXT)) {
         if (!(GetWindowLongW(child, GWL_STYLE) & WS_TABSTOP)) {
@@ -3566,8 +3600,8 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         UpdateApplyButton(*data);
         return TRUE;
     }
-    if (message == WM_SETTINGCHANGE || message == WM_THEMECHANGED || message == WM_DPICHANGED ||
-            message == WM_DISPLAYCHANGE) {
+    if (message == WM_SETTINGCHANGE || message == WM_THEMECHANGED || message == WM_DPICHANGED
+            || message == WM_DISPLAYCHANGE) {
         UpdateSmoothingChoices(*data);
         SetPreferencesFont(*data, true);
         UpdateFontButtons(*data);

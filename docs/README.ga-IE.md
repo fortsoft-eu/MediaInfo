@@ -97,9 +97,6 @@ Ní am rite tacaithe é Windows 95 faoi láthair.
 - Is iad ClearType roghanna frithaliasaithe cló nuair a fhaigheann siad tacaíocht, GDI agus Dada. Is é
   ClearType an rogha tosaigh nuair a thacaítear leis, nó GDI. Ní bhíonn tionchar ag socruithe cló ach ar
   thuairiscí meán agus ar a n-onnmhairí íomhá.
-- Comhad > Osclaíonn Easpórtáil (Ctrl+E) an dialóg Save As Windows agus easpórtálann sé an tuairisc ghníomhach
-  iomlán chuig TXT, BMP, GIF, JPEG, PNG, TIFF nó WebP, lena n-áirítear téacs lasmuigh den limistéar
-  infheicthe.
 - Osclaíonn Help fuinneog ar leith gan mhodh lena hiontráil tascbharra féin agus an cnaipe íoslaghdaithe.
   Maidir le dialóg mhodhúil; liostaíonn ceanntásc an táirge na trí leagan leabaithe DLL ar fad.
 
@@ -181,18 +178,6 @@ UTF-8 gan BOM, an réamhshocrú. Caomhnaítear téacs iomlán na tuairisce agus 
 caomhnaíonn BMP, PNG agus TIFF gach dath rindreáilte; Caomhnaíonn GIF89a an pailéad rindreáilte cruinn nuair a
 bhíonn dathanna 256 ar a mhéad san íomhá. Scríobhann Easpórtáil an fhormáid roghnaithe i gcónaí nó
 tuairiscíonn sé earráid; ní ionadaíonn sé formáid eile riamh.
-
-Tá an tuairisc iomlán sna híomhánna sa chló tuairisce roghnaithe, agus téacs dubh ar chúlra bán. Níl roghchlár
-na bhfeidhmchlár, ceanntásca cluaisíní, barra stádais, roghnúcháin nó cúramaí iontu. Tá an rindreáil
-neamhspleách ar shuíomh scrollaigh an bhosca téacs.
-
-Chun tuairiscí ciúine a ghearradh nó an spás seoltaí ar ríomhairí níos sine a sheachaint, tá íomhá amháin
-teoranta do 16,384 picteilín ar leithead, 32,767 picteilín ar airde agus 256 MiB de chuimhne léarscáile
-neamh-chomhbhrúite. Roghnaigh cló níos lú má sháraíonn tuairisc na teorainneacha sin.
-
-Is é `Google WebP (*.webp)` an fhormáid dheireanach agus sábhálann sé an tuairisc gan chaillteanas.
-
-WebP: 16383 × 16383 px.
 
 ## Teangacha an chomhéadain agus na dtuairiscí
 

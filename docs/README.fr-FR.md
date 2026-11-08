@@ -98,8 +98,6 @@ Windows 95 n'est actuellement pas un moteur d'exécution pris en charge.
 - Les choix d'anticrénelage de police sont ClearType lorsqu'ils sont pris en charge, GDI et Aucun. Le choix
   initial est ClearType lorsqu'il est pris en charge, sinon GDI. Les paramètres de police affectent uniquement
   les rapports multimédias et leurs exportations d'images.
-- Fichier > Exporter (Ctrl+E) ouvre la boîte de dialogue Windows Enregistrer sous et exporte l'intégralité du
-  rapport actif vers TXT, BMP, GIF, JPEG, PNG, TIFF ou WebP, y compris le texte en dehors de la zone visible.
 - L'aide ouvre une fenêtre non modale distincte avec sa propre entrée dans la barre des tâches et son propre
   bouton de réduction. À propos est une boîte de dialogue modale ; son en-tête de produit répertorie les trois
   versions DLL intégrées.
@@ -184,18 +182,6 @@ conservés.
 BMP, PNG et TIFF préservent toutes les couleurs rendues ; GIF89a préserve la palette exacte du rendu lorsque
 l'image contient au plus 256 couleurs. L'exportation écrit toujours le format sélectionné ou signale une
 erreur ; il ne remplace jamais un autre format.
-
-Les images contiennent le rapport complet dans la police de rapport sélectionnée, avec du texte noir sur fond
-blanc. Ils ne contiennent pas le menu de l'application, les en-têtes d'onglets, la barre d'état, la sélection
-ou le curseur. Le rendu est indépendant de la position de défilement de la zone de texte.
-
-Pour éviter de tronquer silencieusement les rapports ou d'épuiser l'espace d'adressage sur les ordinateurs
-plus anciens, une seule image est limitée à 16 384 pixels de largeur, 32 767 pixels de hauteur et 256 MiB de
-mémoire bitmap non compressée. Sélectionnez une police plus petite si un rapport dépasse ces limites.
-
-`Google WebP (*.webp)` est le dernier format et enregistre le rapport sans perte.
-
-WebP: 16383 × 16383 px.
 
 ## Langues de l’interface et des rapports
 

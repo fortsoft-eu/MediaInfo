@@ -89,8 +89,6 @@ Windows 95 ei ole praegu toetatud käitusaeg.
   valitud. Kasutaja valitud fondid säilitatakse ilma rakenduskoodiga asendamata.
 - Fondi antialiase valikud on ClearType, kui seda toetatakse, GDI ja Puudub. Esialgne valik on ClearType, kui
   seda toetatakse, muul juhul GDI. Fondi seaded mõjutavad ainult meediaraporteid ja nende kujutiste eksporti.
-- Fail > Eksport (Ctrl+E) avab dialoogi Windows Salvesta nimega ja ekspordib kogu aktiivse aruande
-  asukohtadesse TXT, BMP, GIF, JPEG, PNG, TIFF või WebP, sealhulgas teksti väljaspool nähtavat ala.
 - Abi avab eraldi režiimita akna, millel on oma tegumiriba sisestus ja minimeerimisnupp. Teave on modaalne
   dialoog; selle toote päises on loetletud kõik kolm manustatud DLL versiooni.
 
@@ -165,18 +163,6 @@ teine kirje, BOM-ita UTF-8. Aruande kogu tekst ja algsed reavahetused säilivad.
 BMP, PNG ja TIFF säilitavad kõik renderdatud värvid; GIF89a säilitab täpse renderdatud paleti, kui pildil on
 kuni 256 värvi. Eksport kirjutab alati valitud vormingu või teatab veast; see ei asenda kunagi teist
 vormingut.
-
-Pildid sisaldavad kogu aruannet valitud aruandefondis, musta tekstiga valgel taustal. Need ei sisalda
-rakenduse menüüd, vahekaartide päiseid, olekuriba, valikut ega kaarti. Renderdamine ei sõltu tekstikasti
-kerimisasendist.
-
-Et vältida aruannete vaikset kärpimist või aadressiruumi kurnamist vanemates arvutites, on ühe pildi laius 16
-384 pikslit, 32 767 pikslit kõrge ja 256 MiB tihendamata bitmap-mälu. Valige väiksem font, kui aruanne ületab
-need piirangud.
-
-`Google WebP (*.webp)` on viimane vorming ja salvestab aruande kadudeta.
-
-WebP: 16383 × 16383 px.
 
 ## Liidese ja aruannete keeled
 

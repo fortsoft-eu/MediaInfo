@@ -98,8 +98,6 @@ Windows 95 non è attualmente un runtime supportato.
 - Le scelte di antialiasing dei caratteri sono ClearType se supportato, GDI e Nessuno. La scelta iniziale è
   ClearType quando supportato, altrimenti GDI. Le impostazioni dei caratteri influiscono solo sui resoconti
   dei media e sulle relative esportazioni di immagini.
-- File > Esporta (Ctrl+E) apre la finestra di dialogo Windows Salva con nome ed esporta l'intero report attivo
-  in TXT, BMP, GIF, JPEG, PNG, TIFF o WebP, incluso il testo all'esterno dell'area visibile.
 - La Guida apre una finestra non modale separata con la propria voce sulla barra delle applicazioni e il
   pulsante di riduzione a icona. Informazioni su è una finestra di dialogo modale; l'intestazione del prodotto
   elenca tutte e tre le versioni DLL integrate.
@@ -181,18 +179,6 @@ TXT offre ANSI, UTF-8, UTF-8 con BOM, UTF-16 BE con BOM e UTF-16 LE con BOM. La 
 BMP, PNG e TIFF preservano tutti i colori renderizzati; GIF89a preserva l'esatta tavolozza renderizzata quando
 l'immagine ha al massimo 256 colori. L'esportazione scrive sempre il formato selezionato o segnala un errore;
 non sostituisce mai un altro formato.
-
-Le immagini contengono il report completo nel carattere del report selezionato, con testo nero su sfondo
-bianco. Non contengono il menu dell'applicazione, le intestazioni delle schede, la barra di stato, la
-selezione o il cursore. Il rendering è indipendente dalla posizione di scorrimento della casella di testo.
-
-Per evitare di troncare automaticamente i report o di esaurire lo spazio degli indirizzi sui computer più
-vecchi, una singola immagine è limitata a 16.384 pixel di larghezza, 32.767 pixel di altezza e 256 MiB di
-memoria bitmap non compressa. Seleziona un carattere più piccolo se un rapporto supera questi limiti.
-
-`Google WebP (*.webp)` è l’ultimo formato e salva il report senza perdita.
-
-WebP: 16383 × 16383 px.
 
 ## Lingue dell’interfaccia e dei report
 

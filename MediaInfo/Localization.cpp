@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.0
+ * Last modified for version 1.1.0.2
  */
 
 #include "Localization.h"
@@ -138,10 +138,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Dekomprese knihovny nebo kontrola CRC selhala." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Prostředek vložené knihovny je neplatný." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Celý report je pro jeden obrázek příliš velký. Zvolte menší písmo reportu a zkuste to "
-                L"znovu."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Knihovna se musí jmenovat libcurl.dll, aby ji MediaInfo mohla používat."
             },
@@ -233,7 +229,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"cesty na příkazovém řádku. Pokud nejsou povolené další instance, soubory se otevřou v již "
                 L"běžícím okně.\r\nVlevo ve stavovém řádku se zobrazuje cesta k souboru a průběh načítání, "
                 L"vpravo verze načtené MediaInfo.dll. Dlouhé cesty se podle dostupného místa zkracují "
-                L"výpustkou.\r\n\r\nEXPORT\r\nCtrl+E exportuje celý report včetně skrytého textu. TXT, BMP, "
+                L"výpustkou.\r\n\r\nEXPORT\r\n"
+                L"TXT, BMP, "
                 L"GIF, JPEG, PNG, TIFF a WebP se nabízejí podle dostupnosti. Poslední složka a formát "
                 L"exportu se pamatují.\r\nTXT nabízí ANSI, UTF-8, UTF-8 s BOM, UTF-16 BE s BOM a UTF-16 LE "
                 L"s BOM. Výchozí je druhá položka, UTF-8 bez BOM. Zachovává se celý text reportu i jeho "
@@ -464,9 +461,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"The bundled library failed decompression or CRC verification."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"The bundled library resource is invalid." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"The complete report is too large for one image. Select a smaller report font and try again."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"The curl library must be named libcurl.dll so MediaInfo can use it."
             },
@@ -559,7 +553,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"line. If multiple instances are disabled, the files open in the running window.\r\nThe "
                 L"left status pane shows file paths and loading progress; the right pane shows the loaded "
                 L"MediaInfo.dll version. Long paths are shortened with an ellipsis to fit the available "
-                L"space.\r\n\r\nEXPORT\r\nCtrl+E exports the entire report, including hidden text. TXT, "
+                L"space.\r\n\r\nEXPORT\r\n"
+                L"TXT, "
                 L"BMP, GIF, JPEG, PNG, TIFF and WebP are listed when available. The last export folder and "
                 L"format are remembered.\r\nTXT offers ANSI, UTF-8, UTF-8 with BOM, UTF-16 BE with BOM and "
                 L"UTF-16 LE with BOM. The second entry, UTF-8 without BOM, is the default. The complete "
@@ -791,9 +786,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"The bundled library failed decompression or CRC verification."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"The bundled library resource is invalid." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"The complete report is too large for one image. Select a smaller report font and try again."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"The curl library must be named libcurl.dll so MediaInfo can use it."
             },
@@ -886,7 +878,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"line. If multiple instances are disabled, the files open in the running window.\r\nThe "
                 L"left status pane shows file paths and loading progress; the right pane shows the loaded "
                 L"MediaInfo.dll version. Long paths are shortened with an ellipsis to fit the available "
-                L"space.\r\n\r\nEXPORT\r\nCtrl+E exports the entire report, including hidden text. TXT, "
+                L"space.\r\n\r\nEXPORT\r\n"
+                L"TXT, "
                 L"BMP, GIF, JPEG, PNG, TIFF and WebP are listed when available. The last export folder and "
                 L"format are remembered.\r\nTXT offers ANSI, UTF-8, UTF-8 with BOM, UTF-16 BE with BOM and "
                 L"UTF-16 LE with BOM. The second entry, UTF-8 without BOM, is the default. The complete "
@@ -1118,9 +1111,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"The bundled library failed decompression or CRC verification."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"The bundled library resource is invalid." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"The complete report is too large for one image. Select a smaller report font and try again."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"The curl library must be named libcurl.dll so MediaInfo can use it."
             },
@@ -1213,7 +1203,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"line. If multiple instances are disabled, the files open in the running window.\r\nThe "
                 L"left status pane shows file paths and loading progress; the right pane shows the loaded "
                 L"MediaInfo.dll version. Long paths are shortened with an ellipsis to fit the available "
-                L"space.\r\n\r\nEXPORT\r\nCtrl+E exports the entire report, including hidden text. TXT, "
+                L"space.\r\n\r\nEXPORT\r\n"
+                L"TXT, "
                 L"BMP, GIF, JPEG, PNG, TIFF and WebP are listed when available. The last export folder and "
                 L"format are remembered.\r\nTXT offers ANSI, UTF-8, UTF-8 with BOM, UTF-16 BE with BOM and "
                 L"UTF-16 LE with BOM. The second entry, UTF-8 without BOM, is the default. The complete "
@@ -1453,10 +1444,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Dekomprimierung oder CRC-Prüfung der Bibliothek fehlgeschlagen."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Die eingebettete Bibliotheksressource ist ungültig." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Der vollständige Bericht ist für ein Bild zu groß. Wählen Sie eine kleinere "
-                L"Berichtsschrift und versuchen Sie es erneut."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Die Bibliothek muss libcurl.dll heißen, damit MediaInfo sie verwenden kann."
             },
@@ -1564,8 +1551,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Instanzen nicht erlaubt sind, werden die Dateien im bereits geöffneten Fenster "
                 L"angezeigt.\r\nLinks in der Statusleiste werden Dateipfade und der Ladefortschritt "
                 L"angezeigt, rechts die Version der geladenen MediaInfo.dll. Lange Pfade werden passend zum "
-                L"verfügbaren Platz mit Auslassungspunkten gekürzt.\r\n\r\nEXPORT\r\nStrg+E exportiert den "
-                L"vollständigen Bericht einschließlich unsichtbaren Textes. TXT, BMP, GIF, JPEG, PNG, TIFF "
+                L"verfügbaren Platz mit Auslassungspunkten gekürzt.\r\n\r\nEXPORT\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF "
                 L"und WebP werden je nach Verfügbarkeit angeboten. Exportordner und Format werden "
                 L"gespeichert.\r\nTXT bietet ANSI, UTF-8, UTF-8 mit BOM, UTF-16 BE mit BOM und UTF-16 LE "
                 L"mit BOM. Standard ist der zweite Eintrag, UTF-8 ohne BOM. Der vollständige Berichtstext "
@@ -1824,10 +1811,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Échec de la décompression ou du contrôle CRC de la bibliothèque."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"La ressource de bibliothèque intégrée est incorrecte." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Le rapport complet est trop grand pour une seule image. Choisissez une police plus petite "
-                L"pour le rapport et réessayez."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"La bibliothèque doit s’appeler libcurl.dll pour que MediaInfo puisse l’utiliser."
             },
@@ -1935,8 +1918,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"la barre d’état affiche les chemins des fichiers et la progression du chargement ; la "
                 L"partie droite affiche la version de MediaInfo.dll chargée. Les chemins trop longs sont "
                 L"abrégés par des points de suspension selon l’espace "
-                L"disponible.\r\n\r\nEXPORTATION\r\nCtrl+E exporte le rapport entier, y compris le texte "
-                L"masqué. TXT, BMP, GIF, JPEG, PNG, TIFF et WebP sont proposés selon leur disponibilité. Le "
+                L"disponible.\r\n\r\nEXPORTATION\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF et WebP sont proposés selon leur disponibilité. Le "
                 L"dernier dossier et le format d’exportation sont mémorisés.\r\nTXT propose ANSI, UTF-8, "
                 L"UTF-8 avec BOM, UTF-16 BE avec BOM et UTF-16 LE avec BOM. La deuxième entrée, UTF-8 sans "
                 L"BOM, est sélectionnée par défaut. Le texte intégral du rapport et ses fins de ligne "
@@ -2195,10 +2178,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Error de descompresión o comprobación CRC de la biblioteca."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"El recurso de biblioteca integrado no es válido." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"El informe completo es demasiado grande para una imagen. Elija una fuente más pequeña para "
-                L"el informe e inténtelo de nuevo."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"La biblioteca debe llamarse libcurl.dll para que MediaInfo pueda usarla."
             },
@@ -2299,8 +2278,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"instancias, los archivos se abren en la ventana que ya está en ejecución.\r\nLa parte "
                 L"izquierda de la barra de estado muestra las rutas de los archivos y el progreso de carga; "
                 L"la derecha muestra la versión de MediaInfo.dll cargada. Las rutas largas se abrevian con "
-                L"puntos suspensivos según el espacio disponible.\r\n\r\nEXPORTACIÓN\r\nCtrl+E exporta el "
-                L"informe completo, incluido el texto oculto. TXT, BMP, GIF, JPEG, PNG, TIFF y WebP "
+                L"puntos suspensivos según el espacio disponible.\r\n\r\nEXPORTACIÓN\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF y WebP "
                 L"aparecen según su disponibilidad. Se recuerdan la última carpeta y el formato de "
                 L"exportación.\r\nTXT ofrece ANSI, UTF-8, UTF-8 con BOM, UTF-16 BE con BOM y UTF-16 LE con "
                 L"BOM. La segunda opción, UTF-8 sin BOM, es la predeterminada. Se conservan el texto "
@@ -2553,10 +2532,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Decompressione o verifica CRC della libreria non riuscita."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"La risorsa della libreria incorporata non è valida." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Il rapporto completo è troppo grande per un’immagine. Scegliere un carattere più piccolo "
-                L"per il rapporto e riprovare."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"La libreria deve chiamarsi libcurl.dll affinché MediaInfo possa usarla."
             },
@@ -2660,8 +2635,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"sinistra della barra di stato mostra i percorsi dei file e l’avanzamento del caricamento; "
                 L"la parte destra mostra la versione di MediaInfo.dll caricata. I percorsi lunghi vengono "
                 L"abbreviati con puntini di sospensione in base allo spazio "
-                L"disponibile.\r\n\r\nESPORTAZIONE\r\nCtrl+E esporta l’intero rapporto, incluso il testo "
-                L"nascosto. TXT, BMP, GIF, JPEG, PNG, TIFF e WebP sono elencati quando disponibili. "
+                L"disponibile.\r\n\r\nESPORTAZIONE\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF e WebP sono elencati quando disponibili. "
                 L"Cartella e formato dell’ultima esportazione vengono ricordati.\r\nTXT offre ANSI, UTF-8, "
                 L"UTF-8 con BOM, UTF-16 BE con BOM e UTF-16 LE con BOM. La seconda voce, UTF-8 senza BOM, è "
                 L"quella predefinita. Il testo completo del report e le interruzioni di riga originali "
@@ -2914,10 +2889,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Falha na descompressão ou verificação CRC da biblioteca." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"O recurso da biblioteca incluída é inválido." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"O relatório completo é demasiado grande para uma imagem. Escolha um tipo de letra mais "
-                L"pequeno para o relatório e tente novamente."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"A biblioteca tem de se chamar libcurl.dll para que o MediaInfo a possa utilizar."
             },
@@ -3020,8 +2991,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"que já está em execução.\r\nO lado esquerdo da barra de estado apresenta os caminhos dos "
                 L"ficheiros e o progresso do carregamento; o lado direito apresenta a versão da "
                 L"MediaInfo.dll carregada. Os caminhos longos são abreviados com reticências de acordo com "
-                L"o espaço disponível.\r\n\r\nEXPORTAÇÃO\r\nCtrl+E exporta o relatório inteiro, incluindo "
-                L"texto oculto. TXT, BMP, GIF, JPEG, PNG, TIFF e WebP surgem conforme a disponibilidade. A "
+                L"o espaço disponível.\r\n\r\nEXPORTAÇÃO\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF e WebP surgem conforme a disponibilidade. A "
                 L"última pasta e o formato de exportação são memorizados.\r\nTXT oferece ANSI, UTF-8, UTF-8 "
                 L"com BOM, UTF-16 BE com BOM e UTF-16 LE com BOM. A segunda opção, UTF-8 sem BOM, é a "
                 L"predefinida. O texto completo do relatório e as quebras de linha originais são "
@@ -3269,10 +3240,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Dekompresja biblioteki lub sprawdzenie CRC nie powiodło się."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Zasób dołączonej biblioteki jest nieprawidłowy." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Cały raport jest za duży na jeden obraz. Wybierz mniejszą czcionkę raportu i spróbuj "
-                L"ponownie."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteka musi nazywać się libcurl.dll, aby MediaInfo mogło jej używać."
             },
@@ -3365,7 +3332,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"instancji jest wyłączone, pliki otworzą się w już uruchomionym oknie.\r\nLewa część paska "
                 L"stanu pokazuje ścieżki plików i postęp ładowania, a prawa wersję załadowanej biblioteki "
                 L"MediaInfo.dll. Długie ścieżki są skracane wielokropkiem stosownie do dostępnego "
-                L"miejsca.\r\n\r\nEKSPORT\r\nCtrl+E eksportuje cały raport, także ukryty tekst. TXT, BMP, "
+                L"miejsca.\r\n\r\nEKSPORT\r\n"
+                L"TXT, BMP, "
                 L"GIF, JPEG, PNG, TIFF i WebP są dostępne zależnie od systemu. Ostatni folder i format "
                 L"eksportu są zapamiętywane.\r\nTXT oferuje ANSI, UTF-8, UTF-8 z BOM, UTF-16 BE z BOM i "
                 L"UTF-16 LE z BOM. Domyślna jest druga pozycja, UTF-8 bez BOM. Pełny tekst raportu i jego "
@@ -3600,10 +3568,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Dekompresia knižnice alebo kontrola CRC zlyhala." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Prostriedok vloženej knižnice je neplatný." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Celý report je na jeden obrázok príliš veľký. Zvoľte menšie písmo reportu a skúste to "
-                L"znova."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Knižnica sa musí volať libcurl.dll, aby ju MediaInfo mohla používať."
             },
@@ -3697,8 +3661,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"zástupcu, prípadne odovzdajte ich cesty v príkazovom riadku. Ak nie je povolených viac "
                 L"inštancií, súbory sa otvoria v už spustenom okne.\r\nVľavo v stavovom riadku sa zobrazuje "
                 L"cesta k súboru a priebeh načítavania, vpravo verzia načítanej MediaInfo.dll. Dlhé cesty "
-                L"sa podľa dostupného miesta skracujú výpustkou.\r\n\r\nEXPORT\r\nCtrl+E exportuje celý "
-                L"report vrátane skrytého textu. TXT, BMP, GIF, JPEG, PNG, TIFF a WebP sa ponúkajú podľa "
+                L"sa podľa dostupného miesta skracujú výpustkou.\r\n\r\nEXPORT\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF a WebP sa ponúkajú podľa "
                 L"dostupnosti. Posledný priečinok a formát exportu sa pamätajú.\r\nTXT ponúka ANSI, UTF-8, "
                 L"UTF-8 s BOM, UTF-16 BE s BOM a UTF-16 LE s BOM. Predvolená je druhá položka, UTF-8 bez "
                 L"BOM. Zachováva sa celý text reportu aj jeho pôvodné konce riadkov.\r\n\r\nVYTVORIŤ SÚBOR "
@@ -3927,9 +3891,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Bibliotekets dekomprimering eller CRC-kontrol mislykkedes."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Den indlejrede biblioteksressource er ugyldig." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Hele rapporten er for stor til ét billede. Vælg en mindre rapportskrift, og prøv igen."
-            },
             { TXT_CURL_FILENAME_INVALID, L"Biblioteket skal hedde libcurl.dll, så MediaInfo kan bruge det." },
             { TXT_FILE_DIALOG_OPEN_FAILED, L"Fildialogen kunne ikke åbnes." },
             { TXT_FILE_DIALOG_SELECTION_FAILED, L"De valgte filer kunne ikke hentes fra fildialogen." },
@@ -4020,8 +3981,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"tilladt, åbnes filerne i det vindue, der allerede kører.\r\nVenstre side af statuslinjen "
                 L"viser filstier og indlæsningsforløb; højre side viser versionen af den indlæste "
                 L"MediaInfo.dll. Lange stier forkortes med udeladelsesprikker, så de passer til den "
-                L"tilgængelige plads.\r\n\r\nEKSPORT\r\nCtrl+E eksporterer hele rapporten, også skjult "
-                L"tekst. TXT, BMP, GIF, JPEG, PNG, TIFF og WebP vises, når de er tilgængelige. Seneste "
+                L"tilgængelige plads.\r\n\r\nEKSPORT\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF og WebP vises, når de er tilgængelige. Seneste "
                 L"eksportmappe og format huskes.\r\nTXT tilbyder ANSI, UTF-8, UTF-8 med BOM, UTF-16 BE med "
                 L"BOM og UTF-16 LE med BOM. Den anden mulighed, UTF-8 uden BOM, er standard. Hele "
                 L"rapportteksten og dens oprindelige linjeskift bevares.\r\n\r\nOPRET EN "
@@ -4254,10 +4215,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Kirjaston purkaminen tai CRC-tarkistus epäonnistui." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Sisällytetyn kirjaston resurssi on virheellinen." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Koko raportti on liian suuri yhteen kuvaan. Valitse pienempi raportin fontti ja yritä "
-                L"uudelleen."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Kirjaston nimen on oltava libcurl.dll, jotta MediaInfo voi käyttää sitä."
             },
@@ -4354,8 +4311,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"komentorivillä. Jos useita esiintymiä ei sallita, tiedostot avataan jo käynnissä olevassa "
                 L"ikkunassa.\r\nTilarivin vasen osa näyttää tiedostopolut ja latauksen etenemisen, oikea "
                 L"osa ladatun MediaInfo.dll-kirjaston version. Pitkät polut lyhennetään kolmella pisteellä "
-                L"käytettävissä olevan tilan mukaan.\r\n\r\nVIENTI\r\nCtrl+E vie koko raportin, myös "
-                L"piilossa olevan tekstin. TXT, BMP, GIF, JPEG, PNG, TIFF ja WebP näkyvät saatavuuden "
+                L"käytettävissä olevan tilan mukaan.\r\n\r\nVIENTI\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF ja WebP näkyvät saatavuuden "
                 L"mukaan. Viimeisin vientikansio ja muoto muistetaan.\r\nTXT tarjoaa muodot ANSI, UTF-8, "
                 L"UTF-8 ja BOM, UTF-16 BE ja BOM sekä UTF-16 LE ja BOM. Oletus on toinen vaihtoehto, UTF-8 "
                 L"ilman BOM-merkkiä. Koko raporttiteksti ja sen alkuperäiset rivinvaihdot "
@@ -4589,9 +4546,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Afþjöppun eða CRC-prófun safnsins mistókst." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Tilfang innbyggða safnsins er ógilt." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Öll skýrslan er of stór fyrir eina mynd. Veldu minna letur fyrir skýrsluna og reyndu aftur."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Safnið verður að heita libcurl.dll svo MediaInfo geti notað það."
             },
@@ -4681,7 +4635,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"skrárnar í glugganum sem er þegar í gangi.\r\nVinstra megin á stöðustikunni birtast "
                 L"skráarslóðir og framvinda hleðslu; hægra megin birtist útgáfa þess MediaInfo.dll sem er "
                 L"hlaðið. Langar slóðir eru styttar með úrfellingarpunktum eftir því plássi sem er "
-                L"tiltækt.\r\n\r\nÚTFLUTNINGUR\r\nCtrl+E flytur út alla skýrsluna, líka falinn texta. TXT, "
+                L"tiltækt.\r\n\r\nÚTFLUTNINGUR\r\n"
+                L"TXT, "
                 L"BMP, GIF, JPEG, PNG, TIFF og WebP birtast þegar þau eru tiltæk. Síðasta útflutningsmappa "
                 L"og snið eru vistuð.\r\nTXT býður ANSI, UTF-8, UTF-8 með BOM, UTF-16 BE með BOM og UTF-16 "
                 L"LE með BOM. Annar valkosturinn, UTF-8 án BOM, er sjálfgefinn. Allur texti skýrslunnar og "
@@ -4909,9 +4864,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Bibliotekets utpakking eller CRC-kontroll mislyktes." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ressursen for det innebygde biblioteket er ugyldig." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Hele rapporten er for stor for ett bilde. Velg en mindre rapportskrift og prøv igjen."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteket må hete libcurl.dll for at MediaInfo skal kunne bruke det."
             },
@@ -5002,8 +4954,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"eller oppgi banene på kommandolinjen. Hvis flere forekomster ikke er tillatt, åpnes "
                 L"filene i vinduet som allerede kjører.\r\nVenstre side av statuslinjen viser filbaner og "
                 L"innlastingsfremdrift; høyre side viser versjonen av den innlastede MediaInfo.dll. Lange "
-                L"baner forkortes med utelatelsesprikker etter tilgjengelig plass.\r\n\r\nEKSPORT\r\nCtrl+E "
-                L"eksporterer hele rapporten, også skjult tekst. TXT, BMP, GIF, JPEG, PNG, TIFF og WebP "
+                L"baner forkortes med utelatelsesprikker etter tilgjengelig plass.\r\n\r\nEKSPORT\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF og WebP "
                 L"vises når de er tilgjengelige. Siste eksportmappe og format huskes.\r\nTXT tilbyr ANSI, "
                 L"UTF-8, UTF-8 med BOM, UTF-16 BE med BOM og UTF-16 LE med BOM. Det andre alternativet, "
                 L"UTF-8 uten BOM, er standard. Hele rapportteksten og de opprinnelige linjeskiftene "
@@ -5236,9 +5188,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Bibliotekets dekomprimering eller CRC-kontroll misslyckades."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Den inbäddade biblioteksresursen är ogiltig." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Hela rapporten är för stor för en bild. Välj ett mindre rapportteckensnitt och försök igen."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteket måste heta libcurl.dll för att MediaInfo ska kunna använda det."
             },
@@ -5334,7 +5283,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"inte är tillåtna öppnas filerna i det fönster som redan körs.\r\nVänster del av "
                 L"statusfältet visar filsökvägar och inläsningsförlopp; höger del visar versionen av den "
                 L"inlästa MediaInfo.dll. Långa sökvägar förkortas med uteslutningstecken efter det "
-                L"tillgängliga utrymmet.\r\n\r\nEXPORT\r\nCtrl+E exporterar hela rapporten, även dold text. "
+                L"tillgängliga utrymmet.\r\n\r\nEXPORT\r\n"
                 L"TXT, BMP, GIF, JPEG, PNG, TIFF och WebP visas när de är tillgängliga. Senaste exportmapp "
                 L"och format sparas.\r\nTXT erbjuder ANSI, UTF-8, UTF-8 med BOM, UTF-16 BE med BOM och "
                 L"UTF-16 LE med BOM. Det andra alternativet, UTF-8 utan BOM, är standard. Hela "
@@ -5564,10 +5513,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Kitaplığın açılması veya CRC denetimi başarısız." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Gömülü kitaplık kaynağı geçersiz." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Raporun tamamı tek görüntü için çok büyük. Daha küçük bir rapor yazı tipi seçin ve yeniden "
-                L"deneyin."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"MediaInfo tarafından kullanılabilmesi için kitaplığın adı libcurl.dll olmalıdır."
             },
@@ -5658,8 +5603,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"izin verilmiyorsa dosyalar zaten açık olan pencerede açılır.\r\nDurum çubuğunun sol "
                 L"tarafı dosya yollarını ve yükleme ilerlemesini, sağ tarafı ise yüklenen MediaInfo.dll "
                 L"sürümünü gösterir. Uzun yollar kullanılabilir alana göre üç noktayla "
-                L"kısaltılır.\r\n\r\nDIŞA AKTARMA\r\nCtrl+E, görünmeyen metin dahil tüm raporu dışa "
-                L"aktarır. TXT, BMP, GIF, JPEG, PNG, TIFF ve WebP kullanılabildiklerinde listelenir. Son "
+                L"kısaltılır.\r\n\r\nDIŞA AKTARMA\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF ve WebP kullanılabildiklerinde listelenir. Son "
                 L"dışa aktarma klasörü ve biçimi hatırlanır.\r\nTXT; ANSI, UTF-8, BOM içeren UTF-8, BOM "
                 L"içeren UTF-16 BE ve BOM içeren UTF-16 LE seçeneklerini sunar. İkinci seçenek olan BOM "
                 L"içermeyen UTF-8 varsayılandır. Raporun tam metni ve özgün satır sonları "
@@ -5887,9 +5832,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Teegi lahtipakkimine või CRC-kontroll nurjus." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Kaasatud teegi ressurss on vigane." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Kogu aruanne on ühe pildi jaoks liiga suur. Valige väiksem aruande font ja proovige uuesti."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Teegi nimi peab olema libcurl.dll, et MediaInfo saaks seda kasutada."
             },
@@ -5973,8 +5915,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"selle otseteele või andke failiteed käsureal. Kui mitu eksemplari pole lubatud, avatakse "
                 L"failid juba töötavas aknas.\r\nOlekuriba vasakul pool kuvatakse failiteed ja laadimise "
                 L"edenemine, paremal laaditud MediaInfo.dll versioon. Pikad teed lühendatakse vastavalt "
-                L"vabale ruumile mõttepunktidega.\r\n\r\nEKSPORT\r\nCtrl+E ekspordib kogu aruande, ka "
-                L"peidetud teksti. TXT, BMP, GIF, JPEG, PNG, TIFF ja WebP kuvatakse saadavuse järgi. "
+                L"vabale ruumile mõttepunktidega.\r\n\r\nEKSPORT\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF ja WebP kuvatakse saadavuse järgi. "
                 L"Viimane ekspordikaust ja vorming jäetakse meelde.\r\nTXT pakub vorminguid ANSI, UTF-8, "
                 L"BOM-iga UTF-8, BOM-iga UTF-16 BE ja BOM-iga UTF-16 LE. Vaikimisi on valitud teine kirje, "
                 L"BOM-ita UTF-8. Aruande kogu tekst ja algsed reavahetused säilivad.\r\n\r\nLOO "
@@ -6209,10 +6151,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Theip ar dhí-chomhbhrú nó ar sheiceáil CRC na leabharlainne."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Tá acmhainn na leabharlainne leabaithe neamhbhailí." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Tá an tuairisc iomlán rómhór d’aon íomhá amháin. Roghnaigh cló níos lú don tuairisc agus "
-                L"bain triail eile as."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Caithfear libcurl.dll a thabhairt ar an leabharlann ionas gur féidir le MediaInfo í a "
                 L"úsáid."
@@ -6319,8 +6257,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"fhuinneog atá ag rith cheana.\r\nTaispeántar conairí comhad agus dul chun cinn an "
                 L"luchtaithe ar thaobh clé an bharra stádais, agus leagan an MediaInfo.dll atá luchtaithe "
                 L"ar dheis. Giorraítear conairí fada le comhartha focalbhá de réir an spáis atá ar "
-                L"fáil.\r\n\r\nEASPÓRTÁIL\r\nEaspórtálann Ctrl+E an tuairisc iomlán, an téacs folaithe san "
-                L"áireamh. Taispeántar TXT, BMP, GIF, JPEG, PNG, TIFF agus WebP nuair atá siad ar fáil. "
+                L"fáil.\r\n\r\nEASPÓRTÁIL\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF agus WebP nuair atá siad ar fáil. "
                 L"Cuimhnítear ar an bhfillteán agus ar an bhformáid easpórtála deireanach.\r\nCuireann TXT "
                 L"ANSI, UTF-8, UTF-8 le BOM, UTF-16 BE le BOM agus UTF-16 LE le BOM ar fáil. Is é an dara "
                 L"rogha, UTF-8 gan BOM, an réamhshocrú. Caomhnaítear téacs iomlán na tuairisce agus a "
@@ -6562,10 +6500,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Bibliotekos išskleidimas arba CRC patikra nepavyko." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Įterptos bibliotekos išteklius netinkamas." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Visa ataskaita per didelė vienam vaizdui. Pasirinkite mažesnį ataskaitos šriftą ir "
-                L"bandykite dar kartą."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteka turi vadintis libcurl.dll, kad MediaInfo galėtų ją naudoti."
             },
@@ -6655,7 +6589,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"eilutėje. Jei keli egzemplioriai neleidžiami, failai atidaromi jau veikiančiame "
                 L"lange.\r\nKairėje būsenos juostos pusėje rodomi failų keliai ir įkėlimo eiga, dešinėje – "
                 L"įkeltos MediaInfo.dll versija. Ilgi keliai trumpinami daugtaškiu pagal turimą "
-                L"vietą.\r\n\r\nEKSPORTAS\r\nCtrl+E eksportuoja visą ataskaitą, įskaitant paslėptą tekstą. "
+                L"vietą.\r\n\r\nEKSPORTAS\r\n"
                 L"TXT, BMP, GIF, JPEG, PNG, TIFF ir WebP rodomi pagal prieinamumą. Įsimenamas paskutinis "
                 L"eksporto aplankas ir formatas.\r\nTXT siūlo ANSI, UTF-8, UTF-8 su BOM, UTF-16 BE su BOM "
                 L"ir UTF-16 LE su BOM. Numatytasis yra antrasis įrašas, UTF-8 be BOM. Išsaugomas visas "
@@ -6889,10 +6823,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Bibliotēkas atspiešana vai CRC pārbaude neizdevās." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Iegultās bibliotēkas resurss nav derīgs." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Viss pārskats ir pārāk liels vienam attēlam. Izvēlieties mazāku pārskata fontu un mēģiniet "
-                L"vēlreiz."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Bibliotēkai jābūt nosauktai libcurl.dll, lai MediaInfo varētu to izmantot."
             },
@@ -6982,8 +6912,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"to ceļus komandrindā. Ja vairākas instances nav atļautas, faili tiek atvērti jau "
                 L"palaistajā logā.\r\nStatusa joslas kreisajā pusē redzami failu ceļi un ielādes norise, "
                 L"bet labajā – ielādētās MediaInfo.dll versija. Gari ceļi tiek saīsināti ar daudzpunkti "
-                L"atbilstoši pieejamajai vietai.\r\n\r\nEKSPORTĒŠANA\r\nCtrl+E eksportē visu pārskatu, arī "
-                L"paslēpto tekstu. TXT, BMP, GIF, JPEG, PNG, TIFF un WebP tiek piedāvāti atbilstoši "
+                L"atbilstoši pieejamajai vietai.\r\n\r\nEKSPORTĒŠANA\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF un WebP tiek piedāvāti atbilstoši "
                 L"pieejamībai. Tiek atcerēta pēdējā eksporta mape un formāts.\r\nTXT piedāvā ANSI, UTF-8, "
                 L"UTF-8 ar BOM, UTF-16 BE ar BOM un UTF-16 LE ar BOM. Noklusējums ir otrais ieraksts, UTF-8 "
                 L"bez BOM. Tiek saglabāts pilns pārskata teksts un tā sākotnējās rindu "
@@ -7222,10 +7152,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"A könyvtár kicsomagolása vagy CRC-ellenőrzése sikertelen."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"A beágyazott könyvtár erőforrása érvénytelen." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"A teljes jelentés túl nagy egy képhez. Válasszon kisebb betűméretet a jelentéshez, és "
-                L"próbálja újra."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"A könyvtár neve libcurl.dll kell legyen, hogy a MediaInfo használhassa."
             },
@@ -7328,8 +7254,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"engedélyezett, a fájlok a már futó ablakban nyílnak meg.\r\nAz állapotsor bal oldala a "
                 L"fájlok elérési útját és a betöltés állapotát, a jobb oldala a betöltött MediaInfo.dll "
                 L"verzióját mutatja. A hosszú elérési utak a rendelkezésre álló helyhez igazodva három "
-                L"ponttal rövidülnek.\r\n\r\nEXPORTÁLÁS\r\nA Ctrl+E a teljes jelentést exportálja, a "
-                L"rejtett szöveggel együtt. A TXT, BMP, GIF, JPEG, PNG, TIFF és WebP az elérhetőség szerint "
+                L"ponttal rövidülnek.\r\n\r\nEXPORTÁLÁS\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF és WebP az elérhetőség szerint "
                 L"jelenik meg. Az utolsó exportmappa és formátum megmarad.\r\nA TXT az ANSI, UTF-8, UTF-8 "
                 L"BOM-mal, UTF-16 BE BOM-mal és UTF-16 LE BOM-mal lehetőségeket kínálja. Az alapértelmezett "
                 L"a második elem, az UTF-8 BOM nélkül. A jelentés teljes szövege és eredeti sorvégei "
@@ -7575,10 +7501,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Id-dekompressjoni jew il-verifika CRC tal-librerija falliet."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ir-riżorsa tal-librerija inkorporata mhijiex valida." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Ir-rapport kollu huwa kbir wisq għal immaġni waħda. Agħżel font iżgħar għar-rapport u "
-                L"erġa’ pprova."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Il-librerija trid tissejjaħ libcurl.dll biex MediaInfo jkun jista’ jużaha."
             },
@@ -7679,8 +7601,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"li diġà qed taħdem.\r\nIn-naħa tax-xellug tal-istrixxa tal-istatus turi l-mogħdijiet "
                 L"tal-fajls u l-progress tat-tagħbija; in-naħa tal-lemin turi l-verżjoni ta’ MediaInfo.dll "
                 L"mgħobbija. Mogħdijiet twal jitqassru b’punti ta’ sospensjoni skont l-ispazju "
-                L"disponibbli.\r\n\r\nESPORTAZZJONI\r\nCtrl+E jesporta r-rapport kollu, inkluż it-test "
-                L"moħbi. TXT, BMP, GIF, JPEG, PNG, TIFF u WebP jidhru meta jkunu disponibbli. L-aħħar "
+                L"disponibbli.\r\n\r\nESPORTAZZJONI\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF u WebP jidhru meta jkunu disponibbli. L-aħħar "
                 L"fowlder u format tal-esportazzjoni jinżammu.\r\nTXT joffri ANSI, UTF-8, UTF-8 b’BOM, "
                 L"UTF-16 BE b’BOM u UTF-16 LE b’BOM. It-tieni għażla, UTF-8 mingħajr BOM, hija dik "
                 L"predefinita. It-test sħiħ tar-rapport u t-truf tal-linji oriġinali jinżammu.\r\n\r\nOĦLOQ "
@@ -7921,10 +7843,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Decompressie of CRC-controle van de bibliotheek is mislukt."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"De ingesloten bibliotheekbron is ongeldig." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Het volledige rapport is te groot voor één afbeelding. Kies een kleiner rapportlettertype "
-                L"en probeer het opnieuw."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"De bibliotheek moet libcurl.dll heten zodat MediaInfo deze kan gebruiken."
             },
@@ -8027,8 +7945,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"exemplaren niet zijn toegestaan, worden de bestanden in het al geopende venster "
                 L"geopend.\r\nLinks op de statusbalk staan bestandspaden en de voortgang van het laden; "
                 L"rechts staat de versie van de geladen MediaInfo.dll. Lange paden worden met een "
-                L"weglatingsteken ingekort tot de beschikbare ruimte.\r\n\r\nEXPORTEREN\r\nCtrl+E "
-                L"exporteert het hele rapport, ook verborgen tekst. TXT, BMP, GIF, JPEG, PNG, TIFF en WebP "
+                L"weglatingsteken ingekort tot de beschikbare ruimte.\r\n\r\nEXPORTEREN\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF en WebP "
                 L"verschijnen als ze beschikbaar zijn. De laatste exportmap en het formaat worden "
                 L"onthouden.\r\nTXT biedt ANSI, UTF-8, UTF-8 met BOM, UTF-16 BE met BOM en UTF-16 LE met "
                 L"BOM. De tweede optie, UTF-8 zonder BOM, is de standaard. De volledige rapporttekst en de "
@@ -8277,10 +8195,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Decomprimarea sau verificarea CRC a bibliotecii a eșuat." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Resursa bibliotecii încorporate este nevalidă." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Raportul complet este prea mare pentru o singură imagine. Alegeți un font mai mic pentru "
-                L"raport și încercați din nou."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteca trebuie să se numească libcurl.dll pentru a putea fi folosită de MediaInfo."
             },
@@ -8378,8 +8292,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"mai multe instanțe, fișierele se deschid în fereastra care rulează deja.\r\nPartea stângă "
                 L"a barei de stare afișează căile fișierelor și progresul încărcării, iar partea dreaptă "
                 L"afișează versiunea MediaInfo.dll încărcată. Căile lungi sunt prescurtate cu puncte de "
-                L"suspensie în funcție de spațiul disponibil.\r\n\r\nEXPORT\r\nCtrl+E exportă întregul "
-                L"raport, inclusiv textul ascuns. TXT, BMP, GIF, JPEG, PNG, TIFF și WebP apar când sunt "
+                L"suspensie în funcție de spațiul disponibil.\r\n\r\nEXPORT\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF și WebP apar când sunt "
                 L"disponibile. Ultimul dosar și format de export sunt memorate.\r\nTXT oferă ANSI, UTF-8, "
                 L"UTF-8 cu BOM, UTF-16 BE cu BOM și UTF-16 LE cu BOM. A doua opțiune, UTF-8 fără BOM, este "
                 L"cea implicită. Se păstrează întregul text al raportului și sfârșiturile de linie "
@@ -8625,10 +8539,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Η αποσυμπίεση ή ο έλεγχος CRC της βιβλιοθήκης απέτυχε." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ο πόρος της ενσωματωμένης βιβλιοθήκης είναι άκυρος." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Η πλήρης αναφορά είναι πολύ μεγάλη για μία εικόνα. Επιλέξτε μικρότερη γραμματοσειρά για "
-                L"την αναφορά και δοκιμάστε ξανά."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Η βιβλιοθήκη πρέπει να ονομάζεται libcurl.dll για να χρησιμοποιηθεί από το MediaInfo."
             },
@@ -8730,8 +8640,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"παρουσίες, τα αρχεία ανοίγουν στο παράθυρο που εκτελείται ήδη.\r\nΤο αριστερό τμήμα της "
                 L"γραμμής κατάστασης δείχνει τις διαδρομές αρχείων και την πρόοδο φόρτωσης, ενώ το δεξιό "
                 L"δείχνει την έκδοση της φορτωμένης MediaInfo.dll. Οι μεγάλες διαδρομές συντομεύονται με "
-                L"αποσιωπητικά ανάλογα με τον διαθέσιμο χώρο.\r\n\r\nΕΞΑΓΩΓΗ\r\nΤο Ctrl+E εξάγει ολόκληρη "
-                L"την αναφορά, μαζί με το κρυμμένο κείμενο. TXT, BMP, GIF, JPEG, PNG, TIFF και WebP "
+                L"αποσιωπητικά ανάλογα με τον διαθέσιμο χώρο.\r\n\r\nΕΞΑΓΩΓΗ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF και WebP "
                 L"εμφανίζονται όταν διατίθενται. Ο τελευταίος φάκελος και η μορφή εξαγωγής "
                 L"αποθηκεύονται.\r\nΤο TXT προσφέρει ANSI, UTF-8, UTF-8 με BOM, UTF-16 BE με BOM και UTF-16 "
                 L"LE με BOM. Προεπιλεγμένη είναι η δεύτερη επιλογή, UTF-8 χωρίς BOM. Διατηρούνται ολόκληρο "
@@ -8975,10 +8885,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Raspakivanje biblioteke ili CRC provjera nije uspjela." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Resurs ugrađene biblioteke nije ispravan." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Cijeli izvještaj je prevelik za jednu sliku. Izaberite manji font izvještaja i pokušajte "
-                L"ponovo."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteka se mora zvati libcurl.dll da bi je MediaInfo mogla koristiti."
             },
@@ -9072,7 +8978,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"instanci nije dozvoljeno, datoteke se otvaraju u već pokrenutom prozoru.\r\nLijeva strana "
                 L"statusne trake prikazuje putanje datoteka i tok učitavanja, a desna verziju učitane "
                 L"MediaInfo.dll biblioteke. Duge putanje skraćuju se trotačkom prema dostupnom "
-                L"prostoru.\r\n\r\nIZVOZ\r\nCtrl+E izvozi cijeli izvještaj, uključujući skriveni tekst. "
+                L"prostoru.\r\n\r\nIZVOZ\r\n"
                 L"TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja fascikla "
                 L"i format izvoza se pamte.\r\nTXT nudi ANSI, UTF-8, UTF-8 s BOM-om, UTF-16 BE s BOM-om i "
                 L"UTF-16 LE s BOM-om. Podrazumijevana je druga stavka, UTF-8 bez BOM-a. Čuvaju se cijeli "
@@ -9302,10 +9208,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Raspakiravanje knjižnice ili CRC provjera nije uspjela." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Resurs ugrađene knjižnice nije ispravan." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Cijelo izvješće je preveliko za jednu sliku. Odaberite manji font izvješća i pokušajte "
-                L"ponovno."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Knjižnica se mora zvati libcurl.dll da bi je MediaInfo mogla koristiti."
             },
@@ -9399,7 +9301,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"nije dopušteno, datoteke se otvaraju u već pokrenutom prozoru.\r\nLijeva strana trake "
                 L"stanja prikazuje putanje datoteka i tijek učitavanja, a desna verziju učitane knjižnice "
                 L"MediaInfo.dll. Duge putanje skraćuju se trotočkom prema dostupnom "
-                L"prostoru.\r\n\r\nIZVOZ\r\nCtrl+E izvozi cijelo izvješće, uključujući skriveni tekst. TXT, "
+                L"prostoru.\r\n\r\nIZVOZ\r\n"
+                L"TXT, "
                 L"BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja mapa i oblik "
                 L"izvoza se pamte.\r\nTXT nudi ANSI, UTF-8, UTF-8 s BOM-om, UTF-16 BE s BOM-om i UTF-16 LE "
                 L"s BOM-om. Zadana je druga stavka, UTF-8 bez BOM-a. Čuvaju se cijeli tekst izvješća i "
@@ -9628,10 +9531,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Razširjanje knjižnice ali preverjanje CRC ni uspelo." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Vir vgrajene knjižnice je neveljaven." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Celotno poročilo je preveliko za eno sliko. Izberite manjšo pisavo poročila in poskusite "
-                L"znova."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Knjižnica se mora imenovati libcurl.dll, da jo MediaInfo lahko uporablja."
             },
@@ -9723,8 +9622,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"podajte njihove poti v ukazni vrstici. Če več primerkov ni dovoljenih, se datoteke "
                 L"odprejo v že delujočem oknu.\r\nLevi del vrstice stanja prikazuje poti datotek in potek "
                 L"nalaganja, desni pa različico naložene knjižnice MediaInfo.dll. Dolge poti se skrajšajo s "
-                L"tropičjem glede na razpoložljivi prostor.\r\n\r\nIZVOZ\r\nCtrl+E izvozi celotno poročilo, "
-                L"tudi skrito besedilo. TXT, BMP, GIF, JPEG, PNG, TIFF in WebP se prikažejo, ko so na "
+                L"tropičjem glede na razpoložljivi prostor.\r\n\r\nIZVOZ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF in WebP se prikažejo, ko so na "
                 L"voljo. Zadnja izvozna mapa in oblika se shranita.\r\nTXT ponuja ANSI, UTF-8, UTF-8 z BOM, "
                 L"UTF-16 BE z BOM in UTF-16 LE z BOM. Privzeta je druga možnost, UTF-8 brez BOM. Ohranijo "
                 L"se celotno besedilo poročila in izvirni konci vrstic.\r\n\r\nUSTVARI DATOTEKO "
@@ -9954,10 +9853,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Raspakivanje biblioteke ili CRC provjera nije uspjela." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Resurs ugrađene biblioteke nije ispravan." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Cijeli izvještaj je prevelik za jednu sliku. Izaberite manji font izvještaja i pokušajte "
-                L"ponovo."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Biblioteka se mora zvati libcurl.dll da bi je MediaInfo mogla koristiti."
             },
@@ -10052,8 +9947,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Ako više instanci nije dozvoljeno, datoteke se otvaraju u već pokrenutom "
                 L"prozoru.\r\nLijeva strana statusne trake prikazuje putanje datoteka i tok učitavanja, a "
                 L"desna verziju učitane biblioteke MediaInfo.dll. Duge putanje skraćuju se trotačkom prema "
-                L"dostupnom prostoru.\r\n\r\nIZVOZ\r\nCtrl+E izvozi cijeli izvještaj, uključujući skriveni "
-                L"tekst. TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja "
+                L"dostupnom prostoru.\r\n\r\nIZVOZ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF i WebP prikazuju se kada su dostupni. Posljednja "
                 L"fascikla i format izvoza se pamte.\r\nTXT nudi ANSI, UTF-8, UTF-8 s BOM-om, UTF-16 BE s "
                 L"BOM-om i UTF-16 LE s BOM-om. Podrazumijevana je druga stavka, UTF-8 bez BOM-a. Čuvaju se "
                 L"cijeli tekst izvještaja i izvorni završeci redova.\r\n\r\nNAPRAVI DATOTEKU "
@@ -10288,10 +10183,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Распакоўванне бібліятэкі або праверка CRC не ўдаліся." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Рэсурс убудаванай бібліятэкі няправільны." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Поўная справаздача завялікая для адной выявы. Выберыце меншы шрыфт справаздачы і паўтарыце "
-                L"спробу."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Бібліятэка павінна называцца libcurl.dll, каб MediaInfo магла яе выкарыстоўваць."
             },
@@ -10381,8 +10272,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"значок EXE або яго ярлык ці перадайце іх шляхі ў камандным радку. Калі некалькі асобнікаў "
                 L"не дазволеныя, файлы адкрываюцца ва ўжо запушчаным акне.\r\nЗлева ў радку стану "
                 L"паказваюцца шляхі файлаў і ход загрузкі, справа — версія загружанай MediaInfo.dll. Доўгія "
-                L"шляхі скарачаюцца шматкроп’ем з улікам даступнага месца.\r\n\r\nЭКСПАРТ\r\nCtrl+E "
-                L"экспартуе ўсю справаздачу, у тым ліку схаваны тэкст. TXT, BMP, GIF, JPEG, PNG, TIFF і "
+                L"шляхі скарачаюцца шматкроп’ем з улікам даступнага месца.\r\n\r\nЭКСПАРТ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF і "
                 L"WebP паказваюцца паводле даступнасці. Апошняя папка і фармат экспарту захоўваюцца.\r\nTXT "
                 L"прапануе ANSI, UTF-8, UTF-8 з BOM, UTF-16 BE з BOM і UTF-16 LE з BOM. Па змаўчанні "
                 L"выбраны другі варыянт, UTF-8 без BOM. Захоўваюцца ўвесь тэкст справаздачы і зыходныя "
@@ -10621,10 +10512,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Разархивирането или CRC проверката на библиотеката е неуспешно."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ресурсът на вградената библиотека е невалиден." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Целият отчет е твърде голям за едно изображение. Изберете по-малък шрифт за отчета и "
-                L"опитайте отново."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Библиотеката трябва да се казва libcurl.dll, за да я използва MediaInfo."
             },
@@ -10721,8 +10608,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ред. Ако не са разрешени няколко екземпляра, файловете се отварят във вече работещия "
                 L"прозорец.\r\nЛявата част на лентата на състоянието показва пътищата до файловете и хода "
                 L"на зареждането, а дясната — версията на заредената MediaInfo.dll. Дългите пътища се "
-                L"съкращават с многоточие според наличното място.\r\n\r\nЕКСПОРТИРАНЕ\r\nCtrl+E експортира "
-                L"целия отчет, включително скрития текст. TXT, BMP, GIF, JPEG, PNG, TIFF и WebP се показват "
+                L"съкращават с многоточие според наличното място.\r\n\r\nЕКСПОРТИРАНЕ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF и WebP се показват "
                 L"според наличността. Последната папка и формат за експорт се запомнят.\r\nTXT предлага "
                 L"ANSI, UTF-8, UTF-8 с BOM, UTF-16 BE с BOM и UTF-16 LE с BOM. По подразбиране е избрана "
                 L"втората опция, UTF-8 без BOM. Запазват се целият текст на отчета и оригиналните краища на "
@@ -10964,10 +10851,6 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Распакувањето или CRC проверката на библиотеката не успеа."
             },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ресурсот на вградената библиотека е неважечки." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Целиот извештај е преголем за една слика. Изберете помал фонт за извештајот и обидете се "
-                L"повторно."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Библиотеката мора да се вика libcurl.dll за да ја користи MediaInfo."
             },
@@ -11066,8 +10949,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"повеќе инстанци, датотеките се отвораат во веќе отворениот прозорец.\r\nЛевиот дел од "
                 L"статусната лента ги прикажува патеките до датотеките и текот на вчитувањето, а десниот "
                 L"верзијата на вчитаната MediaInfo.dll. Долгите патеки се скратуваат со три точки според "
-                L"достапниот простор.\r\n\r\nИЗВОЗ\r\nCtrl+E го извезува целиот извештај, вклучувајќи го "
-                L"скриениот текст. TXT, BMP, GIF, JPEG, PNG, TIFF и WebP се прикажуваат кога се достапни. "
+                L"достапниот простор.\r\n\r\nИЗВОЗ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF и WebP се прикажуваат кога се достапни. "
                 L"Се паметат последната папка и формат за извоз.\r\nTXT нуди ANSI, UTF-8, UTF-8 со BOM, "
                 L"UTF-16 BE со BOM и UTF-16 LE со BOM. Стандардно е избрана втората ставка, UTF-8 без BOM. "
                 L"Се зачувуваат целиот текст на извештајот и изворните краеви на редовите.\r\n\r\nСОЗДАЈ "
@@ -11304,9 +11187,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Распакивање библиотеке или CRC провера није успела." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ресурс уграђене библиотеке није исправан." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Цео извештај је превелик за једну слику. Изаберите мањи фонт извештаја и покушајте поново."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Библиотека се мора звати libcurl.dll да би је MediaInfo могла користити."
             },
@@ -11397,8 +11277,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"путање преко командне линије. Ако више инстанци није дозвољено, датотеке се отварају у "
                 L"већ покренутом прозору.\r\nЛева страна статусне траке приказује путање датотека и ток "
                 L"учитавања, а десна верзију учитане библиотеке MediaInfo.dll. Дуге путање скраћују се "
-                L"тротачком према доступном простору.\r\n\r\nИЗВОЗ\r\nCtrl+E извози цео извештај, "
-                L"укључујући скривени текст. TXT, BMP, GIF, JPEG, PNG, TIFF и WebP приказују се када су "
+                L"тротачком према доступном простору.\r\n\r\nИЗВОЗ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF и WebP приказују се када су "
                 L"доступни. Последња фасцикла и формат извоза се памте.\r\nTXT нуди ANSI, UTF-8, UTF-8 са "
                 L"BOM-ом, UTF-16 BE са BOM-ом и UTF-16 LE са BOM-ом. Подразумевана је друга ставка, UTF-8 "
                 L"без BOM-а. Чувају се цео текст извештаја и изворни завршеци редова.\r\n\r\nНАПРАВИ "
@@ -11632,10 +11512,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Розпакування бібліотеки або перевірка CRC не вдалася." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ресурс вбудованої бібліотеки неправильний." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Повний звіт завеликий для одного зображення. Виберіть менший шрифт звіту та спробуйте ще "
-                L"раз."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Бібліотека має називатися libcurl.dll, щоб MediaInfo могла її використовувати."
             },
@@ -11726,7 +11602,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"дозволено, файли відкриються у вже запущеному вікні.\r\nЛіворуч у рядку стану показано "
                 L"шляхи до файлів і перебіг завантаження, праворуч — версію завантаженої MediaInfo.dll. "
                 L"Довгі шляхи скорочуються трьома крапками відповідно до доступного "
-                L"місця.\r\n\r\nЕКСПОРТ\r\nCtrl+E експортує весь звіт, зокрема прихований текст. TXT, BMP, "
+                L"місця.\r\n\r\nЕКСПОРТ\r\n"
+                L"TXT, BMP, "
                 L"GIF, JPEG, PNG, TIFF і WebP пропонуються залежно від доступності. Остання тека та формат "
                 L"експорту зберігаються.\r\nTXT пропонує ANSI, UTF-8, UTF-8 із BOM, UTF-16 BE із BOM і "
                 L"UTF-16 LE із BOM. Типово вибрано другий варіант, UTF-8 без BOM. Зберігаються весь текст "
@@ -11959,10 +11836,6 @@ static const LocalizedLanguage localizedLanguages[] = {
             },
             { TXT_LIBRARY_DECOMPRESSION_FAILED, L"Распаковка библиотеки или проверка CRC не удалась." },
             { TXT_LIBRARY_RESOURCE_INVALID, L"Ресурс встроенной библиотеки недействителен." },
-            { TXT_REPORT_IMAGE_TOO_LARGE,
-                L"Полный отчёт слишком велик для одного изображения. Выберите меньший шрифт отчёта и "
-                L"повторите попытку."
-            },
             { TXT_CURL_FILENAME_INVALID,
                 L"Библиотека должна называться libcurl.dll, чтобы MediaInfo могла её использовать."
             },
@@ -12053,8 +11926,8 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ярлык либо передайте их пути в командной строке. Если несколько экземпляров не разрешены, "
                 L"файлы откроются в уже запущенном окне.\r\nСлева в строке состояния отображаются пути к "
                 L"файлам и ход загрузки, справа — версия загруженной MediaInfo.dll. Длинные пути "
-                L"сокращаются многоточием с учётом доступного места.\r\n\r\nЭКСПОРТ\r\nCtrl+E экспортирует "
-                L"весь отчёт, включая скрытый текст. TXT, BMP, GIF, JPEG, PNG, TIFF и WebP предлагаются по "
+                L"сокращаются многоточием с учётом доступного места.\r\n\r\nЭКСПОРТ\r\n"
+                L"TXT, BMP, GIF, JPEG, PNG, TIFF и WebP предлагаются по "
                 L"доступности. Последняя папка и формат экспорта запоминаются.\r\nTXT предлагает ANSI, "
                 L"UTF-8, UTF-8 с BOM, UTF-16 BE с BOM и UTF-16 LE с BOM. По умолчанию выбран второй "
                 L"вариант, UTF-8 без BOM. Сохраняются полный текст отчёта и исходные окончания "

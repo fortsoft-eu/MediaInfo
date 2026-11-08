@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.1.0.2
  */
 
 #include "Localization.h"
@@ -1186,7 +1186,7 @@ void MainForm::PreferencesApplied(void* context, const PreferencesChanges& chang
     owner->Layout();
 }
 
-/// Exports the entire active report using the selected native file-dialog format.
+/// Exports the active report using the selected native file-dialog format.
 void MainForm::ExportReport() {
     FileTab* active = CurrentFile();
     if (!active || !active->ready || !active->report) {
@@ -1209,7 +1209,7 @@ void MainForm::ExportReport() {
     wchar_t error[512];
     bool saved = type <= 5
         ? SaveReportText(active->report, path, type, error, 512)
-        : SaveReportImage(active->edit, active->report, path, type, error, 512);
+        : SaveReportImage(active->edit, path, type, error, 512);
     if (saved) {
         SaveExportSetting(path, type);
     } else {

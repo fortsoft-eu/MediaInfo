@@ -91,8 +91,6 @@ Windows 95 šiuo metu nepalaikomas vykdymo laikas.
 - Šrifto antialiasing parinktys yra ClearType, kai palaikoma, GDI ir Nėra. Pradinis pasirinkimas yra
   ClearType, kai palaikomas, kitu atveju GDI. Šrifto nustatymai turi įtakos tik žiniasklaidos pranešimams ir
   jų vaizdų eksportavimui.
-- Failas > Eksportuoti (Ctrl+E) atidaromas dialogo langas Windows Įrašyti kaip ir visa aktyvi ataskaita
-  eksportuojama į TXT, BMP, GIF, JPEG, PNG, TIFF arba WebP, įskaitant tekstą už matomos srities.
 - Pagalba atidaro atskirą bemodį langą su atskiru užduočių juostos įrašu ir sumažinimo mygtuku. Apie yra
   modalinis dialogas; jo produkto antraštėje pateikiamos visos trys įterptosios DLL versijos.
 
@@ -170,18 +168,6 @@ UTF-8 be BOM. Išsaugomas visas ataskaitos tekstas ir originalios eilučių paba
 BMP, PNG ir TIFF išsaugo visas pateiktas spalvas; GIF89a išsaugo tikslią pateiktą paletę, kai vaizdas turi
 daugiausiai 256 spalvų. Eksportas visada rašo pasirinktą formatą arba praneša apie klaidą; jis niekada
 nepakeičia kito formato.
-
-Vaizduose pateikiama visa ataskaita pasirinktu ataskaitos šriftu su juodu tekstu baltame fone. Juose nėra
-programos meniu, skirtukų antraščių, būsenos juostos, pasirinkimo ar žymėjimo. Atvaizdavimas nepriklauso nuo
-teksto laukelio slinkties padėties.
-
-Kad būtų išvengta tylaus ataskaitų sutrumpinimo ar adresų erdvės išnaudojimo senesniuose kompiuteriuose,
-vienas vaizdas yra 16 384 pikselių pločio, 32 767 pikselių aukščio ir 256 MiB nesuglaudintos taškinės
-atmintinės. Pasirinkite mažesnį šriftą, jei ataskaita viršija šias ribas.
-
-`Google WebP (*.webp)` yra paskutinis formatas ir išsaugo ataskaitą be nuostolių.
-
-WebP: 16383 × 16383 px.
 
 ## Sąsajos ir ataskaitų kalbos
 

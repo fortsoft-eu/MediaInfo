@@ -93,8 +93,6 @@ Windows 95 ei ole tällä hetkellä tuettu suoritusaika.
 - Fontin antialiasointivaihtoehdot ovat ClearType, kun niitä tuetaan, GDI ja Ei mitään. Alkuvalinta on
   ClearType, kun sitä tuetaan, muuten GDI. Fonttiasetukset vaikuttavat vain mediaraportteihin ja niiden kuvien
   vientiin.
-- Tiedosto > Vie (Ctrl+E) avaa Windows Tallenna nimellä -valintaikkunan ja vie koko aktiivisen raportin
-  osoitteeseen TXT, BMP, GIF, JPEG, PNG, TIFF tai WebP, mukaan lukien tekstin näkyvän alueen ulkopuolella.
 - Ohje avaa erillisen mallittoman ikkunan, jossa on oma tehtäväpalkin merkintä ja pienennyspainike. Tietoja on
   modaalinen dialogi; sen tuoteotsikossa luetellaan kaikki kolme upotettua DLL-versiota.
 
@@ -174,18 +172,6 @@ vaihtoehto, UTF-8 ilman BOM-merkkiä. Koko raporttiteksti ja sen alkuperäiset r
 BMP, PNG ja TIFF säilyttävät kaikki renderoidut värit; GIF89a säilyttää tarkan renderoidun paletin, kun
 kuvassa on enintään 256 väriä. Vienti kirjoittaa aina valitun muodon tai ilmoittaa virheestä; se ei koskaan
 korvaa toista muotoa.
-
-Kuvat sisältävät koko raportin valitulla raporttifontilla, mustalla tekstillä valkoisella taustalla. Ne eivät
-sisällä sovellusvalikkoa, välilehtien otsikoita, tilapalkkia, valintaa tai välilehteä. Renderöinti on
-riippumaton tekstilaatikon vierityspaikasta.
-
-Jotta vältetään raporttien hiljainen katkaiseminen tai osoitetilan tyhjentäminen vanhemmissa tietokoneissa,
-yhden kuvan leveys on 16 384 pikseliä, 32 767 pikseliä korkea ja 256 MiB pakkaamatonta bittikarttamuistia.
-Valitse pienempi kirjasin, jos raportti ylittää nämä rajat.
-
-`Google WebP (*.webp)` on viimeinen muoto ja tallentaa raportin häviöttömästi.
-
-WebP: 16383 × 16383 px.
 
 ## Käyttöliittymän ja raporttien kielet
 

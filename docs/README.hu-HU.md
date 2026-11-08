@@ -96,9 +96,6 @@ A Windows 95 jelenleg nem támogatott futtatókörnyezet.
 - A betűtípus élsimítási lehetőségek a következők: ClearType, ha támogatott, GDI és Nincs. A kezdeti választás
   ClearType, ha támogatott, egyébként GDI. A betűtípus-beállítások csak a médiajelentésekre és azok
   képexportálására vonatkoznak.
-- A Fájl > Exportálás (Ctrl+E) megnyitja a Windows Mentés másként párbeszédpanelt, és exportálja a teljes
-  aktív jelentést a TXT, BMP, GIF, JPEG, PNG, TIFF vagy WebP mappába, beleértve a látható területen kívüli
-  szöveget is.
 - A Súgó egy különálló, modell nélküli ablakot nyit meg, saját tálcán lévő bejegyzéssel és kicsinyítés
   gombbal. A About egy modális párbeszédpanel; termékfejlécében mindhárom beágyazott DLL verzió szerepel.
 
@@ -179,18 +176,6 @@ megmaradnak.
 BMP, PNG és TIFF megőrzi az összes renderelt színt; A GIF89a megőrzi a pontos renderelt palettát, ha a kép
 legfeljebb 256 színnel rendelkezik. Az Export mindig a kiválasztott formátumot írja, vagy hibát jelez; soha
 nem helyettesít más formátumot.
-
-A képek a teljes jelentést tartalmazzák a kiválasztott jelentés betűtípussal, fehér alapon fekete szöveggel.
-Nem tartalmazzák az alkalmazásmenüt, a lapfejlécet, az állapotsort, a kijelölést vagy a kazettát. A renderelés
-független a szövegdoboz görgetési pozíciójától.
-
-A jelentések csendes csonkolásának vagy a régebbi számítógépek címterének kimerítésének elkerülése érdekében
-egyetlen kép szélessége 16 384 pixel, 32 767 pixel magas és 256 MiB tömörítetlen bittérkép memória. Válasszon
-kisebb betűtípust, ha a jelentés túllépi ezeket a korlátokat.
-
-A `Google WebP (*.webp)` az utolsó formátum, és veszteségmentesen menti a jelentést.
-
-WebP: 16383 × 16383 px.
 
 ## A felület és a jelentések nyelve
 

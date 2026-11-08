@@ -98,8 +98,6 @@ Windows 95 no es actualmente un tiempo de ejecución compatible.
 - Las opciones de suavizado de fuentes son ClearType cuando se admiten, GDI y Ninguna. La elección inicial es
   ClearType cuando sea compatible; en caso contrario, GDI. La configuración de fuente afecta solo a los
   informes de medios y sus exportaciones de imágenes.
-- Archivo > Exportar (Ctrl+E) abre el cuadro de diálogo Guardar como Windows y exporta todo el informe activo
-  a TXT, BMP, GIF, JPEG, PNG, TIFF o WebP, incluido el texto fuera del área visible.
 - Ayuda abre una ventana independiente y no modelo con su propia entrada en la barra de tareas y un botón de
   minimizar. Acerca de es un diálogo modal; su encabezado de producto enumera las tres versiones integradas de
   DLL.
@@ -181,18 +179,6 @@ BOM, es la predeterminada. Se conservan el texto completo del informe y sus fina
 BMP, PNG y TIFF conservan todos los colores renderizados; GIF89a conserva la paleta renderizada exacta cuando
 la imagen tiene como máximo 256 colores. Exportar siempre escribe el formato seleccionado o informa un error;
 nunca sustituye a otro formato.
-
-Las imágenes contienen el informe completo en la fuente de informe seleccionada, con texto negro sobre fondo
-blanco. No contienen el menú de la aplicación, encabezados de pestañas, barra de estado, selección ni cursor.
-La representación es independiente de la posición de desplazamiento del cuadro de texto.
-
-Para evitar truncar informes silenciosamente o agotar el espacio de direcciones en computadoras más antiguas,
-una sola imagen está limitada a 16.384 píxeles de ancho, 32.767 píxeles de alto y 256 MiB de memoria de mapa
-de bits sin comprimir. Seleccione una fuente más pequeña si un informe excede esos límites.
-
-`Google WebP (*.webp)` es el último formato y guarda el informe sin pérdida.
-
-WebP: 16383 × 16383 px.
 
 ## Idiomas de interfaz y de informes
 

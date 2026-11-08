@@ -91,8 +91,6 @@ Windows 95 şu anda desteklenen bir çalışma zamanı değil.
 - Yazı tipi kenar yumuşatma seçenekleri desteklendiğinde ClearType, GDI ve Hiçbiri'dir. Desteklendiğinde ilk
   seçim ClearType, aksi takdirde GDI'dir. Yazı tipi ayarları yalnızca medya raporlarını ve bunların görüntü
   aktarımlarını etkiler.
-- Dosya > Dışa Aktar (Ctrl+E), Windows Farklı Kaydet iletişim kutusunu açar ve görünür alanın dışındaki metin
-  de dahil olmak üzere etkin raporun tamamını TXT, BMP, GIF, JPEG, PNG, TIFF veya WebP'ye aktarır.
 - Yardım, kendi görev çubuğu girişi ve simge durumuna küçültme düğmesiyle ayrı bir modelsiz pencere açar.
   Hakkında kalıcı bir iletişim kutusudur; ürün başlığı, üç yerleşik DLL sürümünün tümünü listeler.
 
@@ -170,18 +168,6 @@ seçenek olan BOM içermeyen UTF-8 varsayılandır. Raporun tam metni ve özgün
 BMP, PNG ve TIFF oluşturulan tüm renkleri korur; GIF89a, görüntüde en fazla 256 renk bulunduğunda oluşturulan
 paletin aynısını korur. Dışa aktarma her zaman seçilen formatı yazar veya bir hata bildirir; asla başka bir
 formatın yerini almaz.
-
-Resimler, beyaz zemin üzerine siyah metinle birlikte, seçilen rapor yazı tipinde tam raporu içerir. Uygulama
-menüsünü, sekme başlıklarını, durum çubuğunu, seçimi veya düzeltme işaretini içermezler. Oluşturma, metin
-kutusunun kaydırma konumundan bağımsızdır.
-
-Raporların sessizce kesilmesini veya eski bilgisayarlarda adres alanının tükenmesini önlemek için, tek bir
-görüntü 16.384 piksel genişliğinde, 32.767 piksel yüksekliğinde ve 256 MiB sıkıştırılmamış bitmap belleğiyle
-sınırlıdır. Rapor bu sınırları aşarsa daha küçük bir yazı tipi seçin.
-
-`Google WebP (*.webp)` son biçimdir ve raporu kayıpsız kaydeder.
-
-WebP: 16383 × 16383 px.
 
 ## Arayüz ve rapor dilleri
 

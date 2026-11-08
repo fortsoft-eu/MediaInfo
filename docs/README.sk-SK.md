@@ -87,8 +87,6 @@ Windows 95 momentálne nie je podporované prostredie runtime.
   vypnuté, kým je vybraté predvolené. Používateľom zvolené písma sa zachovajú bez nahradenia kódom aplikácie.
 - Možnosti vyhladzovania písma sú ClearType, ak je podporované, GDI a Žiadne. Počiatočná voľba je ClearType,
   ak je podporovaná, inak GDI. Nastavenia písma ovplyvňujú iba mediálne správy a ich exporty obrázkov.
-- Súbor > Exportovať (Ctrl+E) otvorí dialógové okno Windows Uložiť ako a exportuje celý aktívny prehľad do
-  TXT, BMP, GIF, JPEG, PNG, TIFF alebo WebP vrátane textu mimo viditeľnej oblasti.
 - Pomocník otvorí samostatné nemodálne okno s vlastnou položkou na paneli úloh a možnosťou minimalizácie. O
   aplikácii je modálny dialóg; záhlavie produktu uvádza všetky tri vložené verzie DLL.
 
@@ -163,18 +161,6 @@ BOM. Zachováva sa celý text reportu aj jeho pôvodné konce riadkov.
 
 BMP, PNG a TIFF zachovajú všetky vykreslené farby; GIF89a zachová presnú vykreslenú paletu, keď má obrázok
 najviac 256 farieb. Export vždy zapíše zvolený formát alebo ohlási chybu; nikdy nenahrádza iný formát.
-
-Obrázky obsahujú celú správu vo vybratom písme správy s čiernym textom na bielom pozadí. Neobsahujú menu
-aplikácie, hlavičky kariet, stavový riadok, výber ani vsuvku. Vykresľovanie je nezávislé od polohy rolovania
-textového poľa.
-
-Aby sa predišlo tichému skracovaniu správ alebo vyčerpaniu priestoru adries na starších počítačoch, jeden
-obrázok je obmedzený na 16 384 pixelov na šírku, 32 767 pixelov na výšku a 256 MiB nekomprimovanej bitmapovej
-pamäte. Ak prehľad prekračuje tieto limity, vyberte menšie písmo.
-
-`Google WebP (*.webp)` je posledný formát a ukladá report bezstratovo.
-
-WebP: 16383 × 16383 px.
 
 ## Jazyky rozhrania a reportov
 

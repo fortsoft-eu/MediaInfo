@@ -94,8 +94,6 @@ Windows 95 bħalissa mhix runtime appoġġjata.
 - Għażliet antialiasing tat-tipa huma ClearType meta appoġġjati, GDI u Xejn. L-għażla inizjali hija ClearType
   meta appoġġjata, inkella GDI. Is-settings tal-font jaffettwaw biss ir-rapporti tal-midja u
   l-esportazzjonijiet tal-immaġni tagħhom.
-- Fajl > Esportazzjoni (Ctrl+E) tiftaħ id-djalogu Windows Save As u tesporta r-rapport attiv kollu lejn TXT,
-  BMP, GIF, JPEG, PNG, TIFF jew WebP, inkluż it-test barra ż-żona viżibbli.
 - Għajnuna tiftaħ tieqa separata bla mudell bid-dħul tagħha stess u l-buttuna timminimizza tat-taskbar. Dwar
   huwa dialog modali; l-intestatura tal-prodott tagħha telenka t-tliet verżjonijiet DLL inkorporati.
 
@@ -175,18 +173,6 @@ hija dik predefinita. It-test sħiħ tar-rapport u t-truf tal-linji oriġinali j
 BMP, PNG u TIFF jippreservaw il-kuluri kollha mogħtija; GIF89a jippreserva l-paletta mogħtija eżatta meta
 l-immaġni jkollha l-aktar 256 kuluri. L-esportazzjoni dejjem tikteb il-format magħżul jew tirrapporta żball;
 qatt ma jissostitwixxi format ieħor.
-
-L-immaġini fihom ir-rapport sħiħ fit-tipa tar-rapport magħżula, b'test iswed fuq sfond abjad. Ma fihomx
-il-menu tal-applikazzjoni, headers tat-tab, status bar, għażla jew caret. Ir-rendering huwa indipendenti
-mill-pożizzjoni tal-iscroll tal-kaxxa tat-test.
-
-Biex tevita li r-rapporti jonqsu bis-skiet jew li teżawrixxi l-ispazju tal-indirizzi fuq kompjuters anzjani,
-immaġini waħda hija limitata għal 16,384 pixels wiesgħa, 32,767 pixels għolja u 256 MiB ta' memorja bitmap
-mhux kompressata. Agħżel font iżgħar jekk rapport jaqbeż dawk il-limiti.
-
-`Google WebP (*.webp)` huwa l-aħħar format u jsalva r-rapport mingħajr telf.
-
-WebP: 16383 × 16383 px.
 
 ## Lingwi tal-interface u tar-rapport
 

@@ -85,8 +85,6 @@ Windows 95 er ekki studdur keyrslutími.
 - Valkostir fyrir hliðrun leturs eru ClearType þegar þeir eru studdir, GDI og None. Upphafsvalið er ClearType
   þegar það er stutt, annars GDI. Leturstillingar hafa aðeins áhrif á fjölmiðlafréttir og myndaútflutning
   þeirra.
-- Skrá > Flytja út (Ctrl+E) opnar Windows Vista sem gluggann og flytur alla virku skýrsluna út í TXT, BMP,
-  GIF, JPEG, PNG, TIFF eða WebP, að meðtöldum texta utan sýnilega svæðisins.
 - Hjálp opnar sérstakan fyrirsætulausan glugga með eigin verkstikufærslu og lágmarkshnappi. Um er valmynd;
   vöruhaus þess sýnir allar þrjár innbyggðu DLL útgáfurnar.
 
@@ -159,18 +157,6 @@ BOM, er sjálfgefinn. Allur texti skýrslunnar og upprunaleg línuskipti varðve
 BMP, PNG og TIFF varðveita alla gerðir liti; GIF89a varðveitir nákvæmlega birtu litatöfluna þegar myndin hefur
 í mesta lagi 256 liti. Export skrifar alltaf valið snið eða tilkynnir um villu; það kemur aldrei í stað annars
 sniðs.
-
-Myndir innihalda skýrsluna í heild sinni í völdu skýrsluletri, með svörtum texta á hvítum bakgrunni. Þau
-innihalda ekki forritavalmyndina, flipahausa, stöðustiku, val eða skjámynd. Lýsing er óháð því hvar
-textareiturinn er flettur.
-
-Til að forðast að stytta skýrslur hljóðlaust eða tæma vistfangarýmið á eldri tölvum er ein mynd takmörkuð við
-16.384 pixla á breidd, 32.767 pixlar á hæð og 256 MiB af óþjappuðu bitmapinni. Veldu minni leturgerð ef
-skýrsla fer yfir þessi mörk.
-
-`Google WebP (*.webp)` er síðasta sniðið og vistar skýrsluna án taps.
-
-WebP: 16383 × 16383 px.
 
 ## Viðmót og skýrslutungumál
 

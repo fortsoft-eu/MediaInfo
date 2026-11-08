@@ -94,8 +94,6 @@ Windows 95 não é atualmente um tempo de execução compatível.
 - As opções de antialiasing de fonte são ClearType quando suportadas, GDI e None. A escolha inicial é
   ClearType quando suportado, caso contrário GDI. As definições de fonte afetam apenas os relatórios de média
   e as suas exportações de imagens.
-- Ficheiro > Exportar (Ctrl+E) abre o diálogo Guardar como Windows e exporta todo o relatório ativo para TXT,
-  BMP, GIF, JPEG, PNG, TIFF ou WebP, incluindo texto fora da área visível.
 - A Ajuda abre uma janela separada sem janela restrita com a sua própria entrada na barra de tarefas e botão
   de minimizar. Sobre é uma caixa de diálogo modal; o cabeçalho do produto lista todas as três versões DLL
   incorporadas.
@@ -178,18 +176,6 @@ TXT oferece ANSI, UTF-8, UTF-8 com BOM, UTF-16 BE com BOM e UTF-16 LE com BOM. A
 BMP, PNG e TIFF preservam todas as cores renderizadas; GIF89a preserva a paleta renderizada exata quando a
 imagem tem no máximo 256 cores. Exportar grava sempre o formato selecionado ou reporta um erro; nunca
 substitui outro formato.
-
-As imagens contêm o relatório completo na fonte selecionada, com texto preto sobre fundo branco. Não contêm o
-menu da aplicação, cabeçalhos de separadores, barra de estado, seleção ou cursor. A renderização é
-independente da posição de deslocação da caixa de texto.
-
-Para evitar o truncamento silencioso de relatórios ou o esgotamento do espaço de endereço em computadores mais
-antigos, uma única imagem está limitada a 16 384 pixels de largura, 32 767 pixels de altura e 256 MiB de
-memória de bitmap não comprimida. Selecione uma fonte mais pequena se um relatório exceder estes limites.
-
-`Google WebP (*.webp)` é o último formato e guarda o relatório sem perdas.
-
-WebP: 16383 × 16383 px.
 
 ## Idiomas de interface e de relatório
 

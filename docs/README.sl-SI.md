@@ -87,8 +87,6 @@ Windows 95 trenutno ni podprto izvajalno okolje.
   izbrana privzeta vrednost. Pisave, ki jih izbere uporabnik, se ohranijo brez zamenjave s kodo aplikacije.
 - Možnosti izravnave pisave so ClearType, če je podprto, GDI in Brez. Začetna izbira je ClearType, če je
   podprto, sicer GDI. Nastavitve pisave vplivajo samo na medijska poročila in njihove izvoze slik.
-- Datoteka > Izvoz (Ctrl+E) odpre pogovorno okno Windows Shrani kot in izvozi celotno aktivno poročilo v TXT,
-  BMP, GIF, JPEG, PNG, TIFF ali WebP, vključno z besedilom zunaj vidnega območja.
 - Pomoč odpre ločeno brezmodno okno z lastnim vnosom v opravilni vrstici in gumbom za pomanjšanje. About je
   modalno pogovorno okno; njegova glava izdelka navaja vse tri vdelane različice DLL.
 
@@ -164,18 +162,6 @@ BOM. Ohranijo se celotno besedilo poročila in izvirni konci vrstic.
 
 BMP, PNG in TIFF ohranijo vse upodobljene barve; GIF89a ohrani natančno upodobljeno paleto, ko ima slika
 največ 256 barv. Izvoz vedno zapiše izbrano obliko ali javi napako; nikoli ne nadomesti drugega formata.
-
-Slike vsebujejo celotno poročilo v izbrani pisavi poročila s črnim besedilom na belem ozadju. Ne vsebujejo
-menija aplikacij, glav zavihkov, vrstice stanja, izbire ali kazalke. Upodabljanje je neodvisno od drsnega
-položaja besedilnega polja.
-
-Da bi se izognili tihemu krčenju poročil ali izčrpanju naslovnega prostora na starejših računalnikih, je
-posamezna slika omejena na 16.384 slikovnih pik v širino, 32.767 v višino in 256 MiB pomnilnika nestisnjene
-bitne slike. Če poročilo presega te omejitve, izberite manjšo pisavo.
-
-`Google WebP (*.webp)` je zadnja oblika in shrani poročilo brez izgub.
-
-WebP: 16383 × 16383 px.
 
 ## Jeziki vmesnika in poročil
 

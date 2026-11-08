@@ -86,8 +86,6 @@ Windows 95 er for øyeblikket ikke en støttet kjøretid.
   mens standard er valgt. Brukervalgte fonter beholdes uten erstatning med applikasjonskode.
 - Valg for skriftkantutjevning er ClearType når de støttes, GDI og Ingen. Det første valget er ClearType når
   det støttes, ellers GDI. Skriftinnstillinger påvirker bare medierapporter og deres bildeeksporter.
-- Fil > Eksporter (Ctrl+E) åpner Windows Lagre som-dialogen og eksporterer hele den aktive rapporten til TXT,
-  BMP, GIF, JPEG, PNG, TIFF eller WebP, inkludert tekst utenfor det synlige området.
 - Hjelp åpner et eget modellløst vindu med egen oppgavelinjeoppføring og minimeringsknapp. Om er en modal
   dialog; produktoverskriften viser alle tre innebygde DLL-versjoner.
 
@@ -161,18 +159,6 @@ uten BOM, er standard. Hele rapportteksten og de opprinnelige linjeskiftene beva
 BMP, PNG og TIFF bevarer alle gjengitte farger; GIF89a bevarer den eksakte gjengitte paletten når bildet har
 maksimalt 256 farger. Eksport skriver alltid det valgte formatet eller rapporterer en feil; det erstatter
 aldri et annet format.
-
-Bilder inneholder hele rapporten i valgt rapportfont, med svart tekst på hvit bakgrunn. De inneholder ikke
-applikasjonsmenyen, faneoverskrifter, statuslinje, utvalg eller innstilling. Gjengivelsen er uavhengig av
-tekstboksens rulleposisjon.
-
-For å unngå stille avkorting av rapporter eller tømme adresseplassen på eldre datamaskiner, er ett enkelt
-bilde begrenset til 16 384 piksler bredt, 32 767 piksler høyt og 256 MiB ukomprimert punktgrafikkminne. Velg
-en mindre skrift hvis en rapport overskrider disse grensene.
-
-`Google WebP (*.webp)` er det siste formatet og lagrer rapporten uten tap.
-
-WebP: 16383 × 16383 px.
 
 ## Grensesnitt og rapportspråk
 

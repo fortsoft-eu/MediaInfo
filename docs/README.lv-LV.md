@@ -91,8 +91,6 @@ Windows 95 pašlaik netiek atbalstīts izpildlaiks.
 - Fontu antialiasing izvēle ir ClearType, kad tiek atbalstīta, GDI un Nav. Sākotnējā izvēle ir ClearType, ja
   tiek atbalstīta, pretējā gadījumā GDI. Fonta iestatījumi ietekmē tikai multivides ziņojumus un to attēlu
   eksportēšanu.
-- Fails > Eksportēt (Ctrl+E) atver dialoglodziņu Windows Saglabāt kā un eksportē visu aktīvo pārskatu uz TXT,
-  BMP, GIF, JPEG, PNG, TIFF vai WebP, ieskaitot tekstu ārpus redzamā apgabala.
 - Palīdzība atver atsevišķu bezmodeļu logu ar savu uzdevumjoslas ierakstu un minimizēšanas pogu. Par ir modāls
   dialogs; tā produkta galvenē ir uzskaitītas visas trīs iegultās DLL versijas.
 
@@ -168,18 +166,6 @@ UTF-8 bez BOM. Tiek saglabāts pilns atskaites teksts un tā sākotnējās rindu
 BMP, PNG un TIFF saglabā visas renderētās krāsas; GIF89a saglabā precīzu renderēto paleti, ja attēlam ir ne
 vairāk kā 256 krāsas. Eksportēt vienmēr raksta izvēlēto formātu vai ziņo par kļūdu; tas nekad neaizstāj citu
 formātu.
-
-Attēli satur pilnu pārskatu atlasītajā pārskata fontā ar melnu tekstu uz balta fona. Tajos nav ietverta
-lietojumprogrammas izvēlne, ciļņu galvenes, statusa josla, atlase vai kopa. Renderēšana nav atkarīga no
-tekstlodziņa ritināšanas pozīcijas.
-
-Lai izvairītos no klusas pārskatu saīsināšanas vai adrešu vietas izsmelšanas vecākos datoros, viena attēla
-platums ir ierobežots līdz 16 384 pikseļiem, 32 767 pikseļiem augsts un 256 MiB nesaspiestas bitkartes
-atmiņas. Atlasiet mazāku fontu, ja pārskats pārsniedz šos ierobežojumus.
-
-`Google WebP (*.webp)` ir pēdējais formāts un saglabā atskaiti bez zudumiem.
-
-WebP: 16383 × 16383 px.
 
 ## Interfeisa un atskaišu valodas
 

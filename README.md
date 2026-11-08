@@ -83,8 +83,6 @@ Windows 95 is not currently a supported runtime.
   the default is selected. User-selected fonts are retained without substitution by application code.
 - Font antialiasing choices are ClearType when supported, GDI and None. The initial choice is ClearType when
   supported, otherwise GDI. Font settings affect only media reports and their image exports.
-- File > Export (Ctrl+E) opens the Windows Save As dialog and exports the entire active report to TXT, BMP,
-  GIF, JPEG, PNG, TIFF or WebP, including text outside the visible area.
 - Help opens a separate modeless window with its own taskbar entry and minimize button. About is a modal
   dialog; its product header lists all three embedded DLL versions.
 
@@ -159,18 +157,6 @@ without BOM, is the default. The complete report text and its original line endi
 BMP, PNG and TIFF preserve all rendered colors; GIF89a preserves the exact rendered palette when the image has
 at most 256 colors. Export always writes the selected format or reports an error; it never substitutes another
 format.
-
-Images contain the full report in the selected report font, with black text on a white background. They do not
-contain the application menu, tab headers, status bar, selection or caret. Rendering is independent of the
-edit's scroll position.
-
-To avoid silently truncating reports or exhausting the address space on older computers, a single image is
-limited to 16,384 pixels wide, 32,767 pixels high and 256 MiB of uncompressed bitmap memory. Select a smaller
-font if a report exceeds those limits.
-
-`Google WebP (*.webp)` is the last format and saves the report losslessly.
-
-WebP: 16383 × 16383 px.
 
 ## Interface and report languages
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.1.0.2
  */
 
 #pragma once
@@ -313,7 +313,7 @@ private:
     /// Immediately clears saved and live recent files and refreshes the main menu.
     static bool PreferencesClearRecentFiles(void* context);
 
-    /// Exports the entire active report using the selected native file-dialog format.
+    /// Exports the active report using the selected native file-dialog format.
     void ExportReport();
 
     /// Opens the system printer dialog and prints a snapshot of the active report without preview.

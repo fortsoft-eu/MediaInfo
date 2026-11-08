@@ -99,8 +99,6 @@ Windows 95 is momenteel geen ondersteunde runtime.
 - Keuzes voor lettertype-anti-aliasing zijn ClearType indien ondersteund, GDI en Geen. De initiële keuze is
   ClearType indien ondersteund, anders GDI. Lettertype-instellingen zijn alleen van invloed op mediaberichten
   en de bijbehorende afbeeldingsexports.
-- Bestand > Exporteren (Ctrl+E) opent het dialoogvenster Windows Opslaan als en exporteert het volledige
-  actieve rapport naar TXT, BMP, GIF, JPEG, PNG, TIFF of WebP, inclusief tekst buiten het zichtbare gebied.
 - Help opent een apart modelloos venster met een eigen taakbalkinvoer en minimaliseerknop. Over is een modale
   dialoog; de productkop vermeldt alle drie de ingebedde DLL-versies.
 
@@ -181,18 +179,6 @@ BOM, is de standaard. De volledige rapporttekst en de oorspronkelijke regeleinde
 BMP, PNG en TIFF behouden alle weergegeven kleuren; GIF89a behoudt het exacte gerenderde palet wanneer de
 afbeelding maximaal 256 kleuren heeft. Export schrijft altijd het geselecteerde formaat of rapporteert een
 fout; het vervangt nooit een ander formaat.
-
-Afbeeldingen bevatten het volledige rapport in het geselecteerde rapportlettertype, met zwarte tekst op een
-witte achtergrond. Ze bevatten niet het toepassingsmenu, de tabbladkoppen, de statusbalk, de selectie of het
-dakje. De weergave is onafhankelijk van de schuifpositie van het tekstvak.
-
-Om te voorkomen dat rapporten stilletjes worden afgekapt of de adresruimte op oudere computers wordt uitgeput,
-is een enkele afbeelding beperkt tot 16.384 pixels breed, 32.767 pixels hoog en 256 MiB ongecomprimeerd
-bitmapgeheugen. Selecteer een kleiner lettertype als een rapport deze limieten overschrijdt.
-
-`Google WebP (*.webp)` is het laatste formaat en slaat het rapport zonder verlies op.
-
-WebP: 16383 × 16383 px.
 
 ## Interface- en rapporttalen
 

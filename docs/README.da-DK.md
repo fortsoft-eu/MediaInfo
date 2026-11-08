@@ -89,8 +89,6 @@ Windows 95 er i øjeblikket ikke en understøttet runtime.
 - Valg af skrifttypeudligning er ClearType, når de understøttes, GDI og Ingen. Det første valg er ClearType,
   når det understøttes, ellers GDI. Skrifttypeindstillinger påvirker kun medierapporter og deres
   billedeksport.
-- Fil > Eksporter (Ctrl+E) åbner Windows Gem som-dialogen og eksporterer hele den aktive rapport til TXT, BMP,
-  GIF, JPEG, PNG, TIFF eller WebP, inklusive tekst uden for det synlige område.
 - Hjælp åbner et separat modelløst vindue med sin egen proceslinjeindgang og minimeringsknap. Om er en modal
   dialog; dens produktoverskrift viser alle tre indlejrede DLL-versioner.
 
@@ -165,18 +163,6 @@ uden BOM, er standard. Hele rapportteksten og dens oprindelige linjeskift bevare
 BMP, PNG og TIFF bevarer alle gengivne farver; GIF89a bevarer den nøjagtige gengivne palet, når billedet højst
 har 256 farver. Eksport skriver altid det valgte format eller rapporterer en fejl; det erstatter aldrig et
 andet format.
-
-Billeder indeholder hele rapporten i den valgte rapportskrifttype, med sort tekst på hvid baggrund. De
-indeholder ikke applikationsmenuen, faneoverskrifter, statuslinje, valg eller indtastning. Gengivelsen er
-uafhængig af tekstboksens rulleposition.
-
-For at undgå lydløst at afkorte rapporter eller opbruge adressepladsen på ældre computere, er et enkelt
-billede begrænset til 16.384 pixels bred, 32.767 pixels høj og 256 MiB ukomprimeret bitmaphukommelse. Vælg en
-mindre skrifttype, hvis en rapport overskrider disse grænser.
-
-`Google WebP (*.webp)` er det sidste format og gemmer rapporten uden tab.
-
-WebP: 16383 × 16383 px.
 
 ## Interface- og rapportsprog
 

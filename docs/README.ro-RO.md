@@ -94,8 +94,6 @@ Windows 95 nu este în prezent un timp de rulare acceptat.
 - Opțiunile de antialiasing pentru font sunt ClearType atunci când sunt acceptate, GDI și Niciunul. Alegerea
   inițială este ClearType când este acceptată, în caz contrar GDI. Setările fonturilor afectează numai
   rapoartele media și exporturile lor de imagini.
-- Fișier > Export (Ctrl+E) deschide dialogul Windows Salvare ca și exportă întregul raport activ în TXT, BMP,
-  GIF, JPEG, PNG, TIFF sau WebP, inclusiv textul din afara zonei vizibile.
 - Ajutor deschide o fereastră separată, fără model, cu propria sa intrare în bara de activități și butonul de
   minimizare. Despre este un dialog modal; antetul produsului său listează toate cele trei versiuni DLL
   încorporate.
@@ -177,18 +175,6 @@ este cea implicită. Se păstrează întregul text al raportului și sfârșitur
 BMP, PNG și TIFF păstrează toate culorile redate; GIF89a păstrează paleta redată exactă atunci când imaginea
 are cel mult 256 culori. Export scrie întotdeauna formatul selectat sau raportează o eroare; nu înlocuiește
 niciodată un alt format.
-
-Imaginile conțin raportul complet în fontul de raport selectat, cu text negru pe fundal alb. Acestea nu conțin
-meniul aplicației, anteturile file, bara de stare, selecția sau semnul de semnătură. Redarea este independentă
-de poziția de defilare a casetei de text.
-
-Pentru a evita trunchierea silențioasă a rapoartelor sau epuizarea spațiului de adrese pe computerele mai
-vechi, o singură imagine este limitată la 16.384 pixeli lățime, 32.767 pixeli înălțime și 256 MiB memorie
-bitmap necomprimată. Selectați un font mai mic dacă un raport depășește aceste limite.
-
-`Google WebP (*.webp)` este ultimul format și salvează raportul fără pierderi.
-
-WebP: 16383 × 16383 px.
 
 ## Limbi de interfață și rapoarte
 

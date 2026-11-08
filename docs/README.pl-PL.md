@@ -92,8 +92,6 @@ Windows 95 nie jest obecnie obsługiwanym środowiskiem wykonawczym.
 - Opcje wygładzania czcionek to ClearType, jeśli jest obsługiwane, GDI i Brak. Początkowy wybór to ClearType,
   jeśli jest obsługiwany, w przeciwnym razie GDI. Ustawienia czcionek wpływają tylko na raporty multimedialne
   i eksport ich obrazów.
-- Plik > Eksportuj (Ctrl+E) otwiera okno dialogowe Windows Zapisz jako i eksportuje cały aktywny raport do
-  TXT, BMP, GIF, JPEG, PNG, TIFF lub WebP, łącznie z tekstem poza widocznym obszarem.
 - Pomoc otwiera oddzielne, niemodalne okno z własnym wpisem na pasku zadań i przyciskiem minimalizacji.
   Informacje to modalne okno dialogowe; w nagłówku produktu znajdują się wszystkie trzy osadzone wersje DLL.
 
@@ -173,18 +171,6 @@ bez BOM. Pełny tekst raportu i jego oryginalne zakończenia wierszy są zachowa
 BMP, PNG i TIFF zachowują wszystkie renderowane kolory; GIF89a zachowuje dokładnie renderowaną paletę, gdy
 obraz ma co najwyżej 256 kolorów. Eksport zawsze zapisuje wybrany format lub zgłasza błąd; nigdy nie zastępuje
 innego formatu.
-
-Obrazy zawierają pełny raport w wybranej czcionce raportu, z czarnym tekstem na białym tle. Nie zawierają menu
-aplikacji, nagłówków zakładek, paska stanu, zaznaczenia ani karetki. Renderowanie jest niezależne od pozycji
-przewijania pola tekstowego.
-
-Aby uniknąć cichego obcinania raportów lub wyczerpania przestrzeni adresowej na starszych komputerach,
-pojedynczy obraz jest ograniczony do 16 384 szerokości pikseli, 32 767 wysokości pikseli i 256 MiB
-nieskompresowanej pamięci bitmapowej. Jeśli raport przekracza te limity, wybierz mniejszą czcionkę.
-
-`Google WebP (*.webp)` jest ostatnim formatem i zapisuje raport bezstratnie.
-
-WebP: 16383 × 16383 px.
 
 ## Języki interfejsu i raportów
 

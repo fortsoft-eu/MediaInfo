@@ -90,8 +90,6 @@ Windows 95 trenutno nije podržano vrijeme izvođenja.
   izabrano podrazumevano. Fontovi koje odabere korisnik zadržavaju se bez zamjene kodom aplikacije.
 - Izbor antialiasinga fonta su ClearType kada je podržano, GDI i Ništa. Početni izbor je ClearType kada je
   podržan, u suprotnom GDI. Postavke fonta utiču samo na medijske izvještaje i njihove izvoze slika.
-- Datoteka > Izvoz (Ctrl+E) otvara dijalog Windows Sačuvaj kao i izvozi cijeli aktivni izvještaj u TXT, BMP,
-  GIF, JPEG, PNG, TIFF ili WebP, uključujući tekst izvan vidljivog područja.
 - Pomoć otvara poseban prozor bez režima sa sopstvenim unosom na traci zadataka i dugmetom za minimiziranje.
   About je modalni dijalog; njegovo zaglavlje proizvoda navodi sve tri ugrađene DLL verzije.
 
@@ -168,18 +166,6 @@ stavka, UTF-8 bez BOM-a. Čuvaju se cijeli tekst izvještaja i izvorni završeci
 
 BMP, PNG i TIFF čuvaju sve prikazane boje; GIF89a čuva tačno prikazanu paletu kada slika ima najviše 256 boja.
 Izvoz uvijek upisuje odabrani format ili prijavljuje grešku; nikada ne zamjenjuje drugi format.
-
-Slike sadrže cijeli izvještaj u odabranom fontu izvještaja, s crnim tekstom na bijeloj pozadini. Ne sadrže
-meni aplikacije, zaglavlja kartica, statusnu traku, izbor ili kursor. Renderiranje je nezavisno od položaja
-pomicanja tekstualnog okvira.
-
-Kako bi se izbjeglo tiho skraćivanje izvještaja ili iscrpljivanje adresnog prostora na starijim računarima,
-jedna slika je ograničena na 16.384 piksela širine, 32.767 visine piksela i 256 MiB nekomprimirane bitmap
-memorije. Odaberite manji font ako izvještaj prelazi ta ograničenja.
-
-`Google WebP (*.webp)` je posljednji format i čuva izvještaj bez gubitaka.
-
-WebP: 16383 × 16383 px.
 
 ## Jezici interfejsa i izvještaja
 

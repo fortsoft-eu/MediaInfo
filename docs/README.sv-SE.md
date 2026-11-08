@@ -87,8 +87,6 @@ Windows 95 stöds för närvarande inte.
   programkod.
 - Val av teckensnittskantutjämning är ClearType när de stöds, GDI och Ingen. Det initiala valet är ClearType
   när det stöds, annars GDI. Teckensnittsinställningar påverkar endast mediarapporter och deras bildexporter.
-- Arkiv > Exportera (Ctrl+E) öppnar dialogrutan Windows Spara som och exporterar hela den aktiva rapporten
-  till TXT, BMP, GIF, JPEG, PNG, TIFF eller WebP, inklusive text utanför det synliga området.
 - Hjälp öppnar ett separat modelllöst fönster med en egen post i aktivitetsfältet och minimeringsknapp. Om är
   en modal dialog; dess produktrubrik listar alla tre inbäddade DLL-versioner.
 
@@ -164,18 +162,6 @@ UTF-8 utan BOM, är standard. Hela rapporttexten och dess ursprungliga radslut b
 BMP, PNG och TIFF bevarar alla renderade färger; GIF89a bevarar den exakta renderade paletten när bilden har
 högst 256 färger. Export skriver alltid det valda formatet eller rapporterar ett fel; det ersätter aldrig ett
 annat format.
-
-Bilder innehåller hela rapporten i valt rapporttypsnitt, med svart text på vit bakgrund. De innehåller inte
-applikationsmenyn, flikrubriker, statusfält, urval eller fält. Återgivningen är oberoende av textrutans
-rullningsposition.
-
-För att undvika tysta avkortningar av rapporter eller uttömmande adressutrymmet på äldre datorer är en enda
-bild begränsad till 16 384 pixlar bred, 32 767 pixlar hög och 256 MiB okomprimerat bitmappsminne. Välj ett
-mindre teckensnitt om en rapport överskrider dessa gränser.
-
-`Google WebP (*.webp)` är det sista formatet och sparar rapporten förlustfritt.
-
-WebP: 16383 × 16383 px.
 
 ## Gränssnitt och rapportspråk
 

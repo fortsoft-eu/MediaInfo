@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.1.0.2
  */
 
 #pragma once
@@ -157,7 +157,6 @@ enum TextId {
     TXT_LIBRARY_EXTRACTION_FAILED,
     TXT_LIBRARY_DECOMPRESSION_FAILED,
     TXT_LIBRARY_RESOURCE_INVALID,
-    TXT_REPORT_IMAGE_TOO_LARGE,
     TXT_CURL_FILENAME_INVALID,
     TXT_FILE_DIALOG_OPEN_FAILED,
     TXT_FILE_DIALOG_SELECTION_FAILED,
@@ -336,8 +335,8 @@ void FreePrintJob(PrintJob* job);
 /// Reports whether the requested image format can be written without substituting another format.
 bool IsReportImageTypeAvailable(DWORD type);
 
-/// Renders the entire report in its selected font and saves it with the requested available encoder.
-bool SaveReportImage(HWND edit, const wchar_t* report, const wchar_t* path, DWORD type, wchar_t* error,
+/// Renders the report in its selected font and saves it with the requested available encoder.
+bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
     int errorCapacity);
 
 /// Saves the report in the selected text encoding, replacing the destination only after a complete write.

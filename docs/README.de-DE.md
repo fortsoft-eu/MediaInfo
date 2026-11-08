@@ -103,9 +103,6 @@ Windows 95 ist derzeit keine unterstützte Laufzeit.
 - Die Auswahlmöglichkeiten für Schriftarten-Antialiasing sind ClearType, sofern unterstützt, GDI und Keine.
   Die erste Wahl ist ClearType, sofern unterstützt, andernfalls GDI. Schriftarteinstellungen wirken sich nur
   auf Medienberichte und deren Bildexporte aus.
-- Datei > Exportieren (Strg+E) öffnet das Dialogfeld „Speichern unter“ von Windows und exportiert den gesamten
-  aktiven Bericht nach TXT, BMP, GIF, JPEG, PNG, TIFF oder WebP, einschließlich Text außerhalb des sichtbaren
-  Bereichs.
 - Die Hilfe öffnet ein separates nicht modales Fenster mit einem eigenen Taskleisteneintrag und einer
   Schaltfläche zum Minimieren. About ist ein modaler Dialog; Im Produktheader sind alle drei eingebetteten
   DLL-Versionen aufgeführt.
@@ -188,19 +185,6 @@ erhalten.
 
 BMP, PNG und TIFF behalten alle gerenderten Farben bei; GIF89a behält die exakte gerenderte Palette bei, wenn
 das Bild höchstens 256 Farben hat. es ersetzt niemals ein anderes Format.
-
-Bilder enthalten den vollständigen Bericht in der ausgewählten Berichtsschriftart, mit schwarzem Text auf
-weißem Hintergrund. Sie enthalten kein Anwendungsmenü, keine Registerkartenüberschriften, keine Statusleiste,
-keine Auswahl oder kein Caretzeichen. Das Rendern erfolgt unabhängig von der Bildlaufposition des Textfelds.
-
-Um zu vermeiden, dass Berichte stillschweigend abgeschnitten werden oder der Adressraum auf älteren Computern
-erschöpft wird, ist ein einzelnes Bild auf 16.384 Pixel Breite, 32.767 Pixel Höhe und 256 MiB unkomprimierten
-Bitmap-Speicher beschränkt. Wählen Sie eine kleinere Schriftart, wenn ein Bericht diese Grenzwerte
-überschreitet.
-
-`Google WebP (*.webp)` ist das letzte Format und speichert den Bericht verlustfrei.
-
-WebP: 16383 × 16383 px.
 
 ## Sprachen der Oberfläche und der Berichte
 
