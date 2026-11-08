@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.1
+ * Last modified for version 1.2.0.0
  */
 
 #pragma once
@@ -44,6 +44,12 @@ bool LoadWordWrapSetting();
 
 /// Persists the last manually selected wrapping state for new report tabs.
 bool SaveWordWrapSetting(bool enabled);
+
+/// Loads optional tab closing by double-click, disabled by default.
+bool LoadCloseTabsOnDoubleClickSetting();
+
+/// Persists the committed tab double-click behavior in the shared option bits.
+bool SaveCloseTabsOnDoubleClickSetting(bool enabled);
 
 /// Loads the optional permission for multiple instances, disabled by default.
 bool LoadMultipleInstancesSetting();

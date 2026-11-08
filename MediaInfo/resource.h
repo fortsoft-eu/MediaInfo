@@ -49,6 +49,7 @@
 #define IDC_RECENT_LABEL                1122
 #define IDC_RECENT_CLEAR                1123
 #define IDC_MULTIPLE_INSTANCES          1124
+#define IDC_CLOSE_TABS_ON_DOUBLE_CLICK  1125
 #define IDC_FIND_LABEL                  1201
 #define IDC_FIND_TEXT                   1202
 #define IDC_FIND_MATCH_CASE             1203
@@ -90,6 +91,7 @@
 #define ID_FILE_SHOW_IN_FOLDER          40030
 #define ID_EDIT_COPY_FILE_NAME          40031
 #define ID_EDIT_COPY_FULL_PATH          40032
+#define ID_FILE_PAGE_SETUP              40033
 #define ID_FILE_RECENT_FIRST            41000
 
 // Next default values for new objects

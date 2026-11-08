@@ -67,18 +67,24 @@ Windows 95 trenutno ni podprto izvajalno okolje.
 - Ctrl+Tab in Ctrl+Shift+Tab preklop zavihkov; Ctrl+W zapre aktivni zavihek. Srednji klik glave zavihka zapre
   ta zavihek in ohrani vse druge aktivne zavihke. Datoteka > Zapri vse zapre vse zavihke, vključno s poročili
   v čakalni vrsti. Datoteka > Izhod (Alt+F4) zapre aplikacijo.
-- Dvoklik izbere besedo. Trojni klik izbere logično vrstico. Vlečenje razširi izbor za besede ali vrstice.
+- Priročni meni glave zavihka vsebuje Zapri zavihek. V Nastavitvah omogočite Zapri zavihke z dvoklikom,
+  da zavihek zaprete z dvoklikom na njegovo glavo. Možnost je privzeto izklopljena in se shrani.
+- Dvoklik v besedilu poročila izbere besedo. Trojni klik izbere logično vrstico. Vlečenje razširi izbor
+  po besedah ali vrsticah.
 - Ctrl+A izbere poročilo; Ctrl+C ga kopira.
-- Uredi > Najdi (Ctrl+F) išče na aktivnem zavihku. F3 ponovi iskanje, Shift+F3 pa obrne njegovo smer. Na koncu
-  besedila se iskanje nadaljuje z drugega konca. Možnosti > Prelom vrstic velja le za aktivni zavihek;
-  kljukica sledi izbranemu zavihku. Iskalno okno je mogoče minimizirati in mu spreminjati širino; položaj in
-  možnost Vedno na vrhu se shranita. Do 30 iskalnih besedil z možnostmi se hrani le do zaprtja programa.
-  Možnosti začetka in konca veljata za logične vrstice. Regularni izrazi uporabljajo sintakso PCRE2. Vsi ukazi
-  menija Uredi veljajo samo za aktivni zavihek. Enter začne iskanje, Shift+Enter pa obrne izbrano smer.
-  »Razlikuj velike in male črke« razlikuje velike in male črke; »Išči nazaj« išče proti začetku besedila.
-  Izbira vnosa iz zgodovine obnovi vseh pet možnosti iskanja, vključno s stanjem regularnih izrazov; »Vedno na
-  vrhu« je neodvisna možnost. »Regularni izraz« onemogoči »Vrstica se začne z« in »Vrstica se konča z«. Če sta
-  vključeni obe možnosti robov vrstice, zadostuje ujemanje na enem robu. »Prelom vrstic« spremeni samo prikaz.
+- Uredi > Najdi (Ctrl+F) išče po aktivnem zavihku poročila ali besedilnem polju okna Pomoč ali O
+  programu, odvisno od tega, katero okno ima fokus. Iskalno okno ohrani nazadnje izbrani vir, dokler ima
+  fokus. F3 ponovi iskanje, Shift+F3 pa obrne njegovo smer. Na koncu besedila se iskanje nadaljuje z
+  drugega konca. Možnosti > Prelom vrstic velja le za aktivni zavihek; kljukica sledi izbranemu zavihku.
+  Iskalno okno je mogoče minimizirati in mu spreminjati širino; položaj in možnost Vedno na vrhu se
+  shranita. Do 30 iskalnih besedil z možnostmi se hrani le do zaprtja programa. Možnosti začetka in
+  konca veljata za logične vrstice. Regularni izrazi uporabljajo sintakso PCRE2. Drugi ukazi menija
+  Uredi veljajo za aktivni zavihek poročila. Enter začne iskanje, Shift+Enter pa obrne izbrano smer.
+  »Razlikuj velike in male črke« razlikuje velike in male črke; »Išči nazaj« išče proti začetku
+  besedila. Izbira vnosa iz zgodovine obnovi vseh pet možnosti iskanja, vključno s stanjem regularnih
+  izrazov; »Vedno na vrhu« je neodvisna možnost. »Regularni izraz« onemogoči »Vrstica se začne z« in
+  »Vrstica se konča z«. Če sta vključeni obe možnosti robov vrstice, zadostuje ujemanje na enem robu.
+  »Prelom vrstic« spremeni samo prikaz.
 - Možnosti > Nastavitve (Ctrl+G) odpre eno samo pogovorno okno z nastavitvami za poti MediaInfo in curl,
   pisavo poročila, izravnavo pisave, jezik vmesnika in jezik poročila. Prazna pot DLL omogoča samodejno
   odkrivanje.
@@ -86,13 +92,19 @@ Windows 95 trenutno ni podprto izvajalno okolje.
   Privzeto obnovi Consolas ali Courier New, če Consolas ni na voljo; gumb Privzeto je onemogočen, ko je
   izbrana privzeta vrednost. Pisave, ki jih izbere uporabnik, se ohranijo brez zamenjave s kodo aplikacije.
 - Možnosti izravnave pisave so ClearType, če je podprto, GDI in Brez. Začetna izbira je ClearType, če je
-  podprto, sicer GDI. Nastavitve pisave vplivajo samo na medijska poročila in njihove izvoze slik.
+  podprto, sicer GDI. Nastavitve pisave veljajo za zavihke poročil, njihov izvoz v slike in tiskanje
+  poročil. Pomoč in O programu ohranita lastni pisavi besedila.
 - Pomoč odpre ločeno brezmodno okno z lastnim vnosom v opravilni vrstici in gumbom za pomanjšanje. About je
   modalno pogovorno okno; njegova glava izdelka navaja vse tri vdelane različice DLL.
 
-Natisni… (Ctrl+P) odpre sistemsko pogovorno okno za izbiro tiskalnika in natisne celoten aktivni zavihek brez
-predogleda. Uporabi se pisava poročila; dolge vrstice se prelomijo, besedilo pa se razdeli na strani. Tiskanje
-poteka v ozadju.
+Datoteka > Priprava strani… odpre nastavitve papirja, usmerjenosti in robov za trenutno sejo. Natisni…
+(Ctrl+P) odpre sistemsko pogovorno okno za tiskanje; Windows 11 ponuja predogled, Windows 10 in starejši
+pa ohranijo klasično okno. Ctrl+P natisne aktivni zavihek glavnega okna ali besedilno polje okna Pomoč
+ali O programu, odvisno od tega, katero okno ima fokus. Poročila uporabljajo izbrano pisavo poročila,
+Pomoč sistemsko pisavo pogovornih oken, O programu pa pisavo svojega besedilnega polja. Če ni odprtih
+zavihkov, Pomoč pa je odprta, Priprava strani… in Natisni… ostaneta na voljo; Natisni… natisne pomoč.
+Pomoč uporablja pogovorno okno za tiskanje glavnega okna; ponovni Ctrl+P v Pomoči postavi isto okno v
+ospredje. Dolge vrstice se prelomijo, besedilo pa razdeli na strani. Tiskanje poteka v ozadju.
 
 Odpri mapo… odpre datoteke neposredno v izbrani mapi, vsako na svojem zavihku. Podmape niso vključene. Odpri
 in Odpri mapo si delita nazadnje izbrano mapo. Izvoz si zapomni ločeno mapo, privzeto Dokumenti.

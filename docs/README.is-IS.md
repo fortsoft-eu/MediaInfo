@@ -64,32 +64,44 @@ Windows 95 er ekki studdur keyrslutími.
 - Ctrl+Tab og Ctrl+Shift+Tab skipta um flipa; Ctrl+W lokar virka flipanum. Ef miðsmellt er á flipahaus lokar
   þeim flipa á meðan öðrum virkum flipa er varðveittur. Skrá > Loka öllu lokar öllum flipa, þar á meðal
   skýrslum í biðröð. Skrá > Hætta (Alt+F4) lokar forritinu.
-- Tvísmella velur orð. Þrísmellur velur rökrétta línu. Að draga eykur valið með orðum eða línum.
+- Samhengisvalmynd flipaheitis inniheldur Loka flipa. Virkjaðu Loka flipum með tvísmelli í
+  Kjörstillingum til að loka flipa með því að tvísmella á heiti hans. Valið er sjálfgefið óvirkt og er
+  vistað.
+- Tvísmellur í skýrslutexta velur orð. Þrír smellir velja röklega línu. Dráttur stækkar valið eftir
+  orðum eða línum.
 - Ctrl+A velur skýrsluna; Ctrl+C afritar það.
-- Breyta > Finna (Ctrl+F) leitar í virkum flipa. F3 endurtekur leitina og Shift+F3 snýr leitarstefnunni við.
-  Við enda textans heldur leitin áfram frá hinum endanum. Valkostir > Línuskipting gildir aðeins fyrir virkan
-  flipa; gátmerkið fylgir völdum flipa. Hægt er að lágmarka leitargluggann og breyta breidd hans; staðsetning
-  og stillingin Alltaf efst eru vistaðar. Allt að 30 leitartextar og stillingar þeirra eru aðeins geymd þar
-  til forritinu er lokað. Upphafs- og endaskilyrði eiga við röklegar línur. Reglulegar segðir nota
-  PCRE2-málskipan. Allar skipanir í Breyta eiga aðeins við virkan flipa. Enter ræsir leit; Shift+Enter snýr
-  valinni stefnu við. „Greina á milli há- og lágstafa“ greinir á milli há- og lágstafa; „Leita afturábak“
-  leitar að upphafi textans. Val á færslu úr leitarsögunni endurheimtir alla fimm leitarvalkostina, þar á
-  meðal stillingu reglulegra segða; „Alltaf efst“ er óháður valkostur. „Regluleg segð“ gerir „Lína byrjar á“
-  og „Lína endar á“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir nægir samsvörun við annan endann.
-  „Línuskipting“ breytir aðeins birtingunni.
+- Breyta > Finna (Ctrl+F) leitar í virka skýrsluflipanum eða textasvæðinu í Hjálp eða Um, eftir því
+  hvaða gluggi hefur fókus. Leitarglugginn heldur síðast valda upprunanum meðan hann hefur fókus. F3
+  endurtekur leitina og Shift+F3 snýr leitarstefnunni við. Við enda textans heldur leitin áfram frá
+  hinum endanum. Valkostir > Línuskipting gildir aðeins fyrir virkan flipa; gátmerkið fylgir völdum
+  flipa. Hægt er að lágmarka leitargluggann og breyta breidd hans; staðsetning og stillingin Alltaf efst
+  eru vistaðar. Allt að 30 leitartextar og stillingar þeirra eru aðeins geymd þar til forritinu er
+  lokað. Upphafs- og endaskilyrði eiga við röklegar línur. Reglulegar segðir nota PCRE2-málskipan. Aðrar
+  skipanir í valmyndinni Breyta eiga við virka skýrsluflipann. Enter ræsir leit; Shift+Enter snýr
+  valinni stefnu við. „Greina á milli há- og lágstafa“ greinir á milli há- og lágstafa; „Leita
+  afturábak“ leitar að upphafi textans. Val á færslu úr leitarsögunni endurheimtir alla fimm
+  leitarvalkostina, þar á meðal stillingu reglulegra segða; „Alltaf efst“ er óháður valkostur. „Regluleg
+  segð“ gerir „Lína byrjar á“ og „Lína endar á“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir
+  nægir samsvörun við annan endann. „Línuskipting“ breytir aðeins birtingunni.
 - Valkostir > Kjörstillingar (Ctrl+G) opnar stakan valglugga fyrir MediaInfo og curl slóðir, skýrsluleturgerð,
   hliðrun leturs, viðmótstungumál og skýrslumál. Tóm DLL slóð gerir sjálfvirka uppgötvun kleift.
 - Leturhnappurinn sýnir fjölskyldu, punktastærð og stíl og opnar venjulega Windows leturgluggann. Sjálfgefið
   endurheimtir Consolas, eða Courier New ef Consolas er ekki tiltækt; Sjálfgefin hnappur er óvirkur meðan
   sjálfgefið er valið. Notandavalið letur er haldið án þess að skipta út með forritakóða.
-- Valkostir fyrir hliðrun leturs eru ClearType þegar þeir eru studdir, GDI og None. Upphafsvalið er ClearType
-  þegar það er stutt, annars GDI. Leturstillingar hafa aðeins áhrif á fjölmiðlafréttir og myndaútflutning
-  þeirra.
+- Valkostir fyrir hliðrun leturs eru ClearType þegar þeir eru studdir, GDI og None. Upphafsvalið er
+  ClearType þegar það er stutt, annars GDI. Leturstillingar hafa áhrif á skýrsluflipa, myndútflutning
+  þeirra og prentun skýrslna. Hjálp og Um halda eigin textaletri.
 - Hjálp opnar sérstakan fyrirsætulausan glugga með eigin verkstikufærslu og lágmarkshnappi. Um er valmynd;
   vöruhaus þess sýnir allar þrjár innbyggðu DLL útgáfurnar.
 
-Prenta… (Ctrl+P) opnar prentaraglugga kerfisins og prentar allan virka flipann án forskoðunar. Valið letur
-skýrslunnar er notað; langar línur eru brotnar og textanum skipt á síður. Prentun fer fram í bakgrunni.
+Skrá > Síðuuppsetning… opnar stillingar fyrir pappír, stefnu og spássíur fyrir núverandi keyrslu.
+Prenta… (Ctrl+P) opnar prentglugga kerfisins; Windows 11 sýnir forskoðun en Windows 10 og eldri útgáfur
+nota hefðbundna gluggann. Ctrl+P prentar virka flipann í aðalglugganum eða textasvæðið í Hjálp eða Um,
+eftir því hvaða gluggi hefur fókus. Skýrslur nota valið skýrsluletur, Hjálp notar letur kerfisglugga og
+Um notar letur eigin textasvæðis. Ef engir flipar eru opnir en Hjálp er opin eru Síðuuppsetning… og
+Prenta… áfram tiltæk; Prenta… prentar hjálpina. Hjálp notar prentglugga aðalgluggans; Ctrl+P aftur í
+Hjálp færir sama glugga fremst. Langar línur brotna og textanum er skipt á síður. Prentun fer fram í
+bakgrunni.
 
 Opna möppu… opnar skrár sem eru beint í valinni möppu, hverja á sínum flipa. Undirmöppur eru ekki teknar með.
 Opna og Opna möppu nota sömu möppuna og síðast var valin. Útflutningur man sína eigin möppu, sjálfgefið Skjöl.

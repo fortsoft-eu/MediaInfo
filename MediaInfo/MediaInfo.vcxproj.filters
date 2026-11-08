@@ -43,6 +43,12 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PrintSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModernPrintDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ComboBoxSupport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -181,6 +187,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrintSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModernPrintDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ComboBoxSupport.h">

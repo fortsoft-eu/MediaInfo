@@ -65,32 +65,45 @@ Windows 95 er for øyeblikket ikke en støttet kjøretid.
 - Ctrl+Tab og Ctrl+Skift+Tab bryterfaner; Ctrl+W lukker den aktive fanen. Midtklikk på en faneoverskrift
   lukker den fanen mens andre aktive faner bevares. Fil > Lukk alle lukker hver fane, inkludert rapporter i
   kø. Fil > Avslutt (Alt+F4) lukker programmet.
-- Dobbeltklikk velger et ord. Trippelklikk velger en logisk linje. Dra utvider utvalget med ord eller linjer.
+- Kontekstmenyen til en faneoverskrift inneholder Lukk fane. Slå på Lukk faner med dobbeltklikk i
+  Preferanser for å lukke en fane ved å dobbeltklikke på overskriften. Valget er som standard av og
+  lagres.
+- Dobbeltklikk i rapportteksten velger et ord. Trippelklikk velger en logisk linje. Dra for å utvide
+  utvalget med ord eller linjer.
 - Ctrl+A velger rapporten; Ctrl+C kopierer den.
-- Rediger > Søk (Ctrl+F) søker i den aktive fanen. F3 gjentar søket; Skift+F3 snur retningen. Ved tekstens
-  ender fortsetter søket fra motsatt ende. Alternativer > Tekstbryting gjelder bare den aktive fanen; haken
-  følger den valgte fanen. Søkevinduet kan minimeres og endres i bredden; plasseringen og innstillingen Alltid
-  øverst huskes. Opptil 30 søketekster med innstillingene deres beholdes bare til programmet avsluttes.
-  Valgene for begynnelse og slutt gjelder logiske linjer. Regulære uttrykk bruker PCRE2-syntaks. Alle
-  kommandoer i Rediger gjelder bare den aktive fanen. Enter starter søket; Skift+Enter snur den valgte
-  retningen. «Skill mellom store og små bokstaver» skiller mellom store og små bokstaver; «Søk bakover» søker
-  mot begynnelsen av teksten. Valg av en historikkoppføring gjenoppretter alle fem søkevalg, inkludert
-  innstillingen for regulære uttrykk; «Alltid øverst» er uavhengig. «Regulært uttrykk» deaktiverer «Linjen
-  starter med» og «Linjen slutter med». Når begge valgene for linjens ender er aktivert, holder det med et
-  treff ved én ende. «Tekstbryting» endrer bare visningen.
+- Rediger > Søk (Ctrl+F) søker i den aktive rapportfanen eller tekstfeltet i Hjelp eller Om, avhengig av
+  hvilket vindu som har fokus. Søkevinduet beholder den sist valgte kilden mens det selv har fokus. F3
+  gjentar søket; Skift+F3 snur retningen. Ved tekstens ender fortsetter søket fra motsatt ende.
+  Alternativer > Tekstbryting gjelder bare den aktive fanen; haken følger den valgte fanen. Søkevinduet
+  kan minimeres og endres i bredden; plasseringen og innstillingen Alltid øverst huskes. Opptil 30
+  søketekster med innstillingene deres beholdes bare til programmet avsluttes. Valgene for begynnelse og
+  slutt gjelder logiske linjer. Regulære uttrykk bruker PCRE2-syntaks. De øvrige kommandoene i
+  Rediger-menyen gjelder den aktive rapportfanen. Enter starter søket; Skift+Enter snur den valgte
+  retningen. «Skill mellom store og små bokstaver» skiller mellom store og små bokstaver; «Søk bakover»
+  søker mot begynnelsen av teksten. Valg av en historikkoppføring gjenoppretter alle fem søkevalg,
+  inkludert innstillingen for regulære uttrykk; «Alltid øverst» er uavhengig. «Regulært uttrykk»
+  deaktiverer «Linjen starter med» og «Linjen slutter med». Når begge valgene for linjens ender er
+  aktivert, holder det med et treff ved én ende. «Tekstbryting» endrer bare visningen.
 - Alternativer > Innstillinger (Ctrl+G) åpner en enkelt preferansedialog for MediaInfo og curl baner,
   rapportfont, skriftkantutjevnelse, grensesnittspråk og rapportspråk. En tom DLL-bane muliggjør automatisk
   oppdagelse.
 - Font-knappen viser familie, punktstørrelse og stil og åpner standard Windows skriftdialog. Standard
   gjenoppretter Consolas, eller Courier New hvis Consolas er utilgjengelig; Standard-knappen er deaktivert
   mens standard er valgt. Brukervalgte fonter beholdes uten erstatning med applikasjonskode.
-- Valg for skriftkantutjevning er ClearType når de støttes, GDI og Ingen. Det første valget er ClearType når
-  det støttes, ellers GDI. Skriftinnstillinger påvirker bare medierapporter og deres bildeeksporter.
+- Valg for skriftkantutjevning er ClearType når de støttes, GDI og Ingen. Det første valget er ClearType
+  når det støttes, ellers GDI. Skriftinnstillinger gjelder rapportfaner, bildeeksport av dem og utskrift
+  av rapporter. Hjelp og Om beholder sine egne tekstskrifter.
 - Hjelp åpner et eget modellløst vindu med egen oppgavelinjeoppføring og minimeringsknapp. Om er en modal
   dialog; produktoverskriften viser alle tre innebygde DLL-versjoner.
 
-Skriv ut… (Ctrl+P) åpner systemets skriverdialog og skriver ut hele den aktive fanen uten forhåndsvisning.
-Rapportskriften brukes; lange linjer brytes, og teksten fordeles på sider. Utskriften kjører i bakgrunnen.
+Fil > Utskriftsformat… åpner innstillinger for papir, retning og marger for denne økten. Skriv ut…
+(Ctrl+P) åpner systemets utskriftsdialog; Windows 11 viser en forhåndsvisning, mens Windows 10 og eldre
+beholder den klassiske dialogen. Ctrl+P skriver ut den aktive fanen i hovedvinduet eller tekstfeltet i
+Hjelp eller Om, avhengig av hvilket vindu som har fokus. Rapporter bruker den valgte rapportskriften,
+Hjelp bruker systemets dialogskrift, og Om bruker skriften i sitt tekstfelt. Hvis ingen faner er åpne,
+men Hjelp er åpen, er Utskriftsformat… og Skriv ut… fortsatt tilgjengelige; Skriv ut… skriver ut Hjelp.
+Hjelp bruker hovedvinduets utskriftsdialog; Ctrl+P på nytt i Hjelp henter den samme dialogen frem. Lange
+linjer brytes og teksten deles i sider. Utskrift foregår i bakgrunnen.
 
 Åpne mappe… åpner filene direkte i den valgte mappen, hver i sin egen fane. Undermapper tas ikke med. Åpne og
 Åpne mappe deler den sist valgte mappen. Eksport husker sin egen mappe, som standard Dokumenter.

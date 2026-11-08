@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.0.0
  */
 
 #include "FindForm.h"
@@ -93,7 +93,7 @@ FindForm::~FindForm() {
     }
 }
 
-/// Uses only the active loaded report and invalidates the last zero-length match after retargeting.
+/// Uses the active form's text edit and invalidates the last zero-length match after retargeting.
 void FindForm::SetTarget(HWND edit) {
     if (target != edit) {
         lastTarget = nullptr;
@@ -504,7 +504,8 @@ void FindForm::SelectMatch(bool reverse) {
     lastMatchLength = match.length;
     bool dialogActive = window && GetActiveWindow() == window;
     if (dialogActive) {
-        SendMessageW(ownerWindow, findMatchMessage, 0, reinterpret_cast<LPARAM>(window));
+        SendMessageW(ownerWindow, findMatchMessage, reinterpret_cast<WPARAM>(GetParent(target)),
+            reinterpret_cast<LPARAM>(window));
     } else {
         SetFocus(target);
     }
@@ -512,10 +513,11 @@ void FindForm::SelectMatch(bool reverse) {
     SendMessageW(target, EM_SCROLLCARET, 0, 0);
 }
 
-/// Searches the active report, reversing the selected direction for Find Previous or Shift.
+/// Searches the selected text edit, reversing the selected direction for Find Previous or Shift.
 void FindForm::FindNext(HWND owner, bool reverse) {
     ownerWindow = owner;
-    if (!target) {
+    if (!target || !IsWindow(target)) {
+        SetTarget(nullptr);
         return;
     }
     bool dialogSearch = window && GetActiveWindow() == window;

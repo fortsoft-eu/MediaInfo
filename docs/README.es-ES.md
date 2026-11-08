@@ -72,22 +72,27 @@ Windows 95 no es actualmente un tiempo de ejecución compatible.
   central en el encabezado de una pestaña, se cierra esa pestaña y se conserva cualquier otra pestaña activa.
   Archivo > Cerrar todo cierra todas las pestañas, incluidos los informes en cola. Archivo > Salir (Alt+F4)
   cierra la aplicación.
-- Al hacer doble clic se selecciona una palabra. Al hacer triple clic se selecciona una línea lógica.
-  Arrastrar amplía la selección por palabras o líneas.
+- El menú contextual de la cabecera de una pestaña incluye Cerrar pestaña. Active Cerrar pestañas con
+  doble clic en Preferencias para cerrar una pestaña haciendo doble clic en su cabecera. La opción está
+  desactivada de forma predeterminada y se guarda.
+- Un doble clic en el texto del informe selecciona una palabra. Un triple clic selecciona una línea
+  lógica. Arrastrar amplía la selección por palabras o líneas.
 - Ctrl+A selecciona el informe; Ctrl+C lo copia.
-- Edición > Buscar (Ctrl+F) busca en la pestaña activa. F3 repite la búsqueda; Mayús+F3 invierte su dirección.
-  Al llegar a un extremo del texto, la búsqueda continúa desde el otro. Opciones > Ajuste de línea solo afecta
-  a la pestaña activa; la marca cambia según la pestaña seleccionada. La ventana de búsqueda se puede
+- Edición > Buscar (Ctrl+F) busca en la pestaña de informe activa o en el área de texto de Ayuda o
+  Acerca de, según la ventana que tenga el foco. La ventana de búsqueda conserva el último origen
+  seleccionado mientras tiene el foco. F3 repite la búsqueda; Mayús+F3 invierte su dirección. Al llegar
+  a un extremo del texto, la búsqueda continúa desde el otro. Opciones > Ajuste de línea solo afecta a
+  la pestaña activa; la marca cambia según la pestaña seleccionada. La ventana de búsqueda se puede
   minimizar y redimensionar horizontalmente; se recuerdan su posición y la opción Siempre visible. Se
   conservan hasta 30 búsquedas y sus opciones solo hasta que se cierra la aplicación. Las opciones de
-  principio y final se aplican a las líneas lógicas. Las expresiones regulares usan la sintaxis de PCRE2.
-  Todos los comandos de Edición afectan solo a la pestaña activa. Entrar inicia la búsqueda; Mayús+Entrar
-  invierte la dirección elegida. «Coincidir mayúsculas y minúsculas» distingue mayúsculas y minúsculas;
-  «Buscar hacia atrás» busca hacia el principio del texto. Elegir una entrada del historial restaura las cinco
-  opciones de búsqueda, incluido el estado del modo de expresión regular; «Siempre visible» es independiente.
-  «Expresión regular» desactiva «La línea empieza por» y «La línea termina en». Si ambas opciones de extremos
-  de línea están activadas, basta con que coincida uno de ellos. «Ajuste de línea» solo cambia la
-  visualización.
+  principio y final se aplican a las líneas lógicas. Las expresiones regulares usan la sintaxis de
+  PCRE2. Los demás comandos del menú Edición se aplican a la pestaña de informe activa. Entrar inicia la
+  búsqueda; Mayús+Entrar invierte la dirección elegida. «Coincidir mayúsculas y minúsculas» distingue
+  mayúsculas y minúsculas; «Buscar hacia atrás» busca hacia el principio del texto. Elegir una entrada
+  del historial restaura las cinco opciones de búsqueda, incluido el estado del modo de expresión
+  regular; «Siempre visible» es independiente. «Expresión regular» desactiva «La línea empieza por» y
+  «La línea termina en». Si ambas opciones de extremos de línea están activadas, basta con que coincida
+  uno de ellos. «Ajuste de línea» solo cambia la visualización.
 - Opciones > Preferencias (Ctrl+G) abre un cuadro de diálogo de preferencias único para las rutas MediaInfo y
   curl, la fuente del informe, el suavizado de fuente, el idioma de la interfaz y el idioma del informe. Una
   ruta DLL vacía permite el descubrimiento automático.
@@ -95,16 +100,23 @@ Windows 95 no es actualmente un tiempo de ejecución compatible.
   estándar Windows. El valor predeterminado restaura Consolas o Courier New si Consolas no está disponible; el
   botón Predeterminado está deshabilitado mientras se selecciona el valor predeterminado. Las fuentes
   seleccionadas por el usuario se conservan sin sustitución por el código de la aplicación.
-- Las opciones de suavizado de fuentes son ClearType cuando se admiten, GDI y Ninguna. La elección inicial es
-  ClearType cuando sea compatible; en caso contrario, GDI. La configuración de fuente afecta solo a los
-  informes de medios y sus exportaciones de imágenes.
+- Las opciones de suavizado de fuentes son ClearType cuando se admiten, GDI y Ninguna. La elección
+  inicial es ClearType cuando sea compatible; en caso contrario, GDI. Los ajustes de fuente afectan a
+  las pestañas de informes, sus exportaciones a imagen y su impresión. Ayuda y Acerca de conservan sus
+  propias fuentes de texto.
 - Ayuda abre una ventana independiente y no modelo con su propia entrada en la barra de tareas y un botón de
   minimizar. Acerca de es un diálogo modal; su encabezado de producto enumera las tres versiones integradas de
   DLL.
 
-Imprimir… (Ctrl+P) abre el diálogo del sistema para elegir impresora e imprime toda la pestaña activa sin
-vista previa. Se usa la fuente del informe; las líneas largas se ajustan y el texto se divide en páginas. La
-impresión se realiza en segundo plano.
+Archivo > Configurar página… abre los ajustes de papel, orientación y márgenes para la sesión actual.
+Imprimir… (Ctrl+P) abre el diálogo de impresión del sistema; Windows 11 ofrece una vista previa,
+mientras que Windows 10 y anteriores conservan el diálogo clásico. Ctrl+P imprime la pestaña activa de
+la ventana principal o el área de texto de Ayuda o Acerca de, según la ventana que tenga el foco. Los
+informes usan la fuente elegida, Ayuda la fuente de diálogo del sistema y Acerca de la de su área de
+texto. Si no hay pestañas abiertas pero Ayuda está abierta, Configurar página… e Imprimir… siguen
+disponibles; Imprimir… imprime la Ayuda. Ayuda usa el diálogo de impresión de la ventana principal;
+pulsar Ctrl+P de nuevo en Ayuda lo trae al primer plano. Las líneas largas se ajustan y el texto se
+divide en páginas. La impresión se realiza en segundo plano.
 
 Abrir carpeta… abre los archivos directamente contenidos en la carpeta seleccionada, cada uno en su propia
 pestaña. No se incluyen las subcarpetas. Abrir y Abrir carpeta comparten la última carpeta seleccionada. La

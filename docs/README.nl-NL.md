@@ -73,22 +73,27 @@ Windows 95 is momenteel geen ondersteunde runtime.
   op een tabbladkop klikt, wordt dat tabblad gesloten terwijl alle andere actieve tabbladen behouden blijven.
   Bestand > Alles sluiten sluit elk tabblad, inclusief rapporten in de wachtrij. Bestand > Afsluiten (Alt+F4)
   sluit de toepassing.
-- Dubbelklikken selecteert een woord. Driemaal klikken selecteert een logische lijn. Door te slepen wordt de
-  selectie uitgebreid met woorden of regels.
+- Het snelmenu van een tabbladkop bevat Tabblad sluiten. Schakel Tabbladen sluiten met dubbelklikken in
+  bij Voorkeuren om een tabblad te sluiten door op de kop te dubbelklikken. Deze optie staat standaard
+  uit en wordt opgeslagen.
+- Dubbelklikken in de rapporttekst selecteert een woord. Driemaal klikken selecteert een logische regel.
+  Slepen breidt de selectie uit met woorden of regels.
 - Ctrl+A selecteert het rapport; Ctrl+C kopieert het.
-- Bewerken > Zoeken (Ctrl+F) doorzoekt het actieve tabblad. F3 herhaalt de zoekopdracht; Shift+F3 keert de
-  richting om. Aan het einde van de tekst gaat het zoeken verder vanaf het andere uiteinde. Opties >
-  Automatische terugloop geldt alleen voor het actieve tabblad; het vinkje volgt het geselecteerde tabblad.
-  Het zoekvenster kan worden geminimaliseerd en in de breedte worden aangepast; de positie en de instelling
-  Altijd bovenop worden onthouden. Maximaal 30 zoekteksten met hun opties blijven alleen bewaard totdat de
-  toepassing wordt afgesloten. De begin- en eindopties gelden voor logische regels. Reguliere expressies
-  gebruiken PCRE2-syntaxis. Alle opdrachten in Bewerken gelden alleen voor het actieve tabblad. Enter start
-  het zoeken; Shift+Enter keert de gekozen richting om. "Hoofdlettergevoelig" maakt onderscheid tussen
-  hoofdletters en kleine letters; "Achteruit zoeken" zoekt naar het begin van de tekst. Een keuze uit de
-  geschiedenis herstelt alle vijf zoekopties, ook de stand van de modus voor reguliere expressies; "Altijd
-  bovenop" staat hier los van. "Reguliere expressie" schakelt "Regel begint met" en "Regel eindigt op" uit.
-  Als beide opties voor de regeluiteinden aanstaan, volstaat een overeenkomst aan één uiteinde. "Automatische
-  terugloop" verandert alleen de weergave.
+- Bewerken > Zoeken (Ctrl+F) zoekt in het actieve rapporttabblad of het tekstvak in Help of Info,
+  afhankelijk van welk venster de focus heeft. Het zoekvenster behoudt de laatst gekozen bron zolang het
+  zelf de focus heeft. F3 herhaalt de zoekopdracht; Shift+F3 keert de richting om. Aan het einde van de
+  tekst gaat het zoeken verder vanaf het andere uiteinde. Opties > Automatische terugloop geldt alleen
+  voor het actieve tabblad; het vinkje volgt het geselecteerde tabblad. Het zoekvenster kan worden
+  geminimaliseerd en in de breedte worden aangepast; de positie en de instelling Altijd bovenop worden
+  onthouden. Maximaal 30 zoekteksten met hun opties blijven alleen bewaard totdat de toepassing wordt
+  afgesloten. De begin- en eindopties gelden voor logische regels. Reguliere expressies gebruiken
+  PCRE2-syntaxis. De overige opdrachten in het menu Bewerken gelden voor het actieve rapporttabblad.
+  Enter start het zoeken; Shift+Enter keert de gekozen richting om. "Hoofdlettergevoelig" maakt
+  onderscheid tussen hoofdletters en kleine letters; "Achteruit zoeken" zoekt naar het begin van de
+  tekst. Een keuze uit de geschiedenis herstelt alle vijf zoekopties, ook de stand van de modus voor
+  reguliere expressies; "Altijd bovenop" staat hier los van. "Reguliere expressie" schakelt "Regel
+  begint met" en "Regel eindigt op" uit. Als beide opties voor de regeluiteinden aanstaan, volstaat een
+  overeenkomst aan één uiteinde. "Automatische terugloop" verandert alleen de weergave.
 - Opties > Voorkeuren (Ctrl+G) opent één dialoogvenster met voorkeuren voor MediaInfo en curl paden,
   rapportlettertype, lettertype-anti-aliasing, interfacetaal en rapporttaal. Een leeg DLL pad maakt
   automatische detectie mogelijk.
@@ -96,15 +101,22 @@ Windows 95 is momenteel geen ondersteunde runtime.
   lettertypedialoogvenster. Standaard wordt Consolas hersteld, of Courier New als Consolas niet beschikbaar
   is; de knop Standaard is uitgeschakeld terwijl de standaard is geselecteerd. Door de gebruiker geselecteerde
   lettertypen blijven behouden zonder vervanging door toepassingscode.
-- Keuzes voor lettertype-anti-aliasing zijn ClearType indien ondersteund, GDI en Geen. De initiële keuze is
-  ClearType indien ondersteund, anders GDI. Lettertype-instellingen zijn alleen van invloed op mediaberichten
-  en de bijbehorende afbeeldingsexports.
+- Keuzes voor lettertype-anti-aliasing zijn ClearType indien ondersteund, GDI en Geen. De initiële keuze
+  is ClearType indien ondersteund, anders GDI. Lettertype-instellingen gelden voor rapporttabbladen, hun
+  afbeeldingsuitvoer en het afdrukken van rapporten. Help en Info behouden hun eigen tekstlettertypen.
 - Help opent een apart modelloos venster met een eigen taakbalkinvoer en minimaliseerknop. Over is een modale
   dialoog; de productkop vermeldt alle drie de ingebedde DLL-versies.
 
-Afdrukken… (Ctrl+P) opent het systeemdialoogvenster voor printers en drukt het hele actieve tabblad af zonder
-afdrukvoorbeeld. Het rapportlettertype wordt gebruikt; lange regels worden afgebroken en de tekst wordt over
-pagina’s verdeeld. Het afdrukken gebeurt op de achtergrond.
+Bestand > Pagina-instelling… opent de instellingen voor papier, afdrukstand en marges voor de huidige
+sessie. Afdrukken… (Ctrl+P) opent het afdrukvenster van het systeem; Windows 11 toont een
+afdrukvoorbeeld, terwijl Windows 10 en ouder het klassieke venster behouden. Ctrl+P drukt het actieve
+tabblad van het hoofdvenster of het tekstvak in Help of Info af, afhankelijk van welk venster de focus
+heeft. Rapporten gebruiken het gekozen rapportlettertype, Help het systeemlettertype voor
+dialoogvensters en Info het lettertype van het eigen tekstvak. Als er geen tabbladen open zijn maar Help
+wel open is, blijven Pagina-instelling… en Afdrukken… beschikbaar; Afdrukken… drukt Help af. Help
+gebruikt het afdrukvenster van het hoofdvenster; opnieuw Ctrl+P in Help brengt hetzelfde venster naar de
+voorgrond. Lange regels worden afgebroken en de tekst wordt over pagina’s verdeeld. Afdrukken gebeurt op
+de achtergrond.
 
 Map openen… opent de bestanden die zich direct in de geselecteerde map bevinden, elk op een eigen tabblad.
 Submappen worden niet meegenomen. Openen en Map openen delen de laatst geselecteerde map. Export onthoudt een

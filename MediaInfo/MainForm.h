@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.2
+ * Last modified for version 1.2.0.0
  */
 
 #pragma once
@@ -33,9 +33,11 @@
 #include "HelpForm.h"
 #include "FindForm.h"
 #include "RecentFiles.h"
+#include "PrintSettings.h"
 
 /// Temporary context owned by the active tab popup.
 struct FileMenuContext;
+class ModernPrintDialog;
 
 /// Symbols used while compiling for the Windows NT 4.0 API target.
 #ifndef IDC_HAND
@@ -113,6 +115,7 @@ struct PrintJob {
     HDC printer;
     wchar_t* report;
     LOGFONTW font;
+    RECT margins;
     UINT fontDpi;
     wchar_t title[MAX_PATH];
     volatile LONG canceled;
@@ -124,6 +127,7 @@ struct PrintJob {
 struct PreferencesChanges {
     bool reportsChanged;
     UINT tabNameLength;
+    bool closeTabsOnDoubleClick;
 };
 
 /// Connects the modal Preferences dialog to viewer state and immediate recent-file actions.
@@ -155,6 +159,9 @@ private:
     HWND window;
     HWND tabs;
     HWND status;
+    HWND searchWindow;
+    HWND printOwner;
+    HWND printDialog;
 
     /// Native fonts, accelerators and background-thread handles.
     HFONT uiFont;
@@ -170,11 +177,13 @@ private:
     AboutForm aboutForm;
     FindForm findForm;
     RecentFiles recentFiles;
+    PrintSettings printSettings;
 
     /// Owned tab records and the currently active report and print requests.
     FileTab* files;
     ReportJob* activeJob;
     PrintJob* activePrintJob;
+    ModernPrintDialog* modernPrint;
 
     /// Borrows the context while the native tab popup is active.
     FileMenuContext* tabMenuContext;
@@ -188,12 +197,14 @@ private:
 
     /// Shutdown, loading, theme and report-option state.
     bool closing;
+    bool printDialogOpen;
     bool libraryLoading;
     bool unicodeTabs;
     bool visualStylesActive;
     bool advancedMode;
     bool fullParsing;
     bool defaultWordWrap;
+    bool closeTabsOnDoubleClick;
 
     /// Session-only header-tool folder and the ANSI tab-tooltip conversion buffer.
     wchar_t headerFolder[MAX_PATH];
@@ -216,6 +227,15 @@ private:
 
     /// Places current paths and messages on the left and shows the loaded DLL version when space permits.
     void UpdateStatus();
+
+    /// Selects the edit in the last active searchable form while retaining it during search-form input.
+    void UpdateFindTarget();
+
+    /// Keeps modeless search input available while the modal About dialog is open.
+    void ShowAbout();
+
+    /// Routes search and print shortcuts from native modal loops.
+    static LRESULT CALLBACK ModalFindFilter(int code, WPARAM wParam, LPARAM lParam);
 
     /// Shows Copy for the clicked status pane and copies its complete Unicode text.
     void ShowStatusContextMenu(POINT point);
@@ -316,14 +336,26 @@ private:
     /// Exports the active report using the selected native file-dialog format.
     void ExportReport();
 
-    /// Opens the system printer dialog and prints a snapshot of the active report without preview.
+    /// Opens the system printer dialog for a snapshot of the focused information edit.
     void PrintReport();
+
+    /// Finds the open print dialog and requests foreground focus without creating another print job.
+    void ForegroundPrintDialog();
+
+    /// Locates the enabled print popup while excluding the application's information forms.
+    static BOOL CALLBACK FindPrintDialog(HWND candidate, LPARAM parameter);
+
+    /// Opens Page Setup for printable content and prevents overlapping print dialogs.
+    void PageSetup();
 
     /// Prints the selected report on its worker thread and posts the result to the viewer.
     static DWORD WINAPI PrintDocument(void* parameter);
 
     /// Collects the finished print job and releases its snapshot and printer context.
     void CompletePrint(PrintJob* job);
+
+    /// Collects a modern print completion and releases its retained references.
+    void CompleteModernPrint(ModernPrintDialog* source);
 
     /// Starts the next queued report when no report thread is already active.
     void StartNextReport();
@@ -358,7 +390,7 @@ private:
     /// Applies the suggested window bounds and rebuilds fonts and layout for the new DPI.
     LRESULT HandleDpiChange(LPARAM lParam);
 
-    /// Releases pending instance requests, closes information forms and ends the message loop.
+    /// Releases pending print and instance requests, closes information forms and ends the message loop.
     LRESULT HandleDestroy();
 
     /// Dispatches native main-window input, layout, file, menu and asynchronous report messages.

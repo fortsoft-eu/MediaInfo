@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.0.0
  */
 
 #pragma once
@@ -41,7 +41,7 @@ struct FindTextMatch {
     int length;
 };
 
-/// Owns the modeless search form, session history and matching state for the active report.
+/// Owns the modeless search form, session history and matching state for the active form's text edit.
 class FindForm {
 
 private:
@@ -144,7 +144,7 @@ public:
     /// Closes the form and releases its font, expression, history and match buffers.
     ~FindForm();
 
-    /// Uses only the active loaded report and invalidates the last zero-length match after retargeting.
+    /// Uses the active form's text edit and invalidates the last zero-length match after retargeting.
     void SetTarget(HWND edit);
 
     /// Retains logical search state when an existing report edit is replaced for native style changes.
@@ -156,7 +156,7 @@ public:
     /// Closes the form while retaining expressions and options only in this running instance.
     void Close();
 
-    /// Searches the active report, reversing the selected direction for Find Previous or Shift.
+    /// Searches the selected text edit, reversing the selected direction for Find Previous or Shift.
     void FindNext(HWND owner, bool reverse);
 
     /// Refreshes all captions and their geometry after a committed interface-language change.

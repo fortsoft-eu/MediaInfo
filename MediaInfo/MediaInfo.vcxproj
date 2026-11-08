@@ -94,6 +94,8 @@
     <ClCompile Include="SystemDialogTemplate.cpp" />
     <ClCompile Include="RecentFiles.cpp" />
     <ClCompile Include="SettingsStorage.cpp" />
+    <ClCompile Include="PrintSettings.cpp" />
+    <ClCompile Include="ModernPrintDialog.cpp" />
     <ClCompile Include="PersistWindowState.cpp" />
     <ClCompile Include="HelpForm.cpp" />
     <ClCompile Include="FindForm.cpp" />
@@ -253,6 +255,8 @@
     <ClInclude Include="SystemDialogTemplate.h" />
     <ClInclude Include="RecentFiles.h" />
     <ClInclude Include="SettingsStorage.h" />
+    <ClInclude Include="PrintSettings.h" />
+    <ClInclude Include="ModernPrintDialog.h" />
     <ClInclude Include="PersistWindowState.h" />
     <ClInclude Include="HelpForm.h" />
     <ClInclude Include="FindForm.h" />

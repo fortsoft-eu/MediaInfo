@@ -71,22 +71,28 @@ Windows 95 non è attualmente un runtime supportato.
   centrale sull'intestazione di una scheda si chiude la scheda preservando qualsiasi altra scheda attiva. File
   > Chiudi tutto chiude tutte le schede, compresi i report in coda. File > Esci (Alt+F4) chiude
   l'applicazione.
-- Fare doppio clic per selezionare una parola. Il triplo clic seleziona una linea logica. Il trascinamento
-  estende la selezione di parole o linee.
+- Il menu contestuale dell’intestazione di una scheda include Chiudi scheda. Attivare Chiudi le schede
+  con doppio clic in Preferenze per chiudere una scheda facendo doppio clic sulla sua intestazione.
+  L’opzione è disattivata per impostazione predefinita e viene salvata.
+- Un doppio clic nel testo del rapporto seleziona una parola. Un triplo clic seleziona una riga logica.
+  Il trascinamento estende la selezione per parole o righe.
 - Ctrl+A seleziona il resoconto; Ctrl+C lo copia.
-- Modifica > Trova (Ctrl+F) cerca nella scheda attiva. F3 ripete la ricerca; Maiusc+F3 ne inverte la
-  direzione. Alle estremità del testo, la ricerca riprende dall’estremità opposta. Opzioni > A capo automatico
-  riguarda solo la scheda attiva; il segno di spunta segue la scheda selezionata. La finestra di ricerca può
-  essere ridotta a icona e ridimensionata orizzontalmente; la posizione e l’opzione Sempre in primo piano
-  vengono memorizzate. Fino a 30 ricerche e le relative opzioni vengono conservate solo fino alla chiusura
-  dell’applicazione. Le opzioni di inizio e fine si riferiscono alle righe logiche. Le espressioni regolari
-  usano la sintassi PCRE2. Tutti i comandi di Modifica riguardano solo la scheda attiva. Invio avvia la
-  ricerca; Maiusc+Invio inverte la direzione scelta. «Maiuscole/minuscole» distingue le lettere maiuscole
-  dalle minuscole; «Cerca all’indietro» cerca verso l’inizio del testo. La scelta di una voce della cronologia
-  ripristina tutte e cinque le opzioni di ricerca, compreso lo stato del modo per le espressioni regolari;
-  «Sempre in primo piano» è indipendente. «Espressione regolare» disattiva «La riga inizia con» e «La riga
-  termina con». Se entrambe le opzioni di inizio e fine riga sono attive, è sufficiente una corrispondenza a
-  una delle estremità. «A capo automatico» modifica solo la visualizzazione.
+- Modifica > Trova (Ctrl+F) cerca nella scheda di rapporto attiva o nell’area di testo di Guida o
+  Informazioni, in base alla finestra con lo stato attivo. La finestra di ricerca mantiene l’ultima
+  origine selezionata finché resta attiva. F3 ripete la ricerca; Maiusc+F3 ne inverte la direzione. Alle
+  estremità del testo, la ricerca riprende dall’estremità opposta. Opzioni > A capo automatico riguarda
+  solo la scheda attiva; il segno di spunta segue la scheda selezionata. La finestra di ricerca può
+  essere ridotta a icona e ridimensionata orizzontalmente; la posizione e l’opzione Sempre in primo
+  piano vengono memorizzate. Fino a 30 ricerche e le relative opzioni vengono conservate solo fino alla
+  chiusura dell’applicazione. Le opzioni di inizio e fine si riferiscono alle righe logiche. Le
+  espressioni regolari usano la sintassi PCRE2. Gli altri comandi del menu Modifica si applicano alla
+  scheda di rapporto attiva. Invio avvia la ricerca; Maiusc+Invio inverte la direzione scelta.
+  «Maiuscole/minuscole» distingue le lettere maiuscole dalle minuscole; «Cerca all’indietro» cerca verso
+  l’inizio del testo. La scelta di una voce della cronologia ripristina tutte e cinque le opzioni di
+  ricerca, compreso lo stato del modo per le espressioni regolari; «Sempre in primo piano» è
+  indipendente. «Espressione regolare» disattiva «La riga inizia con» e «La riga termina con». Se
+  entrambe le opzioni di inizio e fine riga sono attive, è sufficiente una corrispondenza a una delle
+  estremità. «A capo automatico» modifica solo la visualizzazione.
 - Opzioni > Preferenze (Ctrl+G) apre un'unica finestra di dialogo delle preferenze per percorsi MediaInfo e
   curl, carattere del report, antialiasing dei caratteri, lingua dell'interfaccia e lingua del report. Un
   percorso DLL vuoto consente il rilevamento automatico.
@@ -95,16 +101,23 @@ Windows 95 non è attualmente un runtime supportato.
   Consolas non è disponibile; il pulsante Predefinito è disabilitato mentre è selezionata l'impostazione
   predefinita. I caratteri selezionati dall'utente vengono conservati senza sostituzione con il codice
   dell'applicazione.
-- Le scelte di antialiasing dei caratteri sono ClearType se supportato, GDI e Nessuno. La scelta iniziale è
-  ClearType quando supportato, altrimenti GDI. Le impostazioni dei caratteri influiscono solo sui resoconti
-  dei media e sulle relative esportazioni di immagini.
+- Le scelte di antialiasing dei caratteri sono ClearType se supportato, GDI e Nessuno. La scelta
+  iniziale è ClearType quando supportato, altrimenti GDI. Le impostazioni del carattere si applicano
+  alle schede di rapporto, alle loro esportazioni come immagini e alla stampa dei rapporti. Guida e
+  Informazioni mantengono i propri caratteri di testo.
 - La Guida apre una finestra non modale separata con la propria voce sulla barra delle applicazioni e il
   pulsante di riduzione a icona. Informazioni su è una finestra di dialogo modale; l'intestazione del prodotto
   elenca tutte e tre le versioni DLL integrate.
 
-Stampa… (Ctrl+P) apre la finestra di sistema per scegliere la stampante e stampa l’intera scheda attiva senza
-anteprima. Viene usato il carattere del report; le righe lunghe vanno a capo e il testo viene suddiviso in
-pagine. La stampa avviene in background.
+File > Imposta pagina… apre le impostazioni di carta, orientamento e margini per la sessione corrente.
+Stampa… (Ctrl+P) apre la finestra di stampa del sistema; Windows 11 offre un’anteprima, mentre Windows
+10 e precedenti mantengono la finestra classica. Ctrl+P stampa la scheda attiva della finestra
+principale o l’area di testo di Guida o Informazioni, in base alla finestra con lo stato attivo. I
+rapporti usano il carattere scelto, la Guida il carattere dei dialoghi di sistema e Informazioni quello
+della propria area di testo. Se non ci sono schede aperte ma la Guida è aperta, Imposta pagina… e
+Stampa… restano disponibili; Stampa… stampa la Guida. La Guida usa la finestra di stampa della finestra
+principale; premendo di nuovo Ctrl+P nella Guida, si riporta in primo piano lo stesso dialogo di stampa.
+Le righe lunghe vengono mandate a capo e il testo suddiviso in pagine. La stampa avviene in background.
 
 Apri cartella… apre i file contenuti direttamente nella cartella selezionata, ciascuno nella propria scheda.
 Le sottocartelle non sono incluse. Apri e Apri cartella condividono l’ultima cartella selezionata.

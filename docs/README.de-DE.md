@@ -77,21 +77,27 @@ Windows 95 ist derzeit keine unterstützte Laufzeit.
   geschlossen, während alle anderen aktiven Registerkarten erhalten bleiben. „Datei“ > „Alle schließen“
   schließt alle Registerkarten, einschließlich der in der Warteschlange befindlichen Berichte. Datei > Beenden
   (Alt+F4) schließt die Anwendung.
-- Durch Doppelklick wird ein Wort ausgewählt. Ein Dreifachklick wählt eine logische Zeile aus. Durch Ziehen
-  wird die Auswahl um Wörter oder Zeilen erweitert.
+- Das Kontextmenü eines Tabreiters enthält Tab schließen. Aktivieren Sie Tabs per Doppelklick schließen
+  in den Voreinstellungen, um einen Tab durch Doppelklick auf seinen Reiter zu schließen. Die Option ist
+  anfangs deaktiviert und wird gespeichert.
+- Ein Doppelklick im Berichtstext wählt ein Wort aus. Ein Dreifachklick wählt eine logische Zeile aus.
+  Ziehen erweitert die Auswahl um Wörter oder Zeilen.
 - Strg+A wählt den Bericht aus; Strg+C kopiert es.
-- Bearbeiten > Suchen (Strg+F) durchsucht den aktiven Tab. F3 wiederholt die Suche; Umschalt+F3 kehrt die
-  Suchrichtung um. Am Textende wird die Suche am anderen Ende fortgesetzt. Optionen > Zeilenumbruch gilt nur
-  für den aktiven Tab; das Häkchen richtet sich nach dem ausgewählten Tab. Das Suchfenster lässt sich
-  minimieren und in der Breite verändern; seine Position und die Einstellung Immer im Vordergrund werden
-  gespeichert. Bis zu 30 Suchtexte mit ihren Optionen bleiben nur bis zum Beenden der Anwendung erhalten.
-  Zeile beginnt mit und Zeile endet mit beziehen sich auf logische Zeilen. Reguläre Ausdrücke verwenden die
-  PCRE2-Syntax. Alle Befehle unter Bearbeiten betreffen nur den aktiven Tab. Eingabe startet die Suche;
-  Umschalt+Eingabe kehrt die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ unterscheidet Groß- und
-  Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein Eintrag aus dem Verlauf stellt alle fünf
-  Suchoptionen wieder her und schaltet gegebenenfalls den Regexmodus aus; „Immer im Vordergrund“ ist
-  unabhängig davon. „Regulärer Ausdruck“ deaktiviert „Zeile beginnt mit“ und „Zeile endet mit“. Sind beide
-  Zeilenrandoptionen aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“ ändert nur die Darstellung.
+- Bearbeiten > Suchen (Strg+F) durchsucht je nach Fensterfokus den aktiven Berichtstab oder den
+  Textbereich in Hilfe oder Info. Solange das Suchfenster den Fokus hat, behält es die zuletzt gewählte
+  Quelle bei. F3 wiederholt die Suche; Umschalt+F3 kehrt die Suchrichtung um. Am Textende wird die Suche
+  am anderen Ende fortgesetzt. Optionen > Zeilenumbruch gilt nur für den aktiven Tab; das Häkchen
+  richtet sich nach dem ausgewählten Tab. Das Suchfenster lässt sich minimieren und in der Breite
+  verändern; seine Position und die Einstellung Immer im Vordergrund werden gespeichert. Bis zu 30
+  Suchtexte mit ihren Optionen bleiben nur bis zum Beenden der Anwendung erhalten. Zeile beginnt mit und
+  Zeile endet mit beziehen sich auf logische Zeilen. Reguläre Ausdrücke verwenden die PCRE2-Syntax. Die
+  übrigen Befehle im Menü Bearbeiten betreffen den aktiven Berichtstab. Eingabe startet die Suche;
+  Umschalt+Eingabe kehrt die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ unterscheidet Groß-
+  und Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein Eintrag aus dem Verlauf stellt
+  alle fünf Suchoptionen wieder her und schaltet gegebenenfalls den Regexmodus aus; „Immer im
+  Vordergrund“ ist unabhängig davon. „Regulärer Ausdruck“ deaktiviert „Zeile beginnt mit“ und „Zeile
+  endet mit“. Sind beide Zeilenrandoptionen aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“
+  ändert nur die Darstellung.
 - Optionen > Voreinstellungen (Strg+G) öffnet einen einzelnen Voreinstellungsdialog für MediaInfo- und
   curl-Pfade, Berichtsschriftart, Schriftarten-Antialiasing, Schnittstellensprache und Berichtssprache. Ein
   leerer DLL-Pfad ermöglicht die automatische Erkennung.
@@ -100,16 +106,23 @@ Windows 95 ist derzeit keine unterstützte Laufzeit.
   wiederhergestellt, wenn Consolas nicht verfügbar ist. Die Schaltfläche „Standard“ ist deaktiviert, solange
   die Standardeinstellung ausgewählt ist. Vom Benutzer ausgewählte Schriftarten bleiben erhalten, ohne durch
   Anwendungscode ersetzt zu werden.
-- Die Auswahlmöglichkeiten für Schriftarten-Antialiasing sind ClearType, sofern unterstützt, GDI und Keine.
-  Die erste Wahl ist ClearType, sofern unterstützt, andernfalls GDI. Schriftarteinstellungen wirken sich nur
-  auf Medienberichte und deren Bildexporte aus.
+- Die Auswahlmöglichkeiten für Schriftarten-Antialiasing sind ClearType, sofern unterstützt, GDI und
+  Keine. Die erste Wahl ist ClearType, sofern unterstützt, andernfalls GDI. Schrifteinstellungen gelten
+  für Berichtstabs, deren Bildexporte und den Berichtsdruck. Hilfe und Info behalten ihre eigenen
+  Textschriften.
 - Die Hilfe öffnet ein separates nicht modales Fenster mit einem eigenen Taskleisteneintrag und einer
   Schaltfläche zum Minimieren. About ist ein modaler Dialog; Im Produktheader sind alle drei eingebetteten
   DLL-Versionen aufgeführt.
 
-Drucken… (Strg+P) öffnet den Systemdialog zur Druckerauswahl und druckt den vollständigen aktiven Reiter ohne
-Vorschau. Die gewählte Berichtsschrift wird verwendet; lange Zeilen werden umgebrochen und der Text auf Seiten
-verteilt. Der Druck läuft im Hintergrund.
+Datei > Seite einrichten… öffnet die Einstellungen für Papier, Ausrichtung und Ränder für die aktuelle
+Sitzung. Drucken… (Strg+P) öffnet den Systemdruckdialog; Windows 11 bietet eine Vorschau, Windows 10 und
+ältere Versionen behalten den klassischen Dialog. Strg+P druckt je nach Fensterfokus den aktiven Tab des
+Hauptfensters oder den Textbereich in Hilfe oder Info. Berichte verwenden die gewählte Berichtsschrift,
+Hilfe die Systemdialogschrift und Info die Schrift seines Textbereichs. Sind keine Tabs geöffnet, aber
+die Hilfe ist offen, bleiben Seite einrichten… und Drucken… verfügbar; Drucken… druckt die Hilfe. Die
+Hilfe verwendet den Druckdialog des Hauptfensters; erneutes Strg+P in der Hilfe holt ihn in den
+Vordergrund. Lange Zeilen werden umgebrochen und der Text auf Seiten verteilt. Der Druck läuft im
+Hintergrund.
 
 Ordner öffnen… öffnet die Dateien direkt im ausgewählten Ordner jeweils in einer eigenen Registerkarte.
 Unterordner werden nicht einbezogen. Öffnen und Ordner öffnen verwenden gemeinsam den zuletzt ausgewählten

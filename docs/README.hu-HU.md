@@ -70,22 +70,27 @@ A Windows 95 jelenleg nem támogatott futtatókörnyezet.
 - Ctrl+Tab és Ctrl+Shift+Tab lapok váltása; Ctrl+W bezárja az aktív lapot. A lap fejlécére való középső
   kattintás bezárja azt, miközben a többi aktív lap megmarad. A Fájl > Összes bezárása bezár minden lapot,
   beleértve a sorban álló jelentéseket is. A Fájl > Kilépés (Alt+F4) bezárja az alkalmazást.
-- Dupla kattintással kiválaszt egy szót. Három kattintással kiválaszt egy logikai sort. Az elhúzás szavakkal
-  vagy sorokkal bővíti a kijelölést.
+- A lap fejlécének helyi menüjében megtalálható a Lap bezárása parancs. A Beállításokban engedélyezze a
+  Lapok bezárása dupla kattintással lehetőséget, ha a fejlécére duplán kattintva szeretné bezárni a
+  lapot. A beállítás alapértelmezésben ki van kapcsolva, és az állapota mentődik.
+- A jelentés szövegében a dupla kattintás egy szót jelöl ki. A tripla kattintás egy logikai sort jelöl
+  ki. A húzás szavanként vagy soronként bővíti a kijelölést.
 - Ctrl+A kiválasztja a jelentést; Ctrl+C másolja.
-- A Szerkesztés > Keresés (Ctrl+F) az aktív lapon keres. Az F3 megismétli a keresést, a Shift+F3 pedig
-  megfordítja az irányát. A szöveg végéhez érve a keresés a másik végéről folytatódik. A Beállítások >
-  Sortörés csak az aktív lapra érvényes; a jelölés a kiválasztott lapot követi. A keresőablak kis méretre
-  állítható és vízszintesen átméretezhető; a helyzete és a Mindig felül beállítás megmarad. Legfeljebb 30
-  keresési szöveg és beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor elejére és végére
-  vonatkozó beállítások logikai sorokra érvényesek. A reguláris kifejezések PCRE2-szintaxist használnak. A
-  Szerkesztés menü összes parancsa csak az aktív lapra érvényes. Az Enter elindítja a keresést; a Shift+Enter
+- A Szerkesztés > Keresés (Ctrl+F) a fókuszban lévő ablaktól függően az aktív jelentéslapon, a Súgó vagy
+  a Névjegy szövegmezőjében keres. A keresőablak megtartja az utoljára kiválasztott forrást, amíg nála
+  van a fókusz. F3 megismétli a keresést, a Shift+F3 pedig megfordítja az irányát. A szöveg végéhez érve
+  a keresés a másik végéről folytatódik. A Beállítások > Sortörés csak az aktív lapra érvényes; a
+  jelölés a kiválasztott lapot követi. A keresőablak kis méretre állítható és vízszintesen
+  átméretezhető; a helyzete és a Mindig felül beállítás megmarad. Legfeljebb 30 keresési szöveg és
+  beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor elejére és végére vonatkozó beállítások
+  logikai sorokra érvényesek. A reguláris kifejezések PCRE2-szintaxist használnak. A Szerkesztés menü
+  többi parancsa az aktív jelentéslapra vonatkozik. Az Enter elindítja a keresést; a Shift+Enter
   megfordítja a kiválasztott irányt. A „Kis- és nagybetűk megkülönböztetése” megkülönbözteti a kis- és
-  nagybetűket; a „Keresés visszafelé” a szöveg eleje felé keres. Egy előzmény kiválasztása visszaállítja mind
-  az öt keresési beállítást, beleértve a reguláris kifejezések módjának állapotát is; a „Mindig felül” ettől
-  független. A „Reguláris kifejezés” letiltja a „Sor elején” és „Sor végén” beállításokat. Ha mindkét
-  sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron elég az egyezés. A „Sortörés” csak a
-  megjelenítést módosítja.
+  nagybetűket; a „Keresés visszafelé” a szöveg eleje felé keres. Egy előzmény kiválasztása visszaállítja
+  mind az öt keresési beállítást, beleértve a reguláris kifejezések módjának állapotát is; a „Mindig
+  felül” ettől független. A „Reguláris kifejezés” letiltja a „Sor elején” és „Sor végén” beállításokat.
+  Ha mindkét sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron elég az egyezés. A
+  „Sortörés” csak a megjelenítést módosítja.
 - A Beállítások > Beállítások (Ctrl+G) egyetlen beállítási párbeszédpanelt nyit meg a MediaInfo és curl
   útvonalak, a jelentés betűtípusa, a betűtípus élsimítása, a felület nyelve és a jelentés nyelve számára. Az
   üres DLL elérési út lehetővé teszi az automatikus felderítést.
@@ -93,15 +98,22 @@ A Windows 95 jelenleg nem támogatott futtatókörnyezet.
   betűtípus párbeszédpanelt. Az alapértelmezett visszaállítja a Consolas vagy Courier New értéket, ha a
   Consolas nem érhető el; az Alapértelmezett gomb le van tiltva, amíg az alapértelmezett van kiválasztva. A
   felhasználó által kiválasztott betűtípusok alkalmazáskóddal való helyettesítés nélkül megmaradnak.
-- A betűtípus élsimítási lehetőségek a következők: ClearType, ha támogatott, GDI és Nincs. A kezdeti választás
-  ClearType, ha támogatott, egyébként GDI. A betűtípus-beállítások csak a médiajelentésekre és azok
-  képexportálására vonatkoznak.
+- A betűtípus élsimítási lehetőségek a következők: ClearType, ha támogatott, GDI és Nincs. A kezdeti
+  választás ClearType, ha támogatott, egyébként GDI. A betűtípus-beállítások a jelentéslapokra, azok
+  képexportjára és a jelentések nyomtatására vonatkoznak. A Súgó és a Névjegy megtartja saját
+  szövegbetűtípusát.
 - A Súgó egy különálló, modell nélküli ablakot nyit meg, saját tálcán lévő bejegyzéssel és kicsinyítés
   gombbal. A About egy modális párbeszédpanel; termékfejlécében mindhárom beágyazott DLL verzió szerepel.
 
-A Nyomtatás… (Ctrl+P) megnyitja a rendszer nyomtatóválasztó párbeszédablakát, és előnézet nélkül kinyomtatja
-az aktív lap teljes tartalmát. A jelentés betűtípusát használja; a hosszú sorokat tördeli és a szöveget
-oldalakra osztja. A nyomtatás a háttérben fut.
+A Fájl > Oldalbeállítás… az aktuális munkamenet papír-, tájolás- és margóbeállításait nyitja meg. A
+Nyomtatás… (Ctrl+P) a rendszer nyomtatási párbeszédpanelét nyitja meg; Windows 11 alatt előnézet is
+elérhető, Windows 10 és régebbi rendszereken a hagyományos panel marad. A Ctrl+P a fókuszban lévő
+ablaktól függően a főablak aktív lapját, a Súgó vagy a Névjegy szövegmezőjét nyomtatja. A jelentések a
+választott jelentésbetűtípust, a Súgó a rendszer párbeszédpanel-betűtípusát, a Névjegy pedig saját
+szövegmezőjének betűtípusát használja. Ha nincs nyitott lap, de a Súgó nyitva van, az Oldalbeállítás… és
+a Nyomtatás… továbbra is elérhető, és a Súgó nyomtatható. A Súgó a főablak nyomtatási panelét használja;
+az ismételt Ctrl+P a Súgóban ugyanezt a panelt hozza előtérbe. A hosszú sorok tördelődnek, a szöveg
+oldalakra oszlik. A nyomtatás a háttérben történik.
 
 A Mappa megnyitása… a kiválasztott mappában közvetlenül található fájlokat külön-külön lapon nyitja meg. Az
 almappák nem szerepelnek benne. A Megnyitás és a Mappa megnyitása közösen használja az utoljára kiválasztott

@@ -67,20 +67,26 @@ Windows 95 pašlaik netiek atbalstīts izpildlaiks.
 - Ctrl+Tab un Ctrl+Shift+Tab pārslēgt cilnes; Ctrl+W aizver aktīvo cilni. Vidēji noklikšķinot uz cilnes
   galvenes, šī cilne tiek aizvērta, vienlaikus saglabājot jebkuru citu aktīvo cilni. Fails > Aizvērt visu
   aizver visas cilnes, tostarp rindas pārskatus. Fails > Iziet (Alt+F4) aizver lietojumprogrammu.
-- Veicot dubultklikšķi, tiek atlasīts vārds. Trīsreiz noklikšķinot, tiek atlasīta loģiskā līnija. Vilkšana
-  paplašina atlasi pēc vārdiem vai rindiņām.
+- Cilnes galvenes kontekstizvēlnē ir Aizvērt cilni. Iestatījumos ieslēdziet Aizvērt cilnes ar
+  dubultklikšķi, lai aizvērtu cilni ar dubultklikšķi uz tās galvenes. Šī opcija pēc noklusējuma ir
+  izslēgta un tiek saglabāta.
+- Dubultklikšķis pārskata tekstā atlasa vārdu. Trīskāršs klikšķis atlasa loģisku rindu. Vilkšana
+  paplašina atlasi pa vārdiem vai rindām.
 - Ctrl+A atlasa atskaiti; Ctrl+C to kopē.
-- Rediģēt > Atrast (Ctrl+F) meklē aktīvajā cilnē. F3 atkārto meklēšanu, bet Shift+F3 maina tās virzienu.
-  Sasniedzot teksta malu, meklēšana turpinās no otras malas. Opcijas > Teksta aplaušana attiecas tikai uz
-  aktīvo cilni; atzīme mainās atbilstoši atlasītajai cilnei. Meklēšanas logu var minimizēt un mainīt tā
-  platumu; tiek atcerēta atrašanās vieta un opcija Vienmēr virspusē. Līdz 30 meklēšanas tekstiem ar opcijām
-  tiek saglabāti tikai līdz lietotnes aizvēršanai. Sākuma un beigu opcijas attiecas uz loģiskajām rindām.
-  Regulārās izteiksmes izmanto PCRE2 sintaksi. Visas izvēlnes Rediģēt komandas attiecas tikai uz aktīvo cilni.
-  Enter sāk meklēšanu; Shift+Enter apgriež izvēlēto virzienu. “Atšķirt lielos un mazos burtus” atšķir lielos
-  un mazos burtus; “Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures ieraksta izvēle atjauno visas
-  piecas meklēšanas opcijas, tostarp regulārās izteiksmes režīma stāvokli; “Vienmēr virspusē” ir neatkarīga
-  opcija. “Regulārā izteiksme” atspējo “Rinda sākas ar” un “Rinda beidzas ar”. Ja abas rindas malu opcijas ir
-  ieslēgtas, pietiek ar atbilstību vienā malā. “Teksta aplaušana” maina tikai attēlojumu.
+- Rediģēt > Atrast (Ctrl+F) meklē aktīvajā pārskata cilnē vai Palīdzības vai Par programmu teksta
+  apgabalā atkarībā no tā, kuram logam ir fokuss. Meklēšanas logs saglabā pēdējo izvēlēto avotu, kamēr
+  tam ir fokuss. F3 atkārto meklēšanu, bet Shift+F3 maina tās virzienu. Sasniedzot teksta malu,
+  meklēšana turpinās no otras malas. Opcijas > Teksta aplaušana attiecas tikai uz aktīvo cilni; atzīme
+  mainās atbilstoši atlasītajai cilnei. Meklēšanas logu var minimizēt un mainīt tā platumu; tiek
+  atcerēta atrašanās vieta un opcija Vienmēr virspusē. Līdz 30 meklēšanas tekstiem ar opcijām tiek
+  saglabāti tikai līdz lietotnes aizvēršanai. Sākuma un beigu opcijas attiecas uz loģiskajām rindām.
+  Regulārās izteiksmes izmanto PCRE2 sintaksi. Pārējās izvēlnes Rediģēt komandas attiecas uz aktīvo
+  pārskata cilni. Enter sāk meklēšanu; Shift+Enter apgriež izvēlēto virzienu. “Atšķirt lielos un mazos
+  burtus” atšķir lielos un mazos burtus; “Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures
+  ieraksta izvēle atjauno visas piecas meklēšanas opcijas, tostarp regulārās izteiksmes režīma stāvokli;
+  “Vienmēr virspusē” ir neatkarīga opcija. “Regulārā izteiksme” atspējo “Rinda sākas ar” un “Rinda
+  beidzas ar”. Ja abas rindas malu opcijas ir ieslēgtas, pietiek ar atbilstību vienā malā. “Teksta
+  aplaušana” maina tikai attēlojumu.
 - Opcijas > Iestatījumi (Ctrl+G) atver vienu preferenču dialoglodziņu MediaInfo un curl ceļiem, atskaites
   fontam, fontu antialiasingam, saskarnes valodai un atskaites valodai. Tukšs DLL ceļš nodrošina automātisku
   atklāšanu.
@@ -88,14 +94,20 @@ Windows 95 pašlaik netiek atbalstīts izpildlaiks.
   noklusējuma tiek atjaunots Consolas vai Courier New, ja Consolas nav pieejams; poga Noklusējums ir
   atspējota, kamēr ir atlasīta noklusējuma vērtība. Lietotāja atlasītie fonti tiek saglabāti bez aizstāšanas
   ar lietojumprogrammas kodu.
-- Fontu antialiasing izvēle ir ClearType, kad tiek atbalstīta, GDI un Nav. Sākotnējā izvēle ir ClearType, ja
-  tiek atbalstīta, pretējā gadījumā GDI. Fonta iestatījumi ietekmē tikai multivides ziņojumus un to attēlu
-  eksportēšanu.
+- Fontu antialiasing izvēle ir ClearType, kad tiek atbalstīta, GDI un Nav. Sākotnējā izvēle ir
+  ClearType, ja tiek atbalstīta, pretējā gadījumā GDI. Fontu iestatījumi attiecas uz pārskatu cilnēm, to
+  eksportu attēlos un pārskatu drukāšanu. Palīdzība un Par programmu saglabā savus teksta fontus.
 - Palīdzība atver atsevišķu bezmodeļu logu ar savu uzdevumjoslas ierakstu un minimizēšanas pogu. Par ir modāls
   dialogs; tā produkta galvenē ir uzskaitītas visas trīs iegultās DLL versijas.
 
-Drukāt… (Ctrl+P) atver sistēmas printera izvēles dialogu un izdrukā visu aktīvo cilni bez priekšskatījuma.
-Tiek izmantots pārskata fonts; garās rindas tiek aplauztas un teksts sadalīts lapās. Drukāšana notiek fonā.
+Fails > Lappuses iestatīšana… atver papīra, orientācijas un piemaļu iestatījumus pašreizējai sesijai.
+Drukāt… (Ctrl+P) atver sistēmas drukāšanas dialogu; Windows 11 nodrošina priekšskatījumu, bet Windows 10
+un vecākas versijas saglabā klasisko dialogu. Ctrl+P drukā galvenā loga aktīvo cilni vai Palīdzības vai
+Par programmu teksta apgabalu atkarībā no tā, kuram logam ir fokuss. Pārskati izmanto izvēlēto pārskata
+fontu, Palīdzība sistēmas dialogu fontu, bet Par programmu sava teksta apgabala fontu. Ja nav atvērtu
+ciļņu, bet Palīdzība ir atvērta, Lappuses iestatīšana… un Drukāt… paliek pieejamas; Drukāt… drukā
+Palīdzību. Palīdzība izmanto galvenā loga drukāšanas dialogu; atkārtots Ctrl+P Palīdzībā izvirza to pašu
+dialogu priekšplānā. Garās rindas tiek aplauztas, un teksts sadalīts lappusēs. Drukāšana notiek fonā.
 
 Atvērt mapi… atver failus, kas atrodas tieši atlasītajā mapē, katru savā cilnē. Apakšmapes netiek iekļautas.
 Atvērt un Atvērt mapi koplieto pēdējo atlasīto mapi. Eksports atceras atsevišķu mapi, pēc noklusējuma

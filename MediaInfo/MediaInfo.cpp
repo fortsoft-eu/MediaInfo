@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.2
+ * Last modified for version 1.2.0.0
  */
 
 #include "MediaInfo.h"
 #include "MainForm.h"
+#include "PrintSettings.h"
 #include "LibraryWorker.h"
 #include "Localization.h"
 #include "SettingsStorage.h"
@@ -118,6 +119,7 @@ struct PreferencesData {
     int originalLanguage;
     int language;
     UINT originalTabNameLength;
+    bool originalCloseTabsOnDoubleClick;
     bool originalMultipleInstances;
     bool ownsUiFont;
     bool applied;
@@ -1940,83 +1942,40 @@ void FreePrintJob(PrintJob* job) {
     }
 }
 
-/// Captures report text and font and opens the native system printer-selection dialog.
-PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* report, const wchar_t* title,
-    wchar_t* error, int errorCapacity) {
-    error[0] = 0;
+/// Captures the information edit text and font for an independent print request.
+PrintJob* CapturePrintJob(HWND owner, HWND edit, const wchar_t* title, const RECT& margins) {
     PrintJob* job = static_cast<PrintJob*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(PrintJob)));
     if (job) {
         job->target = owner;
         job->fontDpi = WindowDpi(edit);
         HFONT font = reinterpret_cast<HFONT>(SendMessageW(edit, WM_GETFONT, 0, 0));
-        SIZE_T bytes = (static_cast<SIZE_T>(lstrlenW(report)) + 1) * sizeof(wchar_t);
-        job->report = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), 0, bytes));
+        job->report = CopyControlText(edit);
         if (job->report
                 && GetObjectW(font, sizeof(job->font), &job->font) == static_cast<int>(sizeof(job->font))) {
-            CopyMemory(job->report, report, bytes);
             lstrcpynW(job->title, title, ARRAYSIZE(job->title));
-            PRINTDLGW dialog = PRINTDLGW{};
-            dialog.lStructSize = sizeof(dialog);
-            dialog.hwndOwner = owner;
-            dialog.Flags = PD_RETURNDC | PD_USEDEVMODECOPIESANDCOLLATE | PD_NOSELECTION | PD_NOPAGENUMS;
-            dialog.nMinPage = 1;
-            dialog.nMaxPage = 65535;
-            dialog.nFromPage = 1;
-            dialog.nToPage = 1;
-            dialog.nCopies = 1;
-            bool selected = PrintDlgW(&dialog) != FALSE;
-            DWORD failure = selected ? 0 : CommDlgExtendedError();
-            job->printer = dialog.hDC;
-            job->printToFile = (dialog.Flags & PD_PRINTTOFILE) != 0;
-            if (dialog.hDevMode) {
-                GlobalFree(dialog.hDevMode);
-            }
-            if (dialog.hDevNames) {
-                GlobalFree(dialog.hDevNames);
-            }
-            if (selected && job->printer) {
-                return job;
-            }
-            if (!selected && !failure) {
-                FreePrintJob(job);
-                return nullptr;
-            }
+            job->margins = margins;
+            return job;
         }
     }
     FreePrintJob(job);
-    lstrcpynW(error, T(TXT_PRINT_FAILED), errorCapacity);
     return nullptr;
 }
 
-/// Fits one printed line to the page width, preserving surrogate pairs and complete words when possible.
-static int PrintedLineLength(HDC printer, const wchar_t* text, int length, int width) {
-    int first = 0;
-    int last = length;
-    while (first < last) {
-        int count = first + (last - first + 1) / 2;
-        RECT measured = RECT{ 0, 0, width, 0 };
-        if (!DrawTextW(printer, text, count, &measured,
-            DT_CALCRECT | DT_SINGLELINE | DT_NOPREFIX | DT_EXPANDTABS)) {
-            return 0;
-        }
-        if (measured.right <= width) {
-            first = count;
-        } else {
-            last = count - 1;
-        }
+/// Captures the edit snapshot and opens the native printer-selection dialog with the retained settings.
+PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* title,
+    PrintSettings& settings, wchar_t* error, int errorCapacity) {
+    error[0] = 0;
+    PrintJob* job = CapturePrintJob(owner, edit, title, settings.GetMargins());
+    if (!job) {
+        lstrcpynW(error, T(TXT_PRINT_FAILED), errorCapacity);
+        return nullptr;
     }
-    if (first && text[first - 1] >= 0xD800 && text[first - 1] <= 0xDBFF
-        && text[first] >= 0xDC00 && text[first] <= 0xDFFF) {
-        --first;
+    job->printer = settings.ChoosePrinter(owner, &job->printToFile, error, errorCapacity);
+    if (!job->printer) {
+        FreePrintJob(job);
+        return nullptr;
     }
-    if (first < length) {
-        for (int count = first; count > 0; --count) {
-            if (text[count - 1] == L' ' || text[count - 1] == L'\t') {
-                return count;
-            }
-        }
-    }
-    return first;
+    return job;
 }
 
 /// Prints the complete snapshot with page breaks and printer-scaled report font.
@@ -2024,99 +1983,29 @@ bool PrintReportPages(PrintJob* job) {
     if (job->canceled || !job->fontDpi) {
         return false;
     }
-    int dpiX = GetDeviceCaps(job->printer, LOGPIXELSX);
-    int dpiY = GetDeviceCaps(job->printer, LOGPIXELSY);
-    int left = dpiX / 2;
-    int top = dpiY / 2;
-    int width = GetDeviceCaps(job->printer, HORZRES) - 2 * left;
-    int height = GetDeviceCaps(job->printer, VERTRES) - 2 * top;
-    if (dpiX <= 0 || dpiY <= 0 || width <= 0 || height <= 0) {
+    PrintLayout layout;
+    RECT area = PrintContentRect(job->printer, job->margins);
+    if (!layout.Initialize(*job, job->printer, area, GetDeviceCaps(job->printer, LOGPIXELSX),
+            GetDeviceCaps(job->printer, LOGPIXELSY))) {
         return false;
     }
-    LOGFONTW description = job->font;
-    description.lfHeight = MulDiv(description.lfHeight, dpiY, job->fontDpi);
-    description.lfWidth = MulDiv(description.lfWidth, dpiX, job->fontDpi);
-    HFONT font = CreateFontIndirectW(&description);
-    if (!font) {
-        return false;
-    }
-    HGDIOBJ previous = SelectObject(job->printer, font);
-    TEXTMETRICW metrics = TEXTMETRICW{};
-    bool success = previous && previous != HGDI_ERROR && GetTextMetricsW(job->printer, &metrics);
-    int lineHeight = metrics.tmHeight + metrics.tmExternalLeading;
-    int rows = success && lineHeight > 0 ? height / lineHeight : 0;
     DOCINFOW document = DOCINFOW{};
     document.cbSize = sizeof(document);
     document.lpszDocName = job->title;
     document.lpszOutput = job->printToFile ? L"FILE:" : nullptr;
-    bool started = success && rows > 0 && !job->canceled && StartDocW(job->printer, &document) > 0;
-    success = started;
-    bool page = false;
-    int row = 0;
-    const wchar_t* cursor = job->report;
-    if (started) {
-        do {
-            if (job->canceled) {
-                success = false;
-                break;
-            }
-            if (!page) {
-                if (StartPage(job->printer) <= 0) {
-                    success = false;
-                    break;
-                }
-                page = true;
-                HGDIOBJ selected = SelectObject(job->printer, font);
-                if (!selected || selected == HGDI_ERROR) {
-                    success = false;
-                    break;
-                }
-                SetTextColor(job->printer, RGB(0, 0, 0));
-                SetBkMode(job->printer, TRANSPARENT);
-            }
-            int length = 0;
-            while (length < 8192 && cursor[length] && cursor[length] != L'\r' && cursor[length] != L'\n') {
-                ++length;
-            }
-            int count = length ? PrintedLineLength(job->printer, cursor, length, width) : 0;
-            if (length && !count) {
-                success = false;
-                break;
-            }
-            RECT line = RECT{ left, top + row * lineHeight, left + width, top + (row + 1) * lineHeight };
-            if (count && !DrawTextW(job->printer, cursor, count, &line,
-                    DT_SINGLELINE | DT_NOPREFIX | DT_EXPANDTABS)) {
-                success = false;
-                break;
-            }
-            cursor += count;
-            if (count == length) {
-                if (*cursor == L'\r') {
-                    ++cursor;
-                    if (*cursor == L'\n') {
-                        ++cursor;
-                    }
-                } else if (*cursor == L'\n') {
-                    ++cursor;
-                }
-            }
-            if (++row == rows) {
-                if (EndPage(job->printer) <= 0) {
-                    success = false;
-                    break;
-                }
-                page = false;
-                row = 0;
-            }
-        } while (*cursor);
-        if (success && page) {
-            success = EndPage(job->printer) > 0;
-        }
-        if (success && !job->canceled) {
-            success = EndDoc(job->printer) > 0;
-        } else {
+    bool started = !job->canceled && StartDocW(job->printer, &document) > 0;
+    bool success = started;
+    for (UINT page = 0; page < layout.GetPageCount() && success; ++page) {
+        if (job->canceled || StartPage(job->printer) <= 0) {
             success = false;
+            break;
         }
+        success = layout.DrawPage(job->printer, page) && EndPage(job->printer) > 0;
+    }
+    if (success && !job->canceled) {
+        success = EndDoc(job->printer) > 0;
+    } else {
+        success = false;
     }
     if (!success) {
         DWORD failure = GetLastError();
@@ -2127,10 +2016,6 @@ bool PrintReportPages(PrintJob* job) {
             AbortDoc(job->printer);
         }
     }
-    if (previous && previous != HGDI_ERROR) {
-        SelectObject(job->printer, previous);
-    }
-    DeleteObject(font);
     return success;
 }
 
@@ -2606,6 +2491,8 @@ static bool PreferencesChanged(const PreferencesData& data) {
         || lstrcmpiW(data.reportLanguage, data.originalReportLanguage)
         || data.language != data.originalLanguage
         || data.dpi != *data.appliedDpi
+        || IsDlgButtonChecked(data.window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK) == BST_CHECKED
+            != data.originalCloseTabsOnDoubleClick
         || IsDlgButtonChecked(data.window, IDC_MULTIPLE_INSTANCES) == BST_CHECKED
             != data.originalMultipleInstances) {
         return true;
@@ -2697,6 +2584,7 @@ static void SetPreferencesLabels(PreferencesData& data) {
         IDC_TAB_NAME_LABEL,
         IDC_RECENT_LABEL,
         IDC_RECENT_CLEAR,
+        IDC_CLOSE_TABS_ON_DOUBLE_CLICK,
         IDC_MULTIPLE_INSTANCES,
         IDOK,
         IDCANCEL,
@@ -2717,6 +2605,7 @@ static void SetPreferencesLabels(PreferencesData& data) {
         TXT_TAB_NAME_LENGTH,
         TXT_RECENT_FILES,
         TXT_CLEAR_RECENT_FILES,
+        TXT_CLOSE_TABS_ON_DOUBLE_CLICK,
         TXT_ALLOW_MULTIPLE_INSTANCES,
         TXT_OK,
         TXT_CANCEL,
@@ -2915,6 +2804,7 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
         IDC_LANGUAGE_LABEL,
         IDC_REPORT_LABEL,
         IDC_TAB_NAME_LABEL,
+        0,
         IDC_RECENT_LABEL
     };
     const int rowControls[] = {
@@ -2923,6 +2813,7 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
         IDC_LANGUAGE,
         IDC_REPORT_LANGUAGE,
         IDC_TAB_NAME_LENGTH,
+        IDC_CLOSE_TABS_ON_DOUBLE_CLICK,
         IDC_RECENT_CLEAR
     };
     const int rowExtras[] = {
@@ -2931,16 +2822,20 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
         0,
         IDC_REPORT_BROWSE,
         0,
+        0,
         IDC_MULTIPLE_INSTANCES
     };
     LONG above = 0;
     LONG below = 0;
-    for (int row = 0; row < 6; ++row) {
-        HWND label = GetDlgItem(window, rowLabels[row]);
-        RECT bounds = ControlRect(label, window);
-        TEXTMETRICW metrics = TEXTMETRICW{};
-        ReadControlMetrics(label, &metrics);
-        PlaceControl(label, bounds.left, bounds.top, bounds.right - bounds.left, metrics.tmHeight);
+    for (int row = 0; row < 7; ++row) {
+        RECT bounds = RECT{};
+        if (rowLabels[row]) {
+            HWND label = GetDlgItem(window, rowLabels[row]);
+            bounds = ControlRect(label, window);
+            TEXTMETRICW metrics = TEXTMETRICW{};
+            ReadControlMetrics(label, &metrics);
+            PlaceControl(label, bounds.left, bounds.top, bounds.right - bounds.left, metrics.tmHeight);
+        }
         const int controls[] = { rowLabels[row], rowControls[row], rowExtras[row] };
         for (int id : controls) {
             if (!id) {
@@ -2960,8 +2855,10 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
     }
     LONG baseline = top + noteHeight + groupGap.cy + above;
     LONG step = above + below + rowGap.cy;
-    for (int row = 0; row < 6; ++row) {
-        PlacePreferenceControlBaseline(GetDlgItem(window, rowLabels[row]), baseline);
+    for (int row = 0; row < 7; ++row) {
+        if (rowLabels[row]) {
+            PlacePreferenceControlBaseline(GetDlgItem(window, rowLabels[row]), baseline);
+        }
         PlacePreferenceControlBaseline(GetDlgItem(window, rowControls[row]), baseline);
         if (rowExtras[row]) {
             PlacePreferenceControlBaseline(GetDlgItem(window, rowExtras[row]), baseline);
@@ -3103,6 +3000,7 @@ static void LayoutPreferences(PreferencesData& data) {
     HWND tabLength = GetDlgItem(window, IDC_TAB_NAME_LENGTH);
     HWND tabSpin = GetDlgItem(window, IDC_TAB_NAME_SPIN);
     HWND clear = GetDlgItem(window, IDC_RECENT_CLEAR);
+    HWND closeTabs = GetDlgItem(window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK);
     HWND multipleInstances = GetDlgItem(window, IDC_MULTIPLE_INSTANCES);
     UpdateEditMetrics(path);
     UpdateEditMetrics(curlPath);
@@ -3130,6 +3028,7 @@ static void LayoutPreferences(PreferencesData& data) {
         button.cx = preferred.cx;
     }
     SIZE checkSize = PreferredButtonSize(multipleInstances, SIZE{ 0, button.cy });
+    SIZE closeSize = PreferredButtonSize(closeTabs, SIZE{ 0, button.cy });
     LONG recentWidth = PreferenceLabelWidth(window, IDC_RECENT_LABEL);
     LONG requiredWidth = 2 * margin.cx + checkSize.cx + 2 * gap.cx + recentWidth + button.cx;
     if (requiredWidth > client.right) {
@@ -3233,6 +3132,8 @@ static void LayoutPreferences(PreferencesData& data) {
         recentBounds.bottom - recentBounds.top);
     RECT checkBounds = ControlRect(multipleInstances, window);
     PlaceControl(multipleInstances, margin.cx, checkBounds.top, checkSize.cx, checkSize.cy);
+    RECT closeBounds = ControlRect(closeTabs, window);
+    PlaceControl(closeTabs, margin.cx, closeBounds.top, closeSize.cx, closeSize.cy);
     AlignControlBaseline(recentLabel, clear);
     LayoutPreferencesVertically(data, margin);
     OrderPreferencesLabels(window);
@@ -3430,9 +3331,11 @@ static bool ApplyPreferences(PreferencesData& data) {
     saved = SaveReportLanguageSetting(data.reportLanguage) && saved;
     saved = SaveFontSetting(data.font, data.dpi) && saved;
     saved = SaveTabNameLengthSetting(tabLength) && saved;
+    bool closeTabs = IsDlgButtonChecked(data.window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK) == BST_CHECKED;
+    saved = SaveCloseTabsOnDoubleClickSetting(closeTabs) && saved;
     bool multipleInstances = IsDlgButtonChecked(data.window, IDC_MULTIPLE_INSTANCES) == BST_CHECKED;
     saved = SaveMultipleInstancesSetting(multipleInstances) && saved;
-    PreferencesChanges changes = PreferencesChanges{ reloadLibrary, tabLength };
+    PreferencesChanges changes = PreferencesChanges{ reloadLibrary, tabLength, closeTabs };
     *data.appliedFont = data.font;
     *data.appliedDpi = data.dpi;
     lstrcpyW(data.originalPath, path);
@@ -3440,6 +3343,7 @@ static bool ApplyPreferences(PreferencesData& data) {
     lstrcpyW(data.originalReportLanguage, data.reportLanguage);
     data.originalLanguage = data.language;
     data.originalTabNameLength = tabLength;
+    data.originalCloseTabsOnDoubleClick = closeTabs;
     data.originalMultipleInstances = multipleInstances;
     data.applied = true;
     data.reportLanguageChanged = data.reportLanguageChanged || reportChanged;
@@ -3560,6 +3464,9 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
             MAKELPARAM(maximumTabNameLength, minimumTabNameLength));
         SendDlgItemMessageW(window, IDC_TAB_NAME_SPIN, UDM_SETPOS, 0,
             MAKELPARAM(data->originalTabNameLength, 0));
+        data->originalCloseTabsOnDoubleClick = LoadCloseTabsOnDoubleClickSetting();
+        CheckDlgButton(window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK,
+            data->originalCloseTabsOnDoubleClick ? BST_CHECKED : BST_UNCHECKED);
         data->originalMultipleInstances = LoadMultipleInstancesSetting();
         CheckDlgButton(window, IDC_MULTIPLE_INSTANCES,
             data->originalMultipleInstances ? BST_CHECKED : BST_UNCHECKED);
@@ -3600,7 +3507,9 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         UpdateApplyButton(*data);
         return TRUE;
     }
-    if (message == WM_SETTINGCHANGE || message == WM_THEMECHANGED || message == WM_DPICHANGED
+    if (message == WM_SETTINGCHANGE
+            || message == WM_THEMECHANGED
+            || message == WM_DPICHANGED
             || message == WM_DISPLAYCHANGE) {
         UpdateSmoothingChoices(*data);
         SetPreferencesFont(*data, true);
@@ -3610,6 +3519,7 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
     }
     if (message == WM_COMMAND) {
         switch (LOWORD(wParam)) {
+            case IDC_CLOSE_TABS_ON_DOUBLE_CLICK:
             case IDC_MULTIPLE_INSTANCES:
                 UpdateApplyButton(*data);
                 return TRUE;

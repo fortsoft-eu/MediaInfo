@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.0.0
  */
 
 #include "HelpForm.h"
@@ -33,7 +33,8 @@
 #include <commctrl.h>
 
 /// Initializes an unopened modeless Help form and its font state.
-HelpForm::HelpForm() : window(nullptr), uiFont(nullptr), buttonSize(SIZE{}), ownsUiFont(false) {}
+HelpForm::HelpForm()
+        : window(nullptr), ownerWindow(nullptr), uiFont(nullptr), buttonSize(SIZE{}), ownsUiFont(false) {}
 
 /// Closes Help and releases its owned font.
 HelpForm::~HelpForm() {
@@ -173,6 +174,9 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             ClearWindowIcons(window);
             ResetInformationWordBreak();
             owner->window = nullptr;
+            if (IsWindow(owner->ownerWindow)) {
+                SendMessageW(owner->ownerWindow, helpVisibilityChangedMessage, 0, 0);
+            }
             break;
     }
     return FALSE;
@@ -180,6 +184,7 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
 
 /// Shows the independently minimizable Help form or activates its existing instance.
 void HelpForm::Show(HWND owner) {
+    ownerWindow = owner;
     if (window) {
         placement.BringToFront();
         return;
@@ -194,7 +199,13 @@ void HelpForm::Show(HWND owner) {
     HeapFree(GetProcessHeap(), 0, definition);
     if (created && window) {
         placement.Show();
+        SendMessageW(ownerWindow, helpVisibilityChangedMessage, 0, 0);
     }
+}
+
+/// Reveals Help beneath the search form without changing the active search input.
+void HelpForm::Reveal(HWND search) {
+    placement.SetVisible(search);
 }
 
 /// Closes the active modeless dialog.
@@ -206,7 +217,8 @@ void HelpForm::Close() {
 
 /// Routes modeless keyboard input through the native dialog manager.
 bool HelpForm::Translate(MSG* message) {
-    return window && IsDialogMessageW(window, message);
+    return window && (message->hwnd == window || IsChild(window, message->hwnd))
+        && IsDialogMessageW(window, message);
 }
 
 /// Returns the dialog handle, or null when it is closed.

@@ -68,22 +68,27 @@ Windows 95 bħalissa mhix runtime appoġġjata.
 - Ctrl+Tab u Ctrl+Shift+Tab swiċċ tabs; Ctrl+W jagħlaq it-tab attiva. Meta tikklikkja n-nofs header tat-tab
   tagħlaq dik it-tab filwaqt li tippreserva kwalunkwe tab attiva oħra. File > Agħlaq Kollha tagħlaq kull tab,
   inklużi rapporti fil-kju. File > Ħruġ (Alt+F4) jagħlaq l-applikazzjoni.
-- Ikklikkja darbtejn tagħżel kelma. Ikklikkja triple tagħżel linja loġika. It-tkaxkir testendi l-għażla bi
-  kliem jew linji.
+- Il-menu tal-kuntest tal-intestatura ta’ tab jinkludi Agħlaq it-tab. Attiva Agħlaq it-tabs b’ikklikkjar
+  doppju fil-Preferenzi biex tagħlaq tab billi tikklikkja darbtejn fuq l-intestatura tagħha. L-għażla
+  hija mitfija b’mod predefinit u tinżamm.
+- Ikklikkjar doppju fit-test tar-rapport jagħżel kelma. Tliet klikks jagħżlu linja loġika. It-tkaxkir
+  jestendi l-għażla b’kliem jew linji.
 - Ctrl+A jagħżel ir-rapport; Ctrl+C tikkopjaha.
-- Editja > Sib (Ctrl+F) ifittex fit-tab attiva. F3 jirrepeti t-tfittxija; Shift+F3 jaqleb id-direzzjoni
-  tagħha. Meta jintlaħaq tarf tat-test, it-tfittxija tkompli mit-tarf l-ieħor. Għażliet > Kebbeb il-kliem
-  japplika biss għat-tab attiva; il-marka ssegwi t-tab magħżula. It-tieqa tat-tfittxija tista’ tiġi
-  minimizzata u jinbidel il-wisa’ tagħha; il-pożizzjoni u l-għażla Dejjem fuq nett jinżammu. Sa 30 test
-  tat-tfittxija bl-għażliet tagħhom jinżammu biss sakemm tingħalaq l-applikazzjoni. L-għażliet tal-bidu u
-  tat-tmiem japplikaw għal-linji loġiċi. L-espressjonijiet regolari jużaw is-sintassi ta’ PCRE2. Il-kmandi
-  kollha fil-menu Editja japplikaw biss għat-tab attiva. Enter jibda t-tfittxija; Shift+Enter jaqleb
-  id-direzzjoni magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri kbar u żgħar; “Fittex lura”
-  tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja, jerġgħu jiġu applikati l-ħames għażliet
-  tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet regolari; “Dejjem fuq nett” hija
-  indipendenti. “Espressjoni regolari” tiddiżattiva “Il-linja tibda bi” u “Il-linja tispiċċa bi”. Meta ż-żewġ
-  għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb il-kliem” tbiddel biss
-  il-wiri.
+- Editja > Sib (Ctrl+F) ifittex fit-tab tar-rapport attiva jew fiż-żona tat-test ta’ Għajnuna jew Dwar,
+  skont liema tieqa għandha l-fokus. It-tieqa tat-tiftix iżżomm l-aħħar sors magħżul waqt li għandha
+  l-fokus. F3 jirrepeti t-tfittxija; Shift+F3 jaqleb id-direzzjoni tagħha. Meta jintlaħaq tarf tat-test,
+  it-tfittxija tkompli mit-tarf l-ieħor. Għażliet > Kebbeb il-kliem japplika biss għat-tab attiva;
+  il-marka ssegwi t-tab magħżula. It-tieqa tat-tfittxija tista’ tiġi minimizzata u jinbidel il-wisa’
+  tagħha; il-pożizzjoni u l-għażla Dejjem fuq nett jinżammu. Sa 30 test tat-tfittxija bl-għażliet
+  tagħhom jinżammu biss sakemm tingħalaq l-applikazzjoni. L-għażliet tal-bidu u tat-tmiem japplikaw
+  għal-linji loġiċi. L-espressjonijiet regolari jużaw is-sintassi ta’ PCRE2. Il-kmandi l-oħra fil-menu
+  Editja japplikaw għat-tab tar-rapport attiva. Enter jibda t-tfittxija; Shift+Enter jaqleb
+  id-direzzjoni magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri kbar u żgħar; “Fittex
+  lura” tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja, jerġgħu jiġu applikati l-ħames
+  għażliet tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet regolari; “Dejjem fuq nett”
+  hija indipendenti. “Espressjoni regolari” tiddiżattiva “Il-linja tibda bi” u “Il-linja tispiċċa bi”.
+  Meta ż-żewġ għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb il-kliem”
+  tbiddel biss il-wiri.
 - Settings > Preferenzi (Ctrl+G) jiftaħ djalogu tal-preferenzi wieħed għal mogħdijiet MediaInfo u curl, font
   tar-rapport, antialiasing tat-tipa, lingwa tal-interface u lingwa tar-rapport. Mogħdija DLL vojta
   tippermetti skoperta awtomatika.
@@ -91,15 +96,22 @@ Windows 95 bħalissa mhix runtime appoġġjata.
   Windows. Default jirrestawra Consolas, jew Courier New jekk Consolas ma jkunx disponibbli; il-buttuna
   Default hija diżattivata filwaqt li l-default hija magħżula. Il-fonts magħżula mill-utent jinżammu mingħajr
   sostituzzjoni bil-kodiċi tal-applikazzjoni.
-- Għażliet antialiasing tat-tipa huma ClearType meta appoġġjati, GDI u Xejn. L-għażla inizjali hija ClearType
-  meta appoġġjata, inkella GDI. Is-settings tal-font jaffettwaw biss ir-rapporti tal-midja u
-  l-esportazzjonijiet tal-immaġni tagħhom.
+- Għażliet antialiasing tat-tipa huma ClearType meta appoġġjati, GDI u Xejn. L-għażla inizjali hija
+  ClearType meta appoġġjata, inkella GDI. Is-settings tat-tipa japplikaw għat-tabs tar-rapporti,
+  għall-esportazzjoni tagħhom bħala stampi u għall-istampar tar-rapporti. Għajnuna u Dwar iżommu t-tipi
+  tat-test tagħhom stess.
 - Għajnuna tiftaħ tieqa separata bla mudell bid-dħul tagħha stess u l-buttuna timminimizza tat-taskbar. Dwar
   huwa dialog modali; l-intestatura tal-prodott tagħha telenka t-tliet verżjonijiet DLL inkorporati.
 
-Stampa… (Ctrl+P) tiftaħ id-djalogu tal-printers tas-sistema u tistampa t-tab attiva kollha mingħajr
-previżjoni. Jintuża l-font tar-rapport; il-linji twal jitgeżwru u t-test jinqasam f’paġni. L-istampar isir
-fl-isfond.
+Fajl > Issettjar tal-Paġna… jiftaħ l-għażliet tal-karta, l-orjentazzjoni u l-marġini għas-sessjoni
+attwali. Stampa… (Ctrl+P) jiftaħ id-djalogu tal-istampar tas-sistema; Windows 11 juri previżjoni,
+filwaqt li Windows 10 u verżjonijiet eqdem iżommu d-djalogu klassiku. Ctrl+P jistampa t-tab attiva
+tat-tieqa ewlenija jew iż-żona tat-test ta’ Għajnuna jew Dwar, skont liema tieqa għandha l-fokus.
+Ir-rapporti jużaw it-tipa magħżula għar-rapport, Għajnuna tuża t-tipa tad-djalogi tas-sistema u Dwar
+juża t-tipa taż-żona tat-test tiegħu. Jekk ma hemmx tabs miftuħa iżda Għajnuna hija miftuħa, Issettjar
+tal-Paġna… u Stampa… jibqgħu disponibbli; Stampa… jistampa l-għajnuna. Għajnuna tuża d-djalogu
+tal-istampar tat-tieqa ewlenija; Ctrl+P ieħor f’Għajnuna jġib l-istess djalogu fuq quddiem. Il-linji
+twal jitqassmu u t-test jinqasam f’paġni. L-istampar isir fl-isfond.
 
 Iftaħ folder… jiftaħ il-fajls li jinsabu direttament fil-folder magħżul, kull wieħed fit-tab tiegħu.
 Is-subfolders mhumiex inklużi. Iftaħ u Iftaħ folder jużaw l-istess folder magħżul l-aħħar. L-esportazzjoni

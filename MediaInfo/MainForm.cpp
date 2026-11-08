@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.2
+ * Last modified for version 1.2.0.0
  */
 
 #include "Localization.h"
 #include "MainForm.h"
+#include "ModernPrintDialog.h"
 #include "TabControl.h"
 #include "SelectionEdit.h"
 #include "SettingsStorage.h"
@@ -36,7 +37,7 @@
 #include <shellapi.h>
 #include <windowsx.h>
 
- /// Associates a menu command with its submenu and localized caption identifier.
+/// Associates a menu command with its submenu and localized caption identifier.
 struct MenuCaption {
     int menu;
     UINT id;
@@ -61,6 +62,7 @@ static const MenuCaption menuCaptions[] = {
     { 0, ID_FILE_EXPORT, TXT_EXPORT },
     { 0, ID_FILE_LAUNCH, TXT_LAUNCH_FILE },
     { 0, ID_FILE_SHOW_IN_FOLDER, TXT_SHOW_IN_CONTAINING_FOLDER },
+    { 0, ID_FILE_PAGE_SETUP, TXT_PAGE_SETUP },
     { 0, ID_FILE_PRINT, TXT_PRINT },
     { 0, ID_FILE_EXIT, TXT_EXIT },
     { 1, ID_EDIT_COPY, TXT_COPY_SELECTION },
@@ -94,6 +96,10 @@ static const UINT printCompleteMessage = WM_APP + 5;
 
 /// Command returned by the status pane context menu.
 static const UINT statusCopyCommand = 1;
+
+static HHOOK modalFindHook;
+static MainForm* modalFindOwner;
+static bool modalFindFiltering;
 
 /// Reads the current availability of a file and its containing folder for either menu.
 static void ReadFileMenuAvailability(FileMenuContext& context) {
@@ -195,19 +201,23 @@ static void FormatTabCaption(const FileTab* file, UINT limit, wchar_t* caption, 
 
 /// Initializes the viewer window, file lists, fonts and report-worker state.
 MainForm::MainForm()
-        : window(nullptr), tabs(nullptr), status(nullptr), uiFont(nullptr), reportFont(nullptr),
-        accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr),
-        activeJob(nullptr), activePrintJob(nullptr), tabMenuContext(nullptr), reportFontSpec(),
+        : window(nullptr), tabs(nullptr), status(nullptr), searchWindow(nullptr), printOwner(nullptr),
+        printDialog(nullptr), uiFont(nullptr), reportFont(nullptr), accelerators(nullptr),
+        reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
+        activePrintJob(nullptr), modernPrint(nullptr), tabMenuContext(nullptr), reportFontSpec(),
         reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength), traceLevel(0), closing(false),
-        libraryLoading(true), unicodeTabs(false), visualStylesActive(false), advancedMode(false),
-        fullParsing(false), defaultWordWrap(false) {
+        printDialogOpen(false), libraryLoading(true), unicodeTabs(false), visualStylesActive(false),
+        advancedMode(false), fullParsing(false), defaultWordWrap(false), closeTabsOnDoubleClick(false) {
     LoadReportOptionsSetting(fullParsing, advancedMode, traceLevel);
     defaultWordWrap = LoadWordWrapSetting();
+    closeTabsOnDoubleClick = LoadCloseTabsOnDoubleClickSetting();
     LoadOpenFolderSetting(headerFolder, ARRAYSIZE(headerFolder));
 }
 
 /// Stops outstanding reports and releases tabs, fonts and other viewer-owned resources.
 MainForm::~MainForm() {
+    CloseModernPrint(modernPrint);
+    modernPrint = nullptr;
     if (printThread) {
         InterlockedExchange(&activePrintJob->canceled, 1);
         CancelDC(activePrintJob->printer);
@@ -436,9 +446,8 @@ void MainForm::UpdateStatus() {
     int parts[] = { showVersion ? client.right - versionWidth : -1, -1 };
     SendMessageW(status, SB_SETPARTS, showVersion ? 2 : 1, reinterpret_cast<LPARAM>(parts));
     FileTab* active = CurrentFile();
-    bool searchable = active && active->ready && !closing;
     bool wrap = active ? active->wordWrap : defaultWordWrap;
-    findForm.SetTarget(searchable ? active->edit : nullptr);
+    UpdateFindTarget();
     UpdateEditMenu();
     EnableMenuItem(GetMenu(window), ID_WORD_WRAP,
         MF_BYCOMMAND | (active && !closing ? MF_ENABLED : MF_GRAYED));
@@ -447,7 +456,7 @@ void MainForm::UpdateStatus() {
     const wchar_t* text = nullptr;
     if (closing) {
         text = T(TXT_WAITING_FOR_REPORT);
-    } else if (printThread) {
+    } else if (printThread || modernPrint) {
         text = T(TXT_PRINTING);
     } else if (libraryLoading || activeJob) {
         text = T(TXT_LOADING);
@@ -472,8 +481,13 @@ void MainForm::UpdateStatus() {
         | (files ? MF_ENABLED : MF_GRAYED));
     EnableMenuItem(GetMenu(window), ID_FILE_EXPORT, MF_BYCOMMAND
         | (active && active->ready ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(GetMenu(window), ID_FILE_PRINT, MF_BYCOMMAND
-        | (active && active->ready && !printThread ? MF_ENABLED : MF_GRAYED));
+    bool printable = active && active->ready || !files && helpForm.GetWindow();
+    EnableMenuItem(GetMenu(window), ID_FILE_PRINT,
+        MF_BYCOMMAND | (printable && !closing && !printDialogOpen && !printThread && !modernPrint
+            ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(GetMenu(window), ID_FILE_PAGE_SETUP,
+        MF_BYCOMMAND | (printable && !closing && !printDialogOpen && !printThread && !modernPrint
+            ? MF_ENABLED : MF_GRAYED));
     EnableMenuItem(GetMenu(window), ID_PREFERENCES, MF_BYCOMMAND
         | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     EnableMenuItem(GetMenu(window), ID_ADVANCED_MODE, MF_BYCOMMAND
@@ -491,6 +505,54 @@ void MainForm::UpdateStatus() {
             | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     }
     InvalidateRect(status, nullptr, FALSE);
+}
+
+/// Selects the edit in the last active searchable form while retaining it during search-form input.
+void MainForm::UpdateFindTarget() {
+    HWND active = GetActiveWindow();
+    if (active && (active == window || active == helpForm.GetWindow() || active == aboutForm.GetWindow())) {
+        searchWindow = active;
+    }
+    HWND target = nullptr;
+    if (!closing) {
+        if (searchWindow && (searchWindow == helpForm.GetWindow() || searchWindow == aboutForm.GetWindow())) {
+            target = GetDlgItem(searchWindow, IDC_INFO_TEXT);
+        } else {
+            searchWindow = window;
+            FileTab* file = CurrentFile();
+            target = file && file->ready ? file->edit : nullptr;
+        }
+    }
+    findForm.SetTarget(target);
+}
+
+/// Routes search and print shortcuts from native modal loops.
+LRESULT CALLBACK MainForm::ModalFindFilter(int code, WPARAM wParam, LPARAM lParam) {
+    if (code == MSGF_DIALOGBOX && modalFindOwner && !modalFindFiltering) {
+        modalFindFiltering = true;
+        bool handled = modalFindOwner->Translate(reinterpret_cast<MSG*>(lParam));
+        modalFindFiltering = false;
+        if (handled) {
+            return TRUE;
+        }
+    }
+    return CallNextHookEx(modalFindHook, code, wParam, lParam);
+}
+
+/// Keeps modeless search input available while the modal About dialog is open.
+void MainForm::ShowAbout() {
+    modalFindOwner = this;
+    modalFindHook = SetWindowsHookExW(WH_MSGFILTER, ModalFindFilter, nullptr, GetCurrentThreadId());
+    if (!modalFindHook) {
+        modalFindOwner = nullptr;
+        MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        return;
+    }
+    aboutForm.Show(window);
+    UnhookWindowsHookEx(modalFindHook);
+    modalFindHook = nullptr;
+    modalFindOwner = nullptr;
+    UpdateFindTarget();
 }
 
 /// Shows Copy for the clicked status pane and copies its complete Unicode text.
@@ -573,6 +635,8 @@ void MainForm::ShowTabContextMenu(POINT point) {
     AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
     AppendMenuW(menu, MF_STRING | MF_GRAYED, ID_FILE_LAUNCH, T(TXT_LAUNCH_FILE));
     AppendMenuW(menu, MF_STRING | MF_GRAYED, ID_FILE_SHOW_IN_FOLDER, T(TXT_SHOW_IN_CONTAINING_FOLDER));
+    AppendMenuW(menu, MF_SEPARATOR, 0, nullptr);
+    AppendMenuW(menu, MF_STRING, ID_FILE_CLOSE, T(TXT_CLOSE_TAB_CONTEXT));
     FileMenuContext context = FileMenuContext{};
     context.menu = menu;
     context.path = path;
@@ -581,7 +645,9 @@ void MainForm::ShowTabContextMenu(POINT point) {
         TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
     tabMenuContext = nullptr;
     DestroyMenu(menu);
-    if (command) {
+    if (command == ID_FILE_CLOSE) {
+        CloseTab(index);
+    } else if (command) {
         ExecuteFileCommand(command, path);
     }
 }
@@ -1177,6 +1243,7 @@ void MainForm::RefreshReports(bool discardCached) {
 void MainForm::PreferencesApplied(void* context, const PreferencesChanges& changes) {
     MainForm* owner = static_cast<MainForm*>(context);
     owner->tabNameLength = changes.tabNameLength;
+    owner->closeTabsOnDoubleClick = changes.closeTabsOnDoubleClick;
     owner->UpdateTabNames();
     if (changes.reportsChanged) {
         owner->RefreshReports(true);
@@ -1217,27 +1284,82 @@ void MainForm::ExportReport() {
     }
 }
 
-/// Opens the system printer dialog and prints a snapshot of the active report without preview.
+/// Opens the system printer dialog for a snapshot of the focused information edit.
 void MainForm::PrintReport() {
-    FileTab* active = CurrentFile();
-    if (closing || !active || !active->ready || !active->report || printThread) {
+    if (printDialogOpen || modernPrint) {
+        ForegroundPrintDialog();
         return;
     }
-    const wchar_t* title = active->command == LibraryCommand::Read
-        ? active->path
-        : KnownInformationTitle(active->command);
+    FileTab* active = CurrentFile();
+    HWND focused = GetActiveWindow();
+    bool about = focused && focused == aboutForm.GetWindow();
+    bool help = focused && focused == helpForm.GetWindow() || !about && !files && helpForm.GetWindow();
+    HWND dialog = about ? focused : window;
+    HWND edit = about ? GetDlgItem(dialog, IDC_INFO_TEXT)
+        : help ? GetDlgItem(helpForm.GetWindow(), IDC_INFO_TEXT)
+        : active && active->ready ? active->edit : nullptr;
+    if (closing || !edit || printThread) {
+        return;
+    }
+    const wchar_t* title = about ? T(TXT_ABOUT_TITLE) : help ? T(TXT_HELP_TITLE)
+        : active->command == LibraryCommand::Read ? active->path : KnownInformationTitle(active->command);
+    printOwner = dialog;
+    if (UseModernPrintDialog()) {
+        PrintJob* snapshot = CapturePrintJob(window, edit, title, printSettings.GetMargins());
+        modernPrint = snapshot ? CreateModernPrint(snapshot, printSettings) : nullptr;
+        HRESULT result = modernPrint ? ShowModernPrint(modernPrint, dialog) : E_OUTOFMEMORY;
+        if (FAILED(result)) {
+            CloseModernPrint(modernPrint);
+            modernPrint = nullptr;
+            printOwner = nullptr;
+            if (result != HRESULT_FROM_WIN32(ERROR_CANCELLED)) {
+                MessageBoxW(dialog, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            }
+        }
+        UpdateStatus();
+        return;
+    }
     wchar_t error[512];
-    PrintJob* job = ChooseReportPrinter(window, active->edit, active->report, title, error, ARRAYSIZE(error));
+    printDialogOpen = true;
+    UpdateStatus();
+    bool ownHook = !modalFindHook;
+    if (ownHook) {
+        modalFindOwner = this;
+        modalFindHook = SetWindowsHookExW(WH_MSGFILTER, ModalFindFilter, nullptr, GetCurrentThreadId());
+        if (!modalFindHook) {
+            modalFindOwner = nullptr;
+            printDialogOpen = false;
+            printOwner = nullptr;
+            UpdateStatus();
+            MessageBoxW(dialog, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            return;
+        }
+    }
+    bool filtering = modalFindFiltering;
+    modalFindFiltering = false;
+    PrintJob* job = ChooseReportPrinter(dialog, edit, title,
+        printSettings, error, ARRAYSIZE(error));
+    modalFindFiltering = filtering;
+    if (ownHook) {
+        UnhookWindowsHookEx(modalFindHook);
+        modalFindHook = nullptr;
+        modalFindOwner = nullptr;
+    }
+    printDialogOpen = false;
+    printOwner = nullptr;
+    printDialog = nullptr;
     if (closing || !window) {
         FreePrintJob(job);
         return;
     }
     if (!job) {
+        UpdateStatus();
         if (error[0]) {
             MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
         }
         return;
     }
+    job->target = window;
     printThread = CreateThread(nullptr, 0, PrintDocument, job, 0, nullptr);
     if (!printThread) {
         FreePrintJob(job);
@@ -1246,6 +1368,59 @@ void MainForm::PrintReport() {
     }
     activePrintJob = job;
     UpdateStatus();
+}
+
+/// Locates the enabled print popup while excluding the application's information forms.
+BOOL CALLBACK MainForm::FindPrintDialog(HWND candidate, LPARAM parameter) {
+    MainForm* owner = reinterpret_cast<MainForm*>(parameter);
+    if (candidate == owner->window
+            || candidate == owner->helpForm.GetWindow()
+            || candidate == owner->aboutForm.GetWindow()
+            || candidate == owner->findForm.GetWindow()
+            || !IsWindowVisible(candidate)
+            || !IsWindowEnabled(candidate)) {
+        return TRUE;
+    }
+    HWND parent = ::GetWindow(candidate, GW_OWNER);
+    while (parent) {
+        if (parent == owner->printOwner) {
+            owner->printDialog = candidate;
+            return FALSE;
+        }
+        if (parent == owner->helpForm.GetWindow() || parent == owner->aboutForm.GetWindow()
+                || parent == owner->findForm.GetWindow()) {
+            break;
+        }
+        parent = ::GetWindow(parent, GW_OWNER);
+    }
+    return TRUE;
+}
+
+/// Finds the open print dialog and requests foreground focus without creating another print job.
+void MainForm::ForegroundPrintDialog() {
+    printDialog = nullptr;
+    EnumWindows(FindPrintDialog, reinterpret_cast<LPARAM>(this));
+    if (printDialog) {
+        SetForegroundWindow(printDialog);
+    }
+}
+
+/// Opens Page Setup for printable content and prevents overlapping print dialogs.
+void MainForm::PageSetup() {
+    FileTab* active = CurrentFile();
+    bool printable = active && active->ready || !files && helpForm.GetWindow();
+    if (closing || printDialogOpen || printThread || modernPrint || !printable) {
+        return;
+    }
+    wchar_t error[512];
+    printDialogOpen = true;
+    UpdateStatus();
+    bool accepted = printSettings.PageSetup(window, error, ARRAYSIZE(error));
+    printDialogOpen = false;
+    UpdateStatus();
+    if (!accepted && error[0]) {
+        MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+    }
 }
 
 /// Prints the selected report on its worker thread and posts the result to the viewer.
@@ -1276,6 +1451,23 @@ void MainForm::CompletePrint(PrintJob* job) {
         if (failed) {
             MessageBoxW(window, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
         }
+    }
+}
+
+/// Collects a modern print completion and releases its retained references.
+void MainForm::CompleteModernPrint(ModernPrintDialog* source) {
+    if (source != modernPrint) {
+        ReleaseModernPrint(source);
+        return;
+    }
+    bool failed = CloseModernPrint(modernPrint);
+    modernPrint = nullptr;
+    printOwner = nullptr;
+    printDialog = nullptr;
+    ReleaseModernPrint(source);
+    UpdateStatus();
+    if (failed && !closing) {
+        MessageBoxW(window, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
     }
 }
 
@@ -1456,6 +1648,17 @@ LRESULT MainForm::HandleNotification(WPARAM wParam, LPARAM lParam) {
         SelectTab(TabCtrl_GetCurSel(tabs));
         return 0;
     }
+    if (notification->hwndFrom == tabs && notification->code == NM_DBLCLK && closeTabsOnDoubleClick) {
+        DWORD position = GetMessagePos();
+        TCHITTESTINFO hit = TCHITTESTINFO{};
+        hit.pt = POINT{ GET_X_LPARAM(position), GET_Y_LPARAM(position) };
+        ScreenToClient(tabs, &hit.pt);
+        int index = TabCtrl_HitTest(tabs, &hit);
+        if (index >= 0 && hit.flags & TCHT_ONITEM) {
+            CloseTab(index);
+        }
+        return TRUE;
+    }
     if ((notification->code == TTN_GETDISPINFOW || notification->code == TTN_GETDISPINFOA)
             && notification->hwndFrom == TabCtrl_GetToolTips(tabs)) {
         FileTab* file = files;
@@ -1571,9 +1774,15 @@ LRESULT MainForm::HandleDpiChange(LPARAM lParam) {
     return 0;
 }
 
-/// Releases pending instance requests, closes information forms and ends the message loop.
+/// Releases pending print and instance requests, closes information forms and ends the message loop.
 LRESULT MainForm::HandleDestroy() {
+    CloseModernPrint(modernPrint);
+    modernPrint = nullptr;
     MSG pending = MSG{};
+    while (PeekMessageW(&pending, window, modernPrintCompleteMessage, modernPrintCompleteMessage,
+            PM_REMOVE)) {
+        ReleaseModernPrint(reinterpret_cast<ModernPrintDialog*>(pending.lParam));
+    }
     while (PeekMessageW(&pending, window, instanceFilesMessage, instanceFilesMessage, PM_REMOVE)) {
         HeapFree(GetProcessHeap(), 0, reinterpret_cast<void*>(pending.lParam));
     }
@@ -1616,13 +1825,25 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             return 0;
         case findVisibilityChangedMessage:
             return owner->HandleFindVisibility();
+        case helpVisibilityChangedMessage:
+            owner->UpdateStatus();
+            return 0;
         case findMatchMessage:
-            owner->placement.SetVisible(reinterpret_cast<HWND>(lParam));
+            if (reinterpret_cast<HWND>(wParam) == owner->helpForm.GetWindow()) {
+                owner->helpForm.Reveal(reinterpret_cast<HWND>(lParam));
+            } else if (reinterpret_cast<HWND>(wParam) == owner->aboutForm.GetWindow()) {
+                SetWindowPos(owner->aboutForm.GetWindow(), HWND_TOP, 0, 0, 0, 0,
+                    SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+                SetWindowPos(reinterpret_cast<HWND>(lParam), HWND_TOP, 0, 0, 0, 0,
+                    SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            } else {
+                owner->placement.SetVisible(reinterpret_cast<HWND>(lParam));
+            }
             return 0;
         case WM_INITMENUPOPUP:
             if (reinterpret_cast<HMENU>(wParam) == GetSubMenu(GetMenu(window), 0)
-                || owner->tabMenuContext
-                    && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
+                    || owner->tabMenuContext
+                && reinterpret_cast<HMENU>(wParam) == owner->tabMenuContext->menu) {
                 owner->InitializeFileMenu(reinterpret_cast<HMENU>(wParam));
                 return 0;
             }
@@ -1672,7 +1893,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             break;
         case WM_COMMAND:
             if (LOWORD(wParam) >= ID_FILE_RECENT_FIRST
-                    && LOWORD(wParam) < ID_FILE_RECENT_FIRST + RecentFiles::Capacity) {
+                && LOWORD(wParam) < ID_FILE_RECENT_FIRST + RecentFiles::Capacity) {
                 int index = LOWORD(wParam) - ID_FILE_RECENT_FIRST;
                 const wchar_t* recent = owner->recentFiles.Get(index);
                 if (recent) {
@@ -1724,6 +1945,9 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                 case ID_FILE_PRINT:
                     owner->PrintReport();
                     return 0;
+                case ID_FILE_PAGE_SETUP:
+                    owner->PageSetup();
+                    return 0;
                 case ID_FILE_EXPORT:
                     owner->ExportReport();
                     return 0;
@@ -1747,12 +1971,15 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                     owner->SelectAll();
                     return 0;
                 case ID_EDIT_FIND:
+                    owner->UpdateFindTarget();
                     owner->findForm.Show(window);
                     return 0;
                 case ID_EDIT_FIND_NEXT:
+                    owner->UpdateFindTarget();
                     owner->findForm.FindNext(window, false);
                     return 0;
                 case ID_EDIT_FIND_PREVIOUS:
+                    owner->UpdateFindTarget();
                     owner->findForm.FindNext(window, true);
                     return 0;
                 case ID_WORD_WRAP:
@@ -1779,7 +2006,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                     owner->ShowKnownInformation(LibraryCommand::Parameters);
                     return 0;
                 case ID_HELP_ABOUT:
-                    owner->aboutForm.Show(window);
+                    owner->ShowAbout();
                     return 0;
                 case ID_NEXT_TAB:
                     owner->SwitchTab(1);
@@ -1812,6 +2039,8 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
         case WM_QUERYENDSESSION:
             return TRUE;
         case WM_CLOSE:
+            CloseModernPrint(owner->modernPrint);
+            owner->modernPrint = nullptr;
             if (owner->printThread) {
                 InterlockedExchange(&owner->activePrintJob->canceled, 1);
                 CancelDC(owner->activePrintJob->printer);
@@ -1830,6 +2059,10 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             owner->window = nullptr;
             break;
         default:
+            if (message == modernPrintCompleteMessage) {
+                owner->CompleteModernPrint(reinterpret_cast<ModernPrintDialog*>(lParam));
+                return 0;
+            }
             if (message == printCompleteMessage) {
                 owner->CompletePrint(reinterpret_cast<PrintJob*>(lParam));
                 return 0;
@@ -1854,6 +2087,26 @@ void MainForm::Show() {
 
 /// Routes hovered-control wheel input and window keyboard shortcuts before normal native dispatch.
 bool MainForm::Translate(MSG* message) {
+    UpdateFindTarget();
+    HWND activeWindow = GetActiveWindow();
+    if (message->message == WM_KEYDOWN
+        && activeWindow
+        && (activeWindow == window
+            || activeWindow == helpForm.GetWindow()
+            || activeWindow == aboutForm.GetWindow())) {
+        if (message->wParam == L'F' && GetKeyState(VK_CONTROL) & 0x8000) {
+            findForm.Show(window);
+            return true;
+        }
+        if (message->wParam == L'P' && GetKeyState(VK_CONTROL) & 0x8000) {
+            PrintReport();
+            return true;
+        }
+        if (message->wParam == VK_F3) {
+            findForm.FindNext(window, (GetKeyState(VK_SHIFT) & 0x8000) != 0);
+            return true;
+        }
+    }
     if (message->message == WM_KEYDOWN
             && GetActiveWindow() == window
             && (message->wParam == L'C' || message->wParam == L'A')
@@ -1877,15 +2130,23 @@ bool MainForm::Translate(MSG* message) {
         }
         return false;
     }
-    return findForm.Translate(message)
-        || helpForm.Translate(message)
-        || TranslateAcceleratorW(window, accelerators, message)
+    if (findForm.Translate(message) || helpForm.Translate(message)) {
+        return true;
+    }
+    if (message->hwnd != window && !IsChild(window, message->hwnd)) {
+        return false;
+    }
+    return TranslateAcceleratorW(window, accelerators, message)
         || IsDialogMessageW(window, message);
 }
 
 /// Reports whether library initialization or a report operation is pending.
 bool MainForm::HasPendingReports() const {
-    return libraryLoading || reportThread != nullptr || printThread != nullptr;
+    return libraryLoading
+        || reportThread != nullptr
+        || printDialogOpen
+        || printThread != nullptr
+        || modernPrint != nullptr;
 }
 
 /// Reports whether initial library discovery or a Preferences library change is in progress.

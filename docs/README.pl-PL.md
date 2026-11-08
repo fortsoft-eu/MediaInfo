@@ -67,21 +67,26 @@ Windows 95 nie jest obecnie obsługiwanym środowiskiem wykonawczym.
 - Ctrl+Tab i Ctrl+Shift+Tab przełączniki zakładek; Ctrl+W zamyka aktywną kartę. Kliknięcie środkowym
   przyciskiem nagłówka karty zamyka tę kartę, zachowując inne aktywne karty. Plik > Zamknij wszystko zamyka
   każdą kartę, łącznie z raportami umieszczonymi w kolejce. Plik > Wyjdź (Alt+F4) zamyka aplikację.
-- Podwójne kliknięcie zaznacza słowo. Potrójne kliknięcie wybiera linię logiczną. Przeciąganie rozszerza
-  zaznaczenie o słowa lub linie.
+- Menu kontekstowe nagłówka karty zawiera polecenie Zamknij kartę. W Preferencjach włącz Zamykaj karty
+  dwuklikiem, aby zamykać kartę dwukrotnym kliknięciem jej nagłówka. Opcja jest domyślnie wyłączona i
+  jej stan jest zapisywany.
+- Dwukrotne kliknięcie tekstu raportu zaznacza słowo. Trzykrotne kliknięcie zaznacza wiersz logiczny.
+  Przeciąganie rozszerza zaznaczenie o słowa lub wiersze.
 - Ctrl+A wybiera raport; Ctrl+C kopiuje to.
-- Edycja > Znajdź (Ctrl+F) wyszukuje w aktywnej karcie. F3 powtarza wyszukiwanie, a Shift+F3 odwraca jego
-  kierunek. Po dotarciu do końca tekstu wyszukiwanie jest kontynuowane od drugiego końca. Opcje > Zawijanie
-  wierszy dotyczy tylko aktywnej karty; zaznaczenie odpowiada wybranej karcie. Okno wyszukiwania można
-  zminimalizować i zmieniać jego szerokość; położenie oraz ustawienie Zawsze na wierzchu są zapamiętywane. Do
-  30 wyszukiwanych tekstów z opcjami pozostaje w pamięci tylko do zamknięcia aplikacji. Opcje początku i końca
-  dotyczą logicznych wierszy. Wyrażenia regularne używają składni PCRE2. Wszystkie polecenia menu Edycja
-  dotyczą tylko aktywnej karty. Enter uruchamia wyszukiwanie, a Shift+Enter odwraca wybrany kierunek.
-  „Uwzględnij wielkość liter” rozróżnia wielkie i małe litery; „Szukaj wstecz” wyszukuje w kierunku początku
-  tekstu. Wybranie wpisu historii przywraca wszystkie pięć opcji wyszukiwania, w tym stan trybu wyrażeń
-  regularnych; „Zawsze na wierzchu” jest niezależne. „Wyrażenie regularne” wyłącza opcje „Wiersz zaczyna się
-  od” i „Wiersz kończy się na”. Gdy obie opcje krańców wiersza są włączone, wystarczy dopasowanie na jednym z
-  nich. „Zawijanie wierszy” zmienia tylko sposób wyświetlania.
+- Edycja > Znajdź (Ctrl+F) przeszukuje aktywną kartę raportu albo pole tekstowe Pomocy lub O programie,
+  zależnie od tego, które okno ma fokus. Okno wyszukiwania zachowuje ostatnio wybrane źródło, dopóki ma
+  fokus. F3 powtarza wyszukiwanie, a Shift+F3 odwraca jego kierunek. Po dotarciu do końca tekstu
+  wyszukiwanie jest kontynuowane od drugiego końca. Opcje > Zawijanie wierszy dotyczy tylko aktywnej
+  karty; zaznaczenie odpowiada wybranej karcie. Okno wyszukiwania można zminimalizować i zmieniać jego
+  szerokość; położenie oraz ustawienie Zawsze na wierzchu są zapamiętywane. Do 30 wyszukiwanych tekstów
+  z opcjami pozostaje w pamięci tylko do zamknięcia aplikacji. Opcje początku i końca dotyczą logicznych
+  wierszy. Wyrażenia regularne używają składni PCRE2. Pozostałe polecenia menu Edycja dotyczą aktywnej
+  karty raportu. Enter uruchamia wyszukiwanie, a Shift+Enter odwraca wybrany kierunek. „Uwzględnij
+  wielkość liter” rozróżnia wielkie i małe litery; „Szukaj wstecz” wyszukuje w kierunku początku tekstu.
+  Wybranie wpisu historii przywraca wszystkie pięć opcji wyszukiwania, w tym stan trybu wyrażeń
+  regularnych; „Zawsze na wierzchu” jest niezależne. „Wyrażenie regularne” wyłącza opcje „Wiersz zaczyna
+  się od” i „Wiersz kończy się na”. Gdy obie opcje krańców wiersza są włączone, wystarczy dopasowanie na
+  jednym z nich. „Zawijanie wierszy” zmienia tylko sposób wyświetlania.
 - Opcje > Preferencje (Ctrl+G) otwiera pojedyncze okno dialogowe preferencji dla ścieżek MediaInfo i curl,
   czcionki raportu, wygładzania czcionek, języka interfejsu i języka raportów. Pusta ścieżka DLL umożliwia
   automatyczne wykrywanie.
@@ -89,14 +94,20 @@ Windows 95 nie jest obecnie obsługiwanym środowiskiem wykonawczym.
   czcionki Windows. Domyślnie przywraca Consolas lub Courier New, jeśli Consolas jest niedostępne; przycisk
   Domyślne jest wyłączony, gdy wybrane jest ustawienie domyślne. Czcionki wybrane przez użytkownika są
   zachowywane bez zastępowania przez kod aplikacji.
-- Opcje wygładzania czcionek to ClearType, jeśli jest obsługiwane, GDI i Brak. Początkowy wybór to ClearType,
-  jeśli jest obsługiwany, w przeciwnym razie GDI. Ustawienia czcionek wpływają tylko na raporty multimedialne
-  i eksport ich obrazów.
+- Opcje wygładzania czcionek to ClearType, jeśli jest obsługiwane, GDI i Brak. Początkowy wybór to
+  ClearType, jeśli jest obsługiwany, w przeciwnym razie GDI. Ustawienia czcionki dotyczą kart raportów,
+  ich eksportu do obrazów i drukowania raportów. Pomoc i O programie zachowują własne czcionki tekstu.
 - Pomoc otwiera oddzielne, niemodalne okno z własnym wpisem na pasku zadań i przyciskiem minimalizacji.
   Informacje to modalne okno dialogowe; w nagłówku produktu znajdują się wszystkie trzy osadzone wersje DLL.
 
-Drukuj… (Ctrl+P) otwiera systemowe okno wyboru drukarki i drukuje całą aktywną kartę bez podglądu. Używana
-jest czcionka raportu; długie wiersze są zawijane, a tekst dzielony na strony. Drukowanie odbywa się w tle.
+Plik > Ustawienia strony… otwiera ustawienia papieru, orientacji i marginesów na bieżącą sesję. Drukuj…
+(Ctrl+P) otwiera systemowe okno drukowania; Windows 11 udostępnia podgląd, a Windows 10 i starsze
+zachowują klasyczne okno. Ctrl+P drukuje aktywną kartę okna głównego albo pole tekstowe Pomocy lub O
+programie, zależnie od tego, które okno ma fokus. Raporty używają wybranej czcionki raportu, Pomoc
+systemowej czcionki okien dialogowych, a O programie czcionki swojego pola tekstowego. Jeśli nie ma
+otwartych kart, ale Pomoc jest otwarta, Ustawienia strony… i Drukuj… pozostają dostępne; Drukuj… drukuje
+Pomoc. Pomoc używa okna drukowania okna głównego; ponowne Ctrl+P w Pomocy przenosi je na pierwszy plan.
+Długie wiersze są zawijane, a tekst dzielony na strony. Drukowanie działa w tle.
 
 Otwórz folder… otwiera pliki znajdujące się bezpośrednio w wybranym folderze, każdy na osobnej karcie.
 Podfoldery nie są uwzględniane. Otwórz i Otwórz folder korzystają wspólnie z ostatnio wybranego folderu.

@@ -68,32 +68,43 @@ Windows 95 ei ole praegu toetatud käitusaeg.
   keskmisel klõpsamisel suletakse see vahekaart, säilitades samal ajal kõik muud aktiivsed vahekaardid. Fail >
   Sule kõik sulgeb kõik vahekaardid, sealhulgas järjekorras olevad aruanded. Fail > Välju (Alt+F4) sulgeb
   rakenduse.
-- Topeltklõps valib sõna. Kolmikklõps valib loogilise rea. Lohistamine laiendab valikut sõnade või ridade
-  kaupa.
+- Vahekaardi päise kontekstimenüüs on käsk Sule vaheleht. Lülitage Eelistustes sisse Sule vahelehed
+  topeltklõpsuga, et sulgeda vahekaart selle päisel topeltklõpsates. See valik on vaikimisi välja
+  lülitatud ja salvestatakse.
+- Topeltklõps aruande tekstis valib sõna. Kolmikklõps valib loogilise rea. Lohistamine laiendab valikut
+  sõnade või ridade kaupa.
 - Ctrl+A valib aruande; Ctrl+C kopeerib selle.
-- Redigeeri > Otsi (Ctrl+F) otsib aktiivselt vahekaardilt. F3 kordab otsingut ja Shift+F3 pöörab otsingu suuna
-  ümber. Teksti lõppu jõudes jätkub otsing teisest otsast. Suvandid > Reamurdmine kehtib ainult aktiivsel
-  vahekaardil; märge vastab valitud vahekaardile. Otsinguakna saab minimeerida ja selle laiust muuta; asukoht
-  ning valik Alati pealmine jäetakse meelde. Kuni 30 otsinguteksti koos valikutega säilitatakse ainult
-  rakenduse sulgemiseni. Alguse ja lõpu valikud kehtivad loogiliste ridade kohta. Regulaaravaldised kasutavad
-  PCRE2 süntaksit. Kõik menüü Redigeeri käsud kehtivad ainult aktiivsel vahekaardil. Enter käivitab otsingu;
-  Shift+Enter pöörab valitud suuna ümber. „Tõstutundlik“ eristab suur- ja väiketähti; „Otsi tagasisuunas“
-  otsib teksti alguse suunas. Ajalookirje valimine taastab kõik viis otsinguvalikut, sealhulgas
-  regulaaravaldise režiimi oleku; „Alati pealmine“ on sõltumatu. „Regulaaravaldis“ keelab valikud „Rida algab“
-  ja „Rida lõpeb“. Kui mõlemad reapiiri valikud on lubatud, piisab vastest ühes piiris. „Reamurdmine“ muudab
+- Redigeeri > Otsi (Ctrl+F) otsib olenevalt fookuses olevast aknast aktiivselt aruande vahekaardilt või
+  Spikri või Teabe tekstialalt. Otsinguaken säilitab viimati valitud allika, kuni fookus on selles. F3
+  kordab otsingut ja Shift+F3 pöörab otsingu suuna ümber. Teksti lõppu jõudes jätkub otsing teisest
+  otsast. Suvandid > Reamurdmine kehtib ainult aktiivsel vahekaardil; märge vastab valitud vahekaardile.
+  Otsinguakna saab minimeerida ja selle laiust muuta; asukoht ning valik Alati pealmine jäetakse meelde.
+  Kuni 30 otsinguteksti koos valikutega säilitatakse ainult rakenduse sulgemiseni. Alguse ja lõpu
+  valikud kehtivad loogiliste ridade kohta. Regulaaravaldised kasutavad PCRE2 süntaksit. Menüü Redigeeri
+  ülejäänud käsud rakenduvad aktiivsele aruande vahekaardile. Enter käivitab otsingu; Shift+Enter pöörab
+  valitud suuna ümber. „Tõstutundlik“ eristab suur- ja väiketähti; „Otsi tagasisuunas“ otsib teksti
+  alguse suunas. Ajalookirje valimine taastab kõik viis otsinguvalikut, sealhulgas regulaaravaldise
+  režiimi oleku; „Alati pealmine“ on sõltumatu. „Regulaaravaldis“ keelab valikud „Rida algab“ ja „Rida
+  lõpeb“. Kui mõlemad reapiiri valikud on lubatud, piisab vastest ühes piiris. „Reamurdmine“ muudab
   ainult kuvamist.
 - Seaded > Eelistused (Ctrl+G) avab ühe eelistuste dialoogi MediaInfo ja curl teede, aruande fondi, fondi
   antialiasingu, liidese keele ja aruande keele jaoks. Tühi DLL tee võimaldab automaatset tuvastamist.
 - Fondinupp kuvab perekonna, punkti suuruse ja stiili ning avab standardse Windows fondidialoogi. Vaikeseade
   taastab Consolas või Courier New, kui Consolas pole saadaval; nupp Vaikimisi on keelatud, kui vaikeseade on
   valitud. Kasutaja valitud fondid säilitatakse ilma rakenduskoodiga asendamata.
-- Fondi antialiase valikud on ClearType, kui seda toetatakse, GDI ja Puudub. Esialgne valik on ClearType, kui
-  seda toetatakse, muul juhul GDI. Fondi seaded mõjutavad ainult meediaraporteid ja nende kujutiste eksporti.
+- Fondi antialiase valikud on ClearType, kui seda toetatakse, GDI ja Puudub. Esialgne valik on
+  ClearType, kui seda toetatakse, muul juhul GDI. Fondisätted mõjutavad aruande vahekaarte, nende
+  pildieksporti ja aruannete printimist. Spikker ja Teave säilitavad oma tekstifondid.
 - Abi avab eraldi režiimita akna, millel on oma tegumiriba sisestus ja minimeerimisnupp. Teave on modaalne
   dialoog; selle toote päises on loetletud kõik kolm manustatud DLL versiooni.
 
-Prindi… (Ctrl+P) avab süsteemi printerivaliku dialoogi ja prindib kogu aktiivse vahekaardi ilma eelvaateta.
-Kasutatakse valitud aruandefonti; pikad read murtakse ja tekst jagatakse lehekülgedeks. Printimine toimub
+Fail > Lehekülje häälestus… avab selle seansi paberi, suuna ja veeriste sätted. Prindi… (Ctrl+P) avab
+süsteemi prindidialoogi; Windows 11 kuvab eelvaate, Windows 10 ja vanemad kasutavad klassikalist
+dialoogi. Ctrl+P prindib olenevalt fookuses olevast aknast peaakna aktiivse vahekaardi või Spikri või
+Teabe teksti. Aruanded kasutavad valitud aruandefonti, Spikker süsteemi dialoogifonti ja Teave oma
+tekstiala fonti. Kui vahekaarte pole avatud, kuid Spikker on avatud, jäävad Lehekülje häälestus… ja
+Prindi… kasutatavaks; Prindi… prindib spikri. Spikker kasutab peaakna prindidialoogi; uus Ctrl+P Spikris
+toob sama dialoogi esiplaanile. Pikad read murtakse ja tekst jaotatakse lehekülgedeks. Printimine toimub
 taustal.
 
 Ava kaust… avab otse valitud kaustas olevad failid, igaüks oma vahekaardil. Alamkaustu ei kaasata. Ava ja Ava

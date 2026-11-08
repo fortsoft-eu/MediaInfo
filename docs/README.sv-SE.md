@@ -64,20 +64,26 @@ Windows 95 stöds för närvarande inte.
 - Ctrl+Tab och Ctrl+Skift+Tab växla flikar; Ctrl+W stänger den aktiva fliken. Genom att mittklicka på en
   flikrubrik stängs den fliken samtidigt som alla andra aktiva flikar bevaras. Arkiv > Stäng alla stänger alla
   flikar, inklusive köade rapporter. Arkiv > Avsluta (Alt+F4) stänger programmet.
-- Dubbelklicka väljer ett ord. Trippelklick väljer en logisk linje. Genom att dra utökas markeringen med ord
-  eller rader.
+- Flikrubrikens snabbmeny innehåller Stäng flik. Aktivera Stäng flikar med dubbelklick i Preferenser för
+  att stänga en flik genom att dubbelklicka på dess rubrik. Alternativet är avstängt från början och
+  sparas.
+- Dubbelklick i rapporttexten markerar ett ord. Trippelklick markerar en logisk rad. Dra för att utöka
+  markeringen med ord eller rader.
 - Ctrl+A väljer rapporten; Ctrl+C kopierar det.
-- Redigera > Sök (Ctrl+F) söker i den aktiva fliken. F3 upprepar sökningen; Skift+F3 vänder riktningen. Vid
-  textens ändar fortsätter sökningen från motsatt ände. Alternativ > Automatiskt radbyte gäller bara den
-  aktiva fliken; bocken följer den valda fliken. Sökfönstret kan minimeras och ändras i bredd; positionen och
-  inställningen Alltid överst sparas. Upp till 30 söktexter med sina alternativ behålls bara tills programmet
-  avslutas. Alternativen för början och slutet gäller logiska rader. Reguljära uttryck använder PCRE2-syntax.
-  Alla kommandon i Redigera gäller bara den aktiva fliken. Enter startar sökningen; Skift+Enter vänder den
-  valda riktningen. ”Matcha gemener och versaler” skiljer mellan gemener och versaler; ”Sök bakåt” söker mot
-  textens början. Ett val i historiken återställer alla fem sökalternativen, inklusive inställningen för
-  reguljära uttryck; ”Alltid överst” är oberoende. ”Reguljärt uttryck” inaktiverar ”Raden börjar med” och
-  ”Raden slutar med”. Om båda alternativen för radens ändar är aktiverade räcker en träff vid endera änden.
-  ”Automatiskt radbyte” ändrar bara visningen.
+- Redigera > Sök (Ctrl+F) söker i den aktiva rapportfliken eller i textområdet i Hjälp eller Om,
+  beroende på vilket fönster som har fokus. Sökfönstret behåller den senast valda källan medan det
+  självt har fokus. F3 upprepar sökningen; Skift+F3 vänder riktningen. Vid textens ändar fortsätter
+  sökningen från motsatt ände. Alternativ > Automatiskt radbyte gäller bara den aktiva fliken; bocken
+  följer den valda fliken. Sökfönstret kan minimeras och ändras i bredd; positionen och inställningen
+  Alltid överst sparas. Upp till 30 söktexter med sina alternativ behålls bara tills programmet
+  avslutas. Alternativen för början och slutet gäller logiska rader. Reguljära uttryck använder
+  PCRE2-syntax. Övriga kommandon i menyn Redigera gäller den aktiva rapportfliken. Enter startar
+  sökningen; Skift+Enter vänder den valda riktningen. ”Matcha gemener och versaler” skiljer mellan
+  gemener och versaler; ”Sök bakåt” söker mot textens början. Ett val i historiken återställer alla fem
+  sökalternativen, inklusive inställningen för reguljära uttryck; ”Alltid överst” är oberoende.
+  ”Reguljärt uttryck” inaktiverar ”Raden börjar med” och ”Raden slutar med”. Om båda alternativen för
+  radens ändar är aktiverade räcker en träff vid endera änden. ”Automatiskt radbyte” ändrar bara
+  visningen.
 - Alternativ > Inställningar (Ctrl+G) öppnar en enskild inställningsdialog för MediaInfo och curl sökvägar,
   rapportteckensnitt, teckensnittskantutjämning, gränssnittsspråk och rapportspråk. En tom DLL-sökväg
   möjliggör automatisk upptäckt.
@@ -85,14 +91,21 @@ Windows 95 stöds för närvarande inte.
   teckensnitt. Standard återställer Consolas, eller Courier New om Consolas inte är tillgänglig; knappen
   Standard är inaktiverad när standard är valt. Användarvalda teckensnitt behålls utan att ersättas med
   programkod.
-- Val av teckensnittskantutjämning är ClearType när de stöds, GDI och Ingen. Det initiala valet är ClearType
-  när det stöds, annars GDI. Teckensnittsinställningar påverkar endast mediarapporter och deras bildexporter.
+- Val av teckensnittskantutjämning är ClearType när de stöds, GDI och Ingen. Det initiala valet är
+  ClearType när det stöds, annars GDI. Teckensnittsinställningarna gäller rapportflikar, deras
+  bildexport och utskrift av rapporter. Hjälp och Om behåller sina egna textteckensnitt.
 - Hjälp öppnar ett separat modelllöst fönster med en egen post i aktivitetsfältet och minimeringsknapp. Om är
   en modal dialog; dess produktrubrik listar alla tre inbäddade DLL-versioner.
 
-Skriv ut… (Ctrl+P) öppnar systemets skrivardialog och skriver ut hela den aktiva fliken utan
-förhandsgranskning. Rapportens teckensnitt används; långa rader radbryts och texten delas upp på sidor.
-Utskriften sker i bakgrunden.
+Arkiv > Utskriftsformat… öppnar inställningar för papper, orientering och marginaler för den aktuella
+sessionen. Skriv ut… (Ctrl+P) öppnar systemets utskriftsdialog; Windows 11 visar en förhandsgranskning,
+medan Windows 10 och äldre behåller den klassiska dialogen. Ctrl+P skriver ut den aktiva fliken i
+huvudfönstret eller textområdet i Hjälp eller Om, beroende på vilket fönster som har fokus. Rapporter
+använder det valda rapportteckensnittet, Hjälp systemets dialogteckensnitt och Om textområdets eget
+teckensnitt. Om inga flikar är öppna men hjälpfönstret är öppet är Utskriftsformat… och Skriv ut…
+fortfarande tillgängliga; Skriv ut… skriver ut hjälpen. Hjälp använder huvudfönstrets utskriftsdialog;
+ytterligare Ctrl+P i Hjälp för samma dialog till förgrunden. Långa rader radbryts och texten delas upp
+på sidor. Utskrift sker i bakgrunden.
 
 Öppna mapp… öppnar filerna direkt i den valda mappen, var och en på en egen flik. Undermappar tas inte med.
 Öppna och Öppna mapp delar den senast valda mappen. Export kommer ihåg en egen mapp, som standard Dokument.

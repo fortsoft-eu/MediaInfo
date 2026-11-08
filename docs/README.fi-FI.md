@@ -69,20 +69,26 @@ Windows 95 ei ole tällä hetkellä tuettu suoritusaika.
   keskinapsauttaminen sulkee välilehden ja säilyttää muut aktiiviset välilehdet. Tiedosto > Sulje kaikki
   sulkee kaikki välilehdet, mukaan lukien jonossa olevat raportit. Tiedosto > Lopeta (Alt+F4) sulkee
   sovelluksen.
-- Kaksoisnapsautus valitsee sanan. Kolmoisnapsautus valitsee loogisen rivin. Vetäminen laajentaa valintaa
-  sanoilla tai riveillä.
+- Välilehden otsikon pikavalikossa on Sulje välilehti. Ota asetuksissa käyttöön Sulje välilehdet
+  kaksoisnapsautuksella, jos haluat sulkea välilehden kaksoisnapsauttamalla sen otsikkoa. Asetus on
+  oletuksena pois käytöstä, ja se tallennetaan.
+- Kaksoisnapsautus raporttitekstissä valitsee sanan. Kolmoisnapsautus valitsee loogisen rivin. Vetäminen
+  laajentaa valintaa sanoittain tai riveittäin.
 - Ctrl+A valitsee raportin; Ctrl+C kopioi sen.
-- Muokkaa > Etsi (Ctrl+F) hakee aktiivisesta välilehdestä. F3 toistaa haun ja Vaihto+F3 vaihtaa hakusuunnan.
-  Tekstin päässä haku jatkuu toisesta päästä. Asetukset > Automaattinen rivitys koskee vain aktiivista
-  välilehteä; valintamerkki seuraa valittua välilehteä. Hakuikkunan voi pienentää ja sen leveyttä muuttaa;
-  sijainti ja Aina päällimmäisenä -asetus muistetaan. Enintään 30 hakutekstiä asetuksineen säilytetään vain
-  sovelluksen sulkemiseen asti. Rivin alku- ja loppuehdot koskevat loogisia rivejä. Säännölliset lausekkeet
-  käyttävät PCRE2-syntaksia. Kaikki Muokkaa-valikon komennot koskevat vain aktiivista välilehteä. Enter
-  käynnistää haun; Vaihto+Enter kääntää valitun suunnan. ”Sama kirjainkoko” erottaa isot ja pienet kirjaimet;
-  ”Etsi taaksepäin” hakee kohti tekstin alkua. Historiakohteen valinta palauttaa kaikki viisi hakuasetusta,
-  myös säännöllisten lausekkeiden tilan; ”Aina päällimmäisenä” on erillinen asetus. ”Säännöllinen lauseke”
-  poistaa käytöstä asetukset ”Rivi alkaa” ja ”Rivi päättyy”. Kun molemmat rivin reunaehdot ovat käytössä,
-  osuma kummassa tahansa reunassa riittää. ”Automaattinen rivitys” muuttaa vain näyttötapaa.
+- Muokkaa > Etsi (Ctrl+F) hakee aktiivisesta raporttivälilehdestä tai Ohje- tai Tietoja-ikkunan
+  tekstialueelta sen mukaan, missä ikkunassa kohdistus on. Hakuikkuna säilyttää viimeksi valitun
+  lähteen, kun kohdistus on siinä. F3 toistaa haun ja Vaihto+F3 vaihtaa hakusuunnan. Tekstin päässä haku
+  jatkuu toisesta päästä. Asetukset > Automaattinen rivitys koskee vain aktiivista välilehteä;
+  valintamerkki seuraa valittua välilehteä. Hakuikkunan voi pienentää ja sen leveyttä muuttaa; sijainti
+  ja Aina päällimmäisenä -asetus muistetaan. Enintään 30 hakutekstiä asetuksineen säilytetään vain
+  sovelluksen sulkemiseen asti. Rivin alku- ja loppuehdot koskevat loogisia rivejä. Säännölliset
+  lausekkeet käyttävät PCRE2-syntaksia. Muut Muokkaa-valikon komennot koskevat aktiivista
+  raporttivälilehteä. Enter käynnistää haun; Vaihto+Enter kääntää valitun suunnan. ”Sama kirjainkoko”
+  erottaa isot ja pienet kirjaimet; ”Etsi taaksepäin” hakee kohti tekstin alkua. Historiakohteen valinta
+  palauttaa kaikki viisi hakuasetusta, myös säännöllisten lausekkeiden tilan; ”Aina päällimmäisenä” on
+  erillinen asetus. ”Säännöllinen lauseke” poistaa käytöstä asetukset ”Rivi alkaa” ja ”Rivi päättyy”.
+  Kun molemmat rivin reunaehdot ovat käytössä, osuma kummassa tahansa reunassa riittää. ”Automaattinen
+  rivitys” muuttaa vain näyttötapaa.
 - Asetukset > Asetukset (Ctrl+G) avaa yhden asetusikkunan MediaInfo- ja curl-poluille, raportin fontille,
   fontin antialiasolle, käyttöliittymäkielelle ja raportin kielelle. Tyhjä DLL polku mahdollistaa
   automaattisen etsinnän.
@@ -91,14 +97,19 @@ Windows 95 ei ole tällä hetkellä tuettu suoritusaika.
   käytössä, kun oletusasetus on valittuna. Käyttäjän valitsemat kirjasimet säilytetään ilman korvausta
   sovelluskoodilla.
 - Fontin antialiasointivaihtoehdot ovat ClearType, kun niitä tuetaan, GDI ja Ei mitään. Alkuvalinta on
-  ClearType, kun sitä tuetaan, muuten GDI. Fonttiasetukset vaikuttavat vain mediaraportteihin ja niiden kuvien
-  vientiin.
+  ClearType, kun sitä tuetaan, muuten GDI. Fonttiasetukset koskevat raporttivälilehtiä, niiden
+  kuvavientiä ja raporttien tulostusta. Ohje ja Tietoja säilyttävät omat tekstifonttinsa.
 - Ohje avaa erillisen mallittoman ikkunan, jossa on oma tehtäväpalkin merkintä ja pienennyspainike. Tietoja on
   modaalinen dialogi; sen tuoteotsikossa luetellaan kaikki kolme upotettua DLL-versiota.
 
-Tulosta… (Ctrl+P) avaa järjestelmän tulostinvalintaikkunan ja tulostaa koko aktiivisen välilehden ilman
-esikatselua. Raportin fonttia käytetään, pitkät rivit rivitetään ja teksti jaetaan sivuille. Tulostus tapahtuu
-taustalla.
+Tiedosto > Sivun asetukset… avaa istunnon paperi-, suunta- ja reunusasetukset. Tulosta… (Ctrl+P) avaa
+järjestelmän tulostusikkunan; Windows 11 näyttää esikatselun, kun taas Windows 10 ja vanhemmat käyttävät
+perinteistä ikkunaa. Ctrl+P tulostaa pääikkunan aktiivisen välilehden tai Ohje- tai Tietoja-ikkunan
+tekstialueen sen mukaan, missä ikkunassa kohdistus on. Raportit käyttävät valittua raporttifonttia, Ohje
+järjestelmän valintaikkunafonttia ja Tietoja oman tekstialueensa fonttia. Jos välilehtiä ei ole auki
+mutta Ohje on auki, Sivun asetukset… ja Tulosta… ovat edelleen käytettävissä; Tulosta… tulostaa ohjeen.
+Ohje käyttää pääikkunan tulostusikkunaa; uusi Ctrl+P ohjeessa tuo saman ikkunan etualalle. Pitkät rivit
+rivitetään ja teksti jaetaan sivuille. Tulostus tapahtuu taustalla.
 
 Avaa kansio… avaa valitussa kansiossa suoraan olevat tiedostot kukin omalle välilehdelleen. Alikansioita ei
 sisällytetä. Avaa ja Avaa kansio käyttävät yhteistä viimeksi valittua kansiota. Vienti muistaa erillisen

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.0.0
  */
 
 #include "SettingsStorage.h"
@@ -50,6 +50,7 @@ static const DWORD advancedModeOption = 0x02;
 static const DWORD multipleInstancesOption = 0x04;
 static const DWORD traceLevelMask = 0x18;
 static const DWORD wordWrapOption = 0x20;
+static const DWORD closeTabsOnDoubleClickOption = 0x40;
 static const char optionsMutexName[] = "FortSoft.MediaInfo.Options";
 
 /// Current-user registry location for viewer preferences and recent-file history.
@@ -128,6 +129,16 @@ bool LoadWordWrapSetting() {
 /// Persists the last manually selected wrapping state for new report tabs.
 bool SaveWordWrapSetting(bool enabled) {
     return SaveOption(wordWrapOption, enabled ? wordWrapOption : 0);
+}
+
+/// Loads optional tab closing by double-click, disabled by default.
+bool LoadCloseTabsOnDoubleClickSetting() {
+    return (LoadOptions() & closeTabsOnDoubleClickOption) != 0;
+}
+
+/// Persists the committed tab double-click behavior in the shared option bits.
+bool SaveCloseTabsOnDoubleClickSetting(bool enabled) {
+    return SaveOption(closeTabsOnDoubleClickOption, enabled ? closeTabsOnDoubleClickOption : 0);
 }
 
 /// Loads the optional permission for multiple instances, disabled by default.

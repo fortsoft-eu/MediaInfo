@@ -69,21 +69,26 @@ Windows 95 nu este în prezent un timp de rulare acceptat.
 - Ctrl+Tab și Ctrl+Shift+Tab comută filele; Ctrl+W închide fila activă. Făcând clic din mijloc pe un antet de
   filă, se închide acea filă, păstrând orice altă filă activă. Fișier > Închidere totul închide fiecare filă,
   inclusiv rapoartele aflate în coadă. Fișier > Ieșire (Alt+F4) închide aplicația.
-- Faceți dublu clic pentru a selecta un cuvânt. Triplu clic selectează o linie logică. Tragerea extinde
-  selecția cu cuvinte sau linii.
+- Meniul contextual al antetului unei file include Închide fila. Activați Închide filele prin dublu clic
+  în Preferințe pentru a închide o filă prin dublu clic pe antetul ei. Opțiunea este dezactivată
+  implicit și se salvează.
+- Un dublu clic în textul raportului selectează un cuvânt. Un triplu clic selectează o linie logică.
+  Tragerea extinde selecția pe cuvinte sau linii.
 - Ctrl+A selectează raportul; Ctrl+C îl copiază.
-- Editare > Găsire (Ctrl+F) caută în fila activă. F3 repetă căutarea; Shift+F3 îi inversează direcția. La
-  capătul textului, căutarea continuă din celălalt capăt. Opțiuni > Încadrare cuvinte se aplică numai filei
-  active; bifa corespunde filei selectate. Fereastra de căutare poate fi minimizată și redimensionată
-  orizontal; poziția și opțiunea Întotdeauna deasupra sunt memorate. Până la 30 de texte căutate și opțiunile
-  lor sunt păstrate numai până la închiderea aplicației. Opțiunile de început și sfârșit se aplică liniilor
-  logice. Expresiile regulate folosesc sintaxa PCRE2. Toate comenzile din Editare se aplică numai filei
-  active. Enter pornește căutarea; Shift+Enter inversează direcția aleasă. „Potrivire litere mari și mici”
-  deosebește literele mari de cele mici; „Căutare înapoi” caută spre începutul textului. Alegerea unei intrări
-  din istoric restabilește toate cele cinci opțiuni de căutare, inclusiv starea modului de expresii regulate;
-  „Întotdeauna deasupra” este independentă. „Expresie regulată” dezactivează „Linia începe cu” și „Linia se
-  termină cu”. Dacă ambele opțiuni pentru capetele liniei sunt active, este suficientă o potrivire la oricare
-  capăt. „Încadrare cuvinte” schimbă numai afișarea.
+- Editare > Găsire (Ctrl+F) caută în fila de raport activă sau în zona de text din Ajutor ori Despre, în
+  funcție de fereastra care are focalizarea. Fereastra de căutare păstrează ultima sursă selectată cât
+  timp are focalizarea. F3 repetă căutarea; Shift+F3 îi inversează direcția. La capătul textului,
+  căutarea continuă din celălalt capăt. Opțiuni > Încadrare cuvinte se aplică numai filei active; bifa
+  corespunde filei selectate. Fereastra de căutare poate fi minimizată și redimensionată orizontal;
+  poziția și opțiunea Întotdeauna deasupra sunt memorate. Până la 30 de texte căutate și opțiunile lor
+  sunt păstrate numai până la închiderea aplicației. Opțiunile de început și sfârșit se aplică liniilor
+  logice. Expresiile regulate folosesc sintaxa PCRE2. Celelalte comenzi din meniul Editare se aplică
+  filei de raport active. Enter pornește căutarea; Shift+Enter inversează direcția aleasă. „Potrivire
+  litere mari și mici” deosebește literele mari de cele mici; „Căutare înapoi” caută spre începutul
+  textului. Alegerea unei intrări din istoric restabilește toate cele cinci opțiuni de căutare, inclusiv
+  starea modului de expresii regulate; „Întotdeauna deasupra” este independentă. „Expresie regulată”
+  dezactivează „Linia începe cu” și „Linia se termină cu”. Dacă ambele opțiuni pentru capetele liniei
+  sunt active, este suficientă o potrivire la oricare capăt. „Încadrare cuvinte” schimbă numai afișarea.
 - Opțiuni > Preferințe (Ctrl+G) deschide un dialog unic de preferințe pentru căile MediaInfo și curl, fontul
   raportului, antialiasing font, limba interfeței și limba raportului. O cale goală DLL permite descoperirea
   automată.
@@ -91,16 +96,23 @@ Windows 95 nu este în prezent un timp de rulare acceptat.
   font Windows. Restabilește implicit Consolas sau Courier New dacă Consolas nu este disponibil; butonul
   Implicit este dezactivat în timp ce este selectat implicit. Fonturile selectate de utilizator sunt păstrate
   fără a fi înlocuite cu codul aplicației.
-- Opțiunile de antialiasing pentru font sunt ClearType atunci când sunt acceptate, GDI și Niciunul. Alegerea
-  inițială este ClearType când este acceptată, în caz contrar GDI. Setările fonturilor afectează numai
-  rapoartele media și exporturile lor de imagini.
+- Opțiunile de antialiasing pentru font sunt ClearType atunci când sunt acceptate, GDI și Niciunul.
+  Alegerea inițială este ClearType când este acceptată, în caz contrar GDI. Setările fontului se aplică
+  filelor de rapoarte, exporturilor acestora ca imagini și imprimării rapoartelor. Ajutor și Despre își
+  păstrează propriile fonturi de text.
 - Ajutor deschide o fereastră separată, fără model, cu propria sa intrare în bara de activități și butonul de
   minimizare. Despre este un dialog modal; antetul produsului său listează toate cele trei versiuni DLL
   încorporate.
 
-Imprimare… (Ctrl+P) deschide dialogul de sistem pentru alegerea imprimantei și imprimă întreaga filă activă
-fără previzualizare. Se folosește fontul raportului; rândurile lungi sunt împărțite, iar textul este paginat.
-Imprimarea rulează în fundal.
+Fișier > Configurare pagină… deschide setările pentru hârtie, orientare și margini ale sesiunii curente.
+Imprimare… (Ctrl+P) deschide dialogul de imprimare al sistemului; Windows 11 oferă o previzualizare, iar
+Windows 10 și versiunile mai vechi păstrează dialogul clasic. Ctrl+P imprimă fila activă din fereastra
+principală sau zona de text din Ajutor ori Despre, în funcție de fereastra care are focalizarea.
+Rapoartele folosesc fontul de raport ales, Ajutor fontul dialogurilor de sistem, iar Despre fontul
+propriei zone de text. Dacă nu sunt file deschise, dar Ajutor este deschis, Configurare pagină… și
+Imprimare… rămân disponibile; Imprimare… imprimă Ajutorul. Ajutor folosește dialogul de imprimare al
+ferestrei principale; un nou Ctrl+P în Ajutor aduce același dialog în prim-plan. Liniile lungi se
+încadrează, iar textul se împarte în pagini. Imprimarea se face în fundal.
 
 Deschide folderul… deschide fișierele aflate direct în folderul selectat, fiecare în propria filă.
 Subfolderele nu sunt incluse. Deschide și Deschide folderul folosesc același ultim folder selectat. Exportul

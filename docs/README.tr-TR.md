@@ -66,21 +66,26 @@ Windows 95 şu anda desteklenen bir çalışma zamanı değil.
 - Ctrl+Tab ve Ctrl+Shift+Tab sekmeleri değiştirir; Ctrl+W etkin sekmeyi kapatır. Bir sekme başlığına orta
   tıklama, diğer etkin sekmeleri korurken o sekmeyi kapatır. Dosya > Tümünü Kapat, sıraya alınmış raporlar da
   dahil olmak üzere tüm sekmeleri kapatır. Dosya > Çıkış (Alt+F4) uygulamayı kapatır.
-- Çift tıklama bir kelimeyi seçer. Üç tıklama mantıksal bir çizgi seçer. Sürükleme, seçimi kelimelere veya
-  satırlara göre genişletir.
+- Sekme başlığının bağlam menüsünde Sekmeyi kapat bulunur. Başlığına çift tıklayarak sekmeyi kapatmak
+  için Tercihler'de Sekmeleri çift tıklamayla kapat seçeneğini etkinleştirin. Seçenek varsayılan olarak
+  kapalıdır ve kaydedilir.
+- Rapor metnine çift tıklamak bir sözcüğü seçer. Üç kez tıklamak mantıksal bir satırı seçer. Sürüklemek
+  seçimi sözcükler veya satırlar halinde genişletir.
 - Ctrl+A raporu seçer; Ctrl+C kopyalar.
-- Düzenle > Bul (Ctrl+F), etkin sekmede arama yapar. F3 aramayı yineler; Shift+F3 yönünü tersine çevirir.
-  Metnin sonuna ulaşıldığında arama diğer uçtan devam eder. Seçenekler > Sözcük Kaydır yalnızca etkin sekmeyi
-  etkiler; onay işareti seçili sekmeye göre değişir. Arama penceresi simge durumuna küçültülebilir ve yatay
-  olarak boyutlandırılabilir; konumu ile Her zaman üstte ayarı hatırlanır. En fazla 30 arama metni ve
-  seçenekleri yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve bitiş seçenekleri mantıksal satırları
-  esas alır. Düzenli ifadeler PCRE2 sözdizimini kullanır. Düzenle menüsündeki tüm komutlar yalnızca etkin
-  sekmeyi etkiler. Enter aramayı başlatır; Shift+Enter seçilen yönü tersine çevirir. “Büyük/küçük harf
-  eşleştir” büyük ve küçük harfleri ayırt eder; “Geriye doğru ara” metnin başına doğru arar. Geçmişten bir öğe
-  seçmek, düzenli ifade modunun durumu da dahil beş arama seçeneğinin tümünü geri yükler; “Her zaman üstte”
-  bağımsızdır. “Düzenli ifade”, “Satır şu ifadeyle başlar” ve “Satır şu ifadeyle biter” seçeneklerini devre
-  dışı bırakır. Her iki satır ucu seçeneği de açıksa uçlardan birinde eşleşme olması yeterlidir. “Sözcük
-  Kaydır” yalnızca görünümü değiştirir.
+- Düzenle > Bul (Ctrl+F), odağın bulunduğu pencereye göre etkin rapor sekmesinde veya Yardım ya da
+  Hakkında penceresinin metin alanında arar. Arama penceresi, odak kendisindeyken son seçilen kaynağı
+  korur. F3 aramayı yineler; Shift+F3 yönünü tersine çevirir. Metnin sonuna ulaşıldığında arama diğer
+  uçtan devam eder. Seçenekler > Sözcük Kaydır yalnızca etkin sekmeyi etkiler; onay işareti seçili
+  sekmeye göre değişir. Arama penceresi simge durumuna küçültülebilir ve yatay olarak
+  boyutlandırılabilir; konumu ile Her zaman üstte ayarı hatırlanır. En fazla 30 arama metni ve
+  seçenekleri yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve bitiş seçenekleri mantıksal
+  satırları esas alır. Düzenli ifadeler PCRE2 sözdizimini kullanır. Düzenle menüsündeki diğer komutlar
+  etkin rapor sekmesine uygulanır. Enter aramayı başlatır; Shift+Enter seçilen yönü tersine çevirir.
+  “Büyük/küçük harf eşleştir” büyük ve küçük harfleri ayırt eder; “Geriye doğru ara” metnin başına doğru
+  arar. Geçmişten bir öğe seçmek, düzenli ifade modunun durumu da dahil beş arama seçeneğinin tümünü
+  geri yükler; “Her zaman üstte” bağımsızdır. “Düzenli ifade”, “Satır şu ifadeyle başlar” ve “Satır şu
+  ifadeyle biter” seçeneklerini devre dışı bırakır. Her iki satır ucu seçeneği de açıksa uçlardan
+  birinde eşleşme olması yeterlidir. “Sözcük Kaydır” yalnızca görünümü değiştirir.
 - Seçenekler > Tercihler (Ctrl+G), MediaInfo ve curl yolları, rapor yazı tipi, yazı tipi kenar yumuşatma,
   arayüz dili ve rapor dili için tek bir tercihler iletişim kutusu açar. Boş bir DLL yolu otomatik keşif
   sağlar.
@@ -88,15 +93,21 @@ Windows 95 şu anda desteklenen bir çalışma zamanı değil.
   kutusunu açar. Varsayılan, Consolas'yi veya Consolas kullanılamıyorsa Courier New'yi geri yükler; Varsayılan
   seçiliyken Varsayılan düğmesi devre dışı bırakılır. Kullanıcı tarafından seçilen yazı tipleri, uygulama
   koduyla değiştirilmeden korunur.
-- Yazı tipi kenar yumuşatma seçenekleri desteklendiğinde ClearType, GDI ve Hiçbiri'dir. Desteklendiğinde ilk
-  seçim ClearType, aksi takdirde GDI'dir. Yazı tipi ayarları yalnızca medya raporlarını ve bunların görüntü
-  aktarımlarını etkiler.
+- Yazı tipi kenar yumuşatma seçenekleri desteklendiğinde ClearType, GDI ve Hiçbiri'dir. Desteklendiğinde
+  ilk seçim ClearType, aksi takdirde GDI'dir. Yazı tipi ayarları rapor sekmelerini, bunların resim dışa
+  aktarımlarını ve rapor yazdırmayı etkiler. Yardım ve Hakkında kendi metin yazı tiplerini korur.
 - Yardım, kendi görev çubuğu girişi ve simge durumuna küçültme düğmesiyle ayrı bir modelsiz pencere açar.
   Hakkında kalıcı bir iletişim kutusudur; ürün başlığı, üç yerleşik DLL sürümünün tümünü listeler.
 
-Yazdır… (Ctrl+P) sistemin yazıcı seçme iletişim kutusunu açar ve etkin sekmenin tamamını önizleme olmadan
-yazdırır. Seçilen rapor yazı tipi kullanılır; uzun satırlar kaydırılır ve metin sayfalara bölünür. Yazdırma
-arka planda çalışır.
+Dosya > Sayfa Yapısı… geçerli oturum için kâğıt, yön ve kenar boşluğu ayarlarını açar. Yazdır… (Ctrl+P)
+sistem yazdırma iletişim kutusunu açar; Windows 11 önizleme sunar, Windows 10 ve önceki sürümler klasik
+iletişim kutusunu korur. Ctrl+P, odağın bulunduğu pencereye göre ana penceredeki etkin sekmeyi veya
+Yardım ya da Hakkında penceresinin metin alanını yazdırır. Raporlar seçilen rapor yazı tipini, Yardım
+sistem iletişim kutusu yazı tipini, Hakkında ise kendi metin alanının yazı tipini kullanır. Hiçbir sekme
+açık değilken Yardım açıksa Sayfa Yapısı… ve Yazdır… kullanılabilir kalır; Yazdır… Yardım'ı yazdırır.
+Yardım, ana pencerenin yazdırma iletişim kutusunu kullanır; Yardım'da tekrar Ctrl+P'ye basmak aynı
+iletişim kutusunu öne getirir. Uzun satırlar kaydırılır ve metin sayfalara bölünür. Yazdırma arka planda
+yapılır.
 
 Klasör aç… seçili klasörün doğrudan içindeki dosyaları, her biri kendi sekmesinde olacak şekilde açar. Alt
 klasörler dahil edilmez. Aç ve Klasör aç, son seçilen klasörü paylaşır. Dışa aktarma kendi klasörünü hatırlar;

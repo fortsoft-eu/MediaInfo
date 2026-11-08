@@ -65,20 +65,24 @@ Windows 95 er i øjeblikket ikke en understøttet runtime.
 - Ctrl+Tab og Ctrl+Skift+Tab skifte faner; Ctrl+W lukker den aktive fane. Midtklik på en faneoverskrift lukker
   denne fane, mens enhver anden aktiv fane bevares. Filer > Luk alle lukker alle faner, inklusive rapporter i
   kø. Fil > Afslut (Alt+F4) lukker programmet.
-- Dobbeltklik vælger et ord. Tredobbelt-klik vælger en logisk linje. Træk udvider markeringen med ord eller
-  linjer.
+- Fanens kontekstmenu indeholder Luk fane. Aktivér Luk faner ved dobbeltklik i Præferencer for at lukke
+  en fane ved at dobbeltklikke på dens overskrift. Indstillingen er som standard slået fra og gemmes.
+- Dobbeltklik i rapportteksten markerer et ord. Tredobbeltklik markerer en logisk linje. Træk udvider
+  markeringen med ord eller linjer.
 - Ctrl+A vælger rapporten; Ctrl+C kopierer det.
-- Rediger > Søg (Ctrl+F) søger i den aktive fane. F3 gentager søgningen; Skift+F3 vender retningen. Ved
-  tekstens ender fortsætter søgningen fra den modsatte ende. Indstillinger > Tekstombrydning gælder kun den
-  aktive fane; markeringen følger den valgte fane. Søgevinduet kan minimeres og ændres i bredden; placeringen
-  og indstillingen Altid øverst huskes. Op til 30 søgetekster med deres indstillinger gemmes kun, indtil
-  programmet lukkes. Indstillingerne for start og slutning gælder logiske linjer. Regulære udtryk bruger
-  PCRE2-syntaks. Alle kommandoer i Rediger gælder kun den aktive fane. Enter starter søgningen; Skift+Enter
-  vender den valgte retning. „Forskel på store og små bogstaver“ skelner mellem store og små bogstaver; „Søg
-  bagud“ søger mod tekstens begyndelse. Valg af en historikpost gendanner alle fem søgeindstillinger, herunder
-  tilstanden for regulære udtryk; „Altid øverst“ er uafhængig. „Regulært udtryk“ deaktiverer „Linjen starter
-  med“ og „Linjen slutter med“. Er begge indstillinger for linjens ender slået til, er et match ved én ende
-  nok. „Tekstombrydning“ ændrer kun visningen.
+- Rediger > Søg (Ctrl+F) søger i den aktive rapportfane eller i tekstfeltet i Hjælp eller Om, alt efter
+  hvilket vindue der har fokus. Søgevinduet beholder den senest valgte kilde, mens det selv har fokus.
+  F3 gentager søgningen; Skift+F3 vender retningen. Ved tekstens ender fortsætter søgningen fra den
+  modsatte ende. Indstillinger > Tekstombrydning gælder kun den aktive fane; markeringen følger den
+  valgte fane. Søgevinduet kan minimeres og ændres i bredden; placeringen og indstillingen Altid øverst
+  huskes. Op til 30 søgetekster med deres indstillinger gemmes kun, indtil programmet lukkes.
+  Indstillingerne for start og slutning gælder logiske linjer. Regulære udtryk bruger PCRE2-syntaks. De
+  øvrige kommandoer i menuen Rediger gælder den aktive rapportfane. Enter starter søgningen; Skift+Enter
+  vender den valgte retning. „Forskel på store og små bogstaver“ skelner mellem store og små bogstaver;
+  „Søg bagud“ søger mod tekstens begyndelse. Valg af en historikpost gendanner alle fem
+  søgeindstillinger, herunder tilstanden for regulære udtryk; „Altid øverst“ er uafhængig. „Regulært
+  udtryk“ deaktiverer „Linjen starter med“ og „Linjen slutter med“. Er begge indstillinger for linjens
+  ender slået til, er et match ved én ende nok. „Tekstombrydning“ ændrer kun visningen.
 - Indstillinger > Præferencer (Ctrl+G) åbner en enkelt præferencedialog for MediaInfo og curl stier,
   rapportskrifttype, skrifttypeudligning, grænsefladesprog og rapportsprog. En tom DLL-sti muliggør automatisk
   opdagelse.
@@ -86,15 +90,20 @@ Windows 95 er i øjeblikket ikke en understøttet runtime.
   Standard gendanner Consolas eller Courier New hvis Consolas er utilgængelig; knappen Standard er
   deaktiveret, mens standard er valgt. Brugervalgte skrifttyper bibeholdes uden erstatning med
   applikationskode.
-- Valg af skrifttypeudligning er ClearType, når de understøttes, GDI og Ingen. Det første valg er ClearType,
-  når det understøttes, ellers GDI. Skrifttypeindstillinger påvirker kun medierapporter og deres
-  billedeksport.
+- Valg af skrifttypeudligning er ClearType, når de understøttes, GDI og Ingen. Det første valg er
+  ClearType, når det understøttes, ellers GDI. Skrifttypeindstillinger gælder rapportfaner, deres
+  billedeksport og udskrivning af rapporter. Hjælp og Om beholder deres egne tekstskrifttyper.
 - Hjælp åbner et separat modelløst vindue med sin egen proceslinjeindgang og minimeringsknap. Om er en modal
   dialog; dens produktoverskrift viser alle tre indlejrede DLL-versioner.
 
-Udskriv… (Ctrl+P) åbner systemets printerdialog og udskriver hele den aktive fane uden eksempelvisning.
-Rapportens skrifttype bruges; lange linjer ombrydes, og teksten fordeles på sider. Udskrivningen kører i
-baggrunden.
+Filer > Sideopsætning… åbner indstillinger for papir, retning og margener for den aktuelle session.
+Udskriv… (Ctrl+P) åbner systemets udskriftsdialog; Windows 11 viser en forhåndsvisning, mens Windows 10
+og ældre beholder den klassiske dialog. Ctrl+P udskriver den aktive fane i hovedvinduet eller
+tekstfeltet i Hjælp eller Om, alt efter hvilket vindue der har fokus. Rapporter bruger den valgte
+rapportskrifttype, Hjælp bruger systemets dialogskrifttype, og Om bruger skrifttypen i sit tekstfelt.
+Hvis ingen faner er åbne, men Hjælp er åben, er Sideopsætning… og Udskriv… stadig tilgængelige; Udskriv…
+udskriver Hjælp. Hjælp bruger hovedvinduets udskriftsdialog; endnu et Ctrl+P i Hjælp bringer den frem.
+Lange linjer ombrydes, og teksten opdeles i sider. Udskrivning foregår i baggrunden.
 
 Åbn mappe… åbner filerne direkte i den valgte mappe, hver på sin egen fane. Undermapper medtages ikke. Åbn og
 Åbn mappe deler den sidst valgte mappe. Eksport husker sin egen mappe, som standard Dokumenter.

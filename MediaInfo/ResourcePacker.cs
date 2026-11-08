@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.0.0
  */
 
 using System;
@@ -38,13 +38,20 @@ public static class ResourcePacker {
     private const uint Signature = 0x4D494450;
 
     /// <summary>
-    /// Writes the resource signature, original length and CRC32 followed by the source's DEFLATE-compressed bytes.
+    /// Writes the resource signature, original length and CRC32 followed by
+    /// the source's DEFLATE-compressed bytes.
     /// </summary>
-    /// <param name="source">The path of the original x86 PE library to embed without modifying its bytes.</param>
+    /// <param name="source">
+    /// The path of the original x86 PE library to embed without modifying its bytes.
+    /// </param>
     /// <param name="destination">The path of the packed resource file to create or overwrite.</param>
     /// <exception cref="InvalidDataException">The source does not contain an x86 PE header.</exception>
-    /// <exception cref="IOException">The source cannot be read or the destination cannot be written.</exception>
-    /// <exception cref="UnauthorizedAccessException">Access to the source or destination is denied.</exception>
+    /// <exception cref="IOException">
+    /// The source cannot be read or the destination cannot be written.
+    /// </exception>
+    /// <exception cref="UnauthorizedAccessException">
+    /// Access to the source or destination is denied.
+    /// </exception>
     public static void Pack(string source, string destination) {
         byte[] data = File.ReadAllBytes(source);
         int pe = data.Length >= 64 ? BitConverter.ToInt32(data, 60) : -1;

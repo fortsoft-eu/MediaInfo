@@ -67,32 +67,44 @@ Windows 95 momentálne nie je podporované prostredie runtime.
 - Ctrl+Tab a Ctrl+Shift+Tab prepínacie karty; Ctrl+W zatvorí aktívnu kartu. Kliknutím stredným tlačidlom myši
   na hlavičku karty sa táto karta zatvorí, pričom sa zachová akákoľvek iná aktívna karta. Súbor > Zavrieť
   všetko zatvorí všetky karty vrátane prehľadov vo fronte. Súbor > Ukončiť (Alt+F4) zatvorí aplikáciu.
-- Dvojklik vyberie slovo. Trojklik vyberie logický riadok. Ťahanie rozširuje výber po slovách alebo riadkoch.
+- Kontextová ponuka záhlavia karty obsahuje príkaz Zavrieť kartu. Voľba Zatvárať karty dvojklikom v
+  Predvoľbách umožní zatváranie dvojklikom na záhlavie. Predvolene je vypnutá a jej nastavenie sa
+  ukladá.
+- Dvojklik v texte reportu vyberie slovo. Trojklik vyberie logický riadok. Ťahanie rozširuje výber po
+  slovách alebo riadkoch.
 - Ctrl+A vyberie zostavu; Ctrl+C ho skopíruje.
-- Úpravy > Hľadať (Ctrl+F) vyhľadáva v aktívnej karte. F3 hľadanie opakuje, Shift+F3 obráti jeho smer. Po
-  dosiahnutí okraja textu pokračuje hľadanie na opačnom konci. Možnosti > Zalamovanie riadkov ovplyvňuje iba
-  aktívnu kartu; začiarknutie sa mení podľa vybratej karty. Formulár hľadania možno minimalizovať a meniť jeho
-  šírku; pamätá si polohu a voľbu Vždy navrchu. História uchováva najviac 30 hľadaných textov s ich voľbami
-  iba do ukončenia aplikácie. Začína na a Končí na hľadajú na okrajoch logických riadkov. Regulárne výrazy
-  používajú syntax PCRE2. Všetky príkazy ponuky Úpravy sa vzťahujú iba na aktívnu kartu. Enter spustí
-  hľadanie, Shift+Enter obráti zvolený smer. Voľba „Rozlišovať veľké a malé písmená“ rozlišuje veľké a malé
-  písmená; „Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z histórie obnoví všetkých päť volieb hľadania
-  vrátane uloženého stavu regulárneho výrazu; „Vždy navrchu“ je nezávislá voľba. „Regulárny výraz“ vypne voľby
-  „Začína na“ a „Končí na“. Ak sú zapnuté obe voľby okrajov riadka, stačí zhoda na jednom z nich. „Zalamovanie
-  riadkov“ mení iba zobrazenie.
+- Úpravy > Hľadať (Ctrl+F) hľadá podľa fokusu okna v aktívnej karte hlavného okna, v textovej oblasti
+  Pomoci alebo v textovej oblasti O programe. Okno hľadania si počas vlastného fokusu ponechá naposledy
+  zvolený zdroj. F3 hľadanie opakuje, Shift+F3 obráti jeho smer. Po dosiahnutí okraja textu pokračuje
+  hľadanie na opačnom konci. Možnosti > Zalamovanie riadkov ovplyvňuje iba aktívnu kartu; začiarknutie
+  sa mení podľa vybratej karty. Formulár hľadania možno minimalizovať a meniť jeho šírku; pamätá si
+  polohu a voľbu Vždy navrchu. História uchováva najviac 30 hľadaných textov s ich voľbami iba do
+  ukončenia aplikácie. Začína na a Končí na hľadajú na okrajoch logických riadkov. Regulárne výrazy
+  používajú syntax PCRE2. Ostatné príkazy ponuky Úpravy sa vzťahujú na aktívnu kartu reportu. Enter
+  spustí hľadanie, Shift+Enter obráti zvolený smer. Voľba „Rozlišovať veľké a malé písmená“ rozlišuje
+  veľké a malé písmená; „Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z histórie obnoví všetkých
+  päť volieb hľadania vrátane uloženého stavu regulárneho výrazu; „Vždy navrchu“ je nezávislá voľba.
+  „Regulárny výraz“ vypne voľby „Začína na“ a „Končí na“. Ak sú zapnuté obe voľby okrajov riadka, stačí
+  zhoda na jednom z nich. „Zalamovanie riadkov“ mení iba zobrazenie.
 - Možnosti > Predvoľby (Ctrl+G) otvorí jediný dialóg pre cesty MediaInfo a curl, písmo reportu, vyhladzovanie
   písma, jazyk rozhrania a jazyk reportu. Prázdna cesta DLL zapína automatické vyhľadávanie.
 - Tlačidlo písma zobrazuje rodinu, veľkosť bodu a štýl a otvára štandardné dialógové okno písma Windows.
   Predvolene obnoví Consolas alebo Courier New, ak Consolas nie je k dispozícii; tlačidlo Predvolené je
   vypnuté, kým je vybraté predvolené. Používateľom zvolené písma sa zachovajú bez nahradenia kódom aplikácie.
-- Možnosti vyhladzovania písma sú ClearType, ak je podporované, GDI a Žiadne. Počiatočná voľba je ClearType,
-  ak je podporovaná, inak GDI. Nastavenia písma ovplyvňujú iba mediálne správy a ich exporty obrázkov.
+- Možnosti vyhladzovania písma sú ClearType, ak je podporované, GDI a Žiadne. Počiatočná voľba je
+  ClearType, ak je podporovaná, inak GDI. Nastavenia písma ovplyvňujú karty reportov, ich obrazové
+  exporty aj tlač reportov. Pomoc a O programe si ponechávajú vlastné písma textu.
 - Pomocník otvorí samostatné nemodálne okno s vlastnou položkou na paneli úloh a možnosťou minimalizácie. O
   aplikácii je modálny dialóg; záhlavie produktu uvádza všetky tri vložené verzie DLL.
 
-Tlačiť… (Ctrl+P) otvorí systémový dialóg výberu tlačiarne a vytlačí celý obsah aktívnej karty bez náhľadu.
-Použije sa zvolené písmo reportu, dlhé riadky sa zalomia a text sa rozdelí na stránky. Tlač prebieha na
-pozadí.
+Súbor > Vzhľad strany… otvorí nastavenia papiera, orientácie a okrajov pre aktuálne spustenie aplikácie.
+Tlačiť… (Ctrl+P) otvorí systémový tlačový dialóg; Windows 11 poskytuje náhľad, Windows 10 a staršie
+zachovávajú klasický dialóg. Ctrl+P vytlačí aktívnu kartu hlavného okna alebo textovú oblasť Pomoci či O
+programe podľa toho, ktoré okno má fokus. Reporty používajú zvolené písmo reportu, Pomoc systémové
+dialógové písmo a O programe písmo svojej textovej oblasti. Ak nie sú otvorené žiadne karty a Pomoc je
+otvorená, Vzhľad strany… aj Tlačiť… zostávajú dostupné; Tlačiť… vytlačí Pomoc. Pomoc používa tlačový
+dialóg hlavného okna; ďalšie Ctrl+P v Pomoci ho prenesie do popredia. Dlhé riadky sa zalomia a text sa
+rozdelí na strany. Tlač prebieha na pozadí.
 
 Otvoriť priečinok… otvorí súbory priamo vo vybranom priečinku, každý na vlastnej karte. Podpriečinky sa
 neprechádzajú. Otvoriť a Otvoriť priečinok zdieľajú naposledy vybraný priečinok. Export si pamätá vlastný

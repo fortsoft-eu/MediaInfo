@@ -63,32 +63,43 @@ Windows 95 is not currently a supported runtime.
 - Ctrl+Tab and Ctrl+Shift+Tab switch tabs; Ctrl+W closes the active tab. Middle-clicking a tab header closes
   that tab while preserving any other active tab. File > Close All closes every tab, including queued reports.
   File > Exit (Alt+F4) closes the application.
-- Double-click selects a word. Triple-click selects a logical line. Dragging extends the selection by words or
-  lines.
+- The tab header's context menu includes Close tab. Enable Close tabs on double-click in Preferences to
+  close a tab by double-clicking its header. This option is off by default and is saved.
+- Double-click in the report text selects a word. Triple-click selects a logical line. Dragging extends
+  the selection by words or lines.
 - Ctrl+A selects the report; Ctrl+C copies it.
-- Edit > Find (Ctrl+F) searches the active tab. F3 repeats the search; Shift+F3 reverses its direction.
-  Searching wraps at the ends of the text. Options > Word Wrap affects only the active tab, and its check mark
-  follows the selected tab. The search window can be minimized and resized horizontally; its position and
-  Always on Top setting are remembered. Up to 30 search texts and their options are retained only until the
-  application exits. Starts with and Ends with match the edges of logical lines. Regular expressions use PCRE2
-  syntax. All commands in Edit affect only the active tab. Enter searches; Shift+Enter reverses the selected
-  direction. "Case sensitive" distinguishes uppercase and lowercase; "Backward" searches toward the start of
-  the text. Choosing a history entry restores all five search options, including the saved regular-expression
-  mode; "Always on top" is independent. "Regular expression" disables "Starts with" and "Ends with". With both
-  line-edge options enabled, either edge can match. "Word Wrap" changes only the display.
+- Edit > Find (Ctrl+F) searches the active report tab or the text area in Help or About, according to
+  which window has focus. The Find window retains the last selected source while it has focus. F3
+  repeats the search; Shift+F3 reverses its direction. Searching wraps at the ends of the text.
+  Options > Word Wrap affects only the active tab, and its check mark follows the selected tab. The
+  search window can be minimized and resized horizontally; its position and Always on Top setting are
+  remembered. Up to 30 search texts and their options are retained only until the application exits.
+  Starts with and Ends with match the edges of logical lines. Regular expressions use PCRE2 syntax. The
+  other Edit menu commands apply to the active report tab. Enter searches; Shift+Enter reverses the
+  selected direction. "Case sensitive" distinguishes uppercase and lowercase; "Backward" searches toward
+  the start of the text. Choosing a history entry restores all five search options, including the saved
+  regular-expression mode; "Always on top" is independent. "Regular expression" disables "Starts with"
+  and "Ends with". With both line-edge options enabled, either edge can match. "Word Wrap" changes only
+  the display.
 - Options > Preferences (Ctrl+G) opens a single preferences dialog for MediaInfo and curl paths, report font,
   font antialiasing, interface language and report language. An empty DLL path enables automatic discovery.
 - The font button displays the family, point size and style and opens the standard Windows font dialog.
   Default restores Consolas, or Courier New if Consolas is unavailable; the Default button is disabled while
   the default is selected. User-selected fonts are retained without substitution by application code.
-- Font antialiasing choices are ClearType when supported, GDI and None. The initial choice is ClearType when
-  supported, otherwise GDI. Font settings affect only media reports and their image exports.
+- Font antialiasing choices are ClearType when supported, GDI and None. The initial choice is ClearType
+  when supported, otherwise GDI. Font settings affect report tabs, their image exports and report
+  printing. Help and About retain their own text fonts.
 - Help opens a separate modeless window with its own taskbar entry and minimize button. About is a modal
   dialog; its product header lists all three embedded DLL versions.
 
-Print… (Ctrl+P) opens the system printer dialog and prints the complete active tab without a preview. The
-selected report font is used; long lines wrap and the text is split into pages. Printing runs in the
-background.
+File > Page Setup… opens paper, orientation and margin settings for the current application session.
+Print… (Ctrl+P) opens the system print dialog; Windows 11 provides a preview, while Windows 10 and
+earlier keep the classic dialog. Ctrl+P prints the active tab in the main window, or the text area in
+Help or About, according to which window has focus. Reports use the selected report font, Help uses the
+system dialog font, and About uses its text area's font. If no tabs are open and Help is open, Page
+Setup… and Print… remain available; Print… prints Help. Printing from Help uses the main window's
+dialog; pressing Ctrl+P in Help again brings it to the foreground. Long lines wrap and the text is split
+into pages. Printing runs in the background.
 
 Open Folder… opens files directly in the selected folder, each in its own tab. Subfolders are not included.
 Open and Open Folder share their last selected folder. Export remembers its own folder, defaulting to

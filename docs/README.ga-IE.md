@@ -71,22 +71,27 @@ Ní am rite tacaithe é Windows 95 faoi láthair.
 - lasc cluaisíní Ctrl+Tab agus Ctrl+Shift+Tab; Dúnann Ctrl+W an cluaisín gníomhach. Dúnann lárchliceáil ar
   cheanntásc cluaisín an cluaisín sin agus aon chluaisín gníomhach eile á chaomhnú. Comhad > Dún Gach Dúnann
   gach cluaisín, lena n-áirítear tuarascálacha ciúáilte. Dúnann Comhad > Scoir (Alt+F4) an feidhmchlár.
-- Roghnaíonn dhá chliceáil focal. Roghnaíonn trí chliceáil líne loighciúil. Leathnaíonn tarraingt an rogha trí
-  fhocail nó línte.
+- Tá Dún an cluaisín i roghchlár comhthéacs cheanntásc an chluaisín. Cumasaigh Dún cluaisíní le
+  déchliceáil i Roghanna chun cluaisín a dhúnadh trí dhéchliceáil ar a cheanntásc. Tá an rogha múchta de
+  réir réamhshocraithe agus sábháiltear í.
+- Roghnaíonn déchliceáil sa téacs tuairisce focal. Roghnaíonn trí chliceáil líne loighciúil. Leathnaíonn
+  tarraingt an roghnú de réir focal nó línte.
 - roghnaíonn Ctrl+A an tuairisc; Déanann Ctrl+C cóipeáil air.
-- Déanann Eagar > Aimsigh (Ctrl+F) cuardach sa chluaisín gníomhach. Déanann F3 an cuardach arís agus
-  aisiompaíonn Shift+F3 an treo. Ag ceann an téacs, leanann an cuardach ón gceann eile. Ní bhaineann Roghanna
-  > Timfhilleadh Focal ach leis an gcluaisín gníomhach; leanann an tic an cluaisín roghnaithe. Is féidir an
-  fhuinneog chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh agus an socrú Ar barr i
-  gcónaí. Ní choinnítear suas le 30 téacs cuardaigh agus a gcuid roghanna ach go dtí go ndúntar an
-  feidhmchlár. Baineann na roghanna tosaigh agus deiridh le línte loighciúla. Úsáideann sloinn rialta comhréir
-  PCRE2. Ní bhaineann aon ordú sa roghchlár Eagar ach leis an gcluaisín gníomhach. Tosaíonn Enter cuardach;
-  aisiompaíonn Shift+Enter an treo roghnaithe. Déanann “Meaitseáil an cás” idirdhealú idir cás uachtair agus
-  cás íochtair; cuardaíonn “Cuardaigh ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú iontrála staire na
-  cúig rogha cuardaigh uile, lena n-áirítear staid mhód na slonn rialta; tá “Ar barr i gcónaí” neamhspleách.
-  Díchumasaíonn “Slonn rialta” na roghanna “Tosaíonn an líne le” agus “Críochnaíonn an líne le”. Má tá an dá
-  rogha imill líne cumasaithe, is leor meaitseáil ag ceachtar imeall. Ní athraíonn “Timfhilleadh Focal” ach an
-  taispeáint.
+- Déanann Eagar > Aimsigh (Ctrl+F) cuardach sa chluaisín tuairisce gníomhach nó i réimse téacs Cabhair
+  nó Maidir leis, de réir na fuinneoige a bhfuil an fócas aici. Coinníonn an fhuinneog chuardaigh an
+  fhoinse dheireanach a roghnaíodh agus an fócas aici. F3 an cuardach arís agus aisiompaíonn Shift+F3 an
+  treo. Ag ceann an téacs, leanann an cuardach ón gceann eile. Ní bhaineann Roghanna > Timfhilleadh
+  Focal ach leis an gcluaisín gníomhach; leanann an tic an cluaisín roghnaithe. Is féidir an fhuinneog
+  chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh agus an socrú Ar barr i gcónaí. Ní
+  choinnítear suas le 30 téacs cuardaigh agus a gcuid roghanna ach go dtí go ndúntar an feidhmchlár.
+  Baineann na roghanna tosaigh agus deiridh le línte loighciúla. Úsáideann sloinn rialta comhréir PCRE2.
+  Baineann na horduithe eile sa roghchlár Eagar leis an gcluaisín tuairisce gníomhach. Tosaíonn Enter
+  cuardach; aisiompaíonn Shift+Enter an treo roghnaithe. Déanann “Meaitseáil an cás” idirdhealú idir cás
+  uachtair agus cás íochtair; cuardaíonn “Cuardaigh ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú
+  iontrála staire na cúig rogha cuardaigh uile, lena n-áirítear staid mhód na slonn rialta; tá “Ar barr
+  i gcónaí” neamhspleách. Díchumasaíonn “Slonn rialta” na roghanna “Tosaíonn an líne le” agus
+  “Críochnaíonn an líne le”. Má tá an dá rogha imill líne cumasaithe, is leor meaitseáil ag ceachtar
+  imeall. Ní athraíonn “Timfhilleadh Focal” ach an taispeáint.
 - Roghanna > Sainroghanna (Ctrl+G) osclaíonn dialóg roghanna amháin le haghaidh cosáin MediaInfo agus curl,
   cló tuairisce, frith-ailiasú cló, teanga comhéadain agus teanga tuairisce. Ligeann cosán folamh DLL
   fionnachtain uathoibríoch.
@@ -95,14 +100,21 @@ Ní am rite tacaithe é Windows 95 faoi láthair.
   an cnaipe réamhshocraithe díchumasaithe agus an réamhshocrú roghnaithe. Coinnítear clónna a roghnaíonn
   úsáideoirí gan cód feidhmchláir a chur ina n-ionad.
 - Is iad ClearType roghanna frithaliasaithe cló nuair a fhaigheann siad tacaíocht, GDI agus Dada. Is é
-  ClearType an rogha tosaigh nuair a thacaítear leis, nó GDI. Ní bhíonn tionchar ag socruithe cló ach ar
-  thuairiscí meán agus ar a n-onnmhairí íomhá.
+  ClearType an rogha tosaigh nuair a thacaítear leis, nó GDI. Baineann socruithe cló leis na cluaisíní
+  tuairisce, lena n-easpórtálacha íomhá agus le priontáil tuairiscí. Coimeádann Cabhair agus Maidir leis
+  a gclónna téacs féin.
 - Osclaíonn Help fuinneog ar leith gan mhodh lena hiontráil tascbharra féin agus an cnaipe íoslaghdaithe.
   Maidir le dialóg mhodhúil; liostaíonn ceanntásc an táirge na trí leagan leabaithe DLL ar fad.
 
-Osclaíonn Priontáil… (Ctrl+P) dialóg printéara an chórais agus priontálann sé an cluaisín gníomhach iomlán gan
-réamhamharc. Úsáidtear cló na tuairisce; filltear línte fada agus roinntear an téacs ina leathanaigh. Ritheann
-priontáil sa chúlra.
+Osclaíonn Comhad > Socrú Leathanaigh… socruithe páipéir, treoshuímh agus imeall don seisiún reatha.
+Osclaíonn Priontáil… (Ctrl+P) dialóg phriontála an chórais; soláthraíonn Windows 11 réamhamharc, agus
+coimeádann Windows 10 agus leaganacha níos sine an dialóg chlasaiceach. Priontálann Ctrl+P cluaisín
+gníomhach na príomhfhuinneoige nó réimse téacs Cabhair nó Maidir leis, de réir na fuinneoige a bhfuil an
+fócas aici. Úsáideann tuairiscí an cló tuairisce roghnaithe, Cabhair cló dialóige an chórais agus Maidir
+leis cló a réimse téacs féin. Mura bhfuil cluaisíní ar oscailt ach go bhfuil Cabhair ar oscailt, fanann
+Socrú Leathanaigh… agus Priontáil… ar fáil; priontálann Priontáil… an chabhair. Úsáideann Cabhair dialóg
+phriontála na príomhfhuinneoige; tugann Ctrl+P arís i gCabhair an dialóg chéanna chun tosaigh.
+Timfhilltear línte fada agus roinntear an téacs ina leathanaigh. Déantar an phriontáil sa chúlra.
 
 Osclaíonn Oscail fillteán… na comhaid atá go díreach san fhillteán roghnaithe, gach ceann ina chluaisín féin.
 Ní chuirtear fofhillteáin san áireamh. Úsáideann Oscail agus Oscail fillteán an fillteán céanna a roghnaíodh

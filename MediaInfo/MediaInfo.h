@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.2
+ * Last modified for version 1.2.0.0
  */
 
 #pragma once
@@ -31,6 +31,7 @@
 class MediaInfoLibrary;
 struct PrintJob;
 struct PreferencesCallbacks;
+class PrintSettings;
 
 /// Supported interface locales in the same order as the language selection list.
 enum AppLanguage {
@@ -198,6 +199,8 @@ enum TextId {
     TXT_CLEAR_RECENT_FILES,
     TXT_TAB_NAME_LENGTH_INVALID,
     TXT_RECENT_FILES_SAVE_FAILED,
+    TXT_CLOSE_TABS_ON_DOUBLE_CLICK,
+    TXT_CLOSE_TAB_CONTEXT,
     TXT_ALLOW_MULTIPLE_INSTANCES,
     TXT_INSTANCE_FORWARD_FAILED,
     TXT_LOADING,
@@ -228,6 +231,8 @@ enum TextId {
     TXT_TRACE_LEVEL_5,
     TXT_TRACE_LEVEL_9,
     TXT_TRACE_LEVEL_10,
+    TXT_PAGE_SETUP,
+    TXT_PAGE_SETUP_FAILED,
     TXT_PRINT,
     TXT_PRINTING,
     TXT_PRINT_FAILED,
@@ -290,6 +295,7 @@ static const ULONG_PTR instanceFileRequest = 0x4D494E46;
 /// Main-form notifications used by its modeless search form.
 static const UINT findVisibilityChangedMessage = WM_APP + 6;
 static const UINT findMatchMessage = WM_APP + 7;
+static const UINT helpVisibilityChangedMessage = WM_APP + 8;
 
 /// Passes absolute Unicode file paths to the existing viewer, or reactivates it for an empty launch.
 bool ForwardInstanceFiles(HWND target, int count, wchar_t** arguments);
@@ -322,8 +328,11 @@ bool ChooseExportFile(HWND owner, wchar_t* path, const wchar_t* title, DWORD* ty
 /// Chooses an input and saves its first 512 KiB, remembering only the tool's session opening folder.
 void CreateHeaderFile(HWND owner, wchar_t* folder);
 
-/// Captures report text and font and opens the native system printer-selection dialog.
-PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* report, const wchar_t* title,
+/// Captures the information edit text and font for an independent print request.
+PrintJob* CapturePrintJob(HWND owner, HWND edit, const wchar_t* title, const RECT& margins);
+
+/// Captures the edit snapshot and opens the native printer-selection dialog with the retained settings.
+PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* title, PrintSettings& settings,
     wchar_t* error, int errorCapacity);
 
 /// Prints the complete snapshot with page breaks and printer-scaled report font.

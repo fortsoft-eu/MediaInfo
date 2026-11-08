@@ -69,33 +69,46 @@ Windows 95 trenutno nije podržano runtime.
 - Ctrl+Tab i Ctrl+Shift+Tab mijenjanje kartica; Ctrl+W zatvara aktivnu karticu. Srednjim pritiskom na
   zaglavlje kartice zatvara se ta kartica dok se zadržavaju sve druge aktivne kartice. Datoteka > Zatvori sve
   zatvara sve kartice, uključujući izvješća u čekanju. File > Exit (Alt+F4) zatvara aplikaciju.
-- Dupli klik odabire riječ. Trostruki klik odabire logičnu liniju. Povlačenjem se odabir proširuje riječima
-  ili retcima.
+- Kontekstni izbornik zaglavlja kartice sadrži Zatvori karticu. U Postavkama uključite Zatvaraj kartice
+  dvoklikom da biste zatvorili karticu dvoklikom na njezino zaglavlje. Mogućnost je početno isključena i
+  njezino se stanje sprema.
+- Dvoklik u tekstu izvješća odabire riječ. Trostruki klik odabire logički redak. Povlačenje proširuje
+  odabir po riječima ili retcima.
 - Ctrl+A odabire izvješće; Ctrl+C ga kopira.
-- Uređivanje > Pronađi (Ctrl+F) pretražuje aktivnu karticu. F3 ponavlja pretraživanje, a Shift+F3 mijenja
-  njegov smjer. Na kraju teksta pretraživanje se nastavlja s drugog kraja. Mogućnosti > Prelamanje redaka
-  vrijedi samo za aktivnu karticu; oznaka prati odabranu karticu. Prozor pretraživanja može se minimizirati i
-  mijenjati mu se širina; položaj i mogućnost Uvijek na vrhu pamte se. Do 30 tekstova pretraživanja s njihovim
-  mogućnostima čuva se samo do zatvaranja aplikacije. Mogućnosti početka i kraja odnose se na logičke retke.
-  Regularni izrazi koriste sintaksu PCRE2. Sve naredbe izbornika Uređivanje odnose se samo na aktivnu karticu.
-  Enter pokreće pretraživanje, a Shift+Enter obrće odabrani smjer. „Razlikuj velika i mala slova“ razlikuje
-  velika i mala slova; „Traži unatrag“ pretražuje prema početku teksta. Odabir stavke povijesti vraća svih pet
-  mogućnosti pretraživanja, uključujući postavku regularnih izraza; „Uvijek na vrhu“ neovisna je mogućnost.
-  „Regularni izraz“ onemogućuje „Redak počinje s“ i „Redak završava s“. Kada su uključene obje mogućnosti
-  krajeva retka, dovoljno je podudaranje na jednom kraju. „Prelamanje redaka“ mijenja samo prikaz.
+- Uređivanje > Pronađi (Ctrl+F) pretražuje aktivnu karticu izvješća ili tekstno polje prozora Pomoć ili
+  O programu, ovisno o tome koji prozor ima fokus. Prozor pretraživanja zadržava posljednji odabrani
+  izvor dok ima fokus. F3 ponavlja pretraživanje, a Shift+F3 mijenja njegov smjer. Na kraju teksta
+  pretraživanje se nastavlja s drugog kraja. Mogućnosti > Prelamanje redaka vrijedi samo za aktivnu
+  karticu; oznaka prati odabranu karticu. Prozor pretraživanja može se minimizirati i mijenjati mu se
+  širina; položaj i mogućnost Uvijek na vrhu pamte se. Do 30 tekstova pretraživanja s njihovim
+  mogućnostima čuva se samo do zatvaranja aplikacije. Mogućnosti početka i kraja odnose se na logičke
+  retke. Regularni izrazi koriste sintaksu PCRE2. Ostale naredbe izbornika Uređivanje odnose se na
+  aktivnu karticu izvješća. Enter pokreće pretraživanje, a Shift+Enter obrće odabrani smjer. „Razlikuj
+  velika i mala slova“ razlikuje velika i mala slova; „Traži unatrag“ pretražuje prema početku teksta.
+  Odabir stavke povijesti vraća svih pet mogućnosti pretraživanja, uključujući postavku regularnih
+  izraza; „Uvijek na vrhu“ neovisna je mogućnost. „Regularni izraz“ onemogućuje „Redak počinje s“ i
+  „Redak završava s“. Kada su uključene obje mogućnosti krajeva retka, dovoljno je podudaranje na jednom
+  kraju. „Prelamanje redaka“ mijenja samo prikaz.
 - Mogućnosti > Postavke (Ctrl+G) otvara jedan dijaloški okvir postavki za staze MediaInfo i curl, font
   izvješća, antialiasing fonta, jezik sučelja i jezik izvješća. Prazna staza DLL omogućuje automatsko
   otkrivanje.
 - Gumb fonta prikazuje obitelj, veličinu i stil fonta i otvara standardni dijaloški okvir Windows fonta.
   Zadana vrijednost vraća Consolas ili Courier New ako Consolas nije dostupan; gumb Zadano je onemogućen dok
   je odabrano zadano. Fontovi koje je odabrao korisnik zadržavaju se bez zamjene kodom aplikacije.
-- Izbori antialiasinga fonta su ClearType kada je podržano, GDI i Ništa. Početni izbor je ClearType kada je
-  podržan, inače GDI. Postavke fonta utječu samo na medijska izvješća i njihov izvoz slika.
+- Izbori antialiasinga fonta su ClearType kada je podržano, GDI i Ništa. Početni izbor je ClearType kada
+  je podržan, inače GDI. Postavke fonta odnose se na kartice izvješća, njihov izvoz u slike i ispis
+  izvješća. Pomoć i O programu zadržavaju vlastite fontove teksta.
 - Pomoć otvara zaseban nemodalni prozor s vlastitim unosom programske trake i gumbom za minimiziranje. O je
   modalni dijalog; njegovo zaglavlje proizvoda navodi sve tri ugrađene verzije DLL.
 
-Ispis… (Ctrl+P) otvara sistemski dijalog za odabir pisača i ispisuje cijelu aktivnu karticu bez pretpregleda.
-Koristi se font izvješća; dugi se redci prelamaju, a tekst dijeli na stranice. Ispis se odvija u pozadini.
+Datoteka > Postavljanje stranice… otvara postavke papira, usmjerenja i margina za trenutačnu sesiju.
+Ispis… (Ctrl+P) otvara sistemski dijaloški okvir ispisa; Windows 11 pruža pretpregled, dok Windows 10 i
+stariji zadržavaju klasični dijaloški okvir. Ctrl+P ispisuje aktivnu karticu glavnog prozora ili tekstno
+polje prozora Pomoć ili O programu, ovisno o tome koji prozor ima fokus. Izvješća rabe odabrani font
+izvješća, Pomoć sistemski font dijaloških okvira, a O programu font svojeg tekstnog polja. Ako nema
+otvorenih kartica, a Pomoć je otvorena, Postavljanje stranice… i Ispis… ostaju dostupni; Ispis… ispisuje
+pomoć. Pomoć rabi dijaloški okvir ispisa glavnog prozora; ponovni Ctrl+P u Pomoći dovodi isti okvir u
+prvi plan. Dugi se retci prelamaju, a tekst dijeli na stranice. Ispis se odvija u pozadini.
 
 Otvori mapu… otvara datoteke koje se nalaze izravno u odabranoj mapi, svaku na zasebnoj kartici. Podmape nisu
 uključene. Otvori i Otvori mapu dijele posljednju odabranu mapu. Izvoz pamti zasebnu mapu, zadano Dokumenti.

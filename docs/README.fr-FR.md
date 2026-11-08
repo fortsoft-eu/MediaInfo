@@ -71,23 +71,28 @@ Windows 95 n'est actuellement pas un moteur d'exécution pris en charge.
 - Onglets de commutation Ctrl+Tab et Ctrl+Maj+Tab ; Ctrl+W ferme l'onglet actif. Un clic central sur l'en-tête
   d'un onglet ferme cet onglet tout en préservant tout autre onglet actif. Fichier > Fermer tout ferme tous
   les onglets, y compris les rapports en file d'attente. Fichier > Quitter (Alt+F4) ferme l'application.
-- Un double-clic sélectionne un mot. Un triple-clic sélectionne une ligne logique. Le glisser étend la
-  sélection par mots ou lignes.
+- Le menu contextuel de l’en-tête d’un onglet contient Fermer l’onglet. Activez Fermer les onglets par
+  double-clic dans les Préférences pour fermer un onglet en double-cliquant sur son en-tête. Cette
+  option est désactivée par défaut et son état est enregistré.
+- Un double-clic dans le texte du rapport sélectionne un mot. Un triple-clic sélectionne une ligne
+  logique. Le glissement étend la sélection par mots ou par lignes.
 - Ctrl+A sélectionne le rapport ; Ctrl+C le copie.
-- Édition > Rechercher (Ctrl+F) effectue une recherche dans l’onglet actif. F3 répète la recherche ; Maj+F3
-  inverse son sens. Aux extrémités du texte, la recherche reprend à l’autre extrémité. Options > Retour
-  automatique à la ligne concerne uniquement l’onglet actif ; la coche suit l’onglet sélectionné. La fenêtre
-  de recherche peut être réduite et redimensionnée horizontalement ; sa position et l’option Toujours au
-  premier plan sont mémorisées. Jusqu’à 30 recherches et leurs options sont conservées uniquement jusqu’à la
-  fermeture de l’application. Les options de début et de fin s’appliquent aux lignes logiques. Les expressions
-  régulières utilisent la syntaxe PCRE2. Toutes les commandes du menu Édition concernent uniquement l’onglet
-  actif. Entrée lance la recherche ; Maj+Entrée inverse le sens choisi. « Respecter la casse » distingue les
-  majuscules des minuscules ; « Rechercher vers l’arrière » recherche vers le début du texte. Choisir une
-  entrée de l’historique rétablit les cinq options de recherche, y compris l’état du mode d’expression
-  régulière ; « Toujours au premier plan » est indépendante. « Expression régulière » désactive « La ligne
-  commence par » et « La ligne se termine par ». Si les deux options de début et de fin de ligne sont
-  activées, une correspondance à l’une des extrémités suffit. « Retour automatique à la ligne » modifie
-  uniquement l’affichage.
+- Édition > Rechercher (Ctrl+F) recherche dans l’onglet de rapport actif ou dans la zone de texte d’Aide
+  ou d’À propos, selon la fenêtre qui a le focus. La fenêtre de recherche conserve la dernière source
+  sélectionnée tant qu’elle a le focus. F3 répète la recherche ; Maj+F3 inverse son sens. Aux extrémités
+  du texte, la recherche reprend à l’autre extrémité. Options > Retour automatique à la ligne concerne
+  uniquement l’onglet actif ; la coche suit l’onglet sélectionné. La fenêtre de recherche peut être
+  réduite et redimensionnée horizontalement ; sa position et l’option Toujours au premier plan sont
+  mémorisées. Jusqu’à 30 recherches et leurs options sont conservées uniquement jusqu’à la fermeture de
+  l’application. Les options de début et de fin s’appliquent aux lignes logiques. Les expressions
+  régulières utilisent la syntaxe PCRE2. Les autres commandes du menu Édition concernent l’onglet de
+  rapport actif. Entrée lance la recherche ; Maj+Entrée inverse le sens choisi. « Respecter la casse »
+  distingue les majuscules des minuscules ; « Rechercher vers l’arrière » recherche vers le début du
+  texte. Choisir une entrée de l’historique rétablit les cinq options de recherche, y compris l’état du
+  mode d’expression régulière ; « Toujours au premier plan » est indépendante. « Expression régulière »
+  désactive « La ligne commence par » et « La ligne se termine par ». Si les deux options de début et de
+  fin de ligne sont activées, une correspondance à l’une des extrémités suffit. « Retour automatique à
+  la ligne » modifie uniquement l’affichage.
 - Options > Préférences (Ctrl+G) ouvre une boîte de dialogue de préférences unique pour les chemins MediaInfo
   et curl, la police du rapport, l'anticrénelage des polices, la langue de l'interface et la langue du
   rapport. Un chemin DLL vide permet la découverte automatique.
@@ -95,16 +100,24 @@ Windows 95 n'est actuellement pas un moteur d'exécution pris en charge.
   police standard Windows. La valeur par défaut restaure Consolas ou Courier New si Consolas n'est pas
   disponible ; le bouton Par défaut est désactivé lorsque la valeur par défaut est sélectionnée. Les polices
   sélectionnées par l'utilisateur sont conservées sans substitution par le code de l'application.
-- Les choix d'anticrénelage de police sont ClearType lorsqu'ils sont pris en charge, GDI et Aucun. Le choix
-  initial est ClearType lorsqu'il est pris en charge, sinon GDI. Les paramètres de police affectent uniquement
-  les rapports multimédias et leurs exportations d'images.
+- Les choix d'anticrénelage de police sont ClearType lorsqu'ils sont pris en charge, GDI et Aucun. Le
+  choix initial est ClearType lorsqu'il est pris en charge, sinon GDI. Les réglages de police concernent
+  les onglets de rapport, leurs exports en image et leur impression. Aide et À propos conservent leurs
+  propres polices de texte.
 - L'aide ouvre une fenêtre non modale distincte avec sa propre entrée dans la barre des tâches et son propre
   bouton de réduction. À propos est une boîte de dialogue modale ; son en-tête de produit répertorie les trois
   versions DLL intégrées.
 
-Imprimer… (Ctrl+P) ouvre la boîte de dialogue système des imprimantes et imprime tout l’onglet actif sans
-aperçu. La police du rapport est utilisée ; les longues lignes sont renvoyées à la ligne et le texte est
-réparti sur plusieurs pages. L’impression s’exécute en arrière-plan.
+Fichier > Mise en page… ouvre les réglages du papier, de l’orientation et des marges pour la session en
+cours. Imprimer… (Ctrl+P) ouvre la boîte de dialogue système d’impression ; Windows 11 fournit un
+aperçu, tandis que Windows 10 et les versions antérieures conservent le dialogue classique. Ctrl+P
+imprime l’onglet actif de la fenêtre principale ou la zone de texte d’Aide ou d’À propos, selon la
+fenêtre qui a le focus. Les rapports utilisent la police choisie, l’Aide la police système des dialogues
+et À propos la police de sa zone de texte. Si aucun onglet n’est ouvert mais que l’Aide l’est, Mise en
+page… et Imprimer… restent disponibles ; Imprimer… imprime l’Aide. L’Aide utilise le dialogue
+d’impression de la fenêtre principale ; un nouvel appui sur Ctrl+P dans l’Aide le ramène au premier
+plan. Les lignes longues sont renvoyées à la ligne et le texte est réparti en pages. L’impression
+s’effectue en arrière-plan.
 
 Ouvrir un dossier… ouvre les fichiers directement contenus dans le dossier sélectionné, chacun dans son propre
 onglet. Les sous-dossiers ne sont pas inclus. Ouvrir et Ouvrir un dossier partagent le dernier dossier

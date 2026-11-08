@@ -68,20 +68,26 @@ Windows 95 šiuo metu nepalaikomas vykdymo laikas.
 - Ctrl+Tab ir Ctrl+Shift+Tab perjungti skirtukus; Ctrl+W uždaro aktyvų skirtuką. Viduryje spustelėjus skirtuko
   antraštę, tas skirtukas uždaromas ir išsaugomas bet kuris kitas aktyvus skirtukas. Failas > Uždaryti viską
   uždaro kiekvieną skirtuką, įskaitant eilėje esančias ataskaitas. Failas > Išeiti (Alt+F4) uždaro programą.
-- Dukart spustelėjus pasirenkamas žodis. Tris kartus spustelėjus pasirenkama loginė eilutė. Vilkimas praplečia
-  pasirinkimą žodžiais arba eilutėmis.
+- Skirtuko antraštės kontekstiniame meniu yra Uždaryti skirtuką. Nuostatose įjunkite Uždaryti skirtukus
+  dukart spustelėjus, jei norite uždaryti skirtuką dukart spustelėdami jo antraštę. Parinktis iš pradžių
+  išjungta, jos būsena įrašoma.
+- Dukart spustelėjus ataskaitos tekstą pasirenkamas žodis. Triskart spustelėjus pasirenkama loginė
+  eilutė. Velkant žymėjimas plečiamas žodžiais arba eilutėmis.
 - Ctrl+A pasirenka ataskaitą; Ctrl+C jį nukopijuoja.
-- Redaguoti > Rasti (Ctrl+F) ieško aktyviame skirtuke. F3 kartoja paiešką, o Shift+F3 pakeičia jos kryptį.
-  Pasiekus teksto galą, paieška tęsiama nuo kito galo. Parinktys > Teksto eilučių kėlimas taikomas tik
-  aktyviam skirtukui; varnelė atitinka pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo
-  plotį; jo vieta ir parinktis Visada viršuje įsimenamos. Iki 30 paieškos tekstų su parinktimis saugoma tik
-  iki programos uždarymo. Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. Reguliarieji reiškiniai
-  naudoja PCRE2 sintaksę. Visos meniu Redaguoti komandos taikomos tik aktyviam skirtukui. Enter pradeda
-  paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti didžiąsias ir mažąsias raides“ skiria didžiąsias ir
-  mažąsias raides; „Ieškoti atgal“ ieško teksto pradžios link. Pasirinkus istorijos įrašą atkuriamos visos
-  penkios paieškos parinktys, įskaitant reguliariųjų reiškinių režimo būseną; „Visada viršuje“ yra
-  nepriklausoma. „Reguliarusis reiškinys“ išjungia „Eilutė prasideda“ ir „Eilutė baigiasi“. Įjungus abi
-  eilutės kraštų parinktis, pakanka atitikmens viename krašte. „Teksto eilučių kėlimas“ keičia tik rodymą.
+- Redaguoti > Rasti (Ctrl+F) ieško aktyviame ataskaitos skirtuke arba Žinyno ar Apie teksto srityje,
+  atsižvelgiant į tai, kuris langas aktyvus. Paieškos langas išlaiko paskutinį pasirinktą šaltinį, kol
+  pats yra aktyvus. F3 kartoja paiešką, o Shift+F3 pakeičia jos kryptį. Pasiekus teksto galą, paieška
+  tęsiama nuo kito galo. Parinktys > Teksto eilučių kėlimas taikomas tik aktyviam skirtukui; varnelė
+  atitinka pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo plotį; jo vieta ir
+  parinktis Visada viršuje įsimenamos. Iki 30 paieškos tekstų su parinktimis saugoma tik iki programos
+  uždarymo. Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. Reguliarieji reiškiniai naudoja
+  PCRE2 sintaksę. Kitos meniu Redaguoti komandos taikomos aktyviam ataskaitos skirtukui. Enter pradeda
+  paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti didžiąsias ir mažąsias raides“ skiria
+  didžiąsias ir mažąsias raides; „Ieškoti atgal“ ieško teksto pradžios link. Pasirinkus istorijos įrašą
+  atkuriamos visos penkios paieškos parinktys, įskaitant reguliariųjų reiškinių režimo būseną; „Visada
+  viršuje“ yra nepriklausoma. „Reguliarusis reiškinys“ išjungia „Eilutė prasideda“ ir „Eilutė baigiasi“.
+  Įjungus abi eilutės kraštų parinktis, pakanka atitikmens viename krašte. „Teksto eilučių kėlimas“
+  keičia tik rodymą.
 - „Nustatymai“ > „Nuostatos“ (Ctrl+G) atidaro vieną nuostatų dialogo langą, skirtą MediaInfo ir curl takams,
   ataskaitos šriftui, šrifto antialiasing, sąsajos kalbai ir ataskaitos kalbai. Tuščias DLL kelias įgalina
   automatinį aptikimą.
@@ -89,13 +95,19 @@ Windows 95 šiuo metu nepalaikomas vykdymo laikas.
   Numatytasis atkuria Consolas arba Courier New, jei Consolas nepasiekiamas; mygtukas Default yra išjungtas,
   kol pasirinktas numatytasis. Vartotojo pasirinkti šriftai išsaugomi nepakeičiant programos kodu.
 - Šrifto antialiasing parinktys yra ClearType, kai palaikoma, GDI ir Nėra. Pradinis pasirinkimas yra
-  ClearType, kai palaikomas, kitu atveju GDI. Šrifto nustatymai turi įtakos tik žiniasklaidos pranešimams ir
-  jų vaizdų eksportavimui.
+  ClearType, kai palaikomas, kitu atveju GDI. Šrifto nuostatos taikomos ataskaitų skirtukams, jų
+  eksportui į vaizdus ir ataskaitų spausdinimui. Žinynas ir Apie išlaiko savo teksto šriftus.
 - Pagalba atidaro atskirą bemodį langą su atskiru užduočių juostos įrašu ir sumažinimo mygtuku. Apie yra
   modalinis dialogas; jo produkto antraštėje pateikiamos visos trys įterptosios DLL versijos.
 
-Spausdinti… (Ctrl+P) atveria sistemos spausdintuvo pasirinkimo dialogą ir išspausdina visą aktyvų skirtuką be
-peržiūros. Naudojamas ataskaitos šriftas; ilgos eilutės perkeliamos, o tekstas padalijamas į puslapius.
+Failas > Puslapio sąranka… atveria dabartinio seanso popieriaus, padėties ir paraščių nuostatas.
+Spausdinti… (Ctrl+P) atveria sistemos spausdinimo dialogą; Windows 11 rodo peržiūrą, o Windows 10 ir
+senesnės versijos palieka įprastą dialogą. Ctrl+P spausdina pagrindinio lango aktyvų skirtuką arba
+Žinyno ar Apie teksto sritį, atsižvelgiant į tai, kuris langas aktyvus. Ataskaitos naudoja pasirinktą
+ataskaitos šriftą, Žinynas sistemos dialogų šriftą, o Apie savo teksto srities šriftą. Jei nėra atvertų
+skirtukų, bet Žinynas atvertas, Puslapio sąranka… ir Spausdinti… lieka pasiekiami; Spausdinti… spausdina
+žinyną. Žinynas naudoja pagrindinio lango spausdinimo dialogą; dar kartą paspaudus Ctrl+P Žinyne tas
+pats dialogas iškeliamas į priekį. Ilgos eilutės keliamos, o tekstas padalijamas į puslapius.
 Spausdinama fone.
 
 Atidaryti aplanką… atveria tiesiogiai pasirinktame aplanke esančius failus, kiekvieną atskirame skirtuke.

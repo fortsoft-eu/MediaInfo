@@ -69,21 +69,27 @@ Windows 95 não é atualmente um tempo de execução compatível.
 - Ctrl+Tab e Ctrl+Shift+Tab alternam guias; Ctrl+W fecha a aba ativa. Clicar com o botão do meio no cabeçalho
   de um separador fecha esse separador, preservando qualquer outro separador ativo. Ficheiro > Fechar tudo
   fecha todas as guias, incluindo os relatórios em fila. Arquivo > Sair (Alt+F4) fecha o aplicativo.
-- Clique duas vezes para selecionar uma palavra. Clique três vezes para selecionar uma linha lógica. Arrastar
-  estende a seleção por palavras ou linhas.
+- O menu de contexto do cabeçalho de um separador inclui Fechar separador. Ative Fechar separadores com
+  duplo clique nas Preferências para fechar um separador com um duplo clique no cabeçalho. A opção está
+  desativada por predefinição e é guardada.
+- Um duplo clique no texto do relatório seleciona uma palavra. Um triplo clique seleciona uma linha
+  lógica. Arrastar expande a seleção por palavras ou linhas.
 - Ctrl+A seleciona o relatório; Ctrl+C cópia.
-- Editar > Localizar (Ctrl+F) pesquisa no separador ativo. F3 repete a pesquisa; Shift+F3 inverte a direção.
-  Ao atingir uma extremidade do texto, a pesquisa continua na outra. Opções > Moldar texto afeta apenas o
-  separador ativo; a marca acompanha o separador selecionado. A janela de pesquisa pode ser minimizada e
-  redimensionada horizontalmente; a posição e a opção Sempre em cima são memorizadas. São guardadas até 30
-  pesquisas e as respetivas opções apenas até a aplicação ser encerrada. As opções de início e fim referem-se
-  às linhas lógicas. As expressões regulares utilizam a sintaxe PCRE2. Todos os comandos de Editar afetam
-  apenas o separador ativo. Enter inicia a pesquisa; Shift+Enter inverte a direção escolhida. «Distinguir
-  maiúsculas de minúsculas» distingue maiúsculas de minúsculas; «Procurar para trás» pesquisa em direção ao
-  início do texto. A escolha de uma entrada do histórico repõe as cinco opções de pesquisa, incluindo o estado
-  do modo de expressão regular; «Sempre em cima» é independente. «Expressão regular» desativa «A linha começa
-  por» e «A linha termina com». Com ambas as opções de início e fim de linha ativas, basta uma correspondência
-  numa das extremidades. «Moldar texto» altera apenas a apresentação.
+- Editar > Localizar (Ctrl+F) pesquisa no separador de relatório ativo ou na área de texto de Ajuda ou
+  Acerca de, conforme a janela que tem o foco. A janela de pesquisa mantém a última origem selecionada
+  enquanto tem o foco. F3 repete a pesquisa; Shift+F3 inverte a direção. Ao atingir uma extremidade do
+  texto, a pesquisa continua na outra. Opções > Moldar texto afeta apenas o separador ativo; a marca
+  acompanha o separador selecionado. A janela de pesquisa pode ser minimizada e redimensionada
+  horizontalmente; a posição e a opção Sempre em cima são memorizadas. São guardadas até 30 pesquisas e
+  as respetivas opções apenas até a aplicação ser encerrada. As opções de início e fim referem-se às
+  linhas lógicas. As expressões regulares utilizam a sintaxe PCRE2. Os restantes comandos do menu Editar
+  aplicam-se ao separador de relatório ativo. Enter inicia a pesquisa; Shift+Enter inverte a direção
+  escolhida. «Distinguir maiúsculas de minúsculas» distingue maiúsculas de minúsculas; «Procurar para
+  trás» pesquisa em direção ao início do texto. A escolha de uma entrada do histórico repõe as cinco
+  opções de pesquisa, incluindo o estado do modo de expressão regular; «Sempre em cima» é independente.
+  «Expressão regular» desativa «A linha começa por» e «A linha termina com». Com ambas as opções de
+  início e fim de linha ativas, basta uma correspondência numa das extremidades. «Moldar texto» altera
+  apenas a apresentação.
 - Opções > Preferências (Ctrl+G) abre um único diálogo de preferências para os caminhos MediaInfo e curl,
   fonte de relatório, suavização de fonte, idioma de interface e idioma de relatório. Um caminho DLL vazio
   permite a descoberta automática.
@@ -92,15 +98,23 @@ Windows 95 não é atualmente um tempo de execução compatível.
   disponível; o botão Padrão fica desativado enquanto o padrão está selecionado. As fontes selecionadas pelo
   utilizador são mantidas sem substituição pelo código da aplicação.
 - As opções de antialiasing de fonte são ClearType quando suportadas, GDI e None. A escolha inicial é
-  ClearType quando suportado, caso contrário GDI. As definições de fonte afetam apenas os relatórios de média
-  e as suas exportações de imagens.
+  ClearType quando suportado, caso contrário GDI. As definições de tipo de letra afetam os separadores
+  de relatórios, as respetivas exportações para imagem e a impressão de relatórios. Ajuda e Acerca de
+  mantêm os seus próprios tipos de letra.
 - A Ajuda abre uma janela separada sem janela restrita com a sua própria entrada na barra de tarefas e botão
   de minimizar. Sobre é uma caixa de diálogo modal; o cabeçalho do produto lista todas as três versões DLL
   incorporadas.
 
-Imprimir… (Ctrl+P) abre a caixa de diálogo do sistema para escolher a impressora e imprime todo o separador
-ativo sem pré-visualização. É utilizado o tipo de letra do relatório; as linhas longas são ajustadas e o texto
-é dividido em páginas. A impressão decorre em segundo plano.
+Ficheiro > Configurar página… abre as definições de papel, orientação e margens para a sessão atual.
+Imprimir… (Ctrl+P) abre a caixa de diálogo de impressão do sistema; o Windows 11 fornece uma
+pré-visualização, enquanto o Windows 10 e anteriores mantêm a caixa de diálogo clássica. Ctrl+P imprime
+o separador ativo da janela principal ou a área de texto de Ajuda ou Acerca de, conforme a janela que
+tem o foco. Os relatórios usam o tipo de letra escolhido, a Ajuda o tipo de letra dos diálogos do
+sistema e Acerca de o da sua área de texto. Se não houver separadores abertos mas a Ajuda estiver
+aberta, Configurar página… e Imprimir… continuam disponíveis; Imprimir… imprime a Ajuda. A Ajuda usa a
+caixa de diálogo de impressão da janela principal; premir Ctrl+P novamente na Ajuda volta a colocar a
+mesma caixa de diálogo em primeiro plano. As linhas longas são ajustadas e o texto é dividido em
+páginas. A impressão decorre em segundo plano.
 
 Abrir pasta… abre os ficheiros contidos diretamente na pasta selecionada, cada um no seu próprio separador. As
 subpastas não são incluídas. Abrir e Abrir pasta partilham a última pasta selecionada. A exportação memoriza a
