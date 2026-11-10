@@ -30,7 +30,7 @@
 
 static const wchar_t originalTabProperty[] = L"MediaInfo.TabOriginalProc";
 
-/// Maximizes the report page area and handles middle-click tab closing through the parent window.
+/// Maximizes report space, keeps scrolled headers visible and routes middle-click tab closing.
 static LRESULT CALLBACK BorderlessTabProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) {
     WNDPROC original = reinterpret_cast<WNDPROC>(GetPropW(window, originalTabProperty));
     if (message == TCM_ADJUSTRECT && lParam && !(GetWindowLongW(window, GWL_STYLE) & TCS_BOTTOM)) {
@@ -47,6 +47,17 @@ static LRESULT CALLBACK BorderlessTabProc(HWND window, UINT message, WPARAM wPar
         rectangle.top += wParam ? -headerHeight : headerHeight;
         *reinterpret_cast<RECT*>(lParam) = rectangle;
         return result;
+    }
+    if (message == TCM_DELETEITEM) {
+        int count = TabCtrl_GetItemCount(window);
+        RECT previous = RECT{};
+        if (count > 1
+                && wParam < static_cast<WPARAM>(count)
+                && TabCtrl_GetItemRect(window, count - 2, &previous)
+                && previous.left < 0) {
+            SendMessageW(window, WM_HSCROLL, MAKEWPARAM(SB_THUMBPOSITION, count - 2), 0);
+            SendMessageW(window, WM_HSCROLL, MAKEWPARAM(SB_ENDSCROLL, count - 2), 0);
+        }
     }
     if (message == WM_MBUTTONDOWN) {
         return 0;
