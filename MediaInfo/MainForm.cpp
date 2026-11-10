@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.1
+ * Last modified for version 1.2.0.2
  */
 
 #include "Localization.h"
@@ -303,7 +303,7 @@ bool MainForm::Initialize() {
     unicodeTabs = SendMessageW(tabs, CCM_GETUNICODEFORMAT, 0, 0) != 0;
     visualStylesActive = AreVisualStylesActive();
     recentFiles.Load();
-    recentFiles.UpdateMenu(GetSubMenu(GetMenu(window), 0));
+    recentFiles.UpdateMenu(GetMenu(window));
     LoadFontSetting(&reportFontSpec, &reportFontDpi);
     tabNameLength = LoadTabNameLengthSetting();
     RebuildFonts();
@@ -1058,7 +1058,7 @@ void MainForm::CloseAllTabs() {
 void MainForm::RememberFile(const wchar_t* path) {
     recentFiles.Add(path);
     recentFiles.Save();
-    recentFiles.UpdateMenu(GetSubMenu(GetMenu(window), 0));
+    recentFiles.UpdateMenu(GetMenu(window));
     DrawMenuBar(window);
 }
 
@@ -1165,7 +1165,7 @@ bool MainForm::PreferencesClearRecentFiles(void* context) {
     MainForm* owner = static_cast<MainForm*>(context);
     owner->recentFiles.Clear();
     bool saved = owner->recentFiles.Save();
-    owner->recentFiles.UpdateMenu(GetSubMenu(GetMenu(owner->window), 0));
+    owner->recentFiles.UpdateMenu(GetMenu(owner->window));
     DrawMenuBar(owner->window);
     return saved;
 }
@@ -1932,7 +1932,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                             MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON1) == IDYES) {
                             owner->recentFiles.Remove(path);
                             owner->recentFiles.Save();
-                            owner->recentFiles.UpdateMenu(GetSubMenu(GetMenu(window), 0));
+                            owner->recentFiles.UpdateMenu(GetMenu(window));
                             DrawMenuBar(window);
                         }
                     } else {

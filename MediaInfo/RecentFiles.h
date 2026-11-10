@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.0.2
  */
 
 #pragma once
@@ -77,6 +77,6 @@ public:
     /// Returns a stored recent-file path when its index is valid.
     const wchar_t* Get(int index) const;
 
-    /// Rebuilds the numbered recent-file section above Exit using shortened filenames.
-    void UpdateMenu(HMENU menu) const;
+    /// Rebuilds the File submenu and its numbered recent files without retaining obsolete native widths.
+    void UpdateMenu(HMENU menuBar) const;
 };

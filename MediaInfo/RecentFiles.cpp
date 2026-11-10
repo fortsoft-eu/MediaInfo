@@ -21,13 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.0.2
  */
 
 #include "RecentFiles.h"
 #include "SettingsStorage.h"
 #include "resource.h"
 #include "MainForm.h"
+
+/// Copies the flat File menu into a fresh native popup, preserving item text, state and command data.
+static HMENU CopyFileMenu(HMENU source) {
+    HMENU copy = CreatePopupMenu();
+    if (!copy) {
+        return nullptr;
+    }
+    int count = GetMenuItemCount(source);
+    for (int index = 0; index < count; ++index) {
+        MENUITEMINFOW item = MENUITEMINFOW{};
+        item.cbSize = sizeof(item);
+        item.fMask = MIIM_TYPE | MIIM_ID | MIIM_STATE | MIIM_DATA | MIIM_CHECKMARKS;
+        if (!GetMenuItemInfoW(source, index, TRUE, &item) || item.cch >= MAXDWORD / sizeof(wchar_t)) {
+            DestroyMenu(copy);
+            return nullptr;
+        }
+        wchar_t* caption = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), 0,
+            (item.cch + 1) * sizeof(wchar_t)));
+        if (!caption) {
+            DestroyMenu(copy);
+            return nullptr;
+        }
+        item.dwTypeData = caption;
+        ++item.cch;
+        bool copied = GetMenuItemInfoW(source, index, TRUE, &item)
+            && InsertMenuItemW(copy, index, TRUE, &item);
+        HeapFree(GetProcessHeap(), 0, caption);
+        if (!copied) {
+            DestroyMenu(copy);
+            return nullptr;
+        }
+    }
+    return copy;
+}
 
 /// Initializes an empty recent-files list.
 RecentFiles::RecentFiles()
@@ -154,8 +188,12 @@ bool RecentFiles::IsEmpty() const {
     return count == 0;
 }
 
-/// Rebuilds the numbered recent-file section above Exit using shortened filenames.
-void RecentFiles::UpdateMenu(HMENU menu) const {
+/// Rebuilds the File submenu and its numbered recent files without retaining obsolete native widths.
+void RecentFiles::UpdateMenu(HMENU menuBar) const {
+    HMENU menu = GetSubMenu(menuBar, 0);
+    if (!menu) {
+        return;
+    }
     bool removed = false;
     for (int index = GetMenuItemCount(menu) - 1; index >= 0; --index) {
         UINT command = GetMenuItemID(menu, index);
@@ -190,5 +228,18 @@ void RecentFiles::UpdateMenu(HMENU menu) const {
     }
     if (count) {
         InsertMenuW(menu, ID_FILE_EXIT, MF_BYCOMMAND | MF_SEPARATOR, 0, nullptr);
+    }
+    HMENU replacement = CopyFileMenu(menu);
+    if (!replacement) {
+        return;
+    }
+    MENUITEMINFOW popup = MENUITEMINFOW{};
+    popup.cbSize = sizeof(popup);
+    popup.fMask = MIIM_SUBMENU;
+    popup.hSubMenu = replacement;
+    if (SetMenuItemInfoW(menuBar, 0, TRUE, &popup)) {
+        DestroyMenu(menu);
+    } else {
+        DestroyMenu(replacement);
     }
 }
