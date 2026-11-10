@@ -63,7 +63,7 @@ Windows 95 is not currently a supported runtime.
 - Ctrl+Tab and Ctrl+Shift+Tab switch tabs; Ctrl+W closes the active tab. Middle-clicking a tab header closes
   that tab while preserving any other active tab. File > Close All closes every tab, including queued reports.
   File > Exit (Alt+F4) closes the application.
-- The tab header's context menu includes Close tab. Enable Close tabs on double-click in Preferences to
+- The tab header's context menu includes Close Tab. Enable Close tabs on double-click in Preferences to
   close a tab by double-clicking its header. This option is off by default and is saved.
 - Double-click in the report text selects a word. Triple-click selects a logical line. Dragging extends
   the selection by words or lines.

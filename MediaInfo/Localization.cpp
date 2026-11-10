@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.1
  */
 
 #include "Localization.h"
@@ -545,7 +545,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"The recent files list was cleared, but could not be saved in the registry."
             },
             { TXT_CLOSE_TABS_ON_DOUBLE_CLICK, L"Close tabs on double-clic&k" },
-            { TXT_CLOSE_TAB_CONTEXT, L"Close &tab" },
+            { TXT_CLOSE_TAB_CONTEXT, L"Close &Tab" },
             { TXT_ALLOW_MULTIPLE_INSTANCES, L"Allow multiple &instances" },
             { TXT_INSTANCE_FORWARD_FAILED,
                 L"The files could not be passed to the running MediaInfo instance."
@@ -557,7 +557,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"its own read-only tab. Open files with Ctrl+O or drag and drop. Reopening a file "
                 L"selects its existing tab. Ctrl+W or middle-click closes a tab; Close All closes every "
                 L"tab. The File menu remembers eight recent files. The tab header's context menu includes "
-                L"Close tab. Enable Close tabs on double-click in Preferences to close a tab by "
+                L"Close Tab. Enable Close tabs on double-click in Preferences to close a tab by "
                 L"double-clicking its header. This option is off by default and is saved. Double-click in "
                 L"the report text selects a word. Triple-click selects a logical line. Dragging extends "
                 L"the selection by words or lines.\r\nOpen Folder… opens files directly in the selected "
@@ -885,7 +885,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"The recent files list was cleared, but could not be saved in the registry."
             },
             { TXT_CLOSE_TABS_ON_DOUBLE_CLICK, L"Close tabs on double-clic&k" },
-            { TXT_CLOSE_TAB_CONTEXT, L"Close &tab" },
+            { TXT_CLOSE_TAB_CONTEXT, L"Close &Tab" },
             { TXT_ALLOW_MULTIPLE_INSTANCES, L"Allow multiple &instances" },
             { TXT_INSTANCE_FORWARD_FAILED,
                 L"The files could not be passed to the running MediaInfo instance."
@@ -897,7 +897,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"its own read-only tab. Open files with Ctrl+O or drag and drop. Reopening a file "
                 L"selects its existing tab. Ctrl+W or middle-click closes a tab; Close All closes every "
                 L"tab. The File menu remembers eight recent files. The tab header's context menu includes "
-                L"Close tab. Enable Close tabs on double-click in Preferences to close a tab by "
+                L"Close Tab. Enable Close tabs on double-click in Preferences to close a tab by "
                 L"double-clicking its header. This option is off by default and is saved. Double-click in "
                 L"the report text selects a word. Triple-click selects a logical line. Dragging extends "
                 L"the selection by words or lines.\r\nOpen Folder… opens files directly in the selected "
@@ -1225,7 +1225,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"The recent files list was cleared, but could not be saved in the registry."
             },
             { TXT_CLOSE_TABS_ON_DOUBLE_CLICK, L"Close tabs on double-clic&k" },
-            { TXT_CLOSE_TAB_CONTEXT, L"Close &tab" },
+            { TXT_CLOSE_TAB_CONTEXT, L"Close &Tab" },
             { TXT_ALLOW_MULTIPLE_INSTANCES, L"Allow multiple &instances" },
             { TXT_INSTANCE_FORWARD_FAILED,
                 L"The files could not be passed to the running MediaInfo instance."
@@ -1237,7 +1237,7 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"its own read-only tab. Open files with Ctrl+O or drag and drop. Reopening a file "
                 L"selects its existing tab. Ctrl+W or middle-click closes a tab; Close All closes every "
                 L"tab. The File menu remembers eight recent files. The tab header's context menu includes "
-                L"Close tab. Enable Close tabs on double-click in Preferences to close a tab by "
+                L"Close Tab. Enable Close tabs on double-click in Preferences to close a tab by "
                 L"double-clicking its header. This option is off by default and is saved. Double-click in "
                 L"the report text selects a word. Triple-click selects a logical line. Dragging extends "
                 L"the selection by words or lines.\r\nOpen Folder… opens files directly in the selected "
