@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.1.0
  */
 
 #include "TabControl.h"
@@ -30,7 +30,7 @@
 
 static const wchar_t originalTabProperty[] = L"MediaInfo.TabOriginalProc";
 
-/// Maximizes report space, keeps scrolled headers visible and routes middle-click tab closing.
+/// Maximizes report space, keeps scrolled headers visible and routes tab-closing mouse gestures.
 static LRESULT CALLBACK BorderlessTabProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam) {
     WNDPROC original = reinterpret_cast<WNDPROC>(GetPropW(window, originalTabProperty));
     if (message == TCM_ADJUSTRECT && lParam && !(GetWindowLongW(window, GWL_STYLE) & TCS_BOTTOM)) {
@@ -62,14 +62,19 @@ static LRESULT CALLBACK BorderlessTabProc(HWND window, UINT message, WPARAM wPar
     if (message == WM_MBUTTONDOWN) {
         return 0;
     }
-    if (message == WM_MBUTTONUP) {
+    if (message == WM_MBUTTONUP || message == WM_LBUTTONDBLCLK) {
         TCHITTESTINFO hit = TCHITTESTINFO{};
         hit.pt = POINT{ GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
         int index = TabCtrl_HitTest(window, &hit);
         if (index >= 0 && hit.flags & TCHT_ONITEM) {
-            SendMessageW(GetParent(window), tabCloseMessage, index, reinterpret_cast<LPARAM>(window));
+            UINT request = message == WM_MBUTTONUP ? tabCloseMessage : tabDoubleClickMessage;
+            if (SendMessageW(GetParent(window), request, index, reinterpret_cast<LPARAM>(window))) {
+                return 0;
+            }
         }
-        return 0;
+        if (message == WM_MBUTTONUP) {
+            return 0;
+        }
     }
     if (message == WM_NCDESTROY) {
         SetWindowLongPtrW(window, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(original));

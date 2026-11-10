@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.2
+ * Last modified for version 1.2.1.0
  */
 
 #include "Localization.h"
@@ -581,8 +581,8 @@ void MainForm::ShowStatusContextMenu(POINT point) {
             return;
         }
         AppendMenuW(menu, MF_STRING | (text[0] ? MF_ENABLED : MF_GRAYED), statusCopyCommand, T(TXT_COPY));
-        UINT command =
-            TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+        UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0,
+            window, nullptr);
         DestroyMenu(menu);
         if (command == statusCopyCommand && !CopyTextToClipboard(window, text)) {
             MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
@@ -638,8 +638,8 @@ void MainForm::ShowTabContextMenu(POINT point) {
     context.menu = menu;
     context.path = path;
     tabMenuContext = &context;
-    UINT command =
-        TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+    UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0,
+        window, nullptr);
     tabMenuContext = nullptr;
     DestroyMenu(menu);
     if (command == ID_FILE_CLOSE) {
@@ -1666,17 +1666,6 @@ LRESULT MainForm::HandleNotification(WPARAM wParam, LPARAM lParam) {
         SelectTab(TabCtrl_GetCurSel(tabs));
         return 0;
     }
-    if (notification->hwndFrom == tabs && notification->code == NM_DBLCLK && closeTabsOnDoubleClick) {
-        DWORD position = GetMessagePos();
-        TCHITTESTINFO hit = TCHITTESTINFO{};
-        hit.pt = POINT{ GET_X_LPARAM(position), GET_Y_LPARAM(position) };
-        ScreenToClient(tabs, &hit.pt);
-        int index = TabCtrl_HitTest(tabs, &hit);
-        if (index >= 0 && hit.flags & TCHT_ONITEM) {
-            CloseTab(index);
-        }
-        return TRUE;
-    }
     if ((notification->code == TTN_GETDISPINFOW || notification->code == TTN_GETDISPINFOA)
             && notification->hwndFrom == TabCtrl_GetToolTips(tabs)) {
         FileTab* file = files;
@@ -1687,9 +1676,12 @@ LRESULT MainForm::HandleNotification(WPARAM wParam, LPARAM lParam) {
         GetWindowRect(window, &bounds);
         RECT work = WindowWorkArea(bounds);
         SendMessageW(notification->hwndFrom, TTM_SETMAXTIPWIDTH, 0, work.right - work.left);
-        const wchar_t* tooltip = !file ? nullptr : file->command == LibraryCommand::Read
-            ? file->path
-            : KnownInformationTitle(file->command);
+        const wchar_t* tooltip = nullptr;
+        if (file) {
+            tooltip = file->command == LibraryCommand::Read
+                ? file->path
+                : KnownInformationTitle(file->command);
+        }
         if (notification->code == TTN_GETDISPINFOW) {
             reinterpret_cast<NMTTDISPINFOW*>(lParam)->lpszText = const_cast<wchar_t*>(tooltip);
         } else {
@@ -2037,6 +2029,12 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
         case tabCloseMessage:
             if (reinterpret_cast<HWND>(lParam) == owner->tabs) {
                 owner->CloseTab(static_cast<int>(wParam));
+            }
+            return 0;
+        case tabDoubleClickMessage:
+            if (reinterpret_cast<HWND>(lParam) == owner->tabs && owner->closeTabsOnDoubleClick) {
+                owner->CloseTab(static_cast<int>(wParam));
+                return TRUE;
             }
             return 0;
         case WM_DROPFILES:

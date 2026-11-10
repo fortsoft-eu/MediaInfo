@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.1.0
  */
 
 #pragma once
@@ -29,6 +29,7 @@
 #include <windows.h>
 
 static const UINT tabCloseMessage = WM_APP + 2;
+static const UINT tabDoubleClickMessage = WM_APP + 10;
 
 /// Installs the native tab subclass used for workspace painting and header input.
 bool InstallBorderlessTabHandler(HWND window);
