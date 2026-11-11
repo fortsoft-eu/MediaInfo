@@ -204,6 +204,11 @@ OK o Applica conferma le modifiche; Annulla scarta quelle in sospeso. Le prefere
 nomi delle schede (80 predefinito) e cancellare l’elenco dei file recenti. I nomi lunghi conservano inizio,
 fine ed estensione con puntini di sospensione al centro.
 
+Il titolo della finestra principale mostra il file attivo come nome del file — MediaInfo. Le preferenze
+consentono di impostare separatamente la lunghezza del nome nel titolo da 8 a 255 caratteri (40
+predefinito). I nomi più lunghi usano gli stessi puntini di sospensione al centro e mantengono
+l’estensione. Senza schede aperte, il titolo è MediaInfo.
+
 Per impostazione predefinita è consentita una sola istanza e gli avvii successivi inviano i file alla finestra
 aperta. Nelle preferenze è possibile consentire più istanze. Con più finestre, solo la prima di ciascun modulo
 ripristina la posizione salvata; le successive ripristinano solo le dimensioni.

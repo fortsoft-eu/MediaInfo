@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.1.2
  */
 
 #pragma once
 
 #include <windows.h>
+#include "PersistWindowState.h"
 
 /// Hosts modal About and owns its license text, website link, tooltip and context commands.
 class AboutForm {
@@ -40,6 +41,9 @@ private:
     HFONT linkFont;
     HCURSOR hand;
     HMODULE legacyCursorModule;
+
+    /// Retains the dialog position only for this application instance.
+    PersistWindowState placement;
 
     /// Native layout measurements and link state.
     SIZE buttonSize;
@@ -64,7 +68,7 @@ private:
     /// Applies the suggested DPI-change bounds, rebuilds fonts and updates the dialog layout.
     INT_PTR HandleDpiChange(LPARAM lParam);
 
-    /// Loads the license text and installs native edit, link, tooltip and context-menu behavior.
+    /// Loads the license, installs native controls and restores the position retained in memory.
     bool Initialize();
 
     /// Replaces the static website control with a native SysLink when supported.
@@ -104,7 +108,7 @@ public:
     /// Closes the dialog and releases its fonts, tooltip and control subclasses.
     ~AboutForm();
 
-    /// Opens About modally without saving its position.
+    /// Opens About modally and restores its position retained only within this application instance.
     void Show(HWND owner);
 
     /// Closes the active modal dialog.

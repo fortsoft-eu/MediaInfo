@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.2
  */
 
 #pragma once
@@ -147,10 +147,13 @@ public:
     /// Uses the active form's text edit and invalidates the last zero-length match after retargeting.
     void SetTarget(HWND edit);
 
+    /// Reports whether the selected edit still exists and contains searchable text.
+    bool CanSearch() const;
+
     /// Retains logical search state when an existing report edit is replaced for native style changes.
     void ReplaceTarget(HWND original, HWND replacement);
 
-    /// Opens or activates this viewer's search form without blocking its main window.
+    /// Opens or activates the modeless search form only when its selected edit contains text.
     void Show(HWND owner);
 
     /// Closes the form while retaining expressions and options only in this running instance.

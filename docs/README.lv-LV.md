@@ -190,6 +190,11 @@ Labi vai Lietot apstiprina izmaiņas; Atcelt atmet gaidošās izmaiņas. Iestat�
 ierobežojumu (noklusēti 80) un notīrīt neseno failu sarakstu. Gari nosaukumi saglabā sākumu, beigas un
 paplašinājumu ar daudzpunkti vidū.
 
+Galvenā loga virsraksts rāda aktīvo failu formā faila nosaukums — MediaInfo. Iestatījumos nosaukuma garumu
+virsrakstā var iestatīt atsevišķi no 8 līdz 255 rakstzīmēm (noklusējums 40). Garāki nosaukumi tiek
+saīsināti ar to pašu daudzpunkti vidū, saglabājot paplašinājumu. Ja nav atvērtu cilņu, virsraksts ir
+MediaInfo.
+
 Pēc noklusējuma ir atļauta tikai viena instance, un turpmākās palaišanas nodod failus atvērtajam logam.
 Iestatījumos var atļaut vairākas instances. Ja ir vairāki logi, saglabātā pozīcija tiek atjaunota tikai katras
 formas pirmajam logam; pārējiem logiem tiek atjaunots tikai izmērs.

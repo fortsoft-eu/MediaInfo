@@ -194,6 +194,10 @@ OK lub Zastosuj zatwierdza zmiany; Anuluj odrzuca oczekujące zmiany. Preferencj
 długości nazwy karty (domyślnie 80 znaków) i wyczyścić listę ostatnich plików. Długie nazwy zachowują
 początek, koniec i rozszerzenie, z wielokropkiem pośrodku.
 
+Tytuł głównego okna pokazuje aktywny plik w postaci nazwa pliku — MediaInfo. W preferencjach można osobno
+ustawić długość nazwy w tytule od 8 do 255 znaków (domyślnie 40). Dłuższe nazwy są skracane tym samym
+wielokropkiem pośrodku z zachowaniem rozszerzenia. Gdy nie ma otwartych kart, tytuł to MediaInfo.
+
 Domyślnie dozwolona jest tylko jedna instancja, a kolejne uruchomienia przekazują pliki do otwartego okna. W
 ustawieniach można zezwolić na wiele instancji. Przy wielu oknach tylko pierwsze okno każdego formularza
 przywraca zapisaną pozycję; następne przywracają jedynie rozmiar.

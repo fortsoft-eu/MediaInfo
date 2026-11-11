@@ -181,6 +181,10 @@ MediaInfo CSV-tafla.
 hámarkslengd flipaheita (sjálfgefið 80) og hreinsun listans yfir nýlegar skrár. Löng heiti halda upphafi, enda
 og skráarendingu með úrfellingarmerki í miðju.
 
+Titill aðalgluggans sýnir virku skrána á forminu skráarheiti — MediaInfo. Í kjörstillingum má stilla lengd
+nafns í titli sérstaklega á 8–255 stafi (sjálfgefið 40). Lengri nöfn eru stytt með sömu úrfellingarpunktum
+í miðjunni og skráarendingin helst. Þegar engir flipar eru opnir er titillinn MediaInfo.
+
 Sjálfgefið er aðeins eitt tilvik leyft og síðari ræsingar senda skrár til opna gluggans. Í stillingum má leyfa
 mörg tilvik. Ef fleiri gluggar eru leyfðir endurheimtir aðeins fyrsti gluggi hvers eyðublaðs vistaða
 staðsetningu; síðari gluggar endurheimta aðeins stærðina.

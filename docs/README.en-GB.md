@@ -181,6 +181,10 @@ OK or Apply commits changes; Cancel discards pending edits. Preferences sets the
 default) and clears the recent-files list. Long names retain their beginning, ending and extension with a
 middle ellipsis.
 
+The main window title shows the active file as filename — MediaInfo. Preferences sets a separate title
+name limit of 8–255 characters (40 by default). Longer names use the same middle ellipsis and retain the
+extension. With no open tabs, the title is MediaInfo.
+
 By default, only one instance is allowed and later launches send files to the open window. Preferences can
 allow multiple instances. With multiple windows, only the first window of each form restores its saved
 position; later windows restore size only.

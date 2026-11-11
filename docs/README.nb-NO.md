@@ -184,6 +184,10 @@ OK eller Bruk bekrefter endringer; Avbryt forkaster ventende endringer. Preferan
 (80 som standard) og tømmer listen over nylige filer. Lange navn beholder begynnelsen, slutten og filtypen med
 utelatelsesprikker i midten.
 
+Hovedvinduets tittel viser den aktive filen som filnavn — MediaInfo. I innstillingene kan navnets lengde i
+tittelen angis separat til 8–255 tegn (40 som standard). Lengre navn forkortes med de samme
+utelatelsesprikkene i midten, og filtypen beholdes. Uten åpne faner er tittelen MediaInfo.
+
 Som standard tillates bare én forekomst, og senere oppstarter sender filer til det åpne vinduet. Flere
 forekomster kan tillates i preferansene. Ved flere vinduer gjenopprettes lagret plassering bare for det første
 vinduet i hvert skjema; senere vinduer gjenoppretter bare størrelsen.

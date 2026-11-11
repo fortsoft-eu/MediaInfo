@@ -184,6 +184,10 @@ OK eller Anvend bekræfter ændringer; Annuller forkaster ventende ændringer. P
 fanenavne (80 som standard) og rydder listen over seneste filer. Lange navne bevarer begyndelsen, slutningen
 og filtypen med udeladelsesprikker i midten.
 
+Hovedvinduets titel viser den aktive fil som filnavn — MediaInfo. I indstillingerne kan navnets længde i
+titlen indstilles særskilt til 8–255 tegn (40 som standard). Længere navne forkortes med de samme
+udeladelsesprikker i midten, og filtypen bevares. Uden åbne faner er titlen MediaInfo.
+
 Som standard tillades kun én instans, og senere starter sender filer til det åbne vindue. Flere instanser kan
 tillades i præferencerne. Ved flere vinduer gendannes den gemte placering kun for det første vindue af hver
 formular; senere vinduer gendanner kun størrelsen.

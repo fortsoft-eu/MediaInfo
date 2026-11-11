@@ -187,6 +187,10 @@ OK eller Verkställ bekräftar ändringar; Avbryt förkastar väntande ändringa
 fliknamn (80 som standard) och rensar listan över senaste filer. Långa namn behåller början, slutet och
 filändelsen med uteslutningstecken i mitten.
 
+Huvudfönstrets titel visar den aktiva filen som filnamn — MediaInfo. I inställningarna kan namnets längd i
+titeln anges separat till 8–255 tecken (40 som standard). Längre namn förkortas med samma
+uteslutningstecken i mitten, och filändelsen behålls. Utan öppna flikar är titeln MediaInfo.
+
 Som standard tillåts bara en instans och senare starter skickar filer till det öppna fönstret. Flera instanser
 kan tillåtas i preferenserna. Med flera fönster återställs den sparade positionen bara för det första fönstret
 av varje formulär; senare fönster återställer bara storleken.

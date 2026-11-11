@@ -192,6 +192,11 @@ Gerai arba Taikyti patvirtina pakeitimus; Atšaukti atmeta laukiančius pakeitim
 kortelių pavadinimus (numatyta 80) ir išvalyti paskutinių failų sąrašą. Ilgi pavadinimai išlaiko pradžią,
 pabaigą ir plėtinį, o viduryje įterpiamas daugtaškis.
 
+Pagrindinio lango antraštėje aktyvus failas rodomas formatu failo pavadinimas — MediaInfo. Nuostatose
+galima atskirai nustatyti pavadinimo ilgį antraštėje nuo 8 iki 255 simbolių (numatyta 40). Ilgesni
+pavadinimai trumpinami tuo pačiu daugtaškiu viduryje, išsaugant plėtinį. Kai nėra atvertų skirtukų,
+antraštė yra MediaInfo.
+
 Pagal numatytąsias nuostatas leidžiamas tik vienas egzempliorius, o vėlesni paleidimai perduoda failus
 atvertam langui. Nuostatose galima leisti kelis egzempliorius. Kai langų yra keli, išsaugota vieta atkuriama
 tik pirmajam kiekvienos formos langui; kiti langai atkuria tik dydį.

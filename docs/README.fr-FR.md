@@ -208,6 +208,11 @@ OK ou Appliquer valide les modifications ; Annuler abandonne les modifications e
 permettent de limiter les noms d’onglets (80 par défaut) et d’effacer la liste des fichiers récents. Les noms
 longs conservent le début, la fin et l’extension avec des points de suspension au milieu.
 
+Le titre de la fenêtre principale affiche le fichier actif sous la forme nom du fichier — MediaInfo. Les
+préférences permettent de régler séparément la longueur du nom dans le titre de 8 à 255 caractères (40 par
+défaut). Les noms longs utilisent les mêmes points de suspension au milieu et conservent l’extension. Sans
+onglet ouvert, le titre est MediaInfo.
+
 Par défaut, une seule instance est autorisée et les lancements suivants transmettent les fichiers à la fenêtre
 ouverte. Les préférences permettent d’autoriser plusieurs instances. Si plusieurs fenêtres sont autorisées,
 seule la première de chaque formulaire retrouve sa position enregistrée ; les suivantes ne reprennent que la

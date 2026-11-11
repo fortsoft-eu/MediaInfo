@@ -186,6 +186,10 @@ OK või Rakenda kinnitab muudatused; Loobu tühistab ootel muudatused. Eelistust
 piirangu (vaikimisi 80) ja tühjendada hiljutiste failide loendi. Pikad nimed säilitavad alguse, lõpu ja
 laiendi, keskel on mõttepunktid.
 
+Peaakna pealkiri näitab aktiivset faili kujul failinimi — MediaInfo. Eelistustes saab pealkirjas oleva
+nime pikkuseks eraldi määrata 8–255 märki (vaikimisi 40). Pikemad nimed lühendatakse sama
+mõttepunktimärgiga keskel, säilitades faililaiendi. Kui avatud vahekaarte pole, on pealkiri MediaInfo.
+
 Vaikimisi on lubatud ainult üks eksemplar ja järgmised käivitused saadavad failid avatud aknasse. Eelistustes
 saab lubada mitu eksemplari. Mitme akna korral taastab salvestatud asukoha ainult iga vormi esimene aken;
 järgmised aknad taastavad ainult suuruse.

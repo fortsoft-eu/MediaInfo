@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.2
  */
 
 #pragma once
@@ -32,6 +32,11 @@
 static const UINT defaultTabNameLength = 80;
 static const UINT minimumTabNameLength = 8;
 static const UINT maximumTabNameLength = 255;
+
+/// Default and supported bounds for shortened window-title names.
+static const UINT defaultTitleNameLength = 40;
+static const UINT minimumTitleNameLength = minimumTabNameLength;
+static const UINT maximumTitleNameLength = maximumTabNameLength;
 
 /// Loads one consistent saved combination for newly opened tabs, with all options disabled by default.
 void LoadReportOptionsSetting(bool& fullParsing, bool& advancedMode, UINT& traceLevel);
@@ -62,6 +67,12 @@ UINT LoadTabNameLengthSetting();
 
 /// Persists the validated tab-caption length.
 bool SaveTabNameLengthSetting(UINT length);
+
+/// Loads and bounds the saved window-title name length, defaulting to forty characters.
+UINT LoadTitleNameLengthSetting();
+
+/// Persists the validated window-title name length.
+bool SaveTitleNameLengthSetting(UINT length);
 
 /// Reports whether saved recent-file paths are present in the registry.
 bool HasRecentFilesSetting();

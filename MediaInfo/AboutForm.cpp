@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.1.0.1
+ * Last modified for version 1.2.1.2
  */
 
 #include "AboutForm.h"
@@ -286,6 +286,9 @@ AboutForm::AboutForm()
         hand(nullptr), legacyCursorModule(nullptr), buttonSize(SIZE{}), licenseSize(SIZE{}), licenseDpi(96),
         ownsUiFont(false), nativeLink(false), initialized(false) {
     websiteUrl[0] = 0;
+    placement.SetSavingOptions(PersistWindowStateSavingOptions::None);
+    placement.SetDetectionOptions(WindowDetectionOptions::NoDetection);
+    placement.SetUseWindowsDefaultLocation(false);
 }
 
 /// Closes the dialog and releases its fonts, tooltip and control subclasses.
@@ -322,9 +325,12 @@ void AboutForm::SetFonts(bool updateUi) {
     }
     const int ids[] = { IDC_INFO_PRODUCT, IDC_INFO_WEBSITE, IDC_INFO_LINK, IDC_INFO_TEXT, IDOK };
     for (int index = 0; index < 5; ++index) {
-        HFONT font = ids[index] == IDC_INFO_TEXT && newText
-            ? newText
-            : ids[index] == IDC_INFO_LINK && !nativeLink ? newLink : newUi;
+        HFONT font = newUi;
+        if (ids[index] == IDC_INFO_TEXT && newText) {
+            font = newText;
+        } else if (ids[index] == IDC_INFO_LINK && !nativeLink) {
+            font = newLink;
+        }
         if (updateUi || font != newUi) {
             SendDlgItemMessageW(window, ids[index], WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
         }
@@ -496,7 +502,7 @@ void AboutForm::RefreshLanguage() {
     Layout();
 }
 
-/// Loads the license text and installs native edit, link, tooltip and context-menu behavior.
+/// Loads the license, installs native controls and restores the position retained in memory.
 bool AboutForm::Initialize() {
     BuildAboutWebsiteUrl(websiteUrl);
     RECT buttonBounds = ControlRect(GetDlgItem(window, IDOK), window);
@@ -522,8 +528,9 @@ bool AboutForm::Initialize() {
         return false;
     }
     SetLastError(0);
-    if (!SetWindowLongPtrW(edit, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(AboutLicenseSubclassProc))
-            && GetLastError()) {
+    const LONG_PTR previousProc = SetWindowLongPtrW(edit, GWLP_WNDPROC,
+        reinterpret_cast<LONG_PTR>(AboutLicenseSubclassProc));
+    if (!previousProc && GetLastError()) {
         RemovePropW(edit, licenseOriginalProperty);
         return false;
     }
@@ -537,7 +544,7 @@ bool AboutForm::Initialize() {
         return false;
     }
     Layout();
-    return true;
+    return placement.Attach(window, "AboutWindow");
 }
 
 /// Applies the suggested DPI-change bounds, rebuilds fonts and updates the dialog layout.
@@ -629,7 +636,7 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
     return FALSE;
 }
 
-/// Opens About modally without saving its position.
+/// Opens About modally and restores its position retained only within this application instance.
 void AboutForm::Show(HWND owner) {
     if (window) {
         SetForegroundWindow(window);
@@ -720,8 +727,9 @@ bool AboutForm::AttachControls() {
             return false;
         }
         SetLastError(0);
-        if (!SetWindowLongPtrW(control, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(ControlProc))
-                && GetLastError()) {
+        const LONG_PTR previousProc = SetWindowLongPtrW(control, GWLP_WNDPROC,
+            reinterpret_cast<LONG_PTR>(ControlProc));
+        if (!previousProc && GetLastError()) {
             RemovePropW(control, originalProperty);
             RemovePropW(control, ownerProperty);
             DetachControls();
@@ -743,8 +751,9 @@ bool AboutForm::AttachControls() {
     information.uId = reinterpret_cast<UINT_PTR>(GetDlgItem(window, IDC_INFO_LINK));
     information.lpszText = tooltipText;
     if (!SendMessageW(tooltip, TTM_ADDTOOLW, 0, reinterpret_cast<LPARAM>(&information))) {
-        if (!WideCharToMultiByte(CP_ACP, 0, tooltipText, -1, ansiTooltipText, sizeof(ansiTooltipText),
-                nullptr, nullptr)) {
+        const int length = WideCharToMultiByte(CP_ACP, 0, tooltipText, -1, ansiTooltipText,
+            sizeof(ansiTooltipText), nullptr, nullptr);
+        if (!length) {
             DetachControls();
             return false;
         }
@@ -837,8 +846,8 @@ void AboutForm::ShowContextMenu(HWND source, LPARAM location) {
         GetWindowRect(source, &bounds);
         point = POINT{ bounds.left, bounds.bottom };
     }
-    UINT command =
-        TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0, window, nullptr);
+    UINT command = TrackPopupMenu(menu, TPM_RETURNCMD | TPM_RIGHTBUTTON, point.x, point.y, 0,
+        window, nullptr);
     DestroyMenu(menu);
     if (command == openWebsiteCommand) {
         OpenWebsite();
@@ -963,7 +972,8 @@ LRESULT CALLBACK AboutForm::ControlProc(HWND control, UINT message, WPARAM wPara
         RemovePropW(control, originalProperty);
         RemovePropW(control, ownerProperty);
     }
-    return original
-        ? CallWindowProcW(original, control, message, wParam, lParam)
-        : DefWindowProcW(control, message, wParam, lParam);
+    if (original) {
+        return CallWindowProcW(original, control, message, wParam, lParam);
+    }
+    return DefWindowProcW(control, message, wParam, lParam);
 }

@@ -186,6 +186,10 @@ V redu ali Uporabi potrdi spremembe; Prekliči zavrže čakajoče spremembe. Nas
 zavihka (privzeto 80) in počistijo seznam nedavnih datotek. Dolga imena ohranijo začetek, konec in pripono s
 tropičjem na sredini.
 
+Naslov glavnega okna prikazuje dejavno datoteko v obliki ime datoteke — MediaInfo. V nastavitvah lahko
+dolžino imena v naslovu ločeno nastavite na 8–255 znakov (privzeto 40). Daljša imena se skrajšajo z istim
+tropičjem na sredini, končnica pa se ohrani. Brez odprtih zavihkov je naslov MediaInfo.
+
 Privzeto je dovoljen samo en primerek, poznejši zagoni pa pošljejo datoteke odprtemu oknu. V nastavitvah lahko
 dovolite več primerkov. Pri več oknih le prvo okno vsakega obrazca obnovi shranjeni položaj; poznejša okna
 obnovijo samo velikost.

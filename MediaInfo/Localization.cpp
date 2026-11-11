@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.1
+ * Last modified for version 1.2.1.2
  */
 
 #include "Localization.h"
@@ -199,9 +199,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"uvolňování MediaInfo.dll" },
             { TXT_APPLY, L"P&oužít" },
             { TXT_TAB_NAME_LENGTH, L"Délka názvu &karty:" },
+            { TXT_TITLE_NAME_LENGTH, L"Délka názvu záhla&ví:" },
             { TXT_RECENT_FILES, L"Poslední soubory:" },
             { TXT_CLEAR_RECENT_FILES, L"Vyma&zat" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Délka názvu karty musí být mezi 8 a 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Délka názvu v záhlaví musí být mezi 8 a 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Seznam posledních souborů byl vymazán, ale nepodařilo se jej uložit do registru."
             },
@@ -271,7 +273,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"změnit limit délky názvu karty (výchozí 80 znaků) a vymazat seznam posledních souborů. "
                 L"Dlouhé názvy zachovají začátek, konec i příponu s výpustkou uprostřed. Tlačítko Vymazat "
                 L"odstraní seznam posledních souborů okamžitě, i když poté zavřete Předvolby tlačítkem "
-                L"Zrušit.\r\n\r\nKNIHOVNY A OKNA\r\nEXE obsahuje MediaInfo 26.10, 21.03 a 0.7.60. Po "
+                L"Zrušit.\r\n\r\nZáhlaví hlavního okna zobrazuje aktivní soubor ve tvaru název souboru — "
+                L"MediaInfo. V předvolbách lze samostatně nastavit délku názvu v záhlaví na 8–255 znaků; "
+                L"výchozí hodnota je 40. Delší názvy se zkracují stejnou výpustkou uprostřed se zachováním "
+                L"přípony. Bez otevřených karet je záhlaví MediaInfo.\r\n\r\nKNIHOVNY A OKNA\r\nEXE obsahuje "
+                L"MediaInfo 26.10, 21.03 a 0.7.60. Po "
                 L"externích knihovnách je zkouší od nejnovější. Dvě novější verze mají odpovídající "
                 L"libcurl; 0.7.60 libcurl nikdy nerozbaluje. Umístění okna se ukládá. Ve výchozím stavu "
                 L"je povolena pouze jedna instance a další spuštění předá soubory otevřenému oknu. V "
@@ -538,9 +544,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"unloading MediaInfo.dll" },
             { TXT_APPLY, L"&Apply" },
             { TXT_TAB_NAME_LENGTH, L"Tab name len&gth:" },
+            { TXT_TITLE_NAME_LENGTH, L"Titl&e length:" },
             { TXT_RECENT_FILES, L"Recent files:" },
             { TXT_CLEAR_RECENT_FILES, L"&Clear" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"The tab name length must be between 8 and 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"The title name length must be between 8 and 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"The recent files list was cleared, but could not be saved in the registry."
             },
@@ -611,7 +619,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"discards pending edits. Preferences sets the tab name limit (80 by default) and clears "
                 L"the recent-files list. Long names retain their beginning, ending and extension with a "
                 L"middle ellipsis. Clear removes the recent-files list immediately, even if Preferences "
-                L"is then canceled.\r\n\r\nLIBRARIES AND WINDOWS\r\nThe executable embeds MediaInfo "
+                L"is then canceled.\r\n\r\nThe main window title shows the active file as filename — "
+                L"MediaInfo. Preferences sets a separate title name limit of 8–255 characters (40 by "
+                L"default). Longer names use the same middle ellipsis and retain the extension. With no open "
+                L"tabs, the title is MediaInfo.\r\n\r\nLIBRARIES AND WINDOWS\r\nThe executable embeds "
+                L"MediaInfo "
                 L"26.10, 21.03 and 0.7.60, tried newest first after external libraries. The two newer "
                 L"versions have matching libcurl libraries; 0.7.60 never extracts libcurl. Window "
                 L"placement is saved. By default, only one instance is allowed and later launches send "
@@ -878,9 +890,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"unloading MediaInfo.dll" },
             { TXT_APPLY, L"&Apply" },
             { TXT_TAB_NAME_LENGTH, L"Tab name len&gth:" },
+            { TXT_TITLE_NAME_LENGTH, L"Titl&e length:" },
             { TXT_RECENT_FILES, L"Recent files:" },
             { TXT_CLEAR_RECENT_FILES, L"&Clear" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"The tab name length must be between 8 and 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"The title name length must be between 8 and 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"The recent files list was cleared, but could not be saved in the registry."
             },
@@ -951,7 +965,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"discards pending edits. Preferences sets the tab name limit (80 by default) and clears "
                 L"the recent-files list. Long names retain their beginning, ending and extension with a "
                 L"middle ellipsis. Clear removes the recent-files list immediately, even if Preferences "
-                L"is then cancelled.\r\n\r\nLIBRARIES AND WINDOWS\r\nThe executable embeds MediaInfo "
+                L"is then cancelled.\r\n\r\nThe main window title shows the active file as filename — "
+                L"MediaInfo. Preferences sets a separate title name limit of 8–255 characters (40 by "
+                L"default). Longer names use the same middle ellipsis and retain the extension. With no open "
+                L"tabs, the title is MediaInfo.\r\n\r\nLIBRARIES AND WINDOWS\r\nThe executable embeds "
+                L"MediaInfo "
                 L"26.10, 21.03 and 0.7.60, tried newest first after external libraries. The two newer "
                 L"versions have matching libcurl libraries; 0.7.60 never extracts libcurl. Window "
                 L"placement is saved. By default, only one instance is allowed and later launches send "
@@ -1218,9 +1236,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"unloading MediaInfo.dll" },
             { TXT_APPLY, L"&Apply" },
             { TXT_TAB_NAME_LENGTH, L"Tab name len&gth:" },
+            { TXT_TITLE_NAME_LENGTH, L"Titl&e length:" },
             { TXT_RECENT_FILES, L"Recent files:" },
             { TXT_CLEAR_RECENT_FILES, L"&Clear" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"The tab name length must be between 8 and 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"The title name length must be between 8 and 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"The recent files list was cleared, but could not be saved in the registry."
             },
@@ -1291,7 +1311,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"discards pending edits. Preferences sets the tab name limit (80 by default) and clears "
                 L"the recent-files list. Long names retain their beginning, ending and extension with a "
                 L"middle ellipsis. Clear removes the recent-files list immediately, even if Preferences "
-                L"is then cancelled.\r\n\r\nLIBRARIES AND WINDOWS\r\nThe executable embeds MediaInfo "
+                L"is then cancelled.\r\n\r\nThe main window title shows the active file as filename — "
+                L"MediaInfo. Preferences sets a separate title name limit of 8–255 characters (40 by "
+                L"default). Longer names use the same middle ellipsis and retain the extension. With no open "
+                L"tabs, the title is MediaInfo.\r\n\r\nLIBRARIES AND WINDOWS\r\nThe executable embeds "
+                L"MediaInfo "
                 L"26.10, 21.03 and 0.7.60, tried newest first after external libraries. The two newer "
                 L"versions have matching libcurl libraries; 0.7.60 never extracts libcurl. Window "
                 L"placement is saved. By default, only one instance is allowed and later launches send "
@@ -1575,9 +1599,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"Entladen von MediaInfo.dll" },
             { TXT_APPLY, L"Über&nehmen" },
             { TXT_TAB_NAME_LENGTH, L"&Tabnamenlänge:" },
+            { TXT_TITLE_NAME_LENGTH, L"T&itellänge:" },
             { TXT_RECENT_FILES, L"Zuletzt verwendete Dateien:" },
             { TXT_CLEAR_RECENT_FILES, L"&Löschen" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Die Tabnamenlänge muss zwischen 8 und 255 liegen." },
+            { TXT_TITLE_NAME_LENGTH_INVALID,
+                L"Die Namenslänge im Fenstertitel muss zwischen 8 und 255 liegen."
+            },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Die Liste zuletzt verwendeter Dateien wurde gelöscht, konnte jedoch nicht in der "
                 L"Registrierung gespeichert werden."
@@ -1663,7 +1691,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"und das Löschen der Liste zuletzt verwendeter Dateien. Lange Namen behalten Anfang, "
                 L"Ende und Erweiterung mit Auslassungszeichen in der Mitte. Löschen entfernt die Liste "
                 L"zuletzt verwendeter Dateien sofort, auch wenn die Voreinstellungen anschließend mit "
-                L"Abbrechen geschlossen werden.\r\n\r\nBIBLIOTHEKEN UND FENSTER\r\nDie EXE enthält "
+                L"Abbrechen geschlossen werden.\r\n\r\nDer Titel des Hauptfensters zeigt die aktive Datei als"
+                L" Dateiname — MediaInfo. In den Voreinstellungen lässt sich die Namenslänge im Fenstertitel "
+                L"unabhängig auf 8–255 Zeichen festlegen (Standard: 40). Längere Namen werden wie Tabnamen in"
+                L" der Mitte mit einem Auslassungszeichen gekürzt; die Erweiterung bleibt erhalten. Ohne "
+                L"offene Tabs lautet der Titel MediaInfo.\r\n\r\nBIBLIOTHEKEN UND "
+                L"FENSTER\r\nDie EXE enthält "
                 L"MediaInfo 26.10, 21.03 und 0.7.60; nach externen Bibliotheken werden sie beginnend mit "
                 L"der neuesten geprüft. Die beiden neueren Versionen besitzen passende "
                 L"libcurl-Bibliotheken; 0.7.60 entpackt libcurl niemals. Die Fensterposition wird "
@@ -1957,10 +1990,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"le déchargement de MediaInfo.dll" },
             { TXT_APPLY, L"&Appliquer" },
             { TXT_TAB_NAME_LENGTH, L"Longueur des &noms d’onglets :" },
+            { TXT_TITLE_NAME_LENGTH, L"Long&ueur du titre :" },
             { TXT_RECENT_FILES, L"Fichiers récents :" },
             { TXT_CLEAR_RECENT_FILES, L"&Effacer" },
             { TXT_TAB_NAME_LENGTH_INVALID,
                 L"La longueur des noms d’onglets doit être comprise entre 8 et 255."
+            },
+            { TXT_TITLE_NAME_LENGTH_INVALID,
+                L"La longueur du nom dans le titre doit être comprise entre 8 et 255."
             },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"La liste des fichiers récents a été effacée, mais n’a pas pu être enregistrée dans le "
@@ -2048,7 +2085,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"permettent de limiter les noms d’onglets (80 par défaut) et d’effacer la liste des "
                 L"fichiers récents. Les noms longs conservent le début, la fin et l’extension avec des "
                 L"points de suspension au milieu. Effacer supprime immédiatement la liste des fichiers "
-                L"récents, même si vous fermez ensuite les préférences avec Annuler.\r\n\r\nBIBLIOTHÈQUES "
+                L"récents, même si vous fermez ensuite les préférences avec Annuler.\r\n\r\nLe titre de la "
+                L"fenêtre principale affiche le fichier actif sous la forme nom du fichier — MediaInfo. Les "
+                L"préférences permettent de régler séparément la longueur du nom dans le titre de 8 à 255 "
+                L"caractères (40 par défaut). Les noms longs utilisent les mêmes points de suspension au "
+                L"milieu et conservent l’extension. Sans onglet ouvert, le titre est "
+                L"MediaInfo.\r\n\r\nBIBLIOTHÈQUES "
                 L"ET FENÊTRES\r\nL’exécutable contient les bibliothèques MediaInfo 26.10, 21.03 et "
                 L"0.7.60. Après les bibliothèques externes, elles sont essayées de la plus récente à la "
                 L"plus ancienne. Les deux versions récentes ont leur libcurl ; 0.7.60 ne l’extrait "
@@ -2340,9 +2382,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"la descarga de MediaInfo.dll" },
             { TXT_APPLY, L"&Aplicar" },
             { TXT_TAB_NAME_LENGTH, L"&Longitud del nombre de pestaña:" },
+            { TXT_TITLE_NAME_LENGTH, L"L&ongitud del título:" },
             { TXT_RECENT_FILES, L"Archivos recientes:" },
             { TXT_CLEAR_RECENT_FILES, L"&Borrar" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"La longitud del nombre de pestaña debe estar entre 8 y 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID,
+                L"La longitud del nombre en el título debe estar entre 8 y 255."
+            },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"La lista de archivos recientes se borró, pero no se pudo guardar en el Registro."
             },
@@ -2425,7 +2471,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"borrar la lista de archivos recientes. Los nombres largos conservan el principio, el "
                 L"final y la extensión con puntos suspensivos en medio. Borrar elimina la lista de "
                 L"archivos recientes inmediatamente, aunque después cierre las preferencias con "
-                L"Cancelar.\r\n\r\nBIBLIOTECAS Y VENTANAS\r\nEl ejecutable incluye MediaInfo 26.10, 21.03 "
+                L"Cancelar.\r\n\r\nEl título de la ventana principal muestra el archivo activo como nombre de"
+                L" archivo — MediaInfo. Las preferencias permiten fijar por separado la longitud del nombre "
+                L"en el título entre 8 y 255 caracteres (40 por defecto). Los nombres largos usan los mismos "
+                L"puntos suspensivos en el centro y conservan la extensión. Sin pestañas abiertas, el título "
+                L"es MediaInfo.\r\n\r\nBIBLIOTECAS Y VENTANAS\r\nEl ejecutable incluye MediaInfo 26.10, 21.03"
+                L" "
                 L"y 0.7.60, probadas de más reciente a más antigua tras las bibliotecas externas. Las dos "
                 L"nuevas tienen su libcurl; 0.7.60 nunca la extrae. Se guarda la posición de la ventana. "
                 L"De forma predeterminada, solo se permite una instancia y los siguientes inicios envían "
@@ -2711,10 +2762,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"lo scaricamento di MediaInfo.dll" },
             { TXT_APPLY, L"&Applica" },
             { TXT_TAB_NAME_LENGTH, L"Lunghezza del nome della sc&heda:" },
+            { TXT_TITLE_NAME_LENGTH, L"L&unghezza del titolo:" },
             { TXT_RECENT_FILES, L"File recenti:" },
             { TXT_CLEAR_RECENT_FILES, L"Canc&ella" },
             { TXT_TAB_NAME_LENGTH_INVALID,
                 L"La lunghezza del nome della scheda deve essere compresa tra 8 e 255."
+            },
+            { TXT_TITLE_NAME_LENGTH_INVALID,
+                L"La lunghezza del nome nel titolo deve essere compresa tra 8 e 255."
             },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"L’elenco dei file recenti è stato cancellato, ma non è stato possibile salvarlo nel "
@@ -2800,7 +2855,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Le preferenze consentono di limitare i nomi delle schede (80 predefinito) e cancellare "
                 L"l’elenco dei file recenti. I nomi lunghi conservano inizio, fine ed estensione con "
                 L"puntini di sospensione al centro. Cancella rimuove subito l’elenco dei file recenti, "
-                L"anche se poi si chiudono le preferenze con Annulla.\r\n\r\nLIBRERIE E FINESTRE\r\n"
+                L"anche se poi si chiudono le preferenze con Annulla.\r\n\r\nIl titolo della finestra "
+                L"principale mostra il file attivo come nome del file — MediaInfo. Le preferenze consentono "
+                L"di impostare separatamente la lunghezza del nome nel titolo da 8 a 255 caratteri (40 "
+                L"predefinito). I nomi più lunghi usano gli stessi puntini di sospensione al centro e "
+                L"mantengono l’estensione. Senza schede aperte, il titolo è MediaInfo.\r\n\r\nLIBRERIE E "
+                L"FINESTRE\r\n"
                 L"L’eseguibile include le librerie MediaInfo 26.10, 21.03 e 0.7.60. Dopo le librerie "
                 L"esterne, vengono provate dalla più recente alla più vecchia. Le due versioni più "
                 L"recenti hanno la propria libcurl; 0.7.60 non la estrae mai. La posizione della finestra "
@@ -3091,9 +3151,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"o descarregamento de MediaInfo.dll" },
             { TXT_APPLY, L"&Aplicar" },
             { TXT_TAB_NAME_LENGTH, L"Co&mprimento do nome do separador:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Comprimento do título:" },
             { TXT_RECENT_FILES, L"Ficheiros recentes:" },
             { TXT_CLEAR_RECENT_FILES, L"&Limpar" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"O comprimento do nome do separador deve estar entre 8 e 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"O comprimento do nome no título deve estar entre 8 e 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"A lista de ficheiros recentes foi limpa, mas não foi possível guardá-la no Registo."
             },
@@ -3176,7 +3238,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"permitem limitar os nomes dos separadores (80 por predefinição) e limpar a lista dos "
                 L"ficheiros recentes. Os nomes longos mantêm início, fim e extensão com reticências no "
                 L"meio. Limpar remove imediatamente a lista de ficheiros recentes, mesmo que depois feche "
-                L"as preferências com Cancelar.\r\n\r\nBIBLIOTECAS E JANELAS\r\nO executável inclui "
+                L"as preferências com Cancelar.\r\n\r\nO título da janela principal mostra o ficheiro ativo "
+                L"como nome do ficheiro — MediaInfo. As preferências permitem definir separadamente o "
+                L"comprimento do nome no título entre 8 e 255 carateres (40 por predefinição). Os nomes mais "
+                L"longos usam as mesmas reticências ao centro e mantêm a extensão. Sem separadores abertos, o"
+                L" título é MediaInfo.\r\n\r\nBIBLIOTECAS E JANELAS\r\nO executável inclui "
                 L"MediaInfo 26.10, 21.03 e 0.7.60, testadas da mais recente após as bibliotecas externas. "
                 L"As duas versões recentes têm a respetiva libcurl; 0.7.60 nunca a extrai. A posição da "
                 L"janela é guardada. Por predefinição, só é permitida uma instância e os arranques "
@@ -3454,9 +3520,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"zwalniania MediaInfo.dll" },
             { TXT_APPLY, L"Z&astosuj" },
             { TXT_TAB_NAME_LENGTH, L"Długość &nazwy karty:" },
+            { TXT_TITLE_NAME_LENGTH, L"Dł&ugość tytułu:" },
             { TXT_RECENT_FILES, L"Ostatnie pliki:" },
             { TXT_CLEAR_RECENT_FILES, L"Wyc&zyść" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Długość nazwy karty musi wynosić od 8 do 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Długość nazwy w tytule musi wynosić od 8 do 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Lista ostatnich plików została wyczyszczona, ale nie można było zapisać jej w rejestrze."
             },
@@ -3535,7 +3603,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ustawić limit długości nazwy karty (domyślnie 80 znaków) i wyczyścić listę ostatnich "
                 L"plików. Długie nazwy zachowują początek, koniec i rozszerzenie, z wielokropkiem "
                 L"pośrodku. Wyczyść natychmiast usuwa listę ostatnich plików, nawet jeśli preferencje "
-                L"zostaną następnie zamknięte przyciskiem Anuluj.\r\n\r\nBIBLIOTEKI I OKNA\r\nProgram "
+                L"zostaną następnie zamknięte przyciskiem Anuluj.\r\n\r\nTytuł głównego okna pokazuje aktywny"
+                L" plik w postaci nazwa pliku — MediaInfo. W preferencjach można osobno ustawić długość nazwy"
+                L" w tytule od 8 do 255 znaków (domyślnie 40). Dłuższe nazwy są skracane tym samym "
+                L"wielokropkiem pośrodku z zachowaniem rozszerzenia. Gdy nie ma otwartych kart, tytuł to "
+                L"MediaInfo.\r\n\r\nBIBLIOTEKI I OKNA\r\nProgram "
                 L"zawiera MediaInfo 26.10, 21.03 i 0.7.60, sprawdzane od najnowszej po bibliotekach "
                 L"zewnętrznych. Dwie nowsze wersje mają odpowiednią libcurl; 0.7.60 nigdy jej nie "
                 L"rozpakowuje. Położenie okna jest zapisywane. Domyślnie dozwolona jest tylko jedna "
@@ -3804,9 +3876,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"uvoľňovaní MediaInfo.dll" },
             { TXT_APPLY, L"P&oužiť" },
             { TXT_TAB_NAME_LENGTH, L"Dĺžka názvu &karty:" },
+            { TXT_TITLE_NAME_LENGTH, L"Dĺžka &názvu záhlavia:" },
             { TXT_RECENT_FILES, L"Posledné súbory:" },
             { TXT_CLEAR_RECENT_FILES, L"Vyma&zať" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Dĺžka názvu karty musí byť medzi 8 a 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Dĺžka názvu v záhlaví musí byť medzi 8 a 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Zoznam posledných súborov bol vymazaný, ale nepodarilo sa ho uložiť do registra."
             },
@@ -3877,7 +3951,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"zmeny; Zrušiť zahodí rozpracované úpravy. Predvoľby umožňujú zmeniť limit dĺžky názvu "
                 L"karty (predvolene 80 znakov) a vymazať zoznam posledných súborov. Dlhé názvy zachovajú "
                 L"začiatok, koniec aj príponu s výpustkou uprostred. Tlačidlo Vymazať odstráni zoznam "
-                L"posledných súborov okamžite, aj keď potom zatvoríte Predvoľby tlačidlom Zrušiť.\r\n\r\n"
+                L"posledných súborov okamžite, aj keď potom zatvoríte Predvoľby tlačidlom "
+                L"Zrušiť.\r\n\r\nZáhlavie hlavného okna zobrazuje aktívny súbor v tvare názov súboru — "
+                L"MediaInfo. V predvoľbách možno samostatne nastaviť dĺžku názvu v záhlaví na 8–255 znakov; "
+                L"predvolená hodnota je 40. Dlhšie názvy sa skracujú rovnakou výpustkou uprostred so "
+                L"zachovaním prípony. Bez otvorených kariet je záhlavie MediaInfo.\r\n\r\n"
                 L"KNIŽNICE A OKNÁ\r\nEXE obsahuje knižnice MediaInfo 26.10, 21.03 a 0.7.60. Po externých "
                 L"knižniciach sa skúšajú od najnovšej verzie. Dve novšie verzie majú príslušnú libcurl; "
                 L"0.7.60 ju nikdy nerozbaľuje. Poloha okna sa ukladá. Predvolene je povolená iba jedna "
@@ -4141,9 +4219,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"frigivelse af MediaInfo.dll" },
             { TXT_APPLY, L"&Anvend" },
             { TXT_TAB_NAME_LENGTH, L"&Længde på fanenavn:" },
+            { TXT_TITLE_NAME_LENGTH, L"Titell&ængde:" },
             { TXT_RECENT_FILES, L"Seneste filer:" },
             { TXT_CLEAR_RECENT_FILES, L"R&yd" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Fanenavnets længde skal være mellem 8 og 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Navnets længde i titlen skal være mellem 8 og 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Listen over seneste filer blev ryddet, men kunne ikke gemmes i registreringsdatabasen."
             },
@@ -4214,7 +4294,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ændringer. Præferencer angiver grænsen for fanenavne (80 som standard) og rydder listen "
                 L"over seneste filer. Lange navne bevarer begyndelsen, slutningen og filtypen med "
                 L"udeladelsesprikker i midten. Ryd fjerner listen over seneste filer med det samme, "
-                L"selvom præferencerne derefter lukkes med Annuller.\r\n\r\nBIBLIOTEKER OG VINDUER\r\n"
+                L"selvom præferencerne derefter lukkes med Annuller.\r\n\r\nHovedvinduets titel viser den "
+                L"aktive fil som filnavn — MediaInfo. I indstillingerne kan navnets længde i titlen "
+                L"indstilles særskilt til 8–255 tegn (40 som standard). Længere navne forkortes med de samme "
+                L"udeladelsesprikker i midten, og filtypen bevares. Uden åbne faner er titlen "
+                L"MediaInfo.\r\n\r\nBIBLIOTEKER OG VINDUER\r\n"
                 L"Programmet indeholder MediaInfo 26.10, 21.03 og 0.7.60, der prøves fra den nyeste "
                 L"version efter eksterne biblioteker. De to nyere versioner har passende libcurl; 0.7.60 "
                 L"pakker aldrig libcurl ud. Vinduesplaceringen gemmes. Som standard tillades kun én "
@@ -4483,9 +4567,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll-kirjaston vapauttaminen" },
             { TXT_APPLY, L"Kä&ytä" },
             { TXT_TAB_NAME_LENGTH, L"Välilehden nimen p&ituus:" },
+            { TXT_TITLE_NAME_LENGTH, L"Otsiko&n pituus:" },
             { TXT_RECENT_FILES, L"Viimeisimmät tiedostot:" },
             { TXT_CLEAR_RECENT_FILES, L"&Tyhjennä" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Välilehden nimen pituuden on oltava 8–255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Otsikossa olevan nimen pituuden on oltava 8–255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Viimeisimpien tiedostojen luettelo tyhjennettiin, mutta sitä ei voitu tallentaa "
                 L"rekisteriin."
@@ -4565,7 +4651,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"välilehtien nimien pituutta (oletus 80 merkkiä) ja tyhjentää viimeisimpien tiedostojen "
                 L"luettelon. Pitkissä nimissä säilyvät alku, loppu ja tiedostopääte, ja keskellä on kolme "
                 L"pistettä. Tyhjennä poistaa viimeisimpien tiedostojen luettelon heti, vaikka asetukset "
-                L"suljettaisiin sen jälkeen Peruuta-painikkeella.\r\n\r\nKIRJASTOT JA IKKUNAT\r\nOhjelma "
+                L"suljettaisiin sen jälkeen Peruuta-painikkeella.\r\n\r\nPääikkunan otsikko näyttää "
+                L"aktiivisen tiedoston muodossa tiedostonimi — MediaInfo. Asetuksissa otsikossa olevan nimen "
+                L"pituudeksi voi valita erikseen 8–255 merkkiä (oletus 40). Pidemmät nimet lyhennetään "
+                L"samalla keskelle lisättävällä kolmella pisteellä, ja tiedostotunniste säilytetään. Kun "
+                L"välilehtiä ei ole auki, otsikko on MediaInfo.\r\n\r\nKIRJASTOT JA "
+                L"IKKUNAT\r\nOhjelma "
                 L"sisältää MediaInfo-versiot 26.10, 21.03 ja 0.7.60, joita kokeillaan uusimmasta "
                 L"ulkoisten kirjastojen jälkeen. Kahdella uudemmalla on sopiva libcurl; 0.7.60 ei koskaan "
                 L"pura sitä. Ikkunan sijainti tallennetaan. Oletuksena sallitaan vain yksi esiintymä, ja "
@@ -4828,9 +4919,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"afhleðslu MediaInfo.dll" },
             { TXT_APPLY, L"&Nota" },
             { TXT_TAB_NAME_LENGTH, L"Lengd fli&paheitis:" },
+            { TXT_TITLE_NAME_LENGTH, L"Len&gd titils:" },
             { TXT_RECENT_FILES, L"Nýlegar skrár:" },
             { TXT_CLEAR_RECENT_FILES, L"&Hreinsa" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Lengd flipaheitis verður að vera á bilinu 8 til 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Lengd nafns í titli verður að vera á bilinu 8 til 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Listinn yfir nýlegar skrár var hreinsaður en ekki var hægt að vista hann í skrásetningunni."
             },
@@ -4902,7 +4995,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"breytingum. Kjörstillingar leyfa hámarkslengd flipaheita (sjálfgefið 80) og hreinsun "
                 L"listans yfir nýlegar skrár. Löng heiti halda upphafi, enda og skráarendingu með "
                 L"úrfellingarmerki í miðju. Hreinsa fjarlægir listann yfir nýlegar skrár strax, jafnvel "
-                L"þótt kjörstillingunum sé síðan lokað með Hætta við.\r\n\r\nSÖFN OG GLUGGAR\r\nForritið "
+                L"þótt kjörstillingunum sé síðan lokað með Hætta við.\r\n\r\nTitill aðalgluggans sýnir virku "
+                L"skrána á forminu skráarheiti — MediaInfo. Í kjörstillingum má stilla lengd nafns í titli "
+                L"sérstaklega á 8–255 stafi (sjálfgefið 40). Lengri nöfn eru stytt með sömu "
+                L"úrfellingarpunktum í miðjunni og skráarendingin helst. Þegar engir flipar eru opnir er "
+                L"titillinn MediaInfo.\r\n\r\nSÖFN OG GLUGGAR\r\nForritið "
                 L"inniheldur MediaInfo 26.10, 21.03 og 0.7.60, prófuð frá nýjustu útgáfu á eftir ytri "
                 L"söfnum. Nýrri útgáfurnar tvær hafa viðeigandi libcurl; 0.7.60 afþjappar því aldrei. "
                 L"Staðsetning gluggans er vistuð. Sjálfgefið er aðeins eitt tilvik leyft og síðari "
@@ -5164,9 +5261,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"frigjøring av MediaInfo.dll" },
             { TXT_APPLY, L"&Bruk" },
             { TXT_TAB_NAME_LENGTH, L"Lengde på &fanenavn:" },
+            { TXT_TITLE_NAME_LENGTH, L"Titt&ellengde:" },
             { TXT_RECENT_FILES, L"Nylige filer:" },
             { TXT_CLEAR_RECENT_FILES, L"Tø&m" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Fanenavnets lengde må være mellom 8 og 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Navnets lengde i tittelen må være mellom 8 og 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Listen over nylige filer ble tømt, men kunne ikke lagres i registeret."
             },
@@ -5239,7 +5338,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"endringer; Avbryt forkaster ventende endringer. Preferanser angir grensen for fanenavn "
                 L"(80 som standard) og tømmer listen over nylige filer. Lange navn beholder begynnelsen, "
                 L"slutten og filtypen med utelatelsesprikker i midten. Tøm fjerner listen over nylige "
-                L"filer med en gang, selv om preferansene deretter lukkes med Avbryt.\r\n\r\nBIBLIOTEKER "
+                L"filer med en gang, selv om preferansene deretter lukkes med Avbryt.\r\n\r\nHovedvinduets "
+                L"tittel viser den aktive filen som filnavn — MediaInfo. I innstillingene kan navnets lengde "
+                L"i tittelen angis separat til 8–255 tegn (40 som standard). Lengre navn forkortes med de "
+                L"samme utelatelsesprikkene i midten, og filtypen beholdes. Uten åpne faner er tittelen "
+                L"MediaInfo.\r\n\r\nBIBLIOTEKER "
                 L"OG VINDUER\r\nProgrammet inneholder MediaInfo 26.10, 21.03 og 0.7.60, som prøves fra "
                 L"den nyeste versjonen etter eksterne biblioteker. De to nyere versjonene har passende "
                 L"libcurl; 0.7.60 pakker aldri ut libcurl. Vindusplasseringen lagres. Som standard "
@@ -5510,9 +5613,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"frigöring av MediaInfo.dll" },
             { TXT_APPLY, L"&Verkställ" },
             { TXT_TAB_NAME_LENGTH, L"Fliknamnets lä&ngd:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Fönstertitelns längd:" },
             { TXT_RECENT_FILES, L"Senaste filer:" },
             { TXT_CLEAR_RECENT_FILES, L"R&ensa" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Fliknamnets längd måste vara mellan 8 och 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Namnets längd i titeln måste vara mellan 8 och 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Listan över senaste filer rensades, men kunde inte sparas i registret."
             },
@@ -5586,7 +5691,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ändringar; Avbryt förkastar väntande ändringar. Preferenser anger gränsen för fliknamn "
                 L"(80 som standard) och rensar listan över senaste filer. Långa namn behåller början, "
                 L"slutet och filändelsen med uteslutningstecken i mitten. Rensa tar bort listan över "
-                L"senaste filer omedelbart, även om preferenserna därefter stängs med Avbryt.\r\n\r\n"
+                L"senaste filer omedelbart, även om preferenserna därefter stängs med "
+                L"Avbryt.\r\n\r\nHuvudfönstrets titel visar den aktiva filen som filnamn — MediaInfo. I "
+                L"inställningarna kan namnets längd i titeln anges separat till 8–255 tecken (40 som "
+                L"standard). Längre namn förkortas med samma uteslutningstecken i mitten, och filändelsen "
+                L"behålls. Utan öppna flikar är titeln MediaInfo.\r\n\r\n"
                 L"BIBLIOTEK OCH FÖNSTER\r\nProgrammet innehåller MediaInfo 26.10, 21.03 och 0.7.60, som "
                 L"provas från den nyaste versionen efter externa bibliotek. De två nyare versionerna har "
                 L"passande libcurl; 0.7.60 packar aldrig upp libcurl. Fönsterplaceringen sparas. Som "
@@ -5849,9 +5958,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll dosyasının serbest bırakılması" },
             { TXT_APPLY, L"Uygu&la" },
             { TXT_TAB_NAME_LENGTH, L"&Sekme adı uzunluğu:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Başlık uzunluğu:" },
             { TXT_RECENT_FILES, L"Son dosyalar:" },
             { TXT_CLEAR_RECENT_FILES, L"&Temizle" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Sekme adı uzunluğu 8 ile 255 arasında olmalıdır." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Başlıktaki adın uzunluğu 8 ile 255 arasında olmalıdır." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Son dosyalar listesi temizlendi ancak kayıt defterine kaydedilemedi."
             },
@@ -5925,7 +6036,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"bekleyen değişiklikleri atar. Tercihler, sekme adı sınırını (varsayılan 80) ayarlar ve "
                 L"son dosyalar listesini temizler. Uzun adlar başlangıcı, sonu ve uzantıyı korur; ortada "
                 L"üç nokta bulunur. Temizle, Tercihler daha sonra İptal ile kapatılsa bile son dosyalar "
-                L"listesini hemen siler.\r\n\r\nKİTAPLIKLAR VE PENCERELER\r\nProgram, MediaInfo 26.10, "
+                L"listesini hemen siler.\r\n\r\nAna pencere başlığı etkin dosyayı dosya adı — MediaInfo "
+                L"biçiminde gösterir. Tercihlerde başlıktaki adın uzunluğu bağımsız olarak 8–255 karakter "
+                L"arasında ayarlanabilir (varsayılan 40). Uzun adlar aynı orta üç noktayla kısaltılır ve "
+                L"uzantı korunur. Açık sekme yoksa başlık MediaInfo olur.\r\n\r\nKİTAPLIKLAR VE "
+                L"PENCERELER\r\nProgram, MediaInfo 26.10, "
                 L"21.03 ve 0.7.60 kitaplıklarını içerir. Dış kitaplıklardan sonra bunlar en yeni sürümden "
                 L"eskiye doğru denenir. İki yeni sürümün uygun libcurl kitaplıkları vardır; 0.7.60 "
                 L"libcurl’ü asla çıkartmaz. Pencere konumu kaydedilir. Varsayılan olarak yalnızca tek "
@@ -6180,9 +6295,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll-i vabastamisel" },
             { TXT_APPLY, L"Rak&enda" },
             { TXT_TAB_NAME_LENGTH, L"Vahekaardi nime &pikkus:" },
+            { TXT_TITLE_NAME_LENGTH, L"Pealkir&ja pikkus:" },
             { TXT_RECENT_FILES, L"Hiljutised failid:" },
             { TXT_CLEAR_RECENT_FILES, L"Tü&hjenda" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Vahekaardi nime pikkus peab olema 8 kuni 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Pealkirjas oleva nime pikkus peab olema 8 kuni 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Hiljutiste failide loend tühjendati, kuid seda ei saanud registrisse salvestada."
             },
@@ -6252,7 +6369,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"vahekaardi nime piirangu (vaikimisi 80) ja tühjendada hiljutiste failide loendi. Pikad "
                 L"nimed säilitavad alguse, lõpu ja laiendi, keskel on mõttepunktid. Tühjenda eemaldab "
                 L"hiljutiste failide loendi kohe, isegi kui eelistused suletakse seejärel nupuga "
-                L"Loobu.\r\n\r\nTEEGID JA AKNAD\r\nProgramm sisaldab MediaInfo versioone 26.10, 21.03 ja "
+                L"Loobu.\r\n\r\nPeaakna pealkiri näitab aktiivset faili kujul failinimi — MediaInfo. "
+                L"Eelistustes saab pealkirjas oleva nime pikkuseks eraldi määrata 8–255 märki (vaikimisi 40)."
+                L" Pikemad nimed lühendatakse sama mõttepunktimärgiga keskel, säilitades faililaiendi. Kui "
+                L"avatud vahekaarte pole, on pealkiri MediaInfo.\r\n\r\nTEEGID JA AKNAD\r\nProgramm sisaldab "
+                L"MediaInfo versioone 26.10, 21.03 ja "
                 L"0.7.60, mida proovitakse uusimast pärast väliseid teeke. Kahel uuemal on sobiv libcurl; "
                 L"0.7.60 ei paki seda kunagi lahti. Akna asukoht salvestatakse. Vaikimisi on lubatud "
                 L"ainult üks eksemplar ja järgmised käivitused saadavad failid avatud aknasse. "
@@ -6533,9 +6654,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll á dhílódáil" },
             { TXT_APPLY, L"Cuir &i bhfeidhm" },
             { TXT_TAB_NAME_LENGTH, L"F&ad ainm an chluaisín:" },
+            { TXT_TITLE_NAME_LENGTH, L"Fad an t&eidil:" },
             { TXT_RECENT_FILES, L"Comhaid le déanaí:" },
             { TXT_CLEAR_RECENT_FILES, L"&Glan" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Caithfidh fad ainm an chluaisín a bheith idir 8 agus 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Caithfidh fad an ainm sa teideal a bheith idir 8 agus 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Glanadh liosta na gcomhad le déanaí, ach níorbh fhéidir é a shábháil sa chlárlann."
             },
@@ -6618,7 +6741,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"féidir teorainn a chur le fad ainm an chluaisín (80 de réir réamhshocraithe) agus "
                 L"liosta na gcomhad le déanaí a ghlanadh. Coinnítear tús, deireadh agus iarmhír "
                 L"ainmneacha fada le comhartha focalbhá sa lár. Baineann Glan liosta na gcomhad le déanaí "
-                L"láithreach, fiú má dhúntar Roghanna le Cealaigh ina dhiaidh sin.\r\n\r\nLEABHARLANNA "
+                L"láithreach, fiú má dhúntar Roghanna le Cealaigh ina dhiaidh sin.\r\n\r\nTaispeánann teideal"
+                L" na príomhfhuinneoige an comhad gníomhach san fhoirm ainm comhaid — MediaInfo. Sna "
+                L"sainroghanna is féidir fad an ainm sa teideal a shocrú ar leithligh idir 8 agus 255 "
+                L"carachtar (40 de réir réamhshocraithe). Giorraítear ainmneacha níos faide leis an "
+                L"gcomhartha céanna trí phonc sa lár agus coinnítear an iarmhír. Mura bhfuil cluaisín ar "
+                L"oscailt, is é MediaInfo an teideal.\r\n\r\nLEABHARLANNA "
                 L"AGUS FUINNEOGA\r\nTá MediaInfo 26.10, 21.03 agus 0.7.60 sa chlár, á dtriail ón gceann "
                 L"is nuaí tar éis leabharlanna seachtracha. Tá libcurl oiriúnach ag an dá leagan is nuaí; "
                 L"ní bhaineann 0.7.60 libcurl amach riamh. Sábháiltear suíomh na fuinneoige. De réir "
@@ -6890,9 +7018,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll atlaisvinimą" },
             { TXT_APPLY, L"Taik&yti" },
             { TXT_TAB_NAME_LENGTH, L"Skirtuko pavadinimo &ilgis:" },
+            { TXT_TITLE_NAME_LENGTH, L"Antraštė&s ilgis:" },
             { TXT_RECENT_FILES, L"Paskutiniai failai:" },
             { TXT_CLEAR_RECENT_FILES, L"Iš&valyti" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Skirtuko pavadinimo ilgis turi būti nuo 8 iki 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Pavadinimo ilgis antraštėje turi būti nuo 8 iki 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Paskutinių failų sąrašas išvalytas, bet jo nepavyko įrašyti į registrą."
             },
@@ -6967,7 +7097,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"atmeta laukiančius pakeitimus. Nuostatose galima riboti skirtukų pavadinimus (numatyta "
                 L"80) ir išvalyti paskutinių failų sąrašą. Ilgi pavadinimai išlaiko pradžią, pabaigą ir "
                 L"plėtinį, o viduryje įterpiamas daugtaškis. Išvalyti iš karto pašalina paskutinių failų "
-                L"sąrašą, net jei nuostatos vėliau uždaromos mygtuku Atšaukti.\r\n\r\nBIBLIOTEKOS IR "
+                L"sąrašą, net jei nuostatos vėliau uždaromos mygtuku Atšaukti.\r\n\r\nPagrindinio lango "
+                L"antraštėje aktyvus failas rodomas formatu failo pavadinimas — MediaInfo. Nuostatose galima "
+                L"atskirai nustatyti pavadinimo ilgį antraštėje nuo 8 iki 255 simbolių (numatyta 40). Ilgesni"
+                L" pavadinimai trumpinami tuo pačiu daugtaškiu viduryje, išsaugant plėtinį. Kai nėra atvertų "
+                L"skirtukų, antraštė yra MediaInfo.\r\n\r\nBIBLIOTEKOS IR "
                 L"LANGAI\r\nProgramoje yra MediaInfo 26.10, 21.03 ir 0.7.60, tikrinamos nuo naujausios po "
                 L"išorinių bibliotekų. Dvi naujesnės turi atitinkamas libcurl bibliotekas; 0.7.60 libcurl "
                 L"niekada neišpakuoja. Lango padėtis išsaugoma. Pagal numatytąsias nuostatas leidžiamas "
@@ -7232,9 +7366,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"MediaInfo.dll atbrīvošanas laikā" },
             { TXT_APPLY, L"L&ietot" },
             { TXT_TAB_NAME_LENGTH, L"Cilnes nosauku&ma garums:" },
+            { TXT_TITLE_NAME_LENGTH, L"Vir&sraksta garums:" },
             { TXT_RECENT_FILES, L"Nesenie faili:" },
             { TXT_CLEAR_RECENT_FILES, L"No&tīrīt" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Cilnes nosaukuma garumam jābūt no 8 līdz 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Nosaukuma garumam virsrakstā jābūt no 8 līdz 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Neseno failu saraksts tika notīrīts, bet to neizdevās saglabāt reģistrā."
             },
@@ -7306,7 +7442,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"izmaiņas; Atcelt atmet gaidošās izmaiņas. Iestatījumos var noteikt cilnes nosaukuma "
                 L"ierobežojumu (noklusēti 80) un notīrīt neseno failu sarakstu. Gari nosaukumi saglabā "
                 L"sākumu, beigas un paplašinājumu ar daudzpunkti vidū. Notīrīt uzreiz noņem neseno failu "
-                L"sarakstu, pat ja iestatījumi pēc tam tiek aizvērti ar Atcelt.\r\n\r\nBIBLIOTĒKAS UN "
+                L"sarakstu, pat ja iestatījumi pēc tam tiek aizvērti ar Atcelt.\r\n\r\nGalvenā loga "
+                L"virsraksts rāda aktīvo failu formā faila nosaukums — MediaInfo. Iestatījumos nosaukuma "
+                L"garumu virsrakstā var iestatīt atsevišķi no 8 līdz 255 rakstzīmēm (noklusējums 40). Garāki "
+                L"nosaukumi tiek saīsināti ar to pašu daudzpunkti vidū, saglabājot paplašinājumu. Ja nav "
+                L"atvērtu cilņu, virsraksts ir MediaInfo.\r\n\r\nBIBLIOTĒKAS UN "
                 L"LOGI\r\nProgramma ietver MediaInfo 26.10, 21.03 un 0.7.60, ko mēģina no jaunākās pēc "
                 L"ārējām bibliotēkām. Divām jaunākajām ir atbilstoša libcurl; 0.7.60 to nekad neizpako. "
                 L"Loga novietojums tiek saglabāts. Pēc noklusējuma ir atļauta tikai viena instance, un "
@@ -7588,9 +7728,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"a MediaInfo.dll felszabadítása" },
             { TXT_APPLY, L"Al&kalmaz" },
             { TXT_TAB_NAME_LENGTH, L"Lapnév &hossza:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Címhossz:" },
             { TXT_RECENT_FILES, L"Legutóbbi fájlok:" },
             { TXT_CLEAR_RECENT_FILES, L"Tö&rlés" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"A lapnév hosszának 8 és 255 között kell lennie." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"A címsorban lévő név hosszának 8 és 255 között kell lennie." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"A legutóbbi fájlok listája törölve lett, de nem sikerült menteni a rendszerleíró "
                 L"adatbázisba."
@@ -7671,7 +7813,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Beállításokban korlátozható a lapnév hossza (alapérték 80), és törölhető a legutóbbi "
                 L"fájlok listája. A hosszú nevek eleje, vége és kiterjesztése megmarad, középen három "
                 L"ponttal. A Törlés azonnal eltávolítja a legutóbbi fájlok listáját, akkor is, ha a "
-                L"Beállításokat ezután a Mégse gombbal zárja be.\r\n\r\nKÖNYVTÁRAK ÉS ABLAKOK\r\nAz EXE "
+                L"Beállításokat ezután a Mégse gombbal zárja be.\r\n\r\nA főablak címsora az aktív fájlt "
+                L"fájlnév — MediaInfo alakban mutatja. A beállításokban a címsorban lévő név hossza külön "
+                L"állítható 8–255 karakterre (alapértelmezés: 40). A hosszabb nevek ugyanazzal a középre "
+                L"helyezett három ponttal rövidülnek, a kiterjesztés megmarad. Ha nincs nyitott lap, a cím "
+                L"MediaInfo.\r\n\r\nKÖNYVTÁRAK ÉS ABLAKOK\r\nAz EXE "
                 L"MediaInfo 26.10, 21.03 és 0.7.60 változatokat tartalmaz; a külső könyvtárak után a "
                 L"legújabbtól próbálja őket. A két újabbhoz megfelelő libcurl tartozik; a 0.7.60 soha nem "
                 L"bontja ki. Az ablak helyzete megmarad. Alapértelmezés szerint csak egy példány "
@@ -7955,9 +8101,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"il-ħatt ta’ MediaInfo.dll" },
             { TXT_APPLY, L"&Applika" },
             { TXT_TAB_NAME_LENGTH, L"&Tul tal-isem tat-tab:" },
+            { TXT_TITLE_NAME_LENGTH, L"T&ul tat-titlu:" },
             { TXT_RECENT_FILES, L"Fajls riċenti:" },
             { TXT_CLEAR_RECENT_FILES, L"&Ħassar" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"It-tul tal-isem tat-tab irid ikun bejn 8 u 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"It-tul tal-isem fit-titlu jrid ikun bejn 8 u 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Il-lista tal-fajls riċenti tħassret, iżda ma setgħetx tiġi ssejvjata fir-reġistru."
             },
@@ -8038,7 +8186,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"pendenti. Il-preferenzi jissettjaw il-limitu tat-tul tal-isem tat-tab (80 b’mod "
                 L"predefinit) u jħassru l-lista tal-fajls riċenti. Ismijiet twal iżommu l-bidu, it-tmiem "
                 L"u l-estensjoni b’ellissi fin-nofs. Ħassar ineħħi l-lista tal-fajls riċenti "
-                L"immedjatament, anki jekk imbagħad tagħlaq il-preferenzi b’Ikkanċella.\r\n\r\nLIBRERIJI "
+                L"immedjatament, anki jekk imbagħad tagħlaq il-preferenzi b’Ikkanċella.\r\n\r\nIt-titlu "
+                L"tat-tieqa prinċipali juri l-fajl attiv fil-forma isem tal-fajl — MediaInfo. Fil-preferenzi "
+                L"tista’ tissettja separatament it-tul tal-isem fit-titlu minn 8 sa 255 karattru (40 b’mod "
+                L"predefinit). Ismijiet itwal jitqassru bl-istess tliet tikek fin-nofs u jżommu l-estensjoni."
+                L" Mingħajr tabs miftuħin, it-titlu huwa MediaInfo.\r\n\r\nLIBRERIJI "
                 L"U TWIEQI\r\nIl-programm jinkludi MediaInfo 26.10, 21.03 u 0.7.60, li jiġu ppruvati "
                 L"mill-aktar ġdida wara l-libreriji esterni. Iż-żewġ verżjonijiet ġodda għandhom libcurl "
                 L"adattata; 0.7.60 qatt ma toħroġ libcurl. Il-pożizzjoni tat-tieqa tinżamm. B’mod "
@@ -8321,9 +8473,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"het vrijgeven van MediaInfo.dll" },
             { TXT_APPLY, L"T&oepassen" },
             { TXT_TAB_NAME_LENGTH, L"Lengte van tab&naam:" },
+            { TXT_TITLE_NAME_LENGTH, L"Titellen&gte:" },
             { TXT_RECENT_FILES, L"Recente bestanden:" },
             { TXT_CLEAR_RECENT_FILES, L"&Wissen" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"De lengte van de tabnaam moet tussen 8 en 255 liggen." },
+            { TXT_TITLE_NAME_LENGTH_INVALID,
+                L"De lengte van de naam in de titel moet tussen 8 en 255 liggen."
+            },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"De lijst met recente bestanden is gewist, maar kon niet in het register worden opgeslagen."
             },
@@ -8405,7 +8561,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"openstaande wijzigingen. Voorkeuren stellen de limiet voor tabnamen in (standaard 80) "
                 L"en wissen de lijst met recente bestanden. Lange namen behouden begin, einde en extensie "
                 L"met een weglatingsteken in het midden. Wissen verwijdert de lijst met recente bestanden "
-                L"onmiddellijk, ook als de voorkeuren daarna met Annuleren worden gesloten.\r\n\r\n"
+                L"onmiddellijk, ook als de voorkeuren daarna met Annuleren worden gesloten.\r\n\r\nDe titel "
+                L"van het hoofdvenster toont het actieve bestand als bestandsnaam — MediaInfo. In de "
+                L"voorkeuren kan de naamlengte in de titel afzonderlijk worden ingesteld op 8–255 tekens "
+                L"(standaard 40). Langere namen worden met hetzelfde weglatingsteken in het midden ingekort "
+                L"en behouden de extensie. Zonder geopende tabbladen is de titel MediaInfo.\r\n\r\n"
                 L"BIBLIOTHEKEN EN VENSTERS\r\nDe EXE bevat de bibliotheken MediaInfo 26.10, 21.03 en "
                 L"0.7.60. Na de externe bibliotheken worden deze van de nieuwste naar de oudste "
                 L"geprobeerd. De twee nieuwere versies hebben bijpassende libcurl-bibliotheken; 0.7.60 "
@@ -8688,9 +8848,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"descărcării MediaInfo.dll" },
             { TXT_APPLY, L"Se a&plică" },
             { TXT_TAB_NAME_LENGTH, L"Lun&gime nume filă:" },
+            { TXT_TITLE_NAME_LENGTH, L"L&ungime titlu:" },
             { TXT_RECENT_FILES, L"Fișiere recente:" },
             { TXT_CLEAR_RECENT_FILES, L"Ș&terge" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Lungimea numelui filei trebuie să fie între 8 și 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Lungimea numelui din titlu trebuie să fie între 8 și 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Lista fișierelor recente a fost ștearsă, dar nu a putut fi salvată în registru."
             },
@@ -8770,7 +8932,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"limita numelor filelor (implicit 80) și șterg lista fișierelor recente. Numele lungi "
                 L"păstrează începutul, sfârșitul și extensia, cu puncte de suspensie la mijloc. Șterge "
                 L"elimină imediat lista fișierelor recente, chiar dacă preferințele sunt apoi închise cu "
-                L"Anulare.\r\n\r\nBIBLIOTECI ȘI FERESTRE\r\nProgramul include MediaInfo 26.10, 21.03 și "
+                L"Anulare.\r\n\r\nTitlul ferestrei principale afișează fișierul activ în forma nume fișier — "
+                L"MediaInfo. Preferințele permit setarea separată a lungimii numelui din titlu între 8 și 255"
+                L" de caractere (implicit 40). Numele mai lungi sunt scurtate cu aceleași puncte de suspensie"
+                L" la mijloc, păstrând extensia. Fără file deschise, titlul este MediaInfo.\r\n\r\nBIBLIOTECI"
+                L" ȘI FERESTRE\r\nProgramul include MediaInfo 26.10, 21.03 și "
                 L"0.7.60, încercate de la cea mai nouă după bibliotecile externe. Cele două versiuni mai "
                 L"noi au libcurl corespunzătoare; 0.7.60 nu extrage niciodată libcurl. Poziția ferestrei "
                 L"este salvată. În mod implicit este permisă o singură instanță, iar pornirile ulterioare "
@@ -9055,9 +9221,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"την αποδέσμευση του MediaInfo.dll" },
             { TXT_APPLY, L"&Εφαρμογή" },
             { TXT_TAB_NAME_LENGTH, L"Μήκος ονόματος &καρτέλας:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Μήκος τίτλου:" },
             { TXT_RECENT_FILES, L"Πρόσφατα αρχεία:" },
             { TXT_CLEAR_RECENT_FILES, L"Εκκα&θάριση" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Το μήκος ονόματος καρτέλας πρέπει να είναι από 8 έως 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Το μήκος ονόματος στον τίτλο πρέπει να είναι από 8 έως 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Η λίστα πρόσφατων αρχείων εκκαθαρίστηκε, αλλά δεν ήταν δυνατή η αποθήκευσή της στο Μητρώο."
             },
@@ -9145,7 +9313,12 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ονόματος καρτέλας (προεπιλογή 80) και εκκαθαρίζεται η λίστα πρόσφατων αρχείων. Τα "
                 L"μεγάλα ονόματα διατηρούν αρχή, τέλος και επέκταση με αποσιωπητικά στη μέση. Η "
                 L"Εκκαθάριση αφαιρεί αμέσως τη λίστα πρόσφατων αρχείων, ακόμη και αν οι Προτιμήσεις "
-                L"κλείσουν στη συνέχεια με Άκυρο.\r\n\r\nΒΙΒΛΙΟΘΗΚΕΣ ΚΑΙ ΠΑΡΑΘΥΡΑ\r\nΤο πρόγραμμα "
+                L"κλείσουν στη συνέχεια με Άκυρο.\r\n\r\nΟ τίτλος του κύριου παραθύρου εμφανίζει το ενεργό "
+                L"αρχείο ως όνομα αρχείου — MediaInfo. Στις προτιμήσεις μπορείτε να ορίσετε χωριστά το μήκος "
+                L"του ονόματος στον τίτλο από 8 έως 255 χαρακτήρες (προεπιλογή 40). Τα μεγαλύτερα ονόματα "
+                L"συντομεύονται με τα ίδια αποσιωπητικά στη μέση και διατηρούν την επέκταση. Χωρίς ανοιχτές "
+                L"καρτέλες, ο τίτλος είναι MediaInfo.\r\n\r\nΒΙΒΛΙΟΘΗΚΕΣ ΚΑΙ ΠΑΡΑΘΥΡΑ\r\nΤο πρόγραμμα"
+                L" "
                 L"περιλαμβάνει MediaInfo 26.10, 21.03 και 0.7.60, που δοκιμάζονται από τη νεότερη μετά "
                 L"τις εξωτερικές βιβλιοθήκες. Οι δύο νεότερες έχουν αντίστοιχη libcurl· η 0.7.60 δεν την "
                 L"αποσυμπιέζει ποτέ. Η θέση του παραθύρου αποθηκεύεται. Από προεπιλογή επιτρέπεται μόνο "
@@ -9418,9 +9591,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"oslobađanja MediaInfo.dll" },
             { TXT_APPLY, L"Primije&ni" },
             { TXT_TAB_NAME_LENGTH, L"Dužina naziva &kartice:" },
+            { TXT_TITLE_NAME_LENGTH, L"D&užina naslova:" },
             { TXT_RECENT_FILES, L"Nedavne datoteke:" },
             { TXT_CLEAR_RECENT_FILES, L"&Očisti" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Dužina naziva kartice mora biti između 8 i 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Dužina naziva u naslovu mora biti između 8 i 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Lista nedavnih datoteka je očišćena, ali nije sačuvana u registru."
             },
@@ -9495,7 +9670,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"određuju granicu naziva kartice (podrazumijevano 80) i brišu listu nedavnih datoteka. "
                 L"Dugi nazivi zadržavaju početak, kraj i nastavak s trotačkom u sredini. Očisti odmah "
                 L"uklanja listu nedavnih datoteka, čak i ako zatim zatvorite Postavke dugmetom "
-                L"Otkaži.\r\n\r\nBIBLIOTEKE I PROZORI\r\nProgram sadrži MediaInfo 26.10, 21.03 i 0.7.60, "
+                L"Otkaži.\r\n\r\nNaslov glavnog prozora prikazuje aktivnu datoteku u obliku naziv datoteke — "
+                L"MediaInfo. U postavkama se dužina naziva u naslovu može zasebno postaviti na 8–255 znakova "
+                L"(zadano 40). Duži nazivi skraćuju se istom trotačkom u sredini, uz očuvanje nastavka. Bez "
+                L"otvorenih kartica naslov je MediaInfo.\r\n\r\nBIBLIOTEKE I PROZORI\r\nProgram sadrži "
+                L"MediaInfo 26.10, 21.03 i 0.7.60, "
                 L"koje se pokušavaju od najnovije nakon vanjskih biblioteka. Dvije novije verzije imaju "
                 L"odgovarajući libcurl; 0.7.60 ga nikada ne raspakuje. Položaj prozora se čuva. "
                 L"Podrazumijevano je dozvoljena samo jedna instanca, a naredna pokretanja šalju datoteke "
@@ -9760,9 +9939,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"oslobađanja MediaInfo.dll" },
             { TXT_APPLY, L"Primije&ni" },
             { TXT_TAB_NAME_LENGTH, L"Duljina naziva &kartice:" },
+            { TXT_TITLE_NAME_LENGTH, L"D&uljina naslova:" },
             { TXT_RECENT_FILES, L"Nedavne datoteke:" },
             { TXT_CLEAR_RECENT_FILES, L"&Očisti" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Duljina naziva kartice mora biti između 8 i 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Duljina naziva u naslovu mora biti između 8 i 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Popis nedavnih datoteka je očišćen, ali nije spremljen u registru."
             },
@@ -9836,7 +10017,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Odustani odbacuje nepotvrđene promjene. Postavke određuju ograničenje naziva kartice "
                 L"(zadano 80) i brišu popis nedavnih datoteka. Dugi nazivi zadržavaju početak, kraj i "
                 L"nastavak s trotočkom u sredini. Očisti odmah uklanja popis nedavnih datoteka, čak i ako "
-                L"zatim zatvorite Postavke tipkom Odustani.\r\n\r\nKNJIŽNICE I PROZORI\r\nProgram sadrži "
+                L"zatim zatvorite Postavke tipkom Odustani.\r\n\r\nNaslov glavnog prozora prikazuje aktivnu "
+                L"datoteku u obliku naziv datoteke — MediaInfo. U postavkama se duljina naziva u naslovu može"
+                L" zasebno postaviti na 8–255 znakova (zadano 40). Dulji nazivi skraćuju se istom trotočkom u"
+                L" sredini, uz očuvanje nastavka. Bez otvorenih kartica naslov je MediaInfo.\r\n\r\nKNJIŽNICE"
+                L" I PROZORI\r\nProgram sadrži "
                 L"MediaInfo 26.10, 21.03 i 0.7.60, koje se isprobavaju od najnovije nakon vanjskih "
                 L"knjižnica. Dvije novije inačice imaju odgovarajući libcurl; 0.7.60 ga nikada ne "
                 L"raspakirava. Položaj prozora se sprema. Prema zadanim postavkama dopuštena je samo "
@@ -10098,9 +10283,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"sproščanjem MediaInfo.dll" },
             { TXT_APPLY, L"Upor&abi" },
             { TXT_TAB_NAME_LENGTH, L"&Dolžina imena zavihka:" },
+            { TXT_TITLE_NAME_LENGTH, L"Dolži&na naslova:" },
             { TXT_RECENT_FILES, L"Nedavne datoteke:" },
             { TXT_CLEAR_RECENT_FILES, L"Po&čisti" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Dolžina imena zavihka mora biti med 8 in 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Dolžina imena v naslovu mora biti med 8 in 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Seznam nedavnih datotek je bil počiščen, vendar ga ni bilo mogoče shraniti v register."
             },
@@ -10173,7 +10360,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"potrdi spremembe; Prekliči zavrže čakajoče spremembe. Nastavitve določijo omejitev "
                 L"imena zavihka (privzeto 80) in počistijo seznam nedavnih datotek. Dolga imena ohranijo "
                 L"začetek, konec in pripono s tropičjem na sredini. Počisti takoj odstrani seznam "
-                L"nedavnih datotek, tudi če nastavitve nato zaprete s Prekliči.\r\n\r\nKNJIŽNICE IN "
+                L"nedavnih datotek, tudi če nastavitve nato zaprete s Prekliči.\r\n\r\nNaslov glavnega okna "
+                L"prikazuje dejavno datoteko v obliki ime datoteke — MediaInfo. V nastavitvah lahko dolžino "
+                L"imena v naslovu ločeno nastavite na 8–255 znakov (privzeto 40). Daljša imena se skrajšajo z"
+                L" istim tropičjem na sredini, končnica pa se ohrani. Brez odprtih zavihkov je naslov "
+                L"MediaInfo.\r\n\r\nKNJIŽNICE IN "
                 L"OKNA\r\nProgram vsebuje MediaInfo 26.10, 21.03 in 0.7.60, ki jih po zunanjih knjižnicah "
                 L"preizkuša od najnovejše. Novejši različici imata ustrezni libcurl; 0.7.60 ga nikoli ne "
                 L"razširi. Položaj okna se shrani. Privzeto je dovoljen samo en primerek, poznejši zagoni "
@@ -10440,9 +10631,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"oslobađanja MediaInfo.dll" },
             { TXT_APPLY, L"Primije&ni" },
             { TXT_TAB_NAME_LENGTH, L"Dužina naziva &kartice:" },
+            { TXT_TITLE_NAME_LENGTH, L"D&užina naslova:" },
             { TXT_RECENT_FILES, L"Nedavne datoteke:" },
             { TXT_CLEAR_RECENT_FILES, L"&Očisti" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Dužina naziva kartice mora biti između 8 i 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Dužina naziva u naslovu mora biti između 8 i 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Lista nedavnih datoteka je očišćena, ali nije sačuvana u registru."
             },
@@ -10517,7 +10710,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Podešavanja određuju granicu naziva kartice (podrazumijevano 80) i brišu listu nedavnih "
                 L"datoteka. Dugi nazivi zadržavaju početak, kraj i ekstenziju s trotačkom u sredini. "
                 L"Očisti odmah uklanja listu nedavnih datoteka, čak i ako zatim zatvorite Podešavanja "
-                L"dugmetom Otkaži.\r\n\r\nBIBLIOTEKE I PROZORI\r\nProgram sadrži MediaInfo 26.10, 21.03 i "
+                L"dugmetom Otkaži.\r\n\r\nNaslov glavnog prozora prikazuje aktivnu datoteku u obliku naziv "
+                L"datoteke — MediaInfo. U podešavanjima se dužina naziva u naslovu može zasebno postaviti na "
+                L"8–255 znakova (podrazumijevano 40). Duži nazivi skraćuju se istom trotačkom u sredini, uz "
+                L"očuvanje nastavka. Bez otvorenih kartica naslov je MediaInfo.\r\n\r\nBIBLIOTEKE I "
+                L"PROZORI\r\nProgram sadrži MediaInfo 26.10, 21.03 i "
                 L"0.7.60, koje se pokušavaju od najnovije nakon spoljnih biblioteka. Dvije novije verzije "
                 L"imaju odgovarajući libcurl; 0.7.60 ga nikada ne raspakuje. Položaj prozora se čuva. "
                 L"Podrazumijevano je dozvoljena samo jedna instanca, a naredna pokretanja šalju datoteke "
@@ -10786,9 +10983,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"выгрузкі MediaInfo.dll" },
             { TXT_APPLY, L"&Ужыць" },
             { TXT_TAB_NAME_LENGTH, L"Да&ўжыня назвы ўкладкі:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Даўжыня загалоўка:" },
             { TXT_RECENT_FILES, L"Апошнія файлы:" },
             { TXT_CLEAR_RECENT_FILES, L"А&чысціць" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Даўжыня назвы ўкладкі павінна быць ад 8 да 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Даўжыня назвы ў загалоўку павінна быць ад 8 да 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Спіс апошніх файлаў быў ачышчаны, але яго не ўдалося захаваць у рэестры."
             },
@@ -10861,7 +11060,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"змены; Скасаваць адкідае непацверджаныя змены. У наладах задаецца мяжа назвы ўкладкі "
                 L"(па змоўчанні 80) і ачышчаецца спіс апошніх файлаў. Доўгія назвы захоўваюць пачатак, "
                 L"канец і пашырэнне са шматкроп’ем пасярэдзіне. Ачысціць адразу выдаляе спіс апошніх "
-                L"файлаў, нават калі пасля гэтага закрыць налады кнопкай Скасаваць.\r\n\r\nБІБЛІЯТЭКІ І "
+                L"файлаў, нават калі пасля гэтага закрыць налады кнопкай Скасаваць.\r\n\r\nЗагаловак "
+                L"галоўнага акна паказвае актыўны файл у выглядзе назва файла — MediaInfo. У наладах можна "
+                L"асобна задаць даўжыню назвы ў загалоўку ад 8 да 255 сімвалаў (прадвызначана 40). Доўгія "
+                L"назвы скарачаюцца тым жа шматкроп’ем пасярэдзіне з захаваннем пашырэння. Без адкрытых "
+                L"укладак загаловак — MediaInfo.\r\n\r\nБІБЛІЯТЭКІ І "
                 L"ВОКНЫ\r\nПраграма змяшчае MediaInfo 26.10, 21.03 і 0.7.60, якія правяраюцца ад "
                 L"найноўшай пасля знешніх бібліятэк. Дзве навейшыя версіі маюць адпаведную libcurl; "
                 L"0.7.60 ніколі яе не распакоўвае. Становішча акна захоўваецца. Паводле прадвызначэння "
@@ -11138,9 +11341,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"освобождаване на MediaInfo.dll" },
             { TXT_APPLY, L"При&ложи" },
             { TXT_TAB_NAME_LENGTH, L"Дъл&жина на името на раздела:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Дължина на заглавието:" },
             { TXT_RECENT_FILES, L"Скорошни файлове:" },
             { TXT_CLEAR_RECENT_FILES, L"Из&чисти" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Дължината на името на раздела трябва да бъде от 8 до 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Дължината на името в заглавието трябва да бъде от 8 до 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Списъкът с последни файлове е изчистен, но не можа да се запише в регистъра."
             },
@@ -11218,7 +11423,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ограничението за името на раздела (по подразбиране 80) и изчистват списъка със скорошни "
                 L"файлове. Дългите имена запазват началото, края и разширението с многоточие по средата. "
                 L"Изчисти премахва списъка с последни файлове веднага, дори ако след това затворите "
-                L"предпочитанията с Отказ.\r\n\r\nБИБЛИОТЕКИ И ПРОЗОРЦИ\r\nПрограмата включва MediaInfo "
+                L"предпочитанията с Отказ.\r\n\r\nЗаглавието на главния прозорец показва активния файл във "
+                L"вида име на файл — MediaInfo. В предпочитанията дължината на името в заглавието може да се "
+                L"зададе отделно от 8 до 255 знака (по подразбиране 40). По-дългите имена се съкращават със "
+                L"същото многоточие в средата, като разширението се запазва. Без отворени раздели заглавието "
+                L"е MediaInfo.\r\n\r\nБИБЛИОТЕКИ И ПРОЗОРЦИ\r\nПрограмата включва MediaInfo "
                 L"26.10, 21.03 и 0.7.60, изпробвани от най-новата след външните библиотеки. Двете по-нови "
                 L"версии имат подходящ libcurl; 0.7.60 никога не го разархивира. Положението на прозореца "
                 L"се запазва. По подразбиране е разрешен само един екземпляр, а следващите стартирания "
@@ -11496,9 +11705,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"ослободување на MediaInfo.dll" },
             { TXT_APPLY, L"Приме&ни" },
             { TXT_TAB_NAME_LENGTH, L"До&лжина на името на картичката:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Должина на насловот:" },
             { TXT_RECENT_FILES, L"Неодамнешни датотеки:" },
             { TXT_CLEAR_RECENT_FILES, L"Ис&чисти" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Должината на името на картичката мора да биде од 8 до 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Должината на името во насловот мора да биде од 8 до 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Списокот на неодамнешни датотеки е исчистен, но не можеше да се зачува во регистарот."
             },
@@ -11578,7 +11789,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"(стандардно 80 знаци) и го чистат списокот на неодамнешни датотеки. Долгите имиња ги "
                 L"задржуваат почетокот, крајот и наставката со три точки во средината. Исчисти веднаш го "
                 L"отстранува списокот на неодамнешни датотеки, дури и ако потоа ги затворите "
-                L"претпочитувањата со Откажи.\r\n\r\nБИБЛИОТЕКИ И ПРОЗОРЦИ\r\nПрограмата содржи MediaInfo "
+                L"претпочитувањата со Откажи.\r\n\r\nНасловот на главниот прозорец ја прикажува активната "
+                L"датотека во облик име на датотека — MediaInfo. Во поставките должината на името во насловот"
+                L" може одделно да се постави на 8–255 знаци (стандардно 40). Подолгите имиња се скратуваат "
+                L"со истите три точки во средината, со зачувување на наставката. Без отворени картички, "
+                L"насловот е MediaInfo.\r\n\r\nБИБЛИОТЕКИ И ПРОЗОРЦИ\r\nПрограмата содржи MediaInfo "
                 L"26.10, 21.03 и 0.7.60, испробани од најновата по надворешните библиотеки. Двете понови "
                 L"верзии имаат соодветна libcurl; 0.7.60 никогаш не ја отпакува. Положбата на прозорецот "
                 L"се зачувува. Стандардно е дозволена само една инстанца, а следните стартувања ги "
@@ -11846,9 +12061,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"ослобађања MediaInfo.dll" },
             { TXT_APPLY, L"Приме&ни" },
             { TXT_TAB_NAME_LENGTH, L"Ду&жина назива картице:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Дужина наслова:" },
             { TXT_RECENT_FILES, L"Недавне датотеке:" },
             { TXT_CLEAR_RECENT_FILES, L"&Очисти" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Дужина назива картице мора бити између 8 и 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Дужина назива у наслову мора бити између 8 и 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Листа недавних датотека је очишћена, али није сачувана у регистру."
             },
@@ -11921,7 +12138,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Подешавања одређују ограничење назива картице (подразумевано 80) и бришу листу недавних "
                 L"датотека. Дуги називи задржавају почетак, крај и наставак с тротачком у средини. Очисти "
                 L"одмах уклања листу недавних датотека, чак и ако затим затворите Подешавања дугметом "
-                L"Откажи.\r\n\r\nБИБЛИОТЕКЕ И ПРОЗОРИ\r\nПрограм садржи MediaInfo 26.10, 21.03 и 0.7.60, "
+                L"Откажи.\r\n\r\nНаслов главног прозора приказује активну датотеку у облику назив датотеке — "
+                L"MediaInfo. У подешавањима се дужина назива у наслову може засебно поставити на 8–255 "
+                L"знакова (подразумијевано 40). Дужи називи скраћују се истом тротачком у средини, уз очување"
+                L" наставка. Без отворених картица наслов је MediaInfo.\r\n\r\nБИБЛИОТЕКЕ И "
+                L"ПРОЗОРИ\r\nПрограм садржи MediaInfo 26.10, 21.03 и 0.7.60, "
                 L"које се покушавају од најновије након спољних библиотека. Две новије верзије имају "
                 L"одговарајући libcurl; 0.7.60 га никада не распакује. Положај прозора се чува. "
                 L"Подразумевано је дозвољена само једна инстанца, а наредна покретања шаљу датотеке "
@@ -12189,9 +12410,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"вивантаження MediaInfo.dll" },
             { TXT_APPLY, L"З&астосувати" },
             { TXT_TAB_NAME_LENGTH, L"Довжи&на назви вкладки:" },
+            { TXT_TITLE_NAME_LENGTH, L"&Довжина заголовка:" },
             { TXT_RECENT_FILES, L"Останні файли:" },
             { TXT_CLEAR_RECENT_FILES, L"О&чистити" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Довжина назви вкладки має бути від 8 до 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Довжина назви в заголовку має бути від 8 до 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Список останніх файлів очищено, але його не вдалося зберегти в реєстрі."
             },
@@ -12265,7 +12488,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"непідтверджені зміни. Налаштування задають обмеження назви вкладки (типово 80) й "
                 L"очищують список останніх файлів. Довгі назви зберігають початок, кінець і розширення з "
                 L"трикрапкою посередині. Очистити негайно видаляє список останніх файлів, навіть якщо "
-                L"потім закрити налаштування кнопкою Скасувати.\r\n\r\nБІБЛІОТЕКИ ТА ВІКНА\r\nПрограма "
+                L"потім закрити налаштування кнопкою Скасувати.\r\n\r\nЗаголовок головного вікна показує "
+                L"активний файл у вигляді назва файлу — MediaInfo. У налаштуваннях можна окремо задати "
+                L"довжину назви в заголовку від 8 до 255 символів (типово 40). Довші назви скорочуються тією "
+                L"самою трикрапкою посередині зі збереженням розширення. Без відкритих вкладок заголовок — "
+                L"MediaInfo.\r\n\r\nБІБЛІОТЕКИ ТА ВІКНА\r\nПрограма "
                 L"містить MediaInfo 26.10, 21.03 та 0.7.60, які перевіряються від найновішої після "
                 L"зовнішніх бібліотек. Дві новіші версії мають відповідну libcurl; 0.7.60 ніколи її не "
                 L"розпаковує. Положення вікна зберігається. За замовчуванням дозволено лише один "
@@ -12530,9 +12757,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_MEDIALIB_UNLOAD_OPERATION, L"выгрузке MediaInfo.dll" },
             { TXT_APPLY, L"Пр&именить" },
             { TXT_TAB_NAME_LENGTH, L"&Длина названия вкладки:" },
+            { TXT_TITLE_NAME_LENGTH, L"Д&лина заголовка:" },
             { TXT_RECENT_FILES, L"Последние файлы:" },
             { TXT_CLEAR_RECENT_FILES, L"О&чистить" },
             { TXT_TAB_NAME_LENGTH_INVALID, L"Длина названия вкладки должна быть от 8 до 255." },
+            { TXT_TITLE_NAME_LENGTH_INVALID, L"Длина названия в заголовке должна быть от 8 до 255." },
             { TXT_RECENT_FILES_SAVE_FAILED,
                 L"Список последних файлов очищен, но его не удалось сохранить в реестре."
             },
@@ -12608,7 +12837,11 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ограничение названия вкладки (по умолчанию 80) и очищают список последних файлов. "
                 L"Длинные названия сохраняют начало, конец и расширение с многоточием посередине. "
                 L"Очистить сразу удаляет список последних файлов, даже если затем закрыть настройки "
-                L"кнопкой Отмена.\r\n\r\nБИБЛИОТЕКИ И ОКНА\r\nПрограмма содержит MediaInfo 26.10, 21.03 и "
+                L"кнопкой Отмена.\r\n\r\nЗаголовок главного окна показывает активный файл в виде имя файла — "
+                L"MediaInfo. В настройках можно отдельно задать длину названия в заголовке от 8 до 255 "
+                L"символов (по умолчанию 40). Длинные названия сокращаются тем же многоточием посередине с "
+                L"сохранением расширения. Без открытых вкладок заголовок — MediaInfo.\r\n\r\nБИБЛИОТЕКИ И "
+                L"ОКНА\r\nПрограмма содержит MediaInfo 26.10, 21.03 и "
                 L"0.7.60, проверяемые от новейшей после внешних библиотек. У двух новых версий есть "
                 L"соответствующая libcurl; 0.7.60 никогда её не распаковывает. Положение окна "
                 L"сохраняется. По умолчанию разрешён только один экземпляр, а последующие запуски "

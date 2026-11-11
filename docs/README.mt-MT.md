@@ -197,6 +197,11 @@ OK jew Applika jikkonferma l-bidliet; Ikkanċella jwarrab dawk pendenti. Il-pref
 tat-tul tal-isem tat-tab (80 b’mod predefinit) u jħassru l-lista tal-fajls riċenti. Ismijiet twal iżommu
 l-bidu, it-tmiem u l-estensjoni b’ellissi fin-nofs.
 
+It-titlu tat-tieqa prinċipali juri l-fajl attiv fil-forma isem tal-fajl — MediaInfo. Fil-preferenzi tista’
+tissettja separatament it-tul tal-isem fit-titlu minn 8 sa 255 karattru (40 b’mod predefinit). Ismijiet
+itwal jitqassru bl-istess tliet tikek fin-nofs u jżommu l-estensjoni. Mingħajr tabs miftuħin, it-titlu
+huwa MediaInfo.
+
 B’mod awtomatiku hija permessa istanza waħda biss u tnedijiet sussegwenti jibagħtu l-fajls lit-tieqa miftuħa.
 Fil-preferenzi tista’ tippermetti diversi istanzi. B’diversi twieqi, l-ewwel tieqa ta’ kull formola biss
 tirrestawra l-pożizzjoni ssejvjata; it-twieqi ta’ wara jirrestawraw biss id-daqs.

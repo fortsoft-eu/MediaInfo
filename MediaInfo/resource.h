@@ -50,6 +50,9 @@
 #define IDC_RECENT_CLEAR                1123
 #define IDC_MULTIPLE_INSTANCES          1124
 #define IDC_CLOSE_TABS_ON_DOUBLE_CLICK  1125
+#define IDC_TITLE_NAME_LABEL            1126
+#define IDC_TITLE_NAME_LENGTH           1127
+#define IDC_TITLE_NAME_SPIN             1128
 #define IDC_FIND_LABEL                  1201
 #define IDC_FIND_TEXT                   1202
 #define IDC_FIND_MATCH_CASE             1203

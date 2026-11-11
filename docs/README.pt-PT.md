@@ -202,6 +202,11 @@ OK ou Aplicar confirma as alterações; Cancelar descarta as pendentes. As prefe
 nomes dos separadores (80 por predefinição) e limpar a lista dos ficheiros recentes. Os nomes longos mantêm
 início, fim e extensão com reticências no meio.
 
+O título da janela principal mostra o ficheiro ativo como nome do ficheiro — MediaInfo. As preferências
+permitem definir separadamente o comprimento do nome no título entre 8 e 255 carateres (40 por
+predefinição). Os nomes mais longos usam as mesmas reticências ao centro e mantêm a extensão. Sem
+separadores abertos, o título é MediaInfo.
+
 Por predefinição, só é permitida uma instância e os arranques seguintes enviam os ficheiros para a janela
 aberta. Nas preferências, é possível permitir várias instâncias. Com várias janelas, apenas a primeira de cada
 formulário recupera a posição guardada; as seguintes recuperam apenas o tamanho.

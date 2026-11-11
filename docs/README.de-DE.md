@@ -211,6 +211,11 @@ OK oder Übernehmen bestätigt Änderungen; Abbrechen verwirft ausstehende Ände
 enthalten die Tabnamenlänge (Standard 80) und das Löschen der Liste zuletzt verwendeter Dateien. Lange Namen
 behalten Anfang, Ende und Erweiterung mit Auslassungszeichen in der Mitte.
 
+Der Titel des Hauptfensters zeigt die aktive Datei als Dateiname — MediaInfo. In den Voreinstellungen
+lässt sich die Namenslänge im Fenstertitel unabhängig auf 8–255 Zeichen festlegen (Standard: 40). Längere
+Namen werden wie Tabnamen in der Mitte mit einem Auslassungszeichen gekürzt; die Erweiterung bleibt
+erhalten. Ohne offene Tabs lautet der Titel MediaInfo.
+
 Standardmäßig ist nur eine Instanz erlaubt; weitere Starts übergeben Dateien an das offene Fenster. In den
 Voreinstellungen lassen sich mehrere Instanzen zulassen. Bei mehreren Fenstern wird die gespeicherte Position
 nur für das erste Fenster jedes Formulars wiederhergestellt; weitere Fenster übernehmen nur die Größe.

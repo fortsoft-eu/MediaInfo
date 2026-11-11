@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.1
+ * Last modified for version 1.2.1.2
  */
 
 #include "MediaInfo.h"
@@ -30,6 +30,7 @@
 #include "LibraryWorker.h"
 #include "Localization.h"
 #include "SettingsStorage.h"
+#include "PersistWindowState.h"
 #include "SystemDialogTemplate.h"
 #include "SelectionEdit.h"
 #include "ComboBoxSupport.h"
@@ -106,6 +107,7 @@ struct PreferencesData {
     HWND window;
     HFONT uiFont;
     MediaInfoLibrary* library;
+    PersistWindowState* placement;
     LOGFONTW* appliedFont;
     UINT* appliedDpi;
     const PreferencesCallbacks* callbacks;
@@ -119,6 +121,7 @@ struct PreferencesData {
     int originalLanguage;
     int language;
     UINT originalTabNameLength;
+    UINT originalTitleNameLength;
     bool originalCloseTabsOnDoubleClick;
     bool originalMultipleInstances;
     bool ownsUiFont;
@@ -238,7 +241,8 @@ static const int preferencesLabelFields[][2] = {
     { IDC_SMOOTHING_LABEL, IDC_SMOOTHING },
     { IDC_LANGUAGE_LABEL, IDC_LANGUAGE },
     { IDC_REPORT_LABEL, IDC_REPORT_LANGUAGE },
-    { IDC_TAB_NAME_LABEL, IDC_TAB_NAME_LENGTH }
+    { IDC_TAB_NAME_LABEL, IDC_TAB_NAME_LENGTH },
+    { IDC_TITLE_NAME_LABEL, IDC_TITLE_NAME_LENGTH }
 };
 
 /// Stable export identifiers and their native Save-dialog filters.
@@ -450,7 +454,8 @@ static int CALLBACK InformationWordBreakProc(wchar_t* text, int position, int le
         if (position == length) {
             position--;
         }
-        while (position > 0 && (!attributes[position].fCharStop
+        while (position > 0
+            && (!attributes[position].fCharStop
                 || !attributes[position].fSoftBreak && !attributes[position - 1].fWhiteSpace)) {
             position--;
         }
@@ -458,7 +463,8 @@ static int CALLBACK InformationWordBreakProc(wchar_t* text, int position, int le
         if (position < length) {
             position++;
         }
-        while (position < length && (!attributes[position].fCharStop
+        while (position < length
+            && (!attributes[position].fCharStop
                 || !attributes[position].fSoftBreak && !attributes[position - 1].fWhiteSpace)) {
             position++;
         }
@@ -1718,8 +1724,8 @@ bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
     info.bmiHeader.biBitCount = 32;
     info.bmiHeader.biCompression = BI_RGB;
     BYTE* pixels = nullptr;
-    HBITMAP bitmap =
-        CreateDIBSection(dc, &info, DIB_RGB_COLORS, reinterpret_cast<void**>(&pixels), nullptr, 0);
+    HBITMAP bitmap = CreateDIBSection(dc, &info, DIB_RGB_COLORS,
+        reinterpret_cast<void**>(&pixels), nullptr, 0);
     bool success = false;
     if (bitmap) {
         HGDIOBJ oldBitmap = SelectObject(dc, bitmap);
@@ -2052,8 +2058,8 @@ static wchar_t* ExpandLegacySelection(const wchar_t* selection) {
     const wchar_t* name = selection + lstrlenW(selection) + 1;
     if (!*name) {
         SIZE_T length = lstrlenW(selection) + 2;
-        wchar_t* result =
-            static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, length * sizeof(wchar_t)));
+        wchar_t* result = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY,
+            length * sizeof(wchar_t)));
         if (result) {
             lstrcpyW(result, selection);
         }
@@ -2064,8 +2070,8 @@ static wchar_t* ExpandLegacySelection(const wchar_t* selection) {
     for (const wchar_t* cursor = name; *cursor; cursor += lstrlenW(cursor) + 1) {
         capacity += folderLength + lstrlenW(cursor) + 2;
     }
-    wchar_t* result =
-        static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, capacity * sizeof(wchar_t)));
+    wchar_t* result = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY,
+        capacity * sizeof(wchar_t)));
     if (!result) {
         return nullptr;
     }
@@ -2103,8 +2109,8 @@ wchar_t* ChooseMediaFiles(HWND owner) {
         return paths;
     }
     const DWORD capacity = 32768;
-    wchar_t* buffer =
-        static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, capacity * sizeof(wchar_t)));
+    wchar_t* buffer = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY,
+        capacity * sizeof(wchar_t)));
     if (!buffer) {
         return nullptr;
     }
@@ -2508,6 +2514,10 @@ static bool PreferencesChanged(const PreferencesData& data) {
     if (!valid || length != data.originalTabNameLength) {
         return true;
     }
+    length = GetDlgItemInt(data.window, IDC_TITLE_NAME_LENGTH, &valid, FALSE);
+    if (!valid || length != data.originalTitleNameLength) {
+        return true;
+    }
     LOGFONTW original = *data.appliedFont;
     if (!original.lfQuality) {
         original.lfQuality = DefaultReportFontQuality();
@@ -2588,6 +2598,7 @@ static void SetPreferencesLabels(PreferencesData& data) {
         IDC_REPORT_LABEL,
         IDC_REPORT_BROWSE,
         IDC_TAB_NAME_LABEL,
+        IDC_TITLE_NAME_LABEL,
         IDC_RECENT_LABEL,
         IDC_RECENT_CLEAR,
         IDC_CLOSE_TABS_ON_DOUBLE_CLICK,
@@ -2609,6 +2620,7 @@ static void SetPreferencesLabels(PreferencesData& data) {
         TXT_REPORT_LANGUAGE,
         TXT_BROWSE_REPORT,
         TXT_TAB_NAME_LENGTH,
+        TXT_TITLE_NAME_LENGTH,
         TXT_RECENT_FILES,
         TXT_CLEAR_RECENT_FILES,
         TXT_CLOSE_TABS_ON_DOUBLE_CLICK,
@@ -2804,51 +2816,30 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
     RECT noteBounds = ControlRect(note, window);
     int noteHeight = WrappedLabelHeight(note, noteBounds.right - noteBounds.left);
     PlaceControl(note, noteBounds.left, top, noteBounds.right - noteBounds.left, noteHeight);
-    const int rowLabels[] = {
-        IDC_FONT_LABEL,
-        IDC_SMOOTHING_LABEL,
-        IDC_LANGUAGE_LABEL,
-        IDC_REPORT_LABEL,
-        IDC_TAB_NAME_LABEL,
-        0,
-        IDC_RECENT_LABEL
-    };
-    const int rowControls[] = {
-        IDC_FONT_CHOOSE,
-        IDC_SMOOTHING,
-        IDC_LANGUAGE,
-        IDC_REPORT_LANGUAGE,
-        IDC_TAB_NAME_LENGTH,
-        IDC_CLOSE_TABS_ON_DOUBLE_CLICK,
-        IDC_RECENT_CLEAR
-    };
-    const int rowExtras[] = {
-        IDC_FONT_DEFAULT,
-        0,
-        0,
-        IDC_REPORT_BROWSE,
-        0,
-        0,
-        IDC_MULTIPLE_INSTANCES
+    const int rows[][4] = {
+        { IDC_FONT_LABEL, IDC_FONT_CHOOSE, IDC_FONT_DEFAULT, 0 },
+        { IDC_SMOOTHING_LABEL, IDC_SMOOTHING, 0, 0 },
+        { IDC_LANGUAGE_LABEL, IDC_LANGUAGE, 0, 0 },
+        { IDC_REPORT_LABEL, IDC_REPORT_LANGUAGE, IDC_REPORT_BROWSE, 0 },
+        { IDC_TAB_NAME_LABEL, IDC_TAB_NAME_LENGTH, IDC_TITLE_NAME_LENGTH, IDC_TITLE_NAME_LABEL },
+        { 0, IDC_CLOSE_TABS_ON_DOUBLE_CLICK, 0, 0 },
+        { IDC_RECENT_LABEL, IDC_RECENT_CLEAR, IDC_MULTIPLE_INSTANCES, 0 }
     };
     LONG above = 0;
     LONG below = 0;
-    for (int row = 0; row < 7; ++row) {
-        RECT bounds = RECT{};
-        if (rowLabels[row]) {
-            HWND label = GetDlgItem(window, rowLabels[row]);
-            bounds = ControlRect(label, window);
-            TEXTMETRICW metrics = TEXTMETRICW{};
-            ReadControlMetrics(label, &metrics);
-            PlaceControl(label, bounds.left, bounds.top, bounds.right - bounds.left, metrics.tmHeight);
-        }
-        const int controls[] = { rowLabels[row], rowControls[row], rowExtras[row] };
-        for (int id : controls) {
+    for (const auto& row : rows) {
+        for (int id : row) {
             if (!id) {
                 continue;
             }
             HWND control = GetDlgItem(window, id);
-            bounds = ControlRect(control, window);
+            RECT bounds = ControlRect(control, window);
+            if (id == row[0] || id == IDC_TITLE_NAME_LABEL) {
+                TEXTMETRICW metrics = TEXTMETRICW{};
+                ReadControlMetrics(control, &metrics);
+                PlaceControl(control, bounds.left, bounds.top, bounds.right - bounds.left, metrics.tmHeight);
+                bounds = ControlRect(control, window);
+            }
             LONG ascent = PreferenceControlAscent(control);
             LONG descent = bounds.bottom - bounds.top - ascent;
             if (ascent > above) {
@@ -2861,21 +2852,25 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
     }
     LONG baseline = top + noteHeight + groupGap.cy + above;
     LONG step = above + below + rowGap.cy;
-    for (int row = 0; row < 7; ++row) {
-        if (rowLabels[row]) {
-            PlacePreferenceControlBaseline(GetDlgItem(window, rowLabels[row]), baseline);
-        }
-        PlacePreferenceControlBaseline(GetDlgItem(window, rowControls[row]), baseline);
-        if (rowExtras[row]) {
-            PlacePreferenceControlBaseline(GetDlgItem(window, rowExtras[row]), baseline);
+    for (const auto& row : rows) {
+        for (int id : row) {
+            if (id) {
+                PlacePreferenceControlBaseline(GetDlgItem(window, id), baseline);
+            }
         }
         baseline += step;
     }
-    RECT number = ControlRect(GetDlgItem(window, IDC_TAB_NAME_LENGTH), window);
-    HWND spin = GetDlgItem(window, IDC_TAB_NAME_SPIN);
-    RECT spinBounds = ControlRect(spin, window);
-    SetWindowPos(spin, nullptr, spinBounds.left, number.top, spinBounds.right - spinBounds.left,
-        number.bottom - number.top, SWP_NOZORDER | SWP_NOACTIVATE);
+    const int numbers[][2] = {
+        { IDC_TAB_NAME_LENGTH, IDC_TAB_NAME_SPIN },
+        { IDC_TITLE_NAME_LENGTH, IDC_TITLE_NAME_SPIN }
+    };
+    for (const auto& number : numbers) {
+        RECT bounds = ControlRect(GetDlgItem(window, number[0]), window);
+        HWND spin = GetDlgItem(window, number[1]);
+        RECT spinBounds = ControlRect(spin, window);
+        SetWindowPos(spin, nullptr, spinBounds.left, bounds.top, spinBounds.right - spinBounds.left,
+            bounds.bottom - bounds.top, SWP_NOZORDER | SWP_NOACTIVATE);
+    }
     LONG buttonsTop = baseline - step + below + DialogUnits(data.uiFont, 0, 6).cy;
     const int buttons[] = { IDOK, IDCANCEL, IDC_PREFERENCES_APPLY };
     LONG bottom = 0;
@@ -2975,6 +2970,7 @@ static void OrderPreferencesLabels(HWND window) {
         IDC_LANGUAGE_LABEL,
         IDC_REPORT_LABEL,
         IDC_TAB_NAME_LABEL,
+        IDC_TITLE_NAME_LABEL,
         IDC_RECENT_LABEL
     };
     for (int id : labels) {
@@ -3007,12 +3003,16 @@ static void LayoutPreferences(PreferencesData& data) {
     HWND apply = GetDlgItem(window, IDC_PREFERENCES_APPLY);
     HWND tabLength = GetDlgItem(window, IDC_TAB_NAME_LENGTH);
     HWND tabSpin = GetDlgItem(window, IDC_TAB_NAME_SPIN);
+    HWND titleLength = GetDlgItem(window, IDC_TITLE_NAME_LENGTH);
+    HWND titleSpin = GetDlgItem(window, IDC_TITLE_NAME_SPIN);
+    HWND titleLabel = GetDlgItem(window, IDC_TITLE_NAME_LABEL);
     HWND clear = GetDlgItem(window, IDC_RECENT_CLEAR);
     HWND closeTabs = GetDlgItem(window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK);
     HWND multipleInstances = GetDlgItem(window, IDC_MULTIPLE_INSTANCES);
     UpdateEditMetrics(path);
     UpdateEditMetrics(curlPath);
     UpdateEditMetrics(tabLength);
+    UpdateEditMetrics(titleLength);
     UpdateComboBoxMetrics(language);
     UpdateComboBoxMetrics(reportLanguage);
     UpdateComboBoxMetrics(antialiasing);
@@ -3095,10 +3095,16 @@ static void LayoutPreferences(PreferencesData& data) {
     PlaceControl(cancel, rightButton - gap.cx - button.cx, bottom, button.cx, button.cy);
     PlaceControl(accept, rightButton - 2 * (gap.cx + button.cx), bottom, button.cx, button.cy);
     PlaceControl(clear, rightButton, clearBounds.top, button.cx, button.cy);
-    SIZE numberWidth = DialogUnits(data.uiFont, 45, 0);
-    PlaceControl(tabLength, column.cx, lengthBounds.top, numberWidth.cx,
+    PlaceControl(tabLength, column.cx, lengthBounds.top, button.cx,
         lengthBounds.bottom - lengthBounds.top);
     SendMessageW(tabSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(tabLength), 0);
+    PlaceControl(titleLength, rightButton, lengthBounds.top, button.cx,
+        lengthBounds.bottom - lengthBounds.top);
+    SendMessageW(titleSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(titleLength), 0);
+    LONG titleLeft = column.cx + button.cx + gap.cx;
+    RECT titleBounds = ControlRect(titleLabel, window);
+    PlaceControl(titleLabel, titleLeft, titleBounds.top, rightButton - gap.cx - titleLeft,
+        titleBounds.bottom - titleBounds.top);
     PlaceControl(path, pathBounds.left, pathBounds.top, rightButton - gap.cx - pathBounds.left,
         pathBounds.bottom - pathBounds.top);
     int fontWidth = rightButton - gap.cx - fontBounds.left;
@@ -3134,6 +3140,7 @@ static void LayoutPreferences(PreferencesData& data) {
     AlignControlBaseline(cancel, accept);
     AlignControlBaseline(apply, accept);
     AlignControlBaseline(GetDlgItem(window, IDC_TAB_NAME_LABEL), tabLength);
+    AlignControlBaseline(titleLabel, titleLength);
     HWND recentLabel = GetDlgItem(window, IDC_RECENT_LABEL);
     RECT recentBounds = ControlRect(recentLabel, window);
     PlaceControl(recentLabel, margin.cx, recentBounds.top, rightButton - gap.cx - margin.cx,
@@ -3285,6 +3292,11 @@ static bool ApplyPreferences(PreferencesData& data) {
         MessageBoxW(data.window, T(TXT_TAB_NAME_LENGTH_INVALID), L"MediaInfo", MB_OK | MB_ICONERROR);
         return false;
     }
+    UINT titleLength = GetDlgItemInt(data.window, IDC_TITLE_NAME_LENGTH, &valid, FALSE);
+    if (!valid || titleLength < minimumTitleNameLength || titleLength > maximumTitleNameLength) {
+        MessageBoxW(data.window, T(TXT_TITLE_NAME_LENGTH_INVALID), L"MediaInfo", MB_OK | MB_ICONERROR);
+        return false;
+    }
     wchar_t path[MAX_PATH];
     wchar_t curlPath[MAX_PATH];
     GetDlgItemTextW(data.window, IDC_DLL_PATH, path, MAX_PATH);
@@ -3339,11 +3351,12 @@ static bool ApplyPreferences(PreferencesData& data) {
     saved = SaveReportLanguageSetting(data.reportLanguage) && saved;
     saved = SaveFontSetting(data.font, data.dpi) && saved;
     saved = SaveTabNameLengthSetting(tabLength) && saved;
+    saved = SaveTitleNameLengthSetting(titleLength) && saved;
     bool closeTabs = IsDlgButtonChecked(data.window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK) == BST_CHECKED;
     saved = SaveCloseTabsOnDoubleClickSetting(closeTabs) && saved;
     bool multipleInstances = IsDlgButtonChecked(data.window, IDC_MULTIPLE_INSTANCES) == BST_CHECKED;
     saved = SaveMultipleInstancesSetting(multipleInstances) && saved;
-    PreferencesChanges changes = PreferencesChanges{ reloadLibrary, tabLength, closeTabs };
+    PreferencesChanges changes = PreferencesChanges{ reloadLibrary, tabLength, titleLength, closeTabs };
     *data.appliedFont = data.font;
     *data.appliedDpi = data.dpi;
     lstrcpyW(data.originalPath, path);
@@ -3351,6 +3364,7 @@ static bool ApplyPreferences(PreferencesData& data) {
     lstrcpyW(data.originalReportLanguage, data.reportLanguage);
     data.originalLanguage = data.language;
     data.originalTabNameLength = tabLength;
+    data.originalTitleNameLength = titleLength;
     data.originalCloseTabsOnDoubleClick = closeTabs;
     data.originalMultipleInstances = multipleInstances;
     data.applied = true;
@@ -3458,7 +3472,8 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         SendDlgItemMessageW(window, IDC_DLL_PATH, EM_SETLIMITTEXT, MAX_PATH - 1, 0);
         if (!InstallSelectionEditHandler(GetDlgItem(window, IDC_DLL_PATH))
                 || !InstallSelectionEditHandler(GetDlgItem(window, IDC_CURL_PATH))
-                || !InstallSelectionEditHandler(GetDlgItem(window, IDC_TAB_NAME_LENGTH))) {
+                || !InstallSelectionEditHandler(GetDlgItem(window, IDC_TAB_NAME_LENGTH))
+                || !InstallSelectionEditHandler(GetDlgItem(window, IDC_TITLE_NAME_LENGTH))) {
             EndDialog(window, -1);
             return TRUE;
         }
@@ -3472,6 +3487,14 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
             MAKELPARAM(maximumTabNameLength, minimumTabNameLength));
         SendDlgItemMessageW(window, IDC_TAB_NAME_SPIN, UDM_SETPOS, 0,
             MAKELPARAM(data->originalTabNameLength, 0));
+        SetDlgItemInt(window, IDC_TITLE_NAME_LENGTH, data->originalTitleNameLength, FALSE);
+        SendDlgItemMessageW(window, IDC_TITLE_NAME_LENGTH, EM_SETLIMITTEXT, 3, 0);
+        SendDlgItemMessageW(window, IDC_TITLE_NAME_SPIN, UDM_SETBUDDY,
+            reinterpret_cast<WPARAM>(GetDlgItem(window, IDC_TITLE_NAME_LENGTH)), 0);
+        SendDlgItemMessageW(window, IDC_TITLE_NAME_SPIN, UDM_SETRANGE, 0,
+            MAKELPARAM(maximumTitleNameLength, minimumTitleNameLength));
+        SendDlgItemMessageW(window, IDC_TITLE_NAME_SPIN, UDM_SETPOS, 0,
+            MAKELPARAM(data->originalTitleNameLength, 0));
         data->originalCloseTabsOnDoubleClick = LoadCloseTabsOnDoubleClickSetting();
         CheckDlgButton(window, IDC_CLOSE_TABS_ON_DOUBLE_CLICK,
             data->originalCloseTabsOnDoubleClick ? BST_CHECKED : BST_UNCHECKED);
@@ -3483,7 +3506,8 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         UpdateSmoothingChoices(*data);
         SetPreferencesFont(*data, false);
         UpdateFontButtons(*data);
-        if (!InstallPreferencesControlHandlers(window)) {
+        if (!InstallPreferencesControlHandlers(window)
+                || !data->placement->Attach(window, "PreferencesWindow")) {
             EndDialog(window, -1);
             return TRUE;
         }
@@ -3534,6 +3558,7 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
             case IDC_DLL_PATH:
             case IDC_CURL_PATH:
             case IDC_TAB_NAME_LENGTH:
+            case IDC_TITLE_NAME_LENGTH:
                 if (HIWORD(wParam) == EN_CHANGE) {
                     UpdateApplyButton(*data);
                 }
@@ -3594,11 +3619,12 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
     return FALSE;
 }
 
-/// Shows modal Preferences and returns committed font and report-language changes to the caller.
-bool ShowPreferences(HWND owner, MediaInfoLibrary& library, LOGFONTW* font, UINT* dpi,
-        bool* reportLanguageChanged, const PreferencesCallbacks* callbacks) {
+/// Restores session-only Preferences placement and returns committed font and report-language changes.
+bool ShowPreferences(HWND owner, MediaInfoLibrary& library, PersistWindowState& placement,
+        LOGFONTW* font, UINT* dpi, bool* reportLanguageChanged, const PreferencesCallbacks* callbacks) {
     PreferencesData data = PreferencesData{};
     data.library = &library;
+    data.placement = &placement;
     data.appliedFont = font;
     data.appliedDpi = dpi;
     data.callbacks = callbacks;
@@ -3607,6 +3633,10 @@ bool ShowPreferences(HWND owner, MediaInfoLibrary& library, LOGFONTW* font, UINT
     data.originalLanguage = GetApplicationLanguage();
     data.language = data.originalLanguage;
     data.originalTabNameLength = LoadTabNameLengthSetting();
+    data.originalTitleNameLength = LoadTitleNameLengthSetting();
+    placement.SetSavingOptions(PersistWindowStateSavingOptions::None);
+    placement.SetDetectionOptions(WindowDetectionOptions::NoDetection);
+    placement.SetUseWindowsDefaultLocation(false);
     HINSTANCE instance = GetModuleHandleW(nullptr);
     DLGTEMPLATE* definition = LoadSystemDialogTemplate(instance, IDD_PREFERENCES, owner);
     if (!definition) {

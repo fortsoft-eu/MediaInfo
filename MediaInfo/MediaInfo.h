@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.2
  */
 
 #pragma once
@@ -32,6 +32,7 @@ class MediaInfoLibrary;
 struct PrintJob;
 struct PreferencesCallbacks;
 class PrintSettings;
+class PersistWindowState;
 
 /// Supported interface locales in the same order as the language selection list.
 enum AppLanguage {
@@ -195,9 +196,11 @@ enum TextId {
     TXT_MEDIALIB_UNLOAD_OPERATION,
     TXT_APPLY,
     TXT_TAB_NAME_LENGTH,
+    TXT_TITLE_NAME_LENGTH,
     TXT_RECENT_FILES,
     TXT_CLEAR_RECENT_FILES,
     TXT_TAB_NAME_LENGTH_INVALID,
+    TXT_TITLE_NAME_LENGTH_INVALID,
     TXT_RECENT_FILES_SAVE_FAILED,
     TXT_CLOSE_TABS_ON_DOUBLE_CLICK,
     TXT_CLOSE_TAB_CONTEXT,
@@ -306,9 +309,9 @@ bool ValidateInstanceFiles(const COPYDATASTRUCT* request);
 /// Starts the viewer or forwards a restricted launch while serializing simultaneous startup attempts.
 int RunViewer(int count, wchar_t** arguments);
 
-/// Shows modal Preferences and returns committed font and report-language changes to the caller.
-bool ShowPreferences(HWND owner, MediaInfoLibrary& library, LOGFONTW* font, UINT* dpi,
-    bool* reportLanguageChanged = nullptr, const PreferencesCallbacks* callbacks = nullptr);
+/// Restores session-only Preferences placement and returns committed font and report-language changes.
+bool ShowPreferences(HWND owner, MediaInfoLibrary& library, PersistWindowState& placement, LOGFONTW* font,
+    UINT* dpi, bool* reportLanguageChanged = nullptr, const PreferencesCallbacks* callbacks = nullptr);
 
 /// Chooses media paths with a modern native dialog when available and the legacy dialog otherwise.
 wchar_t* ChooseMediaFiles(HWND owner);

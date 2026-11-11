@@ -203,6 +203,11 @@ Roghanna, is féidir teorainn a chur le fad ainm an chluaisín (80 de réir réa
 gcomhad le déanaí a ghlanadh. Coinnítear tús, deireadh agus iarmhír ainmneacha fada le comhartha focalbhá sa
 lár.
 
+Taispeánann teideal na príomhfhuinneoige an comhad gníomhach san fhoirm ainm comhaid — MediaInfo. Sna
+sainroghanna is féidir fad an ainm sa teideal a shocrú ar leithligh idir 8 agus 255 carachtar (40 de réir
+réamhshocraithe). Giorraítear ainmneacha níos faide leis an gcomhartha céanna trí phonc sa lár agus
+coinnítear an iarmhír. Mura bhfuil cluaisín ar oscailt, is é MediaInfo an teideal.
+
 De réir réamhshocraithe, ní cheadaítear ach ásc amháin agus seolann seoltaí eile na comhaid chuig an
 bhfuinneog oscailte. Is féidir áscanna iolracha a cheadú sna socruithe. Má tá roinnt fuinneog ann, ní
 athchóirítear an suíomh sábháilte ach don chéad fhuinneog de gach foirm; ní athchóirítear ach an méid do na

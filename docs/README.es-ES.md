@@ -203,6 +203,11 @@ Aceptar o Aplicar confirma los cambios; Cancelar descarta los pendientes. Las pr
 los nombres de pestaña (80 por defecto) y borrar la lista de archivos recientes. Los nombres largos conservan
 el principio, el final y la extensión con puntos suspensivos en medio.
 
+El título de la ventana principal muestra el archivo activo como nombre de archivo — MediaInfo. Las
+preferencias permiten fijar por separado la longitud del nombre en el título entre 8 y 255 caracteres (40
+por defecto). Los nombres largos usan los mismos puntos suspensivos en el centro y conservan la extensión.
+Sin pestañas abiertas, el título es MediaInfo.
+
 De forma predeterminada, solo se permite una instancia y los siguientes inicios envían los archivos a la
 ventana abierta. En Preferencias se pueden permitir varias instancias. Si hay varias ventanas, solo la primera
 de cada formulario recupera su posición guardada; las siguientes recuperan únicamente el tamaño.

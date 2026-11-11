@@ -203,6 +203,11 @@ OK of Toepassen bevestigt wijzigingen; Annuleren verwerpt openstaande wijziginge
 limiet voor tabnamen in (standaard 80) en wissen de lijst met recente bestanden. Lange namen behouden begin,
 einde en extensie met een weglatingsteken in het midden.
 
+De titel van het hoofdvenster toont het actieve bestand als bestandsnaam — MediaInfo. In de voorkeuren kan
+de naamlengte in de titel afzonderlijk worden ingesteld op 8–255 tekens (standaard 40). Langere namen
+worden met hetzelfde weglatingsteken in het midden ingekort en behouden de extensie. Zonder geopende
+tabbladen is de titel MediaInfo.
+
 Standaard is slechts één exemplaar toegestaan en worden bestanden bij opnieuw starten naar het open venster
 gestuurd. In de voorkeuren kunnen meerdere exemplaren worden toegestaan. Bij meerdere vensters herstelt alleen
 het eerste venster van elk formulier de opgeslagen positie; latere vensters herstellen alleen de grootte.

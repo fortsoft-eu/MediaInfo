@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.2
  */
 
 #include "SettingsStorage.h"
@@ -72,8 +72,9 @@ static bool ReadSetting(const wchar_t* name, DWORD type, void* data, DWORD* byte
 static bool WriteSetting(const wchar_t* name, DWORD type, const void* data, DWORD bytes) {
     HKEY key = nullptr;
     DWORD disposition = 0;
-    if (RegCreateKeyExW(HKEY_CURRENT_USER, settingsKey, 0, nullptr, 0, KEY_SET_VALUE, nullptr, &key,
-            &disposition) != ERROR_SUCCESS) {
+    const LONG createResult = RegCreateKeyExW(HKEY_CURRENT_USER, settingsKey, 0, nullptr, 0,
+        KEY_SET_VALUE, nullptr, &key, &disposition);
+    if (createResult != ERROR_SUCCESS) {
         return false;
     }
     LONG result = RegSetValueExW(key, name, 0, type, static_cast<const BYTE*>(data), bytes);
@@ -116,8 +117,9 @@ void LoadReportOptionsSetting(bool& fullParsing, bool& advancedMode, UINT& trace
 
 /// Persists the full report-option combination for newly opened tabs in one shared-option update.
 bool SaveReportOptionsSetting(bool fullParsing, bool advancedMode, UINT traceLevel) {
-    DWORD bits =
-        (fullParsing ? fullParsingOption : 0) | (advancedMode ? advancedModeOption : 0) | traceLevel << 3;
+    DWORD bits = (fullParsing ? fullParsingOption : 0)
+        | (advancedMode ? advancedModeOption : 0)
+        | traceLevel << 3;
     return traceLevel < 4 && SaveOption(fullParsingOption | advancedModeOption | traceLevelMask, bits);
 }
 
@@ -176,6 +178,22 @@ bool SaveTabNameLengthSetting(UINT length) {
     return WriteSetting(L"TabNameLength", REG_DWORD, &value, sizeof(value));
 }
 
+/// Loads and bounds the saved window-title name length, defaulting to forty characters.
+UINT LoadTitleNameLengthSetting() {
+    DWORD length = 0;
+    DWORD bytes = sizeof(length);
+    return ReadSetting(L"TitleNameLength", REG_DWORD, &length, &bytes)
+        && bytes == sizeof(length)
+        && length >= minimumTitleNameLength
+        && length <= maximumTitleNameLength ? length : defaultTitleNameLength;
+}
+
+/// Persists the validated window-title name length.
+bool SaveTitleNameLengthSetting(UINT length) {
+    DWORD value = length;
+    return WriteSetting(L"TitleNameLength", REG_DWORD, &value, sizeof(value));
+}
+
 /// Reports whether saved recent-file paths are present in the registry.
 bool HasRecentFilesSetting() {
     DWORD bytes = 0;
@@ -205,9 +223,8 @@ bool SaveCurlSetting(const wchar_t* path) {
 int LoadApplicationLanguageSetting() {
     DWORD language = 0;
     DWORD bytes = sizeof(language);
-    return ReadSetting(L"Language", REG_DWORD, &language, &bytes)
-        && bytes == sizeof(language)
-        && language < 36 ? static_cast<int>(language) : -1;
+    const bool loaded = ReadSetting(L"Language", REG_DWORD, &language, &bytes);
+    return loaded && bytes == sizeof(language) && language < 36 ? static_cast<int>(language) : -1;
 }
 
 /// Persists the selected application-interface language index.
@@ -234,8 +251,8 @@ bool SaveReportLanguageSetting(const wchar_t* selection) {
 bool LoadFontSetting(LOGFONTW* font, UINT* dpi) {
     SavedFont saved = SavedFont{};
     DWORD bytes = sizeof(saved);
-    if (!ReadSetting(L"ReportFont", REG_BINARY, &saved,
-            &bytes) || bytes != sizeof(saved) || !saved.dpi || saved.dpi > 960) {
+    const bool loaded = ReadSetting(L"ReportFont", REG_BINARY, &saved, &bytes);
+    if (!loaded || bytes != sizeof(saved) || !saved.dpi || saved.dpi > 960) {
         return false;
     }
     saved.font.lfFaceName[LF_FACESIZE - 1] = 0;
@@ -286,8 +303,8 @@ void LoadExportSetting(wchar_t* folder, DWORD capacity, DWORD* type) {
     }
     folder[capacity - 1] = 0;
     bytes = sizeof(*type);
-    if (!ReadSetting(L"ExportFormat", REG_DWORD, type,
-            &bytes) || bytes != sizeof(*type) || *type < 1 || *type > 11) {
+    const bool loaded = ReadSetting(L"ExportFormat", REG_DWORD, type, &bytes);
+    if (!loaded || bytes != sizeof(*type) || *type < 1 || *type > 11) {
         *type = 2;
     }
 }
@@ -312,8 +329,8 @@ void SaveExportSetting(const wchar_t* filename, DWORD type) {
 /// Loads the saved double-null-terminated recent-file buffer with size validation.
 DWORD LoadRecentFilesSetting(wchar_t* paths, DWORD capacity) {
     DWORD bytes = capacity * sizeof(wchar_t);
-    if (!ReadSetting(L"RecentFiles", REG_MULTI_SZ, paths,
-            &bytes) || bytes < 2 * sizeof(wchar_t) || bytes % sizeof(wchar_t)) {
+    const bool loaded = ReadSetting(L"RecentFiles", REG_MULTI_SZ, paths, &bytes);
+    if (!loaded || bytes < 2 * sizeof(wchar_t) || bytes % sizeof(wchar_t)) {
         return 0;
     }
     DWORD length = bytes / sizeof(wchar_t);
@@ -333,10 +350,10 @@ RECT WindowWorkArea(const RECT& rectangle) {
     NativeMonitorInfo info = NativeMonitorInfo{};
     info.size = sizeof(info);
     HMODULE user = GetModuleHandleW(L"user32.dll");
-    MonitorFromRectFunction fromRect =
-        reinterpret_cast<MonitorFromRectFunction>(GetProcAddress(user, "MonitorFromRect"));
-    GetMonitorInfoFunction getInfo =
-        reinterpret_cast<GetMonitorInfoFunction>(GetProcAddress(user, "GetMonitorInfoW"));
+    MonitorFromRectFunction fromRect = reinterpret_cast<MonitorFromRectFunction>(GetProcAddress(user,
+        "MonitorFromRect"));
+    GetMonitorInfoFunction getInfo = reinterpret_cast<GetMonitorInfoFunction>(GetProcAddress(user,
+        "GetMonitorInfoW"));
     if (fromRect && getInfo && getInfo(fromRect(&rectangle, 2), &info)) {
         return info.work;
     }

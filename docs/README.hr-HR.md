@@ -190,6 +190,10 @@ U redu ili Primijeni potvrđuje promjene; Odustani odbacuje nepotvrđene promjen
 naziva kartice (zadano 80) i brišu popis nedavnih datoteka. Dugi nazivi zadržavaju početak, kraj i nastavak s
 trotočkom u sredini.
 
+Naslov glavnog prozora prikazuje aktivnu datoteku u obliku naziv datoteke — MediaInfo. U postavkama se
+duljina naziva u naslovu može zasebno postaviti na 8–255 znakova (zadano 40). Dulji nazivi skraćuju se
+istom trotočkom u sredini, uz očuvanje nastavka. Bez otvorenih kartica naslov je MediaInfo.
+
 Prema zadanim postavkama dopuštena je samo jedna instanca, a sljedeća pokretanja šalju datoteke otvorenom
 prozoru. U postavkama se može dopustiti više instanci. Kada postoji više prozora, samo prvi prozor svakog
 obrasca vraća spremljeni položaj; ostali vraćaju samo veličinu.

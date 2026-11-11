@@ -195,6 +195,11 @@ OK tai Käytä vahvistaa muutokset; Peruuta hylkää odottavat muutokset. Asetuk
 nimien pituutta (oletus 80 merkkiä) ja tyhjentää viimeisimpien tiedostojen luettelon. Pitkissä nimissä
 säilyvät alku, loppu ja tiedostopääte, ja keskellä on kolme pistettä.
 
+Pääikkunan otsikko näyttää aktiivisen tiedoston muodossa tiedostonimi — MediaInfo. Asetuksissa otsikossa
+olevan nimen pituudeksi voi valita erikseen 8–255 merkkiä (oletus 40). Pidemmät nimet lyhennetään samalla
+keskelle lisättävällä kolmella pisteellä, ja tiedostotunniste säilytetään. Kun välilehtiä ei ole auki,
+otsikko on MediaInfo.
+
 Oletuksena sallitaan vain yksi esiintymä, ja myöhemmät käynnistykset lähettävät tiedostot avoimeen ikkunaan.
 Asetuksissa voi sallia useita esiintymiä. Kun ikkunoita on useita, vain kunkin lomakkeen ensimmäinen ikkuna
 palauttaa tallennetun sijaintinsa; myöhemmät ikkunat palauttavat vain koon.

@@ -182,6 +182,10 @@ OK nebo Použít potvrdí změny; Zrušit zahodí rozpracované úpravy. V před
 karty (výchozí 80 znaků) a vymazat seznam posledních souborů. Dlouhé názvy zachovají začátek, konec i příponu
 s výpustkou uprostřed.
 
+Záhlaví hlavního okna zobrazuje aktivní soubor ve tvaru název souboru — MediaInfo. V předvolbách lze
+samostatně nastavit délku názvu v záhlaví na 8–255 znaků; výchozí hodnota je 40. Delší názvy se zkracují
+stejnou výpustkou uprostřed se zachováním přípony. Bez otevřených karet je záhlaví MediaInfo.
+
 Ve výchozím stavu je povolena pouze jedna instance a další spuštění předá soubory otevřenému oknu. V
 předvolbách lze povolit více instancí. Při více oknech se uložená pozice obnoví jen prvnímu oknu daného
 formuláře; další převezmou pouze uloženou velikost.

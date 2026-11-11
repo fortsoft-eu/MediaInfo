@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.2
  */
 
 #include "FindForm.h"
@@ -234,7 +234,7 @@ void FindForm::Layout() {
         SWP_NOACTIVATE | (IsZoomed(window) ? SWP_HIDEWINDOW : SWP_SHOWWINDOW));
 }
 
-/// Enables Find Next only when a report and a nonempty search expression are available.
+/// Enables Find Next only when the selected edit contains text and a search expression is available.
 void FindForm::UpdateFindButton() {
     if (!window) {
         return;
@@ -242,7 +242,7 @@ void FindForm::UpdateFindButton() {
     HWND button = GetDlgItem(window, IDOK);
     HWND combo = GetDlgItem(window, IDC_FIND_TEXT);
     bool hasText = SendMessageW(combo, CB_GETCURSEL, 0, 0) != CB_ERR || GetWindowTextLengthW(combo) > 0;
-    bool enabled = target && hasText;
+    bool enabled = CanSearch() && hasText;
     if (!enabled && GetFocus() == button) {
         SetFocus(GetDlgItem(window, IDC_FIND_TEXT));
     }
@@ -392,7 +392,9 @@ bool FindForm::FindLiteral(wchar_t* report) {
                 ++last;
             }
             int suffix = last - length;
-            bool prefix = startsWith && length <= last - first && FindLiteralAt(report, needle, first, length);
+            bool prefix = startsWith
+                && length <= last - first
+                && FindLiteralAt(report, needle, first, length);
             if (prefix) {
                 success = AddMatch(first, length);
             }
@@ -449,7 +451,8 @@ bool FindForm::FindRegex(const wchar_t* report) {
             return false;
         }
         if (!AddMatch(start, matched)) {
-            MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo",
+                MB_OK | MB_ICONERROR);
             return false;
         }
         offset = start + matched;
@@ -516,7 +519,7 @@ void FindForm::SelectMatch(bool reverse) {
 /// Searches the selected text edit, reversing the selected direction for Find Previous or Shift.
 void FindForm::FindNext(HWND owner, bool reverse) {
     ownerWindow = owner;
-    if (!target || !IsWindow(target)) {
+    if (!CanSearch()) {
         SetTarget(nullptr);
         return;
     }
@@ -617,6 +620,11 @@ void FindForm::RefreshLanguage() {
     Layout();
 }
 
+/// Reports whether the selected edit still exists and contains searchable text.
+bool FindForm::CanSearch() const {
+    return target && IsWindow(target) && GetWindowTextLengthW(target) > 0;
+}
+
 /// Retains logical search state when an existing report edit is replaced for native style changes.
 void FindForm::ReplaceTarget(HWND original, HWND replacement) {
     if (target == original) {
@@ -627,8 +635,11 @@ void FindForm::ReplaceTarget(HWND original, HWND replacement) {
     }
 }
 
-/// Opens or activates this viewer's search form without blocking its main window.
+/// Opens or activates the modeless search form only when its selected edit contains text.
 void FindForm::Show(HWND owner) {
+    if (!CanSearch()) {
+        return;
+    }
     ownerWindow = owner;
     if (!window) {
         HINSTANCE instance = GetModuleHandleW(nullptr);

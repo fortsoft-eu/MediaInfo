@@ -191,6 +191,10 @@ Tamam veya Uygula değişiklikleri onaylar; İptal bekleyen değişiklikleri ata
 (varsayılan 80) ayarlar ve son dosyalar listesini temizler. Uzun adlar başlangıcı, sonu ve uzantıyı korur;
 ortada üç nokta bulunur.
 
+Ana pencere başlığı etkin dosyayı dosya adı — MediaInfo biçiminde gösterir. Tercihlerde başlıktaki adın
+uzunluğu bağımsız olarak 8–255 karakter arasında ayarlanabilir (varsayılan 40). Uzun adlar aynı orta üç
+noktayla kısaltılır ve uzantı korunur. Açık sekme yoksa başlık MediaInfo olur.
+
 Varsayılan olarak yalnızca tek örneğe izin verilir ve sonraki başlatmalar dosyaları açık pencereye gönderir.
 Tercihlerde birden fazla örneğe izin verilebilir. Birden fazla pencere olduğunda, her formun yalnızca ilk
 penceresi kayıtlı konumunu geri yükler; sonraki pencereler yalnızca boyutu geri yükler.

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.2
  */
 
 #pragma once
@@ -123,10 +123,11 @@ struct PrintJob {
     bool success;
 };
 
-/// Identifies committed preferences that require refreshing reports or tab captions.
+/// Identifies committed preferences that require refreshing reports, tab captions or the window title.
 struct PreferencesChanges {
     bool reportsChanged;
     UINT tabNameLength;
+    UINT titleNameLength;
     bool closeTabsOnDoubleClick;
 };
 
@@ -173,6 +174,7 @@ private:
     /// Library connection, information forms, placement and recent-file history.
     MediaInfoLibrary library;
     PersistWindowState placement;
+    PersistWindowState preferencesPlacement;
     HelpForm helpForm;
     AboutForm aboutForm;
     FindForm findForm;
@@ -188,11 +190,12 @@ private:
     /// Borrows the context while the native tab popup is active.
     FileMenuContext* tabMenuContext;
 
-    /// Report font, tab-caption preferences and identifiers for queued work.
+    /// Report font, caption preferences and identifiers for queued work.
     LOGFONTW reportFontSpec;
     UINT reportFontDpi;
     UINT nextId;
     UINT tabNameLength;
+    UINT titleNameLength;
     UINT traceLevel;
 
     /// Shutdown, loading, theme and report-option state.
@@ -294,7 +297,7 @@ private:
     /// Shows the active search selection while restoring normal hiding in all other report edits.
     bool UpdateSearchSelection();
 
-    /// Refreshes active-tab command availability immediately before the Edit menu or shortcuts are used.
+    /// Refreshes report-edit and focused-source search command availability before menus or shortcuts.
     void UpdateEditMenu();
 
     /// Copies only the selected text of the active report through the native edit control.
@@ -314,6 +317,9 @@ private:
 
     /// Shows modal Preferences with callbacks that apply changes to the live viewer.
     void Preferences();
+
+    /// Updates the window title from the active tab using its independent name-length limit.
+    void UpdateWindowTitle();
 
     /// Applies the configured filename-length limit to every open tab caption.
     void UpdateTabNames();

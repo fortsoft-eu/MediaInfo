@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.0
+ * Last modified for version 1.2.1.2
  */
 
 #include "Localization.h"
@@ -205,9 +205,10 @@ MainForm::MainForm()
         printDialog(nullptr), uiFont(nullptr), reportFont(nullptr), accelerators(nullptr),
         reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
         activePrintJob(nullptr), modernPrint(nullptr), tabMenuContext(nullptr), reportFontSpec(),
-        reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength), traceLevel(0), closing(false),
-        printDialogOpen(false), libraryLoading(true), unicodeTabs(false), visualStylesActive(false),
-        advancedMode(false), fullParsing(false), defaultWordWrap(false), closeTabsOnDoubleClick(false) {
+        reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength),
+        titleNameLength(defaultTitleNameLength), traceLevel(0), closing(false), printDialogOpen(false),
+        libraryLoading(true), unicodeTabs(false), visualStylesActive(false), advancedMode(false),
+        fullParsing(false), defaultWordWrap(false), closeTabsOnDoubleClick(false) {
     LoadReportOptionsSetting(fullParsing, advancedMode, traceLevel);
     defaultWordWrap = LoadWordWrapSetting();
     closeTabsOnDoubleClick = LoadCloseTabsOnDoubleClickSetting();
@@ -306,6 +307,7 @@ bool MainForm::Initialize() {
     recentFiles.UpdateMenu(GetMenu(window));
     LoadFontSetting(&reportFontSpec, &reportFontDpi);
     tabNameLength = LoadTabNameLengthSetting();
+    titleNameLength = LoadTitleNameLengthSetting();
     RebuildFonts();
     accelerators = LoadAcceleratorsW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDR_ACCELERATORS));
     DragAcceptFiles(window, TRUE);
@@ -356,6 +358,7 @@ void MainForm::ApplyLanguage() {
     helpForm.RefreshLanguage();
     aboutForm.RefreshLanguage();
     findForm.RefreshLanguage();
+    UpdateWindowTitle();
     UpdateStatus();
 }
 
@@ -447,7 +450,6 @@ void MainForm::UpdateStatus() {
     SendMessageW(status, SB_SETPARTS, showVersion ? 2 : 1, reinterpret_cast<LPARAM>(parts));
     FileTab* active = CurrentFile();
     bool wrap = active ? active->wordWrap : defaultWordWrap;
-    UpdateFindTarget();
     UpdateEditMenu();
     EnableMenuItem(GetMenu(window), ID_WORD_WRAP,
         MF_BYCOMMAND | (active && !closing ? MF_ENABLED : MF_GRAYED));
@@ -736,6 +738,7 @@ void MainForm::SelectTab(int index) {
         TabCtrl_SetCurSel(tabs, index);
     }
     FileTab* selected = CurrentFile();
+    UpdateWindowTitle();
     if (!UpdateSearchSelection()) {
         MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
     }
@@ -886,8 +889,9 @@ bool MainForm::UpdateSearchSelection() {
     return success;
 }
 
-/// Refreshes active-tab command availability immediately before the Edit menu or shortcuts are used.
+/// Refreshes report-edit and focused-source search command availability before menus or shortcuts.
 void MainForm::UpdateEditMenu() {
+    UpdateFindTarget();
     FileTab* active = CurrentFile();
     DWORD start = 0;
     DWORD end = 0;
@@ -901,9 +905,10 @@ void MainForm::UpdateEditMenu() {
     EnableMenuItem(menu, ID_EDIT_COPY, MF_BYCOMMAND | (start != end ? MF_ENABLED : MF_GRAYED));
     EnableMenuItem(menu, ID_EDIT_SELECT_ALL,
         MF_BYCOMMAND | (length && (start || end < static_cast<DWORD>(length)) ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(menu, ID_EDIT_FIND, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(menu, ID_EDIT_FIND_NEXT, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
-    EnableMenuItem(menu, ID_EDIT_FIND_PREVIOUS, MF_BYCOMMAND | (length ? MF_ENABLED : MF_GRAYED));
+    bool searchable = findForm.CanSearch();
+    EnableMenuItem(menu, ID_EDIT_FIND, MF_BYCOMMAND | (searchable ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_FIND_NEXT, MF_BYCOMMAND | (searchable ? MF_ENABLED : MF_GRAYED));
+    EnableMenuItem(menu, ID_EDIT_FIND_PREVIOUS, MF_BYCOMMAND | (searchable ? MF_ENABLED : MF_GRAYED));
     bool file = active && active->command == LibraryCommand::Read && !closing;
     EnableMenuItem(menu, ID_EDIT_COPY_FILE_NAME, MF_BYCOMMAND | (file ? MF_ENABLED : MF_GRAYED));
     EnableMenuItem(menu, ID_EDIT_COPY_FULL_PATH, MF_BYCOMMAND | (file ? MF_ENABLED : MF_GRAYED));
@@ -1138,7 +1143,8 @@ void MainForm::Preferences() {
         PreferencesClearRecentFiles,
         PreferencesLoading
     };
-    ShowPreferences(window, library, &reportFontSpec, &reportFontDpi, nullptr, &callbacks);
+    ShowPreferences(window, library, preferencesPlacement, &reportFontSpec, &reportFontDpi,
+        nullptr, &callbacks);
     UpdateStatus();
 }
 
@@ -1168,6 +1174,23 @@ bool MainForm::PreferencesClearRecentFiles(void* context) {
     owner->recentFiles.UpdateMenu(GetMenu(owner->window));
     DrawMenuBar(owner->window);
     return saved;
+}
+
+/// Updates the window title from the active tab using its independent name-length limit.
+void MainForm::UpdateWindowTitle() {
+    FileTab* file = CurrentFile();
+    if (!file) {
+        SetWindowTextW(window, L"MediaInfo");
+        return;
+    }
+    wchar_t caption[MAX_PATH + 16];
+    if (file->command == LibraryCommand::Read) {
+        FormatFileNameCaption(file->path, titleNameLength, caption, MAX_PATH);
+    } else {
+        FormatMiddleCaption(KnownInformationTitle(file->command), titleNameLength, false, caption, MAX_PATH);
+    }
+    lstrcatW(caption, L" \u2014 MediaInfo");
+    SetWindowTextW(window, caption);
 }
 
 /// Applies the configured filename-length limit to every open tab caption.
@@ -1245,6 +1268,7 @@ void MainForm::RefreshReports(bool discardCached) {
 void MainForm::PreferencesApplied(void* context, const PreferencesChanges& changes) {
     MainForm* owner = static_cast<MainForm*>(context);
     owner->tabNameLength = changes.tabNameLength;
+    owner->titleNameLength = changes.titleNameLength;
     owner->closeTabsOnDoubleClick = changes.closeTabsOnDoubleClick;
     owner->UpdateTabNames();
     if (changes.reportsChanged) {

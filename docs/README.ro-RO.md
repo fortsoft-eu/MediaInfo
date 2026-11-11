@@ -199,6 +199,11 @@ OK sau Se aplică confirmă modificările; Anulare le abandonează pe cele în a
 limita numelor filelor (implicit 80) și șterg lista fișierelor recente. Numele lungi păstrează începutul,
 sfârșitul și extensia, cu puncte de suspensie la mijloc.
 
+Titlul ferestrei principale afișează fișierul activ în forma nume fișier — MediaInfo. Preferințele permit
+setarea separată a lungimii numelui din titlu între 8 și 255 de caractere (implicit 40). Numele mai lungi
+sunt scurtate cu aceleași puncte de suspensie la mijloc, păstrând extensia. Fără file deschise, titlul
+este MediaInfo.
+
 În mod implicit este permisă o singură instanță, iar pornirile ulterioare trimit fișierele la fereastra
 deschisă. Preferințele permit activarea mai multor instanțe. Cu mai multe ferestre, doar prima fereastră a
 fiecărui formular restabilește poziția salvată; celelalte restabilesc doar dimensiunea.

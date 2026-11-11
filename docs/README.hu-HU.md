@@ -200,6 +200,10 @@ Az OK vagy az Alkalmaz véglegesíti a módosításokat; a Mégse elveti a függ
 korlátozható a lapnév hossza (alapérték 80), és törölhető a legutóbbi fájlok listája. A hosszú nevek eleje,
 vége és kiterjesztése megmarad, középen három ponttal.
 
+A főablak címsora az aktív fájlt fájlnév — MediaInfo alakban mutatja. A beállításokban a címsorban lévő
+név hossza külön állítható 8–255 karakterre (alapértelmezés: 40). A hosszabb nevek ugyanazzal a középre
+helyezett három ponttal rövidülnek, a kiterjesztés megmarad. Ha nincs nyitott lap, a cím MediaInfo.
+
 Alapértelmezés szerint csak egy példány engedélyezett, és a későbbi indítások átadják a fájlokat a nyitott
 ablaknak. A beállításokban több példány is engedélyezhető. Több ablak esetén csak az egyes űrlapok első ablaka
 állítja vissza a mentett pozíciót; a továbbiak csak a méretet.
