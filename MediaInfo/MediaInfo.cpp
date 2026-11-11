@@ -2959,7 +2959,7 @@ static bool InstallPreferencesControlHandlers(HWND window) {
     return true;
 }
 
-/// Keeps full-width native labels beneath fields while retaining the foreground controls' native tab order.
+/// Keeps labels beneath fields and places the title-length caption above the overlapping tab-name label.
 static void OrderPreferencesLabels(HWND window) {
     const int labels[] = {
         IDC_DLL_LABEL,
@@ -2969,8 +2969,8 @@ static void OrderPreferencesLabels(HWND window) {
         IDC_SMOOTHING_LABEL,
         IDC_LANGUAGE_LABEL,
         IDC_REPORT_LABEL,
-        IDC_TAB_NAME_LABEL,
         IDC_TITLE_NAME_LABEL,
+        IDC_TAB_NAME_LABEL,
         IDC_RECENT_LABEL
     };
     for (int id : labels) {
@@ -3101,7 +3101,8 @@ static void LayoutPreferences(PreferencesData& data) {
     PlaceControl(titleLength, rightButton, lengthBounds.top, button.cx,
         lengthBounds.bottom - lengthBounds.top);
     SendMessageW(titleSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(titleLength), 0);
-    LONG titleLeft = column.cx + button.cx + gap.cx;
+    RECT tabSpinBounds = ControlRect(tabSpin, window);
+    LONG titleLeft = tabSpinBounds.right + gap.cx;
     RECT titleBounds = ControlRect(titleLabel, window);
     PlaceControl(titleLabel, titleLeft, titleBounds.top, rightButton - gap.cx - titleLeft,
         titleBounds.bottom - titleBounds.top);
