@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.4
+ * Last modified for version 1.2.1.5
  */
 
 #include "MediaInfo.h"
@@ -2962,7 +2962,7 @@ static bool InstallPreferencesControlHandlers(HWND window) {
     return true;
 }
 
-/// Keeps labels beneath fields and places the title-length caption above the overlapping tab-name label.
+/// Keeps native spins above their buddy edits and overlapping labels behind foreground inputs.
 static void OrderPreferencesLabels(HWND window) {
     const int labels[] = {
         IDC_DLL_LABEL,
@@ -2976,8 +2976,13 @@ static void OrderPreferencesLabels(HWND window) {
         IDC_TAB_NAME_LABEL,
         IDC_RECENT_LABEL
     };
+    const int spins[] = { IDC_TAB_NAME_SPIN, IDC_TITLE_NAME_SPIN };
     for (int id : labels) {
         SetWindowPos(GetDlgItem(window, id), HWND_BOTTOM, 0, 0, 0, 0,
+            SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    }
+    for (int id : spins) {
+        SetWindowPos(GetDlgItem(window, id), HWND_TOP, 0, 0, 0, 0,
             SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
     }
 }
