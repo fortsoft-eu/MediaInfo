@@ -2874,6 +2874,17 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
         }
         baseline += step;
     }
+    const int numbers[][2] = {
+        { IDC_TAB_NAME_LENGTH, IDC_TAB_NAME_SPIN },
+        { IDC_TITLE_NAME_LENGTH, IDC_TITLE_NAME_SPIN }
+    };
+    for (int index = 0; index < 2; ++index) {
+        RECT number = ControlRect(GetDlgItem(window, numbers[index][0]), window);
+        HWND spin = GetDlgItem(window, numbers[index][1]);
+        RECT spinBounds = ControlRect(spin, window);
+        SetWindowPos(spin, nullptr, spinBounds.left, number.top, spinBounds.right - spinBounds.left,
+            number.bottom - number.top, SWP_NOZORDER | SWP_NOACTIVATE);
+    }
     LONG buttonsTop = baseline - step + below + DialogUnits(data.uiFont, 0, 6).cy;
     const int buttons[] = { IDOK, IDCANCEL, IDC_PREFERENCES_APPLY };
     LONG bottom = 0;
@@ -2962,7 +2973,7 @@ static bool InstallPreferencesControlHandlers(HWND window) {
     return true;
 }
 
-/// Keeps native spins above their buddy edits and overlapping labels behind foreground inputs.
+/// Keeps labels beneath fields and places the title-length caption above the overlapping tab-name label.
 static void OrderPreferencesLabels(HWND window) {
     const int labels[] = {
         IDC_DLL_LABEL,
@@ -2976,13 +2987,8 @@ static void OrderPreferencesLabels(HWND window) {
         IDC_TAB_NAME_LABEL,
         IDC_RECENT_LABEL
     };
-    const int spins[] = { IDC_TAB_NAME_SPIN, IDC_TITLE_NAME_SPIN };
     for (int id : labels) {
         SetWindowPos(GetDlgItem(window, id), HWND_BOTTOM, 0, 0, 0, 0,
-            SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-    }
-    for (int id : spins) {
-        SetWindowPos(GetDlgItem(window, id), HWND_TOP, 0, 0, 0, 0,
             SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
     }
 }
@@ -3105,8 +3111,15 @@ static void LayoutPreferences(PreferencesData& data) {
     PlaceControl(clear, rightButton, clearBounds.top, button.cx, button.cy);
     PlaceControl(tabLength, column.cx, lengthBounds.top, button.cx,
         lengthBounds.bottom - lengthBounds.top);
+    SendMessageW(tabSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(tabLength), 0);
     PlaceControl(titleLength, rightButton, lengthBounds.top, button.cx,
         lengthBounds.bottom - lengthBounds.top);
+    SendMessageW(titleSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(titleLength), 0);
+    RECT tabSpinBounds = ControlRect(tabSpin, window);
+    LONG titleLeft = tabSpinBounds.right + gap.cx;
+    RECT titleBounds = ControlRect(titleLabel, window);
+    PlaceControl(titleLabel, titleLeft, titleBounds.top, rightButton - gap.cx - titleLeft,
+        titleBounds.bottom - titleBounds.top);
     PlaceControl(path, pathBounds.left, pathBounds.top, rightButton - gap.cx - pathBounds.left,
         pathBounds.bottom - pathBounds.top);
     int fontWidth = rightButton - gap.cx - fontBounds.left;
@@ -3137,13 +3150,6 @@ static void LayoutPreferences(PreferencesData& data) {
     RECT closeBounds = ControlRect(closeTabs, window);
     PlaceControl(closeTabs, margin.cx, closeBounds.top, closeSize.cx, closeSize.cy);
     LayoutPreferencesVertically(data, margin);
-    SendMessageW(tabSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(tabLength), 0);
-    SendMessageW(titleSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(titleLength), 0);
-    RECT tabSpinBounds = ControlRect(tabSpin, window);
-    LONG titleLeft = tabSpinBounds.right + gap.cx;
-    RECT titleBounds = ControlRect(titleLabel, window);
-    PlaceControl(titleLabel, titleLeft, titleBounds.top, rightButton - gap.cx - titleLeft,
-        titleBounds.bottom - titleBounds.top);
     UpdateComboBoxDropDown(language);
     UpdateComboBoxDropDown(reportLanguage);
     UpdateComboBoxDropDown(antialiasing);
