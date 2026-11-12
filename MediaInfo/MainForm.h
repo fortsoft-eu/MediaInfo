@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.3
  */
 
 #pragma once
@@ -160,6 +160,7 @@ private:
     HWND window;
     HWND tabs;
     HWND status;
+    HWND lastFocusedControl;
     HWND searchWindow;
     HWND printOwner;
     HWND printDialog;
@@ -230,6 +231,9 @@ private:
 
     /// Places current paths and messages on the left and shows the loaded DLL version when space permits.
     void UpdateStatus();
+
+    /// Restores focus to the previous available child control or the active report edit.
+    void RestoreFocus();
 
     /// Selects the edit in the last active searchable form while retaining it during search-form input.
     void UpdateFindTarget();

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.3
  */
 
 #include "Localization.h"
@@ -201,11 +201,11 @@ static void FormatTabCaption(const FileTab* file, UINT limit, wchar_t* caption, 
 
 /// Initializes the viewer window, file lists, fonts and report-worker state.
 MainForm::MainForm()
-        : window(nullptr), tabs(nullptr), status(nullptr), searchWindow(nullptr), printOwner(nullptr),
-        printDialog(nullptr), uiFont(nullptr), reportFont(nullptr), accelerators(nullptr),
-        reportThread(nullptr), printThread(nullptr), files(nullptr), activeJob(nullptr),
-        activePrintJob(nullptr), modernPrint(nullptr), tabMenuContext(nullptr), reportFontSpec(),
-        reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength),
+        : window(nullptr), tabs(nullptr), status(nullptr), lastFocusedControl(nullptr), searchWindow(nullptr),
+        printOwner(nullptr), printDialog(nullptr), uiFont(nullptr), reportFont(nullptr),
+        accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr),
+        activeJob(nullptr), activePrintJob(nullptr), modernPrint(nullptr), tabMenuContext(nullptr),
+        reportFontSpec(), reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength),
         titleNameLength(defaultTitleNameLength), traceLevel(0), closing(false), printDialogOpen(false),
         libraryLoading(true), unicodeTabs(false), visualStylesActive(false), advancedMode(false),
         fullParsing(false), defaultWordWrap(false), closeTabsOnDoubleClick(false) {
@@ -504,6 +504,20 @@ void MainForm::UpdateStatus() {
         EnableMenuItem(GetMenu(window), item, MF_BYCOMMAND | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     }
     InvalidateRect(status, nullptr, FALSE);
+}
+
+/// Restores focus to the previous available child control or the active report edit.
+void MainForm::RestoreFocus() {
+    HWND target = lastFocusedControl;
+    if (!IsChild(window, target) || !IsWindowVisible(target) || !IsWindowEnabled(target)) {
+        FileTab* active = CurrentFile();
+        target = active ? active->edit : nullptr;
+    }
+    lastFocusedControl = target;
+    if (target) {
+        SetFocus(target);
+    }
+    UpdateEditMenu();
 }
 
 /// Selects the edit in the last active searchable form while retaining it during search-form input.
@@ -859,6 +873,9 @@ bool MainForm::ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelectio
     file->edit = replacement;
     file->wordWrap = wordWrap;
     findForm.ReplaceTarget(original, replacement);
+    if (lastFocusedControl == original) {
+        lastFocusedControl = replacement;
+    }
     SetWindowPos(replacement, HWND_TOP, 0, 0, 0, 0,
         SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | (visible ? SWP_SHOWWINDOW : 0));
     DestroyWindow(original);
@@ -1036,6 +1053,9 @@ void MainForm::CloseTab(int index) {
     *cursor = removed->next;
     if (index == selected) {
         findForm.SetTarget(nullptr);
+    }
+    if (lastFocusedControl == removed->edit) {
+        lastFocusedControl = nullptr;
     }
     DestroyWindow(removed->edit);
     ClearReportVariants(removed);
@@ -1850,6 +1870,17 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             break;
         case WM_CREATE:
             return owner->Initialize() ? 0 : -1;
+        case WM_ACTIVATE:
+            if (LOWORD(wParam) == WA_INACTIVE) {
+                HWND focused = GetFocus();
+                if (IsChild(window, focused)) {
+                    owner->lastFocusedControl = focused;
+                }
+            }
+            break;
+        case WM_SETFOCUS:
+            owner->RestoreFocus();
+            return 0;
         case WM_COPYDATA:
             return owner->HandleCopyData(lParam);
         case instanceFilesMessage:
