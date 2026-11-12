@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.4
  */
 
 #pragma once
@@ -68,8 +68,12 @@ public:
 class PrintLayout {
 
 private:
-    const wchar_t* text;
+    HWND richEdit;
+    HDC richTarget;
     HFONT font;
+    const wchar_t* text;
+    RECT richArea;
+    RECT richPage;
     RECT area;
     PrintLine* lines;
     UINT lineCount;
@@ -77,10 +81,13 @@ private:
     UINT rows;
     LONG lineHeight;
 
+    /// Loads the captured RTF and paginates its native character and paragraph formatting.
+    bool InitializeRichText(const PrintJob& job, HDC reference, const RECT& content, int dpiX, int dpiY);
+
     /// Appends a source text span, growing the line buffer as needed.
     bool AddLine(int start, int length);
 
-    /// Clears pagination and releases the font and cached line positions.
+    /// Clears pagination and releases the private RichEdit, font and cached line positions.
     void Reset();
 
 public:
@@ -93,7 +100,8 @@ public:
     /// Measures the captured edit font and wraps its text into pages within the supplied content rectangle.
     bool Initialize(const PrintJob& job, HDC reference, const RECT& content, int dpiX, int dpiY);
 
-    /// Draws one zero-based page with the saved font, line positions and content clipping.
+    /// Draws one zero-based page with captured rich formatting or the saved plain-text font and line
+    /// positions.
     bool DrawPage(HDC output, UINT page) const;
 
     /// Returns the number of pages in the prepared layout.

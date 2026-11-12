@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.3
+ * Last modified for version 1.2.1.4
  */
 #undef WINVER
 #undef _WIN32_WINNT
@@ -676,6 +676,9 @@ HRESULT ModernPrintDialog::BuildPages() {
     ComPtr<IDWriteTextLayout> layout;
     HRESULT result = textFactory->CreateTextLayout(job->report, lstrlenW(job->report), textFormat.Get(),
         width, height, &layout);
+    if (SUCCEEDED(result) && job->formatLayout) {
+        result = job->formatLayout(job, layout.Get(), context.Get(), 0, lstrlenW(job->report));
+    }
     UINT32 count = 0;
     if (SUCCEEDED(result)) {
         result = layout->GetLineMetrics(nullptr, 0, &count);
@@ -802,6 +805,9 @@ HRESULT ModernPrintDialog::CreatePage(UINT page, ID2D1CommandList** result) {
     }
     if (SUCCEEDED(status) && job->font.lfStrikeOut) {
         status = layout->SetStrikethrough(TRUE, text);
+    }
+    if (SUCCEEDED(status) && job->formatLayout) {
+        status = job->formatLayout(job, layout.Get(), context.Get(), range.start, range.length);
     }
     ComPtr<ID2D1CommandList> commands;
     if (SUCCEEDED(status)) {

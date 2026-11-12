@@ -21,12 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.1
+ * Last modified for version 1.2.1.4
  */
 
 #include "PrintSettings.h"
 #include "MainForm.h"
 #include <commdlg.h>
+#include <richedit.h>
+
+#ifndef WS_EX_NOACTIVATE
+#define WS_EX_NOACTIVATE 0x08000000
+#endif
+
+/// Tracks the bytes consumed while loading one immutable RTF print snapshot.
+struct RichPrintInput {
+    const BYTE* bytes;
+    ULONG size;
+    ULONG position;
+};
+
+/// Supplies RTF snapshot bytes without referring to the original GUI control.
+static DWORD CALLBACK ReadPrintRtf(DWORD_PTR cookie, LPBYTE bytes, LONG capacity, LONG* copied) {
+    RichPrintInput* input = reinterpret_cast<RichPrintInput*>(cookie);
+    ULONG remaining = input->size - input->position;
+    ULONG count = static_cast<ULONG>(capacity) < remaining ? static_cast<ULONG>(capacity) : remaining;
+    CopyMemory(bytes, input->bytes + input->position, count);
+    input->position += count;
+    *copied = static_cast<LONG>(count);
+    return ERROR_SUCCESS;
+}
 
 /// Clones a movable printer-settings handle without changing the stored original.
 static bool CopyPrintHandle(HGLOBAL source, HGLOBAL& destination) {
@@ -189,16 +212,22 @@ static int PrintedLineLength(HDC dc, const wchar_t* text, int length, int width)
 
 /// Initializes an empty page layout without allocating font or line storage.
 PrintLayout::PrintLayout()
-        : text(nullptr), font(nullptr), area(RECT{}), lines(nullptr), lineCount(0), capacity(0), rows(0),
-        lineHeight(0) {}
+        : richEdit(nullptr), richTarget(nullptr), font(nullptr), text(nullptr), richArea(RECT{}),
+        richPage(RECT{}), area(RECT{}), lines(nullptr), lineCount(0), capacity(0), rows(0), lineHeight(0) {}
 
 /// Releases the font and line positions owned by the page layout.
 PrintLayout::~PrintLayout() {
     Reset();
 }
 
-/// Clears pagination and releases the font and cached line positions.
+/// Clears pagination and releases the private RichEdit, font and cached line positions.
 void PrintLayout::Reset() {
+    if (richEdit) {
+        SendMessageW(richEdit, EM_FORMATRANGE, 0, 0);
+        DestroyWindow(richEdit);
+        richEdit = nullptr;
+    }
+    richTarget = nullptr;
     if (font) {
         DeleteObject(font);
     }
@@ -233,6 +262,51 @@ bool PrintLayout::AddLine(int start, int length) {
     return true;
 }
 
+/// Loads the captured RTF and paginates its native character and paragraph formatting.
+bool PrintLayout::InitializeRichText(const PrintJob& job, HDC reference, const RECT& content, int dpiX,
+        int dpiY) {
+    richEdit = CreateWindowExW(WS_EX_NOACTIVATE, MSFTEDIT_CLASS, L"", WS_POPUP | ES_MULTILINE,
+        0, 0, 1, 1, nullptr, nullptr, GetModuleHandleW(nullptr), nullptr);
+    if (!richEdit) {
+        return false;
+    }
+    SendMessageW(richEdit, EM_EXLIMITTEXT, 0, 0x7FFFFFFE);
+    RichPrintInput input{ job.richText, job.richTextSize, 0 };
+    EDITSTREAM stream{};
+    stream.dwCookie = reinterpret_cast<DWORD_PTR>(&input);
+    stream.pfnCallback = ReadPrintRtf;
+    SendMessageW(richEdit, EM_STREAMIN, SF_RTF, reinterpret_cast<LPARAM>(&stream));
+    if (stream.dwError) {
+        return false;
+    }
+    richTarget = reference;
+    richArea = RECT{ MulDiv(content.left, 1440, dpiX), MulDiv(content.top, 1440, dpiY),
+        MulDiv(content.right, 1440, dpiX), MulDiv(content.bottom, 1440, dpiY) };
+    richPage = RECT{ 0, 0, MulDiv(GetDeviceCaps(reference, HORZRES), 1440, dpiX),
+        MulDiv(GetDeviceCaps(reference, VERTRES), 1440, dpiY) };
+    FORMATRANGE range{};
+    range.hdc = reference;
+    range.hdcTarget = reference;
+    range.rc = richArea;
+    range.rcPage = richPage;
+    range.chrg.cpMax = -1;
+    LONG length = lstrlenW(job.report);
+    bool success = true;
+    while (range.chrg.cpMin < length) {
+        range.rc = richArea;
+        range.rcPage = richPage;
+        LRESULT measured = SendMessageW(richEdit, EM_FORMATRANGE, FALSE, reinterpret_cast<LPARAM>(&range));
+        LONG next = measured < length ? static_cast<LONG>(measured) : length;
+        if (next <= range.chrg.cpMin || !AddLine(range.chrg.cpMin, next - range.chrg.cpMin)) {
+            success = false;
+            break;
+        }
+        range.chrg.cpMin = next;
+    }
+    SendMessageW(richEdit, EM_FORMATRANGE, 0, 0);
+    return success && lineCount > 0;
+}
+
 /// Measures the captured edit font and wraps its text into pages within the supplied content rectangle.
 bool PrintLayout::Initialize(const PrintJob& job, HDC reference, const RECT& content, int dpiX, int dpiY) {
     Reset();
@@ -241,6 +315,9 @@ bool PrintLayout::Initialize(const PrintJob& job, HDC reference, const RECT& con
     int height = area.bottom - area.top;
     if (!job.report || !job.fontDpi || dpiX <= 0 || dpiY <= 0 || width <= 0 || height <= 0) {
         return false;
+    }
+    if (job.richText) {
+        return InitializeRichText(job, reference, content, dpiX, dpiY);
     }
     LOGFONTW description = job.font;
     description.lfHeight = MulDiv(description.lfHeight, dpiY, job.fontDpi);
@@ -288,10 +365,22 @@ bool PrintLayout::Initialize(const PrintJob& job, HDC reference, const RECT& con
     return success;
 }
 
-/// Draws one zero-based page with the saved font, line positions and content clipping.
+/// Draws one zero-based page with captured rich formatting or the saved plain-text font and line positions.
 bool PrintLayout::DrawPage(HDC output, UINT page) const {
     if (page >= GetPageCount()) {
         return false;
+    }
+    if (richEdit) {
+        const PrintLine& pageRange = lines[page];
+        FORMATRANGE range{};
+        range.hdc = output;
+        range.hdcTarget = richTarget;
+        range.rc = richArea;
+        range.rcPage = richPage;
+        range.chrg = CHARRANGE{ pageRange.start, pageRange.start + pageRange.length };
+        LRESULT rendered = SendMessageW(richEdit, EM_FORMATRANGE, TRUE, reinterpret_cast<LPARAM>(&range));
+        SendMessageW(richEdit, EM_FORMATRANGE, 0, 0);
+        return rendered >= range.chrg.cpMax;
     }
     int saved = SaveDC(output);
     if (!saved) {
@@ -320,6 +409,9 @@ bool PrintLayout::DrawPage(HDC output, UINT page) const {
 
 /// Returns the number of pages in the prepared layout.
 UINT PrintLayout::GetPageCount() const {
+    if (richEdit) {
+        return lineCount;
+    }
     return rows ? lineCount / rows + (lineCount % rows != 0) : 0;
 }
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.3
+ * Last modified for version 1.2.1.4
  */
 
 #pragma once
@@ -38,6 +38,7 @@
 /// Temporary context owned by the active tab popup.
 struct FileMenuContext;
 class ModernPrintDialog;
+struct IUnknown;
 
 /// Symbols used while compiling for the Windows NT 4.0 API target.
 #ifndef IDC_HAND
@@ -76,6 +77,9 @@ struct FileTab {
     HWND edit;
     FileTab* next;
     wchar_t* report;
+    BYTE* richText;
+    ULONG richTextSize;
+    HRESULT(*formatLayout)(const PrintJob* job, IUnknown* layout, IUnknown* context, UINT start, UINT length);
     wchar_t* reports[reportVariantCount];
     BY_HANDLE_FILE_INFORMATION source;
     wchar_t path[MAX_PATH];
@@ -97,6 +101,9 @@ struct ReportJob {
     HWND target;
     MediaInfoLibrary* library;
     wchar_t* report;
+    BYTE* richText;
+    ULONG richTextSize;
+    HRESULT(*formatLayout)(const PrintJob* job, IUnknown* layout, IUnknown* context, UINT start, UINT length);
     BY_HANDLE_FILE_INFORMATION source;
     wchar_t path[MAX_PATH];
     wchar_t error[512];
@@ -114,6 +121,9 @@ struct PrintJob {
     HWND target;
     HDC printer;
     wchar_t* report;
+    BYTE* richText;
+    ULONG richTextSize;
+    HRESULT(*formatLayout)(const PrintJob* job, IUnknown* layout, IUnknown* context, UINT start, UINT length);
     LOGFONTW font;
     RECT margins;
     UINT fontDpi;

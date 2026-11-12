@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.3
+ * Last modified for version 1.2.1.4
  */
 
 #include "MediaInfo.h"
@@ -2874,17 +2874,6 @@ static void LayoutPreferencesVertically(PreferencesData& data, const SIZE& margi
         }
         baseline += step;
     }
-    const int numbers[][2] = {
-        { IDC_TAB_NAME_LENGTH, IDC_TAB_NAME_SPIN },
-        { IDC_TITLE_NAME_LENGTH, IDC_TITLE_NAME_SPIN }
-    };
-    for (const auto& number : numbers) {
-        RECT bounds = ControlRect(GetDlgItem(window, number[0]), window);
-        HWND spin = GetDlgItem(window, number[1]);
-        RECT spinBounds = ControlRect(spin, window);
-        SetWindowPos(spin, nullptr, spinBounds.left, bounds.top, spinBounds.right - spinBounds.left,
-            bounds.bottom - bounds.top, SWP_NOZORDER | SWP_NOACTIVATE);
-    }
     LONG buttonsTop = baseline - step + below + DialogUnits(data.uiFont, 0, 6).cy;
     const int buttons[] = { IDOK, IDCANCEL, IDC_PREFERENCES_APPLY };
     LONG bottom = 0;
@@ -3111,15 +3100,8 @@ static void LayoutPreferences(PreferencesData& data) {
     PlaceControl(clear, rightButton, clearBounds.top, button.cx, button.cy);
     PlaceControl(tabLength, column.cx, lengthBounds.top, button.cx,
         lengthBounds.bottom - lengthBounds.top);
-    SendMessageW(tabSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(tabLength), 0);
     PlaceControl(titleLength, rightButton, lengthBounds.top, button.cx,
         lengthBounds.bottom - lengthBounds.top);
-    SendMessageW(titleSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(titleLength), 0);
-    RECT tabSpinBounds = ControlRect(tabSpin, window);
-    LONG titleLeft = tabSpinBounds.right + gap.cx;
-    RECT titleBounds = ControlRect(titleLabel, window);
-    PlaceControl(titleLabel, titleLeft, titleBounds.top, rightButton - gap.cx - titleLeft,
-        titleBounds.bottom - titleBounds.top);
     PlaceControl(path, pathBounds.left, pathBounds.top, rightButton - gap.cx - pathBounds.left,
         pathBounds.bottom - pathBounds.top);
     int fontWidth = rightButton - gap.cx - fontBounds.left;
@@ -3150,6 +3132,13 @@ static void LayoutPreferences(PreferencesData& data) {
     RECT closeBounds = ControlRect(closeTabs, window);
     PlaceControl(closeTabs, margin.cx, closeBounds.top, closeSize.cx, closeSize.cy);
     LayoutPreferencesVertically(data, margin);
+    SendMessageW(tabSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(tabLength), 0);
+    SendMessageW(titleSpin, UDM_SETBUDDY, reinterpret_cast<WPARAM>(titleLength), 0);
+    RECT tabSpinBounds = ControlRect(tabSpin, window);
+    LONG titleLeft = tabSpinBounds.right + gap.cx;
+    RECT titleBounds = ControlRect(titleLabel, window);
+    PlaceControl(titleLabel, titleLeft, titleBounds.top, rightButton - gap.cx - titleLeft,
+        titleBounds.bottom - titleBounds.top);
     UpdateComboBoxDropDown(language);
     UpdateComboBoxDropDown(reportLanguage);
     UpdateComboBoxDropDown(antialiasing);
