@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.3
  */
 #undef WINVER
 #undef _WIN32_WINNT
@@ -732,7 +732,7 @@ HRESULT ModernPrintDialog::Prepare(IInspectable* options) {
         result = core->GetPageDescription(0, &description);
     }
     if (SUCCEEDED(result)) {
-        const auto& image = description.ImageableRect;
+        const Foundation::Rect& image = description.ImageableRect;
         D2D1_RECT_F margins = D2D1::RectF(
             job->margins.left * 96.0f / 2540.0f,
             job->margins.top * 96.0f / 2540.0f,

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.3
  */
 
 #include "MediaInfo.h"
@@ -2482,9 +2482,13 @@ static bool PreferencesHasRecentFiles(const PreferencesData& data) {
         : HasRecentFilesSetting();
 }
 
-/// Moves focus through the native dialog manager before disabling a focused Preferences button.
+/// Changes button availability only when needed and moves focus before disabling a focused button.
 static void EnablePreferencesControl(HWND window, int id, bool enabled) {
     HWND control = GetDlgItem(window, id);
+    const bool wasEnabled = IsWindowEnabled(control) != FALSE;
+    if (wasEnabled == enabled) {
+        return;
+    }
     if (!enabled && GetFocus() == control) {
         HWND next = GetNextDlgTabItem(window, control, FALSE);
         SendMessageW(window, WM_NEXTDLGCTL, reinterpret_cast<WPARAM>(next), TRUE);
@@ -2582,9 +2586,19 @@ static void PopulateLanguages(PreferencesData& data) {
     UpdateReportChoices(data);
 }
 
+/// Updates a Preferences caption only when its actual text changes.
+static void SetPreferencesCaption(HWND window, const wchar_t* text) {
+    wchar_t current[1024];
+    current[0] = 0;
+    GetWindowTextW(window, current, ARRAYSIZE(current));
+    if (lstrcmpW(current, text)) {
+        SetWindowTextW(window, text);
+    }
+}
+
 /// Applies translated Preferences captions without changing pending settings.
 static void SetPreferencesLabels(PreferencesData& data) {
-    SetWindowTextW(data.window, T(TXT_PREFERENCES_TITLE));
+    SetPreferencesCaption(data.window, T(TXT_PREFERENCES_TITLE));
     const int controls[] = {
         IDC_DLL_LABEL,
         IDC_DLL_BROWSE,
@@ -2630,7 +2644,7 @@ static void SetPreferencesLabels(PreferencesData& data) {
         TXT_APPLY
     };
     for (int index = 0; index < static_cast<int>(sizeof(controls) / sizeof(controls[0])); ++index) {
-        SetDlgItemTextW(data.window, controls[index], T(labels[index]));
+        SetPreferencesCaption(GetDlgItem(data.window, controls[index]), T(labels[index]));
     }
 }
 
@@ -3127,21 +3141,6 @@ static void LayoutPreferences(PreferencesData& data) {
     RECT dropped = RECT{};
     SendMessageW(antialiasing, CB_GETDROPPEDCONTROLRECT, 0, reinterpret_cast<LPARAM>(&dropped));
     PlaceControl(antialiasing, fontBounds.left, comboBounds.top, comboWidth, dropped.bottom - dropped.top);
-    AlignControlBaseline(browse, path);
-    AlignControlBaseline(curlBrowse, curlPath);
-    AlignControlBaseline(GetDlgItem(window, IDC_LANGUAGE_LABEL), language);
-    AlignControlBaseline(GetDlgItem(window, IDC_REPORT_LABEL), reportLanguage);
-    AlignControlBaseline(reportBrowse, reportLanguage);
-    UpdateComboBoxDropDown(language);
-    UpdateComboBoxDropDown(reportLanguage);
-    AlignControlBaseline(GetDlgItem(window, IDC_FONT_LABEL), font);
-    AlignControlBaseline(reset, font);
-    AlignControlBaseline(GetDlgItem(window, IDC_SMOOTHING_LABEL), antialiasing);
-    UpdateComboBoxDropDown(antialiasing);
-    AlignControlBaseline(cancel, accept);
-    AlignControlBaseline(apply, accept);
-    AlignControlBaseline(GetDlgItem(window, IDC_TAB_NAME_LABEL), tabLength);
-    AlignControlBaseline(titleLabel, titleLength);
     HWND recentLabel = GetDlgItem(window, IDC_RECENT_LABEL);
     RECT recentBounds = ControlRect(recentLabel, window);
     PlaceControl(recentLabel, margin.cx, recentBounds.top, rightButton - gap.cx - margin.cx,
@@ -3150,8 +3149,10 @@ static void LayoutPreferences(PreferencesData& data) {
     PlaceControl(multipleInstances, margin.cx, checkBounds.top, checkSize.cx, checkSize.cy);
     RECT closeBounds = ControlRect(closeTabs, window);
     PlaceControl(closeTabs, margin.cx, closeBounds.top, closeSize.cx, closeSize.cy);
-    AlignControlBaseline(recentLabel, clear);
     LayoutPreferencesVertically(data, margin);
+    UpdateComboBoxDropDown(language);
+    UpdateComboBoxDropDown(reportLanguage);
+    UpdateComboBoxDropDown(antialiasing);
     OrderPreferencesLabels(window);
 }
 
@@ -3169,13 +3170,31 @@ static void ResizePreferencesWidth(PreferencesData& data) {
     data.widthReduction = reduction;
 }
 
-/// Lists supported antialiasing choices in order and preserves an available pending selection.
+/// Rebuilds antialiasing choices only when availability, captions or the pending selection differ.
 static void UpdateSmoothingChoices(PreferencesData& data) {
     HWND smoothing = GetDlgItem(data.window, IDC_SMOOTHING);
     const wchar_t* labels[] = { L"ClearType", L"GDI", T(TXT_ANTIALIASING_NONE) };
     const BYTE qualities[] = { 5, ANTIALIASED_QUALITY, NONANTIALIASED_QUALITY };
     BYTE quality = data.font.lfQuality ? data.font.lfQuality : DefaultReportFontQuality();
     bool clearType = IsClearTypeAvailable();
+    const LRESULT count = SendMessageW(smoothing, CB_GETCOUNT, 0, 0);
+    const LRESULT selected = SendMessageW(smoothing, CB_GETCURSEL, 0, 0);
+    const int expectedCount = clearType ? 3 : 2;
+    if (count == expectedCount && selected != CB_ERR) {
+        const LRESULT selectedQuality = SendMessageW(smoothing, CB_GETITEMDATA, selected, 0);
+        if (selectedQuality == quality) {
+            wchar_t caption[128];
+            const LRESULT length = SendMessageW(smoothing, CB_GETLBTEXTLEN, count - 1, 0);
+            if (length >= 0 && length < static_cast<LRESULT>(ARRAYSIZE(caption))) {
+                const LRESULT copied = SendMessageW(smoothing, CB_GETLBTEXT, count - 1,
+                    reinterpret_cast<LPARAM>(caption));
+                if (copied == length && !lstrcmpW(caption, labels[2])) {
+                    data.font.lfQuality = quality;
+                    return;
+                }
+            }
+        }
+    }
     SendMessageW(smoothing, CB_RESETCONTENT, 0, 0);
     for (int index = clearType ? 0 : 1; index < 3; ++index) {
         LRESULT item = SendMessageW(smoothing, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(labels[index]));
@@ -3256,7 +3275,7 @@ static void UpdateFontButtons(PreferencesData& data) {
         }
     }
     caption[output] = 0;
-    SetDlgItemTextW(data.window, IDC_FONT_CHOOSE, caption);
+    SetPreferencesCaption(GetDlgItem(data.window, IDC_FONT_CHOOSE), caption);
     EnablePreferencesControl(data.window, IDC_FONT_DEFAULT, custom);
 }
 
@@ -3320,11 +3339,12 @@ static bool ApplyPreferences(PreferencesData& data) {
         return true;
     }
     bool reportChanged = lstrcmpiW(data.reportLanguage, data.originalReportLanguage) != 0;
+    const bool languageChanged = data.language != data.originalLanguage;
     SetApplicationLanguage(data.language);
     bool reloadLibrary = lstrcmpiW(path, data.originalPath)
         || lstrcmpiW(curlPath, data.originalCurlPath)
         || reportChanged
-        || data.language != data.originalLanguage
+        || languageChanged
         || !data.library->IsLoaded();
     if (reloadLibrary) {
         HCURSOR previous = SetCursor(LoadCursorW(nullptr, IDC_WAIT));
@@ -3370,10 +3390,12 @@ static bool ApplyPreferences(PreferencesData& data) {
     data.originalMultipleInstances = multipleInstances;
     data.applied = true;
     data.reportLanguageChanged = data.reportLanguageChanged || reportChanged;
-    SetPreferencesLabels(data);
-    UpdateSmoothingChoices(data);
-    UpdateFontButtons(data);
-    LayoutPreferences(data);
+    if (languageChanged) {
+        SetPreferencesLabels(data);
+        UpdateSmoothingChoices(data);
+        UpdateFontButtons(data);
+        LayoutPreferences(data);
+    }
     if (data.callbacks && data.callbacks->applied) {
         data.callbacks->applied(data.callbacks->context, changes);
     }
