@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.4
+ * Last modified for version 1.2.1.6
  */
 
 #pragma once
@@ -299,17 +299,12 @@ private:
     /// Selects a matching file or information tab through the shared activation path.
     bool SelectExistingTab(LibraryCommand command, const wchar_t* path);
 
-    /// Creates a report edit with the established selection handler and selected line-wrapping style.
-    HWND CreateReportEdit(bool wordWrap, bool showSelection = false);
+    /// Creates a report edit with persistent selection, native selection handling and the chosen wrapping
+    /// style.
+    HWND CreateReportEdit(bool wordWrap);
 
     /// Replaces one native edit while preserving report text, selection, viewport and focus.
-    bool ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelection);
-
-    /// Synchronizes report selection visibility after the modeless search form opens or closes.
-    LRESULT HandleFindVisibility();
-
-    /// Shows the active search selection while restoring normal hiding in all other report edits.
-    bool UpdateSearchSelection();
+    bool ReplaceReportEdit(FileTab* file, bool wordWrap);
 
     /// Refreshes report-edit and focused-source search command availability before menus or shortcuts.
     void UpdateEditMenu();

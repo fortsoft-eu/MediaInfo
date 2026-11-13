@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.3
+ * Last modified for version 1.2.1.6
  */
 
 #include "Localization.h"
@@ -753,9 +753,6 @@ void MainForm::SelectTab(int index) {
     }
     FileTab* selected = CurrentFile();
     UpdateWindowTitle();
-    if (!UpdateSearchSelection()) {
-        MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
-    }
     for (FileTab* file = files; file; file = file->next) {
         SetWindowPos(file->edit, HWND_TOP, 0, 0, 0, 0,
             SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | (file == selected ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
@@ -804,20 +801,18 @@ bool MainForm::SelectExistingTab(LibraryCommand command, const wchar_t* path) {
     return false;
 }
 
-/// Creates a report edit with the established selection handler and selected line-wrapping style.
-HWND MainForm::CreateReportEdit(bool wordWrap, bool showSelection) {
+/// Creates a report edit with persistent selection, native selection handling and the chosen wrapping style.
+HWND MainForm::CreateReportEdit(bool wordWrap) {
     DWORD style = WS_CHILD
         | WS_TABSTOP
         | WS_CLIPSIBLINGS
         | WS_VSCROLL
         | ES_MULTILINE
+        | ES_NOHIDESEL
         | ES_READONLY
         | ES_AUTOVSCROLL;
     if (!wordWrap) {
         style |= WS_HSCROLL | ES_AUTOHSCROLL;
-    }
-    if (showSelection) {
-        style |= ES_NOHIDESEL;
     }
     HWND edit = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"", style,
         0, 0, 1, 1, window, nullptr, GetModuleHandleW(nullptr), nullptr);
@@ -833,9 +828,9 @@ HWND MainForm::CreateReportEdit(bool wordWrap, bool showSelection) {
 }
 
 /// Replaces one native edit while preserving report text, selection, viewport and focus.
-bool MainForm::ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelection) {
+bool MainForm::ReplaceReportEdit(FileTab* file, bool wordWrap) {
     HWND original = file->edit;
-    HWND replacement = CreateReportEdit(wordWrap, showSelection);
+    HWND replacement = CreateReportEdit(wordWrap);
     if (!replacement) {
         return false;
     }
@@ -883,27 +878,6 @@ bool MainForm::ReplaceReportEdit(FileTab* file, bool wordWrap, bool showSelectio
         SetFocus(replacement);
     }
     return true;
-}
-
-/// Synchronizes report selection visibility after the modeless search form opens or closes.
-LRESULT MainForm::HandleFindVisibility() {
-    bool success = UpdateSearchSelection();
-    UpdateStatus();
-    return success;
-}
-
-/// Shows the active search selection while restoring normal hiding in all other report edits.
-bool MainForm::UpdateSearchSelection() {
-    FileTab* active = CurrentFile();
-    bool success = true;
-    for (FileTab* file = files; file; file = file->next) {
-        bool show = findForm.GetWindow() && file == active;
-        bool shown = (GetWindowLongW(file->edit, GWL_STYLE) & ES_NOHIDESEL) != 0;
-        if (show != shown && !ReplaceReportEdit(file, file->wordWrap, show)) {
-            success = false;
-        }
-    }
-    return success;
 }
 
 /// Refreshes report-edit and focused-source search command availability before menus or shortcuts.
@@ -954,8 +928,7 @@ void MainForm::ToggleWordWrap() {
     if (!file || closing) {
         return;
     }
-    bool showSelection = (GetWindowLongW(file->edit, GWL_STYLE) & ES_NOHIDESEL) != 0;
-    if (!ReplaceReportEdit(file, !file->wordWrap, showSelection)) {
+    if (!ReplaceReportEdit(file, !file->wordWrap)) {
         MessageBoxW(window, T(TXT_WORD_WRAP_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
     } else {
         defaultWordWrap = file->wordWrap;
@@ -989,7 +962,7 @@ bool MainForm::CreateTab(LibraryCommand command, const wchar_t* path) {
         lstrcpyW(file->path, path);
     }
     file->id = nextId++;
-    file->edit = CreateReportEdit(file->wordWrap, findForm.GetWindow() != nullptr);
+    file->edit = CreateReportEdit(file->wordWrap);
     if (!file->edit) {
         HeapFree(GetProcessHeap(), 0, file);
         return false;
@@ -1889,7 +1862,8 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             owner->Layout();
             return 0;
         case findVisibilityChangedMessage:
-            return owner->HandleFindVisibility();
+            owner->UpdateStatus();
+            return TRUE;
         case helpVisibilityChangedMessage:
             owner->UpdateStatus();
             return 0;
