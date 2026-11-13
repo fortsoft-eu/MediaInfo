@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.4
+ * Last modified for version 1.2.1.7
  */
 
 #include "PrintSettings.h"
@@ -123,7 +123,10 @@ bool PrintSettings::PageSetup(HWND owner, wchar_t* error, int capacity) {
     }
     FreePrintHandles(dialog.hDevMode, dialog.hDevNames);
     if (!copied || failure) {
-        lstrcpynW(error, T(TXT_PAGE_SETUP_FAILED), capacity);
+        if (!lstrcpynW(error, T(TXT_PAGE_SETUP_FAILED), capacity)) {
+            error[0] = 0;
+            OutputDebugStringW(L"PrintSettings::PageSetup: copying the error message failed.\n");
+        }
     }
     return false;
 }
@@ -154,7 +157,10 @@ HDC PrintSettings::ChoosePrinter(HWND owner, bool* printToFile, wchar_t* error, 
     }
     FreePrintHandles(dialog.hDevMode, dialog.hDevNames);
     if (!copied || failure || accepted) {
-        lstrcpynW(error, T(TXT_PRINT_FAILED), capacity);
+        if (!lstrcpynW(error, T(TXT_PRINT_FAILED), capacity)) {
+            error[0] = 0;
+            OutputDebugStringW(L"PrintSettings::ChoosePrinter: copying the error message failed.\n");
+        }
     }
     return nullptr;
 }

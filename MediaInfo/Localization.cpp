@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.7
  */
 
 #include "Localization.h"
@@ -184,7 +184,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Bylo vybráno příliš mnoho souborů. Otevírejte menší skupiny." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Použijte 32bitové knihovny kompatibilní s vaší verzí Windows. Ponechejte cesty prázdné pro "
-                L"automatické vyhledávání. MediaInfo 0.7.60 nepoužívá libcurl."
+                L"automatické vyhledávání. MediaInfoLib v0.7.60 nepoužívá libcurl.dll."
             },
             { TXT_VERSION, L"Verze" },
             { TXT_WEBSITE_TOOLTIP, L"Navštívit web %s" },
@@ -529,7 +529,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Too many files were selected. Open them in smaller groups." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Use 32-bit libraries compatible with your Windows version. Leave paths empty for automatic "
-                L"discovery. MediaInfo 0.7.60 does not use libcurl."
+                L"discovery. MediaInfoLib v0.7.60 does not use libcurl.dll."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Visit %s" },
@@ -875,7 +875,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Too many files were selected. Open them in smaller groups." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Use 32-bit libraries compatible with your Windows version. Leave paths empty for automatic "
-                L"discovery. MediaInfo 0.7.60 does not use libcurl."
+                L"discovery. MediaInfoLib v0.7.60 does not use libcurl.dll."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Visit %s" },
@@ -1221,7 +1221,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Too many files were selected. Open them in smaller groups." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Use 32-bit libraries compatible with your Windows version. Leave paths empty for automatic "
-                L"discovery. MediaInfo 0.7.60 does not use libcurl."
+                L"discovery. MediaInfoLib v0.7.60 does not use libcurl.dll."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Visit %s" },
@@ -1584,7 +1584,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Zu viele Dateien ausgewählt. Öffnen Sie kleinere Gruppen." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Verwenden Sie 32-Bit-Bibliotheken, die mit Ihrer Windows-Version kompatibel sind. Lassen "
-                L"Sie die Pfade für die automatische Suche leer. MediaInfo 0.7.60 verwendet libcurl nicht."
+                L"Sie die Pfade für die automatische Suche leer. MediaInfoLib v0.7.60 verwendet libcurl.dll "
+                L"nicht."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Website %s besuchen" },
@@ -1975,7 +1976,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Trop de fichiers sélectionnés. Ouvrez des groupes plus petits." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Utilisez des bibliothèques 32 bits compatibles avec votre version de Windows. Laissez les "
-                L"chemins vides pour la recherche automatique. MediaInfo 0.7.60 n’utilise pas libcurl."
+                L"chemins vides pour la recherche automatique. MediaInfoLib v0.7.60 n’utilise pas "
+                L"libcurl.dll."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Visiter le site web %s" },
@@ -2367,7 +2369,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Se seleccionaron demasiados archivos. Abra grupos más pequeños." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Use bibliotecas de 32 bits compatibles con su versión de Windows. Deje las rutas vacías "
-                L"para la búsqueda automática. MediaInfo 0.7.60 no usa libcurl."
+                L"para la búsqueda automática. MediaInfoLib v0.7.60 no usa libcurl.dll."
             },
             { TXT_VERSION, L"Versión" },
             { TXT_WEBSITE_TOOLTIP, L"Visitar el sitio web %s" },
@@ -2747,7 +2749,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Troppi file selezionati. Aprire gruppi più piccoli." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Usare librerie a 32 bit compatibili con la propria versione di Windows. Lasciare vuoti i "
-                L"percorsi per la ricerca automatica. MediaInfo 0.7.60 non usa libcurl."
+                L"percorsi per la ricerca automatica. MediaInfoLib v0.7.60 non usa libcurl.dll."
             },
             { TXT_VERSION, L"Versione" },
             { TXT_WEBSITE_TOOLTIP, L"Visita il sito web %s" },
@@ -3136,7 +3138,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Foram selecionados demasiados ficheiros. Abra grupos mais pequenos." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Utilize bibliotecas de 32 bits compatíveis com a sua versão do Windows. Deixe os caminhos "
-                L"vazios para a pesquisa automática. O MediaInfo 0.7.60 não utiliza libcurl."
+                L"vazios para a pesquisa automática. O MediaInfoLib v0.7.60 não utiliza libcurl.dll."
             },
             { TXT_VERSION, L"Versão" },
             { TXT_WEBSITE_TOOLTIP, L"Visitar o site %s" },
@@ -3505,7 +3507,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Wybrano za dużo plików. Otwieraj je w mniejszych grupach." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Użyj 32-bitowych bibliotek zgodnych z używaną wersją systemu Windows. Pozostaw puste "
-                L"ścieżki, aby włączyć automatyczne wyszukiwanie. MediaInfo 0.7.60 nie używa libcurl."
+                L"ścieżki, aby włączyć automatyczne wyszukiwanie. MediaInfoLib v0.7.60 nie używa libcurl.dll."
             },
             { TXT_VERSION, L"Wersja" },
             { TXT_WEBSITE_TOOLTIP, L"Odwiedź witrynę %s" },
@@ -3861,7 +3863,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Bolo vybraných príliš veľa súborov. Otvárajte menšie skupiny." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Použite 32-bitové knižnice kompatibilné s vašou verziou Windows. Ponechajte cesty prázdne "
-                L"pre automatické vyhľadávanie. MediaInfo 0.7.60 nepoužíva libcurl."
+                L"pre automatické vyhľadávanie. MediaInfoLib v0.7.60 nepoužíva libcurl.dll."
             },
             { TXT_VERSION, L"Verzia" },
             { TXT_WEBSITE_TOOLTIP, L"Navštíviť web %s" },
@@ -4204,7 +4206,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Der er valgt for mange filer. Åbn mindre grupper." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Brug 32-bit-biblioteker, der er kompatible med din Windows-version. Lad stierne være tomme "
-                L"for automatisk søgning. MediaInfo 0.7.60 bruger ikke libcurl."
+                L"for automatisk søgning. MediaInfoLib v0.7.60 bruger ikke libcurl.dll."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Besøg webstedet %s" },
@@ -4552,7 +4554,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Valittuja tiedostoja on liikaa. Avaa pienempiä ryhmiä." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Käytä tämän Windowsin kanssa yhteensopivia 32-bittisiä DLL-kirjastoja. Tyhjät polut "
-                L"ottavat haun käyttöön. MediaInfo 0.7.60 ei käytä libcurl-kirjastoa."
+                L"ottavat haun käyttöön. MediaInfoLib v0.7.60 ei käytä libcurl.dll-kirjastoa."
             },
             { TXT_VERSION, L"Versio" },
             { TXT_WEBSITE_TOOLTIP, L"Käy verkkosivustolla %s" },
@@ -4904,7 +4906,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Of margar skrár voru valdar. Opnaðu smærri hópa." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Notaðu 32 bita söfn sem eru samhæf þinni útgáfu af Windows. Hafðu slóðirnar auðar fyrir "
-                L"sjálfvirka leit. MediaInfo 0.7.60 notar ekki libcurl."
+                L"sjálfvirka leit. MediaInfoLib v0.7.60 notar ekki libcurl.dll."
             },
             { TXT_VERSION, L"Útgáfa" },
             { TXT_WEBSITE_TOOLTIP, L"Heimsækja vefsvæði %s" },
@@ -5246,7 +5248,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"For mange filer er valgt. Åpne mindre grupper." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Bruk 32-biters biblioteker som er kompatible med Windows-versjonen din. La banene være "
-                L"tomme for automatisk søk. MediaInfo 0.7.60 bruker ikke libcurl."
+                L"tomme for automatisk søk. MediaInfoLib v0.7.60 bruker ikke libcurl.dll."
             },
             { TXT_VERSION, L"Versjon" },
             { TXT_WEBSITE_TOOLTIP, L"Besøk nettstedet %s" },
@@ -5598,7 +5600,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"För många filer valdes. Öppna mindre grupper." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Använd 32-bitars bibliotek som är kompatibla med din Windows-version. Lämna sökvägarna "
-                L"tomma för automatisk sökning. MediaInfo 0.7.60 använder inte libcurl."
+                L"tomma för automatisk sökning. MediaInfoLib v0.7.60 använder inte libcurl.dll."
             },
             { TXT_VERSION, L"Version" },
             { TXT_WEBSITE_TOOLTIP, L"Besök webbplatsen %s" },
@@ -5943,7 +5945,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Çok fazla dosya seçildi. Daha küçük gruplar açın." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Windows sürümünüzle uyumlu 32 bit kitaplıklar kullanın. Otomatik arama için yolları boş "
-                L"bırakın. MediaInfo 0.7.60 libcurl kullanmaz."
+                L"bırakın. MediaInfoLib v0.7.60 libcurl.dll kullanmaz."
             },
             { TXT_VERSION, L"Sürüm" },
             { TXT_WEBSITE_TOOLTIP, L"%s web sitesini ziyaret et" },
@@ -6280,7 +6282,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Valiti liiga palju faile. Avage väiksemad rühmad." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Kasutage selle Windowsiga ühilduvaid 32-bitiseid DLL-e. Tühjad teed lubavad otsingu. "
-                L"MediaInfo 0.7.60 ei kasuta libcurli."
+                L"MediaInfoLib v0.7.60 ei kasuta libcurl.dll-i."
             },
             { TXT_VERSION, L"Versioon" },
             { TXT_WEBSITE_TOOLTIP, L"Ava veebisait %s" },
@@ -6639,7 +6641,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Roghnaíodh an iomarca comhad. Oscail grúpaí níos lú." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Úsáid leabharlanna 32 giotán atá comhoiriúnach le do leagan de Windows. Fág na conairí "
-                L"folamh don chuardach uathoibríoch. Ní úsáideann MediaInfo 0.7.60 libcurl."
+                L"folamh don chuardach uathoibríoch. Ní úsáideann MediaInfoLib v0.7.60 libcurl.dll."
             },
             { TXT_VERSION, L"Leagan" },
             { TXT_WEBSITE_TOOLTIP, L"Oscail an suíomh gréasáin %s" },
@@ -7003,7 +7005,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Pasirinkta per daug failų. Atverkite mažesnėmis grupėmis." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Naudokite su savo Windows versija suderinamas 32 bitų bibliotekas. Palikite kelius "
-                L"tuščius, kad būtų ieškoma automatiškai. MediaInfo 0.7.60 nenaudoja libcurl."
+                L"tuščius, kad būtų ieškoma automatiškai. MediaInfoLib v0.7.60 nenaudoja libcurl.dll."
             },
             { TXT_VERSION, L"Versija" },
             { TXT_WEBSITE_TOOLTIP, L"Atidaryti svetainę %s" },
@@ -7351,7 +7353,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Atlasīts pārāk daudz failu. Atveriet mazākas grupas." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Izmantojiet 32 bitu bibliotēkas, kas ir saderīgas ar jūsu Windows versiju. Atstājiet ceļus "
-                L"tukšus automātiskai meklēšanai. MediaInfo 0.7.60 neizmanto libcurl."
+                L"tukšus automātiskai meklēšanai. MediaInfoLib v0.7.60 neizmanto libcurl.dll."
             },
             { TXT_VERSION, L"Versija" },
             { TXT_WEBSITE_TOOLTIP, L"Atvērt tīmekļa vietni %s" },
@@ -7712,8 +7714,8 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Túl sok fájlt választott ki. Nyisson meg kisebb csoportokat." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Használjon a Windows-verziójával kompatibilis 32 bites könyvtárakat. Az automatikus "
-                L"kereséshez hagyja üresen az elérési utakat. A MediaInfo 0.7.60 nem használ "
-                L"libcurl-könyvtárat."
+                L"kereséshez hagyja üresen az elérési utakat. A MediaInfoLib v0.7.60 nem használ "
+                L"libcurl.dll-könyvtárat."
             },
             { TXT_VERSION, L"Verzió" },
             { TXT_WEBSITE_TOOLTIP, L"Webhely megnyitása: %s" },
@@ -8086,7 +8088,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Intgħażlu wisq fajls. Iftaħ gruppi iżgħar." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Uża libreriji ta’ 32 bit kompatibbli mal-verżjoni tiegħek ta’ Windows. Ħalli l-mogħdijiet "
-                L"vojta għat-tiftix awtomatiku. MediaInfo 0.7.60 ma jużax libcurl."
+                L"vojta għat-tiftix awtomatiku. MediaInfoLib v0.7.60 ma jużax libcurl.dll."
             },
             { TXT_VERSION, L"Verżjoni" },
             { TXT_WEBSITE_TOOLTIP, L"Iftaħ is-sit web %s" },
@@ -8458,7 +8460,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Te veel bestanden geselecteerd. Open kleinere groepen." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Gebruik compatibele 32-bits DLL's voor deze Windows-versie. Lege paden schakelen zoeken "
-                L"in. MediaInfo 0.7.60 gebruikt geen libcurl."
+                L"in. MediaInfoLib v0.7.60 gebruikt geen libcurl.dll."
             },
             { TXT_VERSION, L"Versie" },
             { TXT_WEBSITE_TOOLTIP, L"Website %s openen" },
@@ -8833,7 +8835,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Au fost selectate prea multe fișiere. Deschideți grupuri mai mici." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Folosiți biblioteci pe 32 de biți compatibile cu versiunea dvs. de Windows. Lăsați căile "
-                L"goale pentru căutarea automată. MediaInfo 0.7.60 nu folosește libcurl."
+                L"goale pentru căutarea automată. MediaInfoLib v0.7.60 nu folosește libcurl.dll."
             },
             { TXT_VERSION, L"Versiune" },
             { TXT_WEBSITE_TOOLTIP, L"Deschidere site web %s" },
@@ -9206,7 +9208,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Επιλέχθηκαν πάρα πολλά αρχεία. Ανοίξτε μικρότερες ομάδες." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Χρησιμοποιήστε βιβλιοθήκες 32 bit συμβατές με την έκδοση των Windows σας. Αφήστε κενές τις "
-                L"διαδρομές για αυτόματη αναζήτηση. Το MediaInfo 0.7.60 δεν χρησιμοποιεί libcurl."
+                L"διαδρομές για αυτόματη αναζήτηση. Το MediaInfoLib v0.7.60 δεν χρησιμοποιεί libcurl.dll."
             },
             { TXT_VERSION, L"Έκδοση" },
             { TXT_WEBSITE_TOOLTIP, L"Άνοιγμα τοποθεσίας web %s" },
@@ -9576,7 +9578,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Izabrano je previše datoteka. Otvarajte manje grupe." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Koristite 32-bitne biblioteke kompatibilne s vašom verzijom sistema Windows. Ostavite "
-                L"putanje prazne za automatsku pretragu. MediaInfo 0.7.60 ne koristi libcurl."
+                L"putanje prazne za automatsku pretragu. MediaInfoLib v0.7.60 ne koristi libcurl.dll."
             },
             { TXT_VERSION, L"Verzija" },
             { TXT_WEBSITE_TOOLTIP, L"Posjeti web-mjesto %s" },
@@ -9924,7 +9926,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Odabrano je previše datoteka. Otvarajte manje grupe." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Koristite 32-bitne knjižnice kompatibilne s vašom verzijom sustava Windows. Ostavite "
-                L"putanje prazne za automatsko pretraživanje. MediaInfo 0.7.60 ne koristi libcurl."
+                L"putanje prazne za automatsko pretraživanje. MediaInfoLib v0.7.60 ne koristi libcurl.dll."
             },
             { TXT_VERSION, L"Verzija" },
             { TXT_WEBSITE_TOOLTIP, L"Posjeti web-mjesto %s" },
@@ -10268,7 +10270,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Izbranih je preveč datotek. Odpirajte manjše skupine." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Uporabite 32-bitne knjižnice, združljive z vašo različico sistema Windows. Poti pustite "
-                L"prazne za samodejno iskanje. MediaInfo 0.7.60 ne uporablja libcurl."
+                L"prazne za samodejno iskanje. MediaInfoLib v0.7.60 ne uporablja libcurl.dll."
             },
             { TXT_VERSION, L"Različica" },
             { TXT_WEBSITE_TOOLTIP, L"Obišči spletno mesto %s" },
@@ -10616,7 +10618,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Izabrano je previše datoteka. Otvarajte manje grupe." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Koristite 32-bitne biblioteke kompatibilne s vašom verzijom sistema Windows. Ostavite "
-                L"putanje prazne za automatsku pretragu. MediaInfo 0.7.60 ne koristi libcurl."
+                L"putanje prazne za automatsku pretragu. MediaInfoLib v0.7.60 ne koristi libcurl.dll."
             },
             { TXT_VERSION, L"Verzija" },
             { TXT_WEBSITE_TOOLTIP, L"Otvori veb-sajt %s" },
@@ -10968,7 +10970,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Выбрана занадта шмат файлаў. Адкрывайце меншыя групы." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Выкарыстайце 32-бітныя бібліятэкі, сумяшчальныя з вашай версіяй Windows. Пакіньце шляхі "
-                L"пустымі для аўтаматычнага пошуку. MediaInfo 0.7.60 не выкарыстоўвае libcurl."
+                L"пустымі для аўтаматычнага пошуку. MediaInfoLib v0.7.60 не выкарыстоўвае libcurl.dll."
             },
             { TXT_VERSION, L"Версія" },
             { TXT_WEBSITE_TOOLTIP, L"Адкрыць вэб-сайт %s" },
@@ -11326,7 +11328,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Избрани са твърде много файлове. Отваряйте по-малки групи." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Използвайте 32-битови библиотеки, съвместими с вашата версия на Windows. Оставете пътищата "
-                L"празни за автоматично търсене. MediaInfo 0.7.60 не използва libcurl."
+                L"празни за автоматично търсене. MediaInfoLib v0.7.60 не използва libcurl.dll."
             },
             { TXT_VERSION, L"Версия" },
             { TXT_WEBSITE_TOOLTIP, L"Отвори уебсайта %s" },
@@ -11690,7 +11692,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Избрани се премногу датотеки. Отворајте помали групи." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Користете 32-битни библиотеки компатибилни со вашата верзија на Windows. Оставете ги "
-                L"патеките празни за автоматско пребарување. MediaInfo 0.7.60 не користи libcurl."
+                L"патеките празни за автоматско пребарување. MediaInfoLib v0.7.60 не користи libcurl.dll."
             },
             { TXT_VERSION, L"Верзија" },
             { TXT_WEBSITE_TOOLTIP, L"Отвори ја веб-страницата %s" },
@@ -12046,7 +12048,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Изабрано је превише датотека. Отварајте мање групе." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Користите 32-битне библиотеке компатибилне с вашом верзијом система Windows. Оставите "
-                L"путање празне за аутоматску претрагу. MediaInfo 0.7.60 не користи libcurl."
+                L"путање празне за аутоматску претрагу. MediaInfoLib v0.7.60 не користи libcurl.dll."
             },
             { TXT_VERSION, L"Верзија" },
             { TXT_WEBSITE_TOOLTIP, L"Отвори веб-сајт %s" },
@@ -12395,7 +12397,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Вибрано забагато файлів. Відкривайте менші групи." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Використайте 32-бітні бібліотеки, сумісні з вашою версією Windows. Для автоматичного "
-                L"пошуку залиште шляхи порожніми. MediaInfo 0.7.60 не використовує libcurl."
+                L"пошуку залиште шляхи порожніми. MediaInfoLib v0.7.60 не використовує libcurl.dll."
             },
             { TXT_VERSION, L"Версія" },
             { TXT_WEBSITE_TOOLTIP, L"Відкрити вебсайт %s" },
@@ -12742,7 +12744,7 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_TOO_MANY_FILES, L"Выбрано слишком много файлов. Открывайте меньшие группы." },
             { TXT_LIBRARY_PATH_HINT,
                 L"Используйте 32-битные библиотеки, совместимые с вашей версией Windows. Для автоматического "
-                L"поиска оставьте пути пустыми. MediaInfo 0.7.60 не использует libcurl."
+                L"поиска оставьте пути пустыми. MediaInfoLib v0.7.60 не использует libcurl.dll."
             },
             { TXT_VERSION, L"Версия" },
             { TXT_WEBSITE_TOOLTIP, L"Открыть веб-сайт %s" },

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.7
  */
 #pragma once
 
@@ -113,7 +113,7 @@ private:
     void Complete(bool failure);
 
     /// Applies the stored paper size and orientation to the system print task options.
-    void ApplySettings(Printing::IPrintTaskOptionsCore* options);
+    void ApplySettings(Printing::IPrintTaskOptionsCore* options) const;
 
     /// Uses the heap storage already allocated by Create without a C runtime allocation.
     static void* operator new(size_t size, void* memory);
