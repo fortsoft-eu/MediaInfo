@@ -1102,7 +1102,7 @@ INT_PTR DrawWrappedTextItem(const DRAWITEMSTRUCT* item) {
 /// Shortens text in the middle without splitting surrogate pairs, optionally retaining a complete file
 /// extension.
 void FormatMiddleCaption(const wchar_t* name, UINT limit, bool keepExtension, wchar_t* caption,
-    DWORD capacity) {
+        DWORD capacity) {
     if (!capacity) {
         return;
     }
@@ -1284,8 +1284,7 @@ bool IsReportImageTypeAvailable(DWORD type) {
 }
 
 /// Renders the report in its selected font and saves it with the requested available encoder.
-bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
-        int errorCapacity) {
+bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error, int errorCapacity) {
     if (type < 6 || type > 11) {
         lstrcpynW(error, T(TXT_IMAGE_FORMAT_UNSUPPORTED), errorCapacity);
         return false;
@@ -1379,8 +1378,7 @@ bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
         }
         GdiFlush();
         SelectObject(dc, oldBitmap);
-        success = ImageWriter::Save(path, pixels, width, height, bounds, type - 5,
-            error, errorCapacity);
+        success = ImageWriter::Save(path, pixels, width, height, bounds, type - 5, error, errorCapacity);
         DeleteObject(bitmap);
     }
     HeapFree(GetProcessHeap(), 0, text);
@@ -1547,8 +1545,8 @@ PrintJob* CapturePrintJob(HWND owner, HWND edit, const wchar_t* title, const REC
 }
 
 /// Captures the edit snapshot and opens the native printer-selection dialog with the retained settings.
-PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* title,
-    PrintSettings& settings, wchar_t* error, int errorCapacity) {
+PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* title, PrintSettings& settings,
+        wchar_t* error, int errorCapacity) {
     error[0] = 0;
     PrintJob* job = CapturePrintJob(owner, edit, title, settings.GetMargins());
     if (!job) {
