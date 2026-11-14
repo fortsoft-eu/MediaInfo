@@ -52,6 +52,6 @@ public:
     static const wchar_t* Label(DWORD type);
 
     /// Saves a cropped BGRA image and replaces the destination only after successful encoding.
-    static bool Save(const wchar_t* path, const BYTE* pixels, int width, int height,
-        const RECT& crop, DWORD type, wchar_t* error, int capacity);
+    static bool Save(const wchar_t* path, const BYTE* pixels, int width, int height, const RECT& crop,
+        DWORD type, wchar_t* error, int capacity);
 };
