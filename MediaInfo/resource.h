@@ -57,7 +57,7 @@
 #define IDC_FIND_TEXT                   1202
 #define IDC_FIND_MATCH_CASE             1203
 #define IDC_FIND_BACKWARD               1204
-#define IDC_FIND_TOPMOST                1205
+#define IDC_FIND_WHOLE_WORDS            1205
 #define IDC_FIND_STARTS_WITH            1206
 #define IDC_FIND_ENDS_WITH              1207
 #define IDC_FIND_REGEX                  1208

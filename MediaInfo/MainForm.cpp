@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.6
+ * Last modified for version 1.2.1.7
  */
 
 #include "Localization.h"
@@ -100,6 +100,20 @@ static const UINT statusCopyCommand = 1;
 static HHOOK modalFindHook;
 static MainForm* modalFindOwner;
 static bool modalFindFiltering;
+
+/// Reveals the matching form beneath search without changing keyboard focus or topmost settings.
+static void RevealFindTarget(HWND target, HWND search) {
+    if (IsIconic(target)) {
+        ShowWindow(target, SW_SHOWNOACTIVATE);
+    }
+    SetWindowPos(search, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    HWND after = search;
+    if (GetWindowLongPtrW(search, GWL_EXSTYLE) & WS_EX_TOPMOST) {
+        after = HWND_TOP;
+    }
+    SetWindowPos(target, after, 0, 0, 0, 0,
+        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+}
 
 /// Reads the current availability of a file and its containing folder for either menu.
 static void ReadFileMenuAvailability(FileMenuContext& context) {
@@ -1868,16 +1882,7 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
             owner->UpdateStatus();
             return 0;
         case findMatchMessage:
-            if (reinterpret_cast<HWND>(wParam) == owner->helpForm.GetWindow()) {
-                owner->helpForm.Reveal(reinterpret_cast<HWND>(lParam));
-            } else if (reinterpret_cast<HWND>(wParam) == owner->aboutForm.GetWindow()) {
-                SetWindowPos(owner->aboutForm.GetWindow(), HWND_TOP, 0, 0, 0, 0,
-                    SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-                SetWindowPos(reinterpret_cast<HWND>(lParam), HWND_TOP, 0, 0, 0, 0,
-                    SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
-            } else {
-                owner->placement.SetVisible(reinterpret_cast<HWND>(lParam));
-            }
+            RevealFindTarget(reinterpret_cast<HWND>(wParam), reinterpret_cast<HWND>(lParam));
             return 0;
         case WM_INITMENUPOPUP:
             if (reinterpret_cast<HMENU>(wParam) == GetSubMenu(GetMenu(window), 0)

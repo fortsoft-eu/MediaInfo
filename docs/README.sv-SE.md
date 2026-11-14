@@ -74,16 +74,14 @@ Windows 95 stöds för närvarande inte.
   beroende på vilket fönster som har fokus. Sökfönstret behåller den senast valda källan medan det
   självt har fokus. F3 upprepar sökningen; Skift+F3 vänder riktningen. Vid textens ändar fortsätter
   sökningen från motsatt ände. Alternativ > Automatiskt radbyte gäller bara den aktiva fliken; bocken
-  följer den valda fliken. Sökfönstret kan minimeras och ändras i bredd; positionen och inställningen
-  Alltid överst sparas. Upp till 30 söktexter med sina alternativ behålls bara tills programmet
-  avslutas. Alternativen för början och slutet gäller logiska rader. Reguljära uttryck använder
-  PCRE2-syntax. Övriga kommandon i menyn Redigera gäller den aktiva rapportfliken. Enter startar
-  sökningen; Skift+Enter vänder den valda riktningen. ”Matcha gemener och versaler” skiljer mellan
-  gemener och versaler; ”Sök bakåt” söker mot textens början. Ett val i historiken återställer alla fem
-  sökalternativen, inklusive inställningen för reguljära uttryck; ”Alltid överst” är oberoende.
-  ”Reguljärt uttryck” inaktiverar ”Raden börjar med” och ”Raden slutar med”. Om båda alternativen för
-  radens ändar är aktiverade räcker en träff vid endera änden. ”Automatiskt radbyte” ändrar bara
-  visningen.
+  följer den valda fliken. Sökfönstret kan minimeras och ändras i bredd; positionen sparas. Upp till 30
+  söktexter med sina alternativ behålls bara tills programmet avslutas. Alternativen för början och slutet
+  gäller logiska rader. Reguljära uttryck använder PCRE2-syntax. Övriga kommandon i menyn Redigera gäller den
+  aktiva rapportfliken. Enter startar sökningen; Skift+Enter vänder den valda riktningen. ”Matcha gemener och
+  versaler” skiljer mellan gemener och versaler; ”Sök bakåt” söker mot textens början. Ett val i historiken
+  återställer alla sex sökalternativen, inklusive inställningen för reguljära uttryck. ”Reguljärt uttryck”
+  inaktiverar ”Matcha hela ord”, ”Radens början” och ”Radens slut”. Om båda alternativen för radens ändar är
+  aktiverade räcker en träff vid endera änden. ”Automatiskt radbyte” ändrar bara visningen.
 - Alternativ > Inställningar (Ctrl+G) öppnar en enskild inställningsdialog för MediaInfo och curl sökvägar,
   rapportteckensnitt, teckensnittskantutjämning, gränssnittsspråk och rapportspråk. En tom DLL-sökväg
   möjliggör automatisk upptäckt.

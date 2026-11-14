@@ -75,15 +75,14 @@ Windows 95 er for øyeblikket ikke en støttet kjøretid.
   hvilket vindu som har fokus. Søkevinduet beholder den sist valgte kilden mens det selv har fokus. F3
   gjentar søket; Skift+F3 snur retningen. Ved tekstens ender fortsetter søket fra motsatt ende.
   Alternativer > Tekstbryting gjelder bare den aktive fanen; haken følger den valgte fanen. Søkevinduet
-  kan minimeres og endres i bredden; plasseringen og innstillingen Alltid øverst huskes. Opptil 30
-  søketekster med innstillingene deres beholdes bare til programmet avsluttes. Valgene for begynnelse og
-  slutt gjelder logiske linjer. Regulære uttrykk bruker PCRE2-syntaks. De øvrige kommandoene i
-  Rediger-menyen gjelder den aktive rapportfanen. Enter starter søket; Skift+Enter snur den valgte
-  retningen. «Skill mellom store og små bokstaver» skiller mellom store og små bokstaver; «Søk bakover»
-  søker mot begynnelsen av teksten. Valg av en historikkoppføring gjenoppretter alle fem søkevalg,
-  inkludert innstillingen for regulære uttrykk; «Alltid øverst» er uavhengig. «Regulært uttrykk»
-  deaktiverer «Linjen starter med» og «Linjen slutter med». Når begge valgene for linjens ender er
-  aktivert, holder det med et treff ved én ende. «Tekstbryting» endrer bare visningen.
+  kan minimeres og endres i bredden; plasseringen huskes. Opptil 30 søketekster med innstillingene deres
+  beholdes bare til programmet avsluttes. Valgene for begynnelse og slutt gjelder logiske linjer. Regulære
+  uttrykk bruker PCRE2-syntaks. De øvrige kommandoene i Rediger-menyen gjelder den aktive rapportfanen. Enter
+  starter søket; Skift+Enter snur den valgte retningen. «Skill mellom store og små bokstaver» skiller mellom
+  store og små bokstaver; «Søk bakover» søker mot begynnelsen av teksten. Valg av en historikkoppføring
+  gjenoppretter alle seks søkevalg, inkludert innstillingen for regulære uttrykk. «Regulært uttrykk»
+  deaktiverer «Bare hele ord», «Begynnelsen på linja» og «Slutten på linja». Når begge valgene for linjens
+  ender er aktivert, holder det med et treff ved én ende. «Tekstbryting» endrer bare visningen.
 - Alternativer > Innstillinger (Ctrl+G) åpner en enkelt preferansedialog for MediaInfo og curl baner,
   rapportfont, skriftkantutjevnelse, grensesnittspråk og rapportspråk. En tom DLL-bane muliggjør automatisk
   oppdagelse.

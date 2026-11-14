@@ -80,15 +80,15 @@ Windows 95 nu este în prezent un timp de rulare acceptat.
   timp are focalizarea. F3 repetă căutarea; Shift+F3 îi inversează direcția. La capătul textului,
   căutarea continuă din celălalt capăt. Opțiuni > Încadrare cuvinte se aplică numai filei active; bifa
   corespunde filei selectate. Fereastra de căutare poate fi minimizată și redimensionată orizontal;
-  poziția și opțiunea Întotdeauna deasupra sunt memorate. Până la 30 de texte căutate și opțiunile lor
-  sunt păstrate numai până la închiderea aplicației. Opțiunile de început și sfârșit se aplică liniilor
-  logice. Expresiile regulate folosesc sintaxa PCRE2. Celelalte comenzi din meniul Editare se aplică
-  filei de raport active. Enter pornește căutarea; Shift+Enter inversează direcția aleasă. „Potrivire
-  litere mari și mici” deosebește literele mari de cele mici; „Căutare înapoi” caută spre începutul
-  textului. Alegerea unei intrări din istoric restabilește toate cele cinci opțiuni de căutare, inclusiv
-  starea modului de expresii regulate; „Întotdeauna deasupra” este independentă. „Expresie regulată”
-  dezactivează „Linia începe cu” și „Linia se termină cu”. Dacă ambele opțiuni pentru capetele liniei
-  sunt active, este suficientă o potrivire la oricare capăt. „Încadrare cuvinte” schimbă numai afișarea.
+  poziția este memorată. Până la 30 de texte căutate și opțiunile lor sunt păstrate numai până la închiderea
+  aplicației. Opțiunile de început și sfârșit se aplică liniilor logice. Expresiile regulate folosesc sintaxa
+  PCRE2. Celelalte comenzi din meniul Editare se aplică filei de raport active. Enter pornește căutarea;
+  Shift+Enter inversează direcția aleasă. „Potrivire litere mari și mici” deosebește literele mari de cele
+  mici; „Căutare înapoi” caută spre începutul textului. Alegerea unei intrări din istoric restabilește toate
+  cele șase opțiuni de căutare, inclusiv starea modului de expresii regulate. „Expresie regulată” dezactivează
+  „Potrivește doar cuvintele întregi”, „Începutul rândului” și „Sfârșitul rândului”. Dacă ambele opțiuni
+  pentru capetele liniei sunt active, este suficientă o potrivire la oricare capăt. „Încadrare cuvinte”
+  schimbă numai afișarea.
 - Opțiuni > Preferințe (Ctrl+G) deschide un dialog unic de preferințe pentru căile MediaInfo și curl, fontul
   raportului, antialiasing font, limba interfeței și limba raportului. O cale goală DLL permite descoperirea
   automată.

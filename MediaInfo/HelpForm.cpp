@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.7
  */
 
 #include "HelpForm.h"
@@ -203,11 +203,6 @@ void HelpForm::Show(HWND owner) {
     }
 }
 
-/// Reveals Help beneath the search form without changing the active search input.
-void HelpForm::Reveal(HWND search) {
-    placement.SetVisible(search);
-}
-
 /// Closes the active modeless dialog.
 void HelpForm::Close() {
     if (window) {
@@ -217,7 +212,8 @@ void HelpForm::Close() {
 
 /// Routes modeless keyboard input through the native dialog manager.
 bool HelpForm::Translate(MSG* message) {
-    return window && (message->hwnd == window || IsChild(window, message->hwnd))
+    return window
+        && (message->hwnd == window || IsChild(window, message->hwnd))
         && IsDialogMessageW(window, message);
 }
 

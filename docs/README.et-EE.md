@@ -78,15 +78,14 @@ Windows 95 ei ole praegu toetatud käitusaeg.
   Spikri või Teabe tekstialalt. Otsinguaken säilitab viimati valitud allika, kuni fookus on selles. F3
   kordab otsingut ja Shift+F3 pöörab otsingu suuna ümber. Teksti lõppu jõudes jätkub otsing teisest
   otsast. Suvandid > Reamurdmine kehtib ainult aktiivsel vahekaardil; märge vastab valitud vahekaardile.
-  Otsinguakna saab minimeerida ja selle laiust muuta; asukoht ning valik Alati pealmine jäetakse meelde.
-  Kuni 30 otsinguteksti koos valikutega säilitatakse ainult rakenduse sulgemiseni. Alguse ja lõpu
-  valikud kehtivad loogiliste ridade kohta. Regulaaravaldised kasutavad PCRE2 süntaksit. Menüü Redigeeri
-  ülejäänud käsud rakenduvad aktiivsele aruande vahekaardile. Enter käivitab otsingu; Shift+Enter pöörab
-  valitud suuna ümber. „Tõstutundlik“ eristab suur- ja väiketähti; „Otsi tagasisuunas“ otsib teksti
-  alguse suunas. Ajalookirje valimine taastab kõik viis otsinguvalikut, sealhulgas regulaaravaldise
-  režiimi oleku; „Alati pealmine“ on sõltumatu. „Regulaaravaldis“ keelab valikud „Rida algab“ ja „Rida
-  lõpeb“. Kui mõlemad reapiiri valikud on lubatud, piisab vastest ühes piiris. „Reamurdmine“ muudab
-  ainult kuvamist.
+  Otsinguakna saab minimeerida ja selle laiust muuta; asukoht jäetakse meelde. Kuni 30 otsinguteksti koos
+  valikutega säilitatakse ainult rakenduse sulgemiseni. Alguse ja lõpu valikud kehtivad loogiliste ridade
+  kohta. Regulaaravaldised kasutavad PCRE2 süntaksit. Menüü Redigeeri ülejäänud käsud rakenduvad aktiivsele
+  aruande vahekaardile. Enter käivitab otsingu; Shift+Enter pöörab valitud suuna ümber. „Tõstutundlik“ eristab
+  suur- ja väiketähti; „Otsi tagasisuunas“ otsib teksti alguse suunas. Ajalookirje valimine taastab kõik kuus
+  otsinguvalikut, sealhulgas regulaaravaldise režiimi oleku. „Regulaaravaldis“ keelab valikud „Otsi tervet
+  sõna“, „Rea algus“ ja „Rea lõpp“. Kui mõlemad reapiiri valikud on lubatud, piisab vastest ühes piiris.
+  „Reamurdmine“ muudab ainult kuvamist.
 - Seaded > Eelistused (Ctrl+G) avab ühe eelistuste dialoogi MediaInfo ja curl teede, aruande fondi, fondi
   antialiasingu, liidese keele ja aruande keele jaoks. Tühi DLL tee võimaldab automaatset tuvastamist.
 - Fondinupp kuvab perekonna, punkti suuruse ja stiili ning avab standardse Windows fondidialoogi. Vaikeseade

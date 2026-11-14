@@ -81,16 +81,15 @@ A Windows 95 jelenleg nem támogatott futtatókörnyezet.
   van a fókusz. F3 megismétli a keresést, a Shift+F3 pedig megfordítja az irányát. A szöveg végéhez érve
   a keresés a másik végéről folytatódik. A Beállítások > Sortörés csak az aktív lapra érvényes; a
   jelölés a kiválasztott lapot követi. A keresőablak kis méretre állítható és vízszintesen
-  átméretezhető; a helyzete és a Mindig felül beállítás megmarad. Legfeljebb 30 keresési szöveg és
-  beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor elejére és végére vonatkozó beállítások
-  logikai sorokra érvényesek. A reguláris kifejezések PCRE2-szintaxist használnak. A Szerkesztés menü
-  többi parancsa az aktív jelentéslapra vonatkozik. Az Enter elindítja a keresést; a Shift+Enter
-  megfordítja a kiválasztott irányt. A „Kis- és nagybetűk megkülönböztetése” megkülönbözteti a kis- és
-  nagybetűket; a „Keresés visszafelé” a szöveg eleje felé keres. Egy előzmény kiválasztása visszaállítja
-  mind az öt keresési beállítást, beleértve a reguláris kifejezések módjának állapotát is; a „Mindig
-  felül” ettől független. A „Reguláris kifejezés” letiltja a „Sor elején” és „Sor végén” beállításokat.
-  Ha mindkét sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron elég az egyezés. A
-  „Sortörés” csak a megjelenítést módosítja.
+  átméretezhető; a helyzete megmarad. Legfeljebb 30 keresési szöveg és beállításaik csak az alkalmazás
+  bezárásáig maradnak meg. A sor elejére és végére vonatkozó beállítások logikai sorokra érvényesek. A
+  reguláris kifejezések PCRE2-szintaxist használnak. A Szerkesztés menü többi parancsa az aktív jelentéslapra
+  vonatkozik. Az Enter elindítja a keresést; a Shift+Enter megfordítja a kiválasztott irányt. A „Kis- és
+  nagybetűk megkülönböztetése” megkülönbözteti a kis- és nagybetűket; a „Keresés visszafelé” a szöveg eleje
+  felé keres. Egy előzmény kiválasztása visszaállítja mind a hat keresési beállítást, beleértve a reguláris
+  kifejezések módjának állapotát is. A „Reguláris kifejezés” letiltja a „Teljes szóegyezés”, „Sor eleje” és
+  „Sor vége” beállításokat. Ha mindkét sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron
+  elég az egyezés. A „Sortörés” csak a megjelenítést módosítja.
 - A Beállítások > Beállítások (Ctrl+G) egyetlen beállítási párbeszédpanelt nyit meg a MediaInfo és curl
   útvonalak, a jelentés betűtípusa, a betűtípus élsimítása, a felület nyelve és a jelentés nyelve számára. Az
   üres DLL elérési út lehetővé teszi az automatikus felderítést.

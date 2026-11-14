@@ -74,14 +74,13 @@ Windows 95 er ekki studdur keyrslutími.
   hvaða gluggi hefur fókus. Leitarglugginn heldur síðast valda upprunanum meðan hann hefur fókus. F3
   endurtekur leitina og Shift+F3 snýr leitarstefnunni við. Við enda textans heldur leitin áfram frá
   hinum endanum. Valkostir > Línuskipting gildir aðeins fyrir virkan flipa; gátmerkið fylgir völdum
-  flipa. Hægt er að lágmarka leitargluggann og breyta breidd hans; staðsetning og stillingin Alltaf efst
-  eru vistaðar. Allt að 30 leitartextar og stillingar þeirra eru aðeins geymd þar til forritinu er
-  lokað. Upphafs- og endaskilyrði eiga við röklegar línur. Reglulegar segðir nota PCRE2-málskipan. Aðrar
-  skipanir í valmyndinni Breyta eiga við virka skýrsluflipann. Enter ræsir leit; Shift+Enter snýr
-  valinni stefnu við. „Greina á milli há- og lágstafa“ greinir á milli há- og lágstafa; „Leita
-  afturábak“ leitar að upphafi textans. Val á færslu úr leitarsögunni endurheimtir alla fimm
-  leitarvalkostina, þar á meðal stillingu reglulegra segða; „Alltaf efst“ er óháður valkostur. „Regluleg
-  segð“ gerir „Lína byrjar á“ og „Lína endar á“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir
+  flipa. Hægt er að lágmarka leitargluggann og breyta breidd hans; staðsetningin er vistuð. Allt að 30
+  leitartextar og stillingar þeirra eru aðeins geymd þar til forritinu er lokað. Upphafs- og endaskilyrði eiga
+  við röklegar línur. Reglulegar segðir nota PCRE2-málskipan. Aðrar skipanir í valmyndinni Breyta eiga við
+  virka skýrsluflipann. Enter ræsir leit; Shift+Enter snýr valinni stefnu við. „Greina á milli há- og
+  lágstafa“ greinir á milli há- og lágstafa; „Leita afturábak“ leitar að upphafi textans. Val á færslu úr
+  leitarsögunni endurheimtir alla sex leitarvalkostina, þar á meðal stillingu reglulegra segða. „Regluleg
+  segð“ gerir „Heil orð“, „Byrjun línu“ og „Endir línu“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir
   nægir samsvörun við annan endann. „Línuskipting“ breytir aðeins birtingunni.
 - Valkostir > Kjörstillingar (Ctrl+G) opnar stakan valglugga fyrir MediaInfo og curl slóðir, skýrsluleturgerð,
   hliðrun leturs, viðmótstungumál og skýrslumál. Tóm DLL slóð gerir sjálfvirka uppgötvun kleift.

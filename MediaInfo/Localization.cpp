@@ -288,16 +288,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ponechá naposledy zvolený zdroj. F3 hledání opakuje, Shift+F3 obrátí jeho směr. Po "
                 L"dosažení okraje textu pokračuje hledání na opačném konci. Možnosti > Zalamování řádků "
                 L"ovlivňuje jen aktivní kartu; zatržení se mění podle vybrané karty. Formulář hledání lze "
-                L"minimalizovat a měnit jeho šířku; pamatuje si polohu a volbu Vždy navrchu. Historie "
-                L"uchovává až 30 hledaných textů s jejich volbami pouze do ukončení aplikace. Začíná na a "
-                L"Končí na hledají na okrajích logických řádků. Regulární výrazy používají syntaxi PCRE2. "
-                L"Ostatní příkazy nabídky Úpravy pracují s aktivní kartou reportu. Enter spustí hledání, "
-                L"Shift+Enter obrátí zvolený směr. Volba „Rozlišovat velikost písmen“ rozlišuje velká a "
-                L"malá písmena; „Hledat pozpátku“ hledá směrem k začátku textu. Výběr z historie obnoví "
-                L"všech pět voleb hledání, včetně uloženého stavu regulárního výrazu; „Vždy navrchu“ je "
-                L"nezávislá volba. „Regulární výraz“ vypne volby „Začíná na“ a „Končí na“. Jsou-li obě "
-                L"volby okrajů zapnuté, stačí shoda na jednom z nich. „Zalamování řádků“ mění pouze "
-                L"zobrazení."
+                L"minimalizovat a měnit jeho šířku; pamatuje si polohu. Historie uchovává až 30 hledaných "
+                L"textů s jejich volbami pouze do ukončení aplikace. Začátek řádku a Konec řádku hledají na "
+                L"okrajích logických řádků. Regulární výrazy používají syntaxi PCRE2. Ostatní příkazy "
+                L"nabídky Úpravy pracují s aktivní kartou reportu. Enter spustí hledání, Shift+Enter obrátí "
+                L"zvolený směr. Volba „Rozlišovat velikost písmen“ rozlišuje velká a malá písmena; „Hledat "
+                L"pozpátku“ hledá směrem k začátku textu. Výběr z historie obnoví všech šest voleb hledání, "
+                L"včetně uloženého stavu regulárního výrazu. „Regulární výraz“ vypne volby „Pouze celá "
+                L"slova“, „Začátek řádku“ a „Konec řádku“. Jsou-li obě volby okrajů zapnuté, stačí shoda na "
+                L"jednom z nich. „Zalamování řádků“ mění pouze zobrazení."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -358,13 +357,13 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT_MENU, L"Najít &další\tF3" },
             { TXT_FIND_PREVIOUS_MENU, L"Najít &předchozí\tShift+F3" },
             { TXT_FIND_TITLE, L"%s — Najít" },
-            { TXT_FIND_WHAT, L"&Hledat:" },
+            { TXT_FIND_WHAT, L"&Najít:" },
             { TXT_FIND_NEXT, L"Najít &další" },
             { TXT_FIND_MATCH_CASE, L"Rozlišovat &velikost písmen" },
             { TXT_FIND_BACKWARD, L"Hledat &pozpátku" },
-            { TXT_FIND_TOPMOST, L"Vždy navr&chu" },
-            { TXT_FIND_STARTS_WITH, L"Začíná &na" },
-            { TXT_FIND_ENDS_WITH, L"K&ončí na" },
+            { TXT_FIND_WHOLE_WORDS, L"Pouze &celá slova" },
+            { TXT_FIND_STARTS_WITH, L"Začáte&k řádku" },
+            { TXT_FIND_ENDS_WITH, L"K&onec řádku" },
             { TXT_FIND_REGEX, L"&Regulární výraz" },
             { TXT_FIND_NOT_FOUND, L"Zadaný text nebyl nalezen." },
             { TXT_FIND_FAILED, L"Vyhledávání se nepodařilo dokončit." },
@@ -634,16 +633,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"retains the last selected source while it has focus. F3 repeats the search; Shift+F3 "
                 L"reverses its direction. Searching wraps at the ends of the text. Options > Word Wrap "
                 L"affects only the active tab, and its check mark follows the selected tab. The search "
-                L"window can be minimized and resized horizontally; its position and Always on Top "
-                L"setting are remembered. Up to 30 search texts and their options are retained only until "
-                L"the application exits. Starts with and Ends with match the edges of logical lines. "
-                L"Regular expressions use PCRE2 syntax. The other Edit menu commands apply to the active "
-                L"report tab. Enter searches; Shift+Enter reverses the selected direction. \"Case "
-                L"sensitive\" distinguishes uppercase and lowercase; \"Backward\" searches toward the "
-                L"start of the text. Choosing a history entry restores all five search options, including "
-                L"the saved regular-expression mode; \"Always on top\" is independent. \"Regular "
-                L"expression\" disables \"Starts with\" and \"Ends with\". With both line-edge options "
-                L"enabled, either edge can match. \"Word Wrap\" changes only the display."
+                L"window can be minimized and resized horizontally; its position is remembered. Up to 30 "
+                L"search texts and their options are retained only until the application exits. Beginning of "
+                L"line and End of line match the edges of logical lines. Regular expressions use PCRE2 "
+                L"syntax. The other Edit menu commands apply to the active report tab. Enter searches; "
+                L"Shift+Enter reverses the selected direction. \"Match case\" distinguishes uppercase and "
+                L"lowercase; \"Search backward\" searches toward the start of the text. Choosing a history "
+                L"entry restores all six search options, including the saved regular-expression mode. "
+                L"\"Regular expression\" disables \"Match whole word only\", \"Beginning of line\" and \"End "
+                L"of line\". With both line-edge options enabled, either edge can match. \"Word Wrap\" "
+                L"changes only the display."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -704,14 +703,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT_MENU, L"Find &Next\tF3" },
             { TXT_FIND_PREVIOUS_MENU, L"Find &Previous\tShift+F3" },
             { TXT_FIND_TITLE, L"%s — Find" },
-            { TXT_FIND_WHAT, L"&Find:" },
-            { TXT_FIND_NEXT, L"Fi&nd Next" },
-            { TXT_FIND_MATCH_CASE, L"C&ase sensitive" },
-            { TXT_FIND_BACKWARD, L"&Backward" },
-            { TXT_FIND_TOPMOST, L"Always on &top" },
-            { TXT_FIND_STARTS_WITH, L"&Starts with" },
-            { TXT_FIND_ENDS_WITH, L"En&ds with" },
-            { TXT_FIND_REGEX, L"Regular e&xpression" },
+            { TXT_FIND_WHAT, L"&Find what:" },
+            { TXT_FIND_NEXT, L"Find &Next" },
+            { TXT_FIND_MATCH_CASE, L"Match c&ase" },
+            { TXT_FIND_BACKWARD, L"Search &backward" },
+            { TXT_FIND_WHOLE_WORDS, L"Match &whole word only" },
+            { TXT_FIND_STARTS_WITH, L"Be&ginning of line" },
+            { TXT_FIND_ENDS_WITH, L"&End of line" },
+            { TXT_FIND_REGEX, L"&Regular expression" },
             { TXT_FIND_NOT_FOUND, L"The specified text was not found." },
             { TXT_FIND_FAILED, L"The search could not be completed." },
             { TXT_FIND_REGEX_ERROR, L"Regular expression error:\r\n\r\n%s" },
@@ -980,16 +979,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"retains the last selected source while it has focus. F3 repeats the search; Shift+F3 "
                 L"reverses its direction. Searching wraps at the ends of the text. Options > Word Wrap "
                 L"affects only the active tab, and its check mark follows the selected tab. The search "
-                L"window can be minimised and resized horizontally; its position and Always on Top "
-                L"setting are remembered. Up to 30 search texts and their options are retained only until "
-                L"the application exits. Starts with and Ends with match the edges of logical lines. "
-                L"Regular expressions use PCRE2 syntax. The other Edit menu commands apply to the active "
-                L"report tab. Enter searches; Shift+Enter reverses the selected direction. \"Case "
-                L"sensitive\" distinguishes uppercase and lowercase; \"Backward\" searches toward the "
-                L"start of the text. Choosing a history entry restores all five search options, including "
-                L"the saved regular-expression mode; \"Always on top\" is independent. \"Regular "
-                L"expression\" disables \"Starts with\" and \"Ends with\". With both line-edge options "
-                L"enabled, either edge can match. \"Word Wrap\" changes only the display."
+                L"window can be minimised and resized horizontally; its position is remembered. Up to 30 "
+                L"search texts and their options are retained only until the application exits. Beginning of "
+                L"line and End of line match the edges of logical lines. Regular expressions use PCRE2 "
+                L"syntax. The other Edit menu commands apply to the active report tab. Enter searches; "
+                L"Shift+Enter reverses the selected direction. \"Match case\" distinguishes uppercase and "
+                L"lowercase; \"Search backward\" searches toward the start of the text. Choosing a history "
+                L"entry restores all six search options, including the saved regular-expression mode. "
+                L"\"Regular expression\" disables \"Match whole word only\", \"Beginning of line\" and \"End "
+                L"of line\". With both line-edge options enabled, either edge can match. \"Word Wrap\" "
+                L"changes only the display."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1050,14 +1049,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT_MENU, L"Find &Next\tF3" },
             { TXT_FIND_PREVIOUS_MENU, L"Find &Previous\tShift+F3" },
             { TXT_FIND_TITLE, L"%s — Find" },
-            { TXT_FIND_WHAT, L"&Find:" },
-            { TXT_FIND_NEXT, L"Fi&nd Next" },
-            { TXT_FIND_MATCH_CASE, L"C&ase sensitive" },
-            { TXT_FIND_BACKWARD, L"&Backward" },
-            { TXT_FIND_TOPMOST, L"Always on &top" },
-            { TXT_FIND_STARTS_WITH, L"&Starts with" },
-            { TXT_FIND_ENDS_WITH, L"En&ds with" },
-            { TXT_FIND_REGEX, L"Regular e&xpression" },
+            { TXT_FIND_WHAT, L"&Find what:" },
+            { TXT_FIND_NEXT, L"Find &Next" },
+            { TXT_FIND_MATCH_CASE, L"Match c&ase" },
+            { TXT_FIND_BACKWARD, L"Search &backward" },
+            { TXT_FIND_WHOLE_WORDS, L"Match &whole word only" },
+            { TXT_FIND_STARTS_WITH, L"Be&ginning of line" },
+            { TXT_FIND_ENDS_WITH, L"&End of line" },
+            { TXT_FIND_REGEX, L"&Regular expression" },
             { TXT_FIND_NOT_FOUND, L"The specified text was not found." },
             { TXT_FIND_FAILED, L"The search could not be completed." },
             { TXT_FIND_REGEX_ERROR, L"Regular expression error:\r\n\r\n%s" },
@@ -1326,16 +1325,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"retains the last selected source while it has focus. F3 repeats the search; Shift+F3 "
                 L"reverses its direction. Searching wraps at the ends of the text. Options > Word Wrap "
                 L"affects only the active tab, and its check mark follows the selected tab. The search "
-                L"window can be minimised and resized horizontally; its position and Always on Top "
-                L"setting are remembered. Up to 30 search texts and their options are retained only until "
-                L"the application exits. Starts with and Ends with match the edges of logical lines. "
-                L"Regular expressions use PCRE2 syntax. The other Edit menu commands apply to the active "
-                L"report tab. Enter searches; Shift+Enter reverses the selected direction. \"Case "
-                L"sensitive\" distinguishes uppercase and lowercase; \"Backward\" searches toward the "
-                L"start of the text. Choosing a history entry restores all five search options, including "
-                L"the saved regular-expression mode; \"Always on top\" is independent. \"Regular "
-                L"expression\" disables \"Starts with\" and \"Ends with\". With both line-edge options "
-                L"enabled, either edge can match. \"Word Wrap\" changes only the display."
+                L"window can be minimised and resized horizontally; its position is remembered. Up to 30 "
+                L"search texts and their options are retained only until the application exits. Beginning of "
+                L"line and End of line match the edges of logical lines. Regular expressions use PCRE2 "
+                L"syntax. The other Edit menu commands apply to the active report tab. Enter searches; "
+                L"Shift+Enter reverses the selected direction. \"Match case\" distinguishes uppercase and "
+                L"lowercase; \"Search backward\" searches toward the start of the text. Choosing a history "
+                L"entry restores all six search options, including the saved regular-expression mode. "
+                L"\"Regular expression\" disables \"Match whole word only\", \"Beginning of line\" and \"End "
+                L"of line\". With both line-edge options enabled, either edge can match. \"Word Wrap\" "
+                L"changes only the display."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1396,14 +1395,14 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT_MENU, L"Find &Next\tF3" },
             { TXT_FIND_PREVIOUS_MENU, L"Find &Previous\tShift+F3" },
             { TXT_FIND_TITLE, L"%s — Find" },
-            { TXT_FIND_WHAT, L"&Find:" },
-            { TXT_FIND_NEXT, L"Fi&nd Next" },
-            { TXT_FIND_MATCH_CASE, L"C&ase sensitive" },
-            { TXT_FIND_BACKWARD, L"&Backward" },
-            { TXT_FIND_TOPMOST, L"Always on &top" },
-            { TXT_FIND_STARTS_WITH, L"&Starts with" },
-            { TXT_FIND_ENDS_WITH, L"En&ds with" },
-            { TXT_FIND_REGEX, L"Regular e&xpression" },
+            { TXT_FIND_WHAT, L"&Find what:" },
+            { TXT_FIND_NEXT, L"Find &Next" },
+            { TXT_FIND_MATCH_CASE, L"Match c&ase" },
+            { TXT_FIND_BACKWARD, L"Search &backward" },
+            { TXT_FIND_WHOLE_WORDS, L"Match &whole word only" },
+            { TXT_FIND_STARTS_WITH, L"Be&ginning of line" },
+            { TXT_FIND_ENDS_WITH, L"&End of line" },
+            { TXT_FIND_REGEX, L"&Regular expression" },
             { TXT_FIND_NOT_FOUND, L"The specified text was not found." },
             { TXT_FIND_FAILED, L"The search could not be completed." },
             { TXT_FIND_REGEX_ERROR, L"Regular expression error:\r\n\r\n%s" },
@@ -1711,17 +1710,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"kehrt die Suchrichtung um. Am Textende wird die Suche am anderen Ende fortgesetzt. "
                 L"Optionen > Zeilenumbruch gilt nur für den aktiven Tab; das Häkchen richtet sich nach "
                 L"dem ausgewählten Tab. Das Suchfenster lässt sich minimieren und in der Breite "
-                L"verändern; seine Position und die Einstellung Immer im Vordergrund werden gespeichert. "
-                L"Bis zu 30 Suchtexte mit ihren Optionen bleiben nur bis zum Beenden der Anwendung "
-                L"erhalten. Zeile beginnt mit und Zeile endet mit beziehen sich auf logische Zeilen. "
-                L"Reguläre Ausdrücke verwenden die PCRE2-Syntax. Die übrigen Befehle im Menü Bearbeiten "
-                L"betreffen den aktiven Berichtstab. Eingabe startet die Suche; Umschalt+Eingabe kehrt "
-                L"die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ unterscheidet Groß- und "
-                L"Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein Eintrag aus dem "
-                L"Verlauf stellt alle fünf Suchoptionen wieder her und schaltet gegebenenfalls den "
-                L"Regexmodus aus; „Immer im Vordergrund“ ist unabhängig davon. „Regulärer Ausdruck“ "
-                L"deaktiviert „Zeile beginnt mit“ und „Zeile endet mit“. Sind beide Zeilenrandoptionen "
-                L"aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“ ändert nur die Darstellung."
+                L"verändern; seine Position wird gespeichert. Bis zu 30 Suchtexte mit ihren Optionen bleiben "
+                L"nur bis zum Beenden der Anwendung erhalten. Zeilenanfang und Zeilenende beziehen sich auf "
+                L"logische Zeilen. Reguläre Ausdrücke verwenden die PCRE2-Syntax. Die übrigen Befehle im "
+                L"Menü Bearbeiten betreffen den aktiven Berichtstab. Eingabe startet die Suche; "
+                L"Umschalt+Eingabe kehrt die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ "
+                L"unterscheidet Groß- und Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein "
+                L"Eintrag aus dem Verlauf stellt alle sechs Suchoptionen wieder her, einschließlich des "
+                L"gespeicherten Regexmodus. „Regulärer Ausdruck“ deaktiviert „Nur ganze Wörter suchen“, "
+                L"„Zeilenanfang“ und „Zeilenende“. Sind beide Zeilenrandoptionen aktiv, genügt ein Treffer "
+                L"an einem Rand. „Zeilenumbruch“ ändert nur die Darstellung."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -1793,9 +1791,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"&Weitersuchen" },
             { TXT_FIND_MATCH_CASE, L"Groß-/&Kleinschreibung beachten" },
             { TXT_FIND_BACKWARD, L"&Rückwärts suchen" },
-            { TXT_FIND_TOPMOST, L"Immer im &Vordergrund" },
-            { TXT_FIND_STARTS_WITH, L"Zeile &beginnt mit" },
-            { TXT_FIND_ENDS_WITH, L"Zeile &endet mit" },
+            { TXT_FIND_WHOLE_WORDS, L"N&ur ganze Wörter suchen" },
+            { TXT_FIND_STARTS_WITH, L"&Zeilenanfang" },
+            { TXT_FIND_ENDS_WITH, L"Z&eilenende" },
             { TXT_FIND_REGEX, L"Regulärer &Ausdruck" },
             { TXT_FIND_NOT_FOUND, L"Der angegebene Text wurde nicht gefunden." },
             { TXT_FIND_FAILED, L"Die Suche konnte nicht abgeschlossen werden." },
@@ -2107,18 +2105,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"inverse son sens. Aux extrémités du texte, la recherche reprend à l’autre extrémité. "
                 L"Options > Retour automatique à la ligne concerne uniquement l’onglet actif ; la coche "
                 L"suit l’onglet sélectionné. La fenêtre de recherche peut être réduite et redimensionnée "
-                L"horizontalement ; sa position et l’option Toujours au premier plan sont mémorisées. "
-                L"Jusqu’à 30 recherches et leurs options sont conservées uniquement jusqu’à la fermeture "
-                L"de l’application. Les options de début et de fin s’appliquent aux lignes logiques. Les "
-                L"expressions régulières utilisent la syntaxe PCRE2. Les autres commandes du menu Édition "
-                L"concernent l’onglet de rapport actif. Entrée lance la recherche ; Maj+Entrée inverse le "
-                L"sens choisi. « Respecter la casse » distingue les majuscules des minuscules ; « "
-                L"Rechercher vers l’arrière » recherche vers le début du texte. Choisir une entrée de "
-                L"l’historique rétablit les cinq options de recherche, y compris l’état du mode "
-                L"d’expression régulière ; « Toujours au premier plan » est indépendante. « Expression "
-                L"régulière » désactive « La ligne commence par » et « La ligne se termine par ». Si les "
-                L"deux options de début et de fin de ligne sont activées, une correspondance à l’une des "
-                L"extrémités suffit. « Retour automatique à la ligne » modifie uniquement l’affichage."
+                L"horizontalement ; sa position est mémorisée. Jusqu’à 30 recherches et leurs options sont "
+                L"conservées uniquement jusqu’à la fermeture de l’application. Les options de début et de "
+                L"fin s’appliquent aux lignes logiques. Les expressions régulières utilisent la syntaxe "
+                L"PCRE2. Les autres commandes du menu Édition concernent l’onglet de rapport actif. Entrée "
+                L"lance la recherche ; Maj+Entrée inverse le sens choisi. « Respecter la casse » distingue "
+                L"les majuscules des minuscules ; « Rechercher vers l’arrière » recherche vers le début du "
+                L"texte. Choisir une entrée de l’historique rétablit les six options de recherche, y compris "
+                L"l’état du mode d’expression régulière . « Expression régulière » désactive « Mot entier "
+                L"uniquement », « Début de ligne » et « Fin de ligne ». Si les deux options de début et de "
+                L"fin de ligne sont activées, une correspondance à l’une des extrémités suffit. « Retour "
+                L"automatique à la ligne » modifie uniquement l’affichage."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2188,9 +2185,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Rechercher le &suivant" },
             { TXT_FIND_MATCH_CASE, L"Respecter la &casse" },
             { TXT_FIND_BACKWARD, L"Rechercher vers l’&arrière" },
-            { TXT_FIND_TOPMOST, L"Toujours au premier &plan" },
-            { TXT_FIND_STARTS_WITH, L"La l&igne commence par" },
-            { TXT_FIND_ENDS_WITH, L"La ligne se &termine par" },
+            { TXT_FIND_WHOLE_WORDS, L"Mot entier &uniquement" },
+            { TXT_FIND_STARTS_WITH, L"&Début de ligne" },
+            { TXT_FIND_ENDS_WITH, L"F&in de ligne" },
             { TXT_FIND_REGEX, L"Expression &régulière" },
             { TXT_FIND_NOT_FOUND, L"Le texte spécifié est introuvable." },
             { TXT_FIND_FAILED, L"La recherche n’a pas pu être terminée." },
@@ -2491,17 +2488,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"invierte su dirección. Al llegar a un extremo del texto, la búsqueda continúa desde el "
                 L"otro. Opciones > Ajuste de línea solo afecta a la pestaña activa; la marca cambia según "
                 L"la pestaña seleccionada. La ventana de búsqueda se puede minimizar y redimensionar "
-                L"horizontalmente; se recuerdan su posición y la opción Siempre visible. Se conservan "
-                L"hasta 30 búsquedas y sus opciones solo hasta que se cierra la aplicación. Las opciones "
-                L"de principio y final se aplican a las líneas lógicas. Las expresiones regulares usan la "
-                L"sintaxis de PCRE2. Los demás comandos del menú Edición se aplican a la pestaña de "
-                L"informe activa. Entrar inicia la búsqueda; Mayús+Entrar invierte la dirección elegida. "
-                L"«Coincidir mayúsculas y minúsculas» distingue mayúsculas y minúsculas; «Buscar hacia "
-                L"atrás» busca hacia el principio del texto. Elegir una entrada del historial restaura "
-                L"las cinco opciones de búsqueda, incluido el estado del modo de expresión regular; "
-                L"«Siempre visible» es independiente. «Expresión regular» desactiva «La línea empieza "
-                L"por» y «La línea termina en». Si ambas opciones de extremos de línea están activadas, "
-                L"basta con que coincida uno de ellos. «Ajuste de línea» solo cambia la visualización."
+                L"horizontalmente; se recuerda su posición. Se conservan hasta 30 búsquedas y sus opciones "
+                L"solo hasta que se cierra la aplicación. Las opciones de principio y final se aplican a las "
+                L"líneas lógicas. Las expresiones regulares usan la sintaxis de PCRE2. Los demás comandos "
+                L"del menú Edición se aplican a la pestaña de informe activa. Entrar inicia la búsqueda; "
+                L"Mayús+Entrar invierte la dirección elegida. «Coincidir mayúsculas y minúsculas» distingue "
+                L"mayúsculas y minúsculas; «Buscar hacia atrás» busca hacia el principio del texto. Elegir "
+                L"una entrada del historial restaura las seis opciones de búsqueda, incluido el estado del "
+                L"modo de expresión regular. «Expresión regular» desactiva «Solo palabras completas», "
+                L"«Comienzo de línea» y «Fin de línea». Si ambas opciones de extremos de línea están "
+                L"activadas, basta con que coincida uno de ellos. «Ajuste de línea» solo cambia la "
+                L"visualización."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -2571,9 +2568,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Buscar &siguiente" },
             { TXT_FIND_MATCH_CASE, L"Coincidir &mayúsculas y minúsculas" },
             { TXT_FIND_BACKWARD, L"Buscar hacia &atrás" },
-            { TXT_FIND_TOPMOST, L"Siempre &visible" },
-            { TXT_FIND_STARTS_WITH, L"La línea &empieza por" },
-            { TXT_FIND_ENDS_WITH, L"La &línea termina en" },
+            { TXT_FIND_WHOLE_WORDS, L"Solo &palabras completas" },
+            { TXT_FIND_STARTS_WITH, L"C&omienzo de línea" },
+            { TXT_FIND_ENDS_WITH, L"&Fin de línea" },
             { TXT_FIND_REGEX, L"Expresión &regular" },
             { TXT_FIND_NOT_FOUND, L"No se encontró el texto especificado." },
             { TXT_FIND_FAILED, L"No se pudo completar la búsqueda." },
@@ -2876,18 +2873,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Maiusc+F3 ne inverte la direzione. Alle estremità del testo, la ricerca riprende "
                 L"dall’estremità opposta. Opzioni > A capo automatico riguarda solo la scheda attiva; il "
                 L"segno di spunta segue la scheda selezionata. La finestra di ricerca può essere ridotta "
-                L"a icona e ridimensionata orizzontalmente; la posizione e l’opzione Sempre in primo "
-                L"piano vengono memorizzate. Fino a 30 ricerche e le relative opzioni vengono conservate "
-                L"solo fino alla chiusura dell’applicazione. Le opzioni di inizio e fine si riferiscono "
-                L"alle righe logiche. Le espressioni regolari usano la sintassi PCRE2. Gli altri comandi "
-                L"del menu Modifica si applicano alla scheda di rapporto attiva. Invio avvia la ricerca; "
-                L"Maiusc+Invio inverte la direzione scelta. «Maiuscole/minuscole» distingue le lettere "
-                L"maiuscole dalle minuscole; «Cerca all’indietro» cerca verso l’inizio del testo. La "
-                L"scelta di una voce della cronologia ripristina tutte e cinque le opzioni di ricerca, "
-                L"compreso lo stato del modo per le espressioni regolari; «Sempre in primo piano» è "
-                L"indipendente. «Espressione regolare» disattiva «La riga inizia con» e «La riga termina "
-                L"con». Se entrambe le opzioni di inizio e fine riga sono attive, è sufficiente una "
-                L"corrispondenza a una delle estremità. «A capo automatico» modifica solo la "
+                L"a icona e ridimensionata orizzontalmente; la posizione viene memorizzata. Fino a 30 "
+                L"ricerche e le relative opzioni vengono conservate solo fino alla chiusura "
+                L"dell’applicazione. Le opzioni di inizio e fine si riferiscono alle righe logiche. Le "
+                L"espressioni regolari usano la sintassi PCRE2. Gli altri comandi del menu Modifica si "
+                L"applicano alla scheda di rapporto attiva. Invio avvia la ricerca; Maiusc+Invio inverte la "
+                L"direzione scelta. «Maiuscole/minuscole» distingue le lettere maiuscole dalle minuscole; "
+                L"«Cerca all’indietro» cerca verso l’inizio del testo. La scelta di una voce della "
+                L"cronologia ripristina tutte e sei le opzioni di ricerca, compreso lo stato del modo per le "
+                L"espressioni regolari. «Espressione regolare» disattiva «Solo parole intere», «Inizio della "
+                L"riga» e «Fine riga». Se entrambe le opzioni di inizio e fine riga sono attive, è "
+                L"sufficiente una corrispondenza a una delle estremità. «A capo automatico» modifica solo la "
                 L"visualizzazione."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
@@ -2958,9 +2954,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Trova &successivo" },
             { TXT_FIND_MATCH_CASE, L"&Maiuscole/minuscole" },
             { TXT_FIND_BACKWARD, L"Cerca all’&indietro" },
-            { TXT_FIND_TOPMOST, L"Sempre in &primo piano" },
-            { TXT_FIND_STARTS_WITH, L"&La riga inizia con" },
-            { TXT_FIND_ENDS_WITH, L"La riga termin&a con" },
+            { TXT_FIND_WHOLE_WORDS, L"Solo &parole intere" },
+            { TXT_FIND_STARTS_WITH, L"I&nizio della riga" },
+            { TXT_FIND_ENDS_WITH, L"&Fine riga" },
             { TXT_FIND_REGEX, L"Espressione &regolare" },
             { TXT_FIND_NOT_FOUND, L"Il testo specificato non è stato trovato." },
             { TXT_FIND_FAILED, L"Impossibile completare la ricerca." },
@@ -3257,17 +3253,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"inverte a direção. Ao atingir uma extremidade do texto, a pesquisa continua na outra. "
                 L"Opções > Moldar texto afeta apenas o separador ativo; a marca acompanha o separador "
                 L"selecionado. A janela de pesquisa pode ser minimizada e redimensionada horizontalmente; "
-                L"a posição e a opção Sempre em cima são memorizadas. São guardadas até 30 pesquisas e as "
-                L"respetivas opções apenas até a aplicação ser encerrada. As opções de início e fim "
-                L"referem-se às linhas lógicas. As expressões regulares utilizam a sintaxe PCRE2. Os "
-                L"restantes comandos do menu Editar aplicam-se ao separador de relatório ativo. Enter "
-                L"inicia a pesquisa; Shift+Enter inverte a direção escolhida. «Distinguir maiúsculas de "
-                L"minúsculas» distingue maiúsculas de minúsculas; «Procurar para trás» pesquisa em "
-                L"direção ao início do texto. A escolha de uma entrada do histórico repõe as cinco opções "
-                L"de pesquisa, incluindo o estado do modo de expressão regular; «Sempre em cima» é "
-                L"independente. «Expressão regular» desativa «A linha começa por» e «A linha termina "
-                L"com». Com ambas as opções de início e fim de linha ativas, basta uma correspondência "
-                L"numa das extremidades. «Moldar texto» altera apenas a apresentação."
+                L"a posição é memorizada. São guardadas até 30 pesquisas e as respetivas opções apenas até a "
+                L"aplicação ser encerrada. As opções de início e fim referem-se às linhas lógicas. As "
+                L"expressões regulares utilizam a sintaxe PCRE2. Os restantes comandos do menu Editar "
+                L"aplicam-se ao separador de relatório ativo. Enter inicia a pesquisa; Shift+Enter inverte a "
+                L"direção escolhida. «Distinguir maiúsculas de minúsculas» distingue maiúsculas de "
+                L"minúsculas; «Procurar para trás» pesquisa em direção ao início do texto. A escolha de uma "
+                L"entrada do histórico repõe as seis opções de pesquisa, incluindo o estado do modo de "
+                L"expressão regular. «Expressão regular» desativa «Corresponder a palavra inteira», «Início "
+                L"da linha» e «Fim da linha». Com ambas as opções de início e fim de linha ativas, basta uma "
+                L"correspondência numa das extremidades. «Moldar texto» altera apenas a apresentação."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -3337,9 +3332,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Localizar &seguinte" },
             { TXT_FIND_MATCH_CASE, L"Distinguir &maiúsculas de minúsculas" },
             { TXT_FIND_BACKWARD, L"Procurar para &trás" },
-            { TXT_FIND_TOPMOST, L"Sempre em &cima" },
-            { TXT_FIND_STARTS_WITH, L"&A linha começa por" },
-            { TXT_FIND_ENDS_WITH, L"A li&nha termina com" },
+            { TXT_FIND_WHOLE_WORDS, L"Corresponder a &palavra inteira" },
+            { TXT_FIND_STARTS_WITH, L"&Início da linha" },
+            { TXT_FIND_ENDS_WITH, L"Fim &da linha" },
             { TXT_FIND_REGEX, L"Expressão &regular" },
             { TXT_FIND_NOT_FOUND, L"O texto especificado não foi encontrado." },
             { TXT_FIND_FAILED, L"Não foi possível concluir a pesquisa." },
@@ -3622,17 +3617,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"kierunek. Po dotarciu do końca tekstu wyszukiwanie jest kontynuowane od drugiego końca. "
                 L"Opcje > Zawijanie wierszy dotyczy tylko aktywnej karty; zaznaczenie odpowiada wybranej "
                 L"karcie. Okno wyszukiwania można zminimalizować i zmieniać jego szerokość; położenie "
-                L"oraz ustawienie Zawsze na wierzchu są zapamiętywane. Do 30 wyszukiwanych tekstów z "
-                L"opcjami pozostaje w pamięci tylko do zamknięcia aplikacji. Opcje początku i końca "
-                L"dotyczą logicznych wierszy. Wyrażenia regularne używają składni PCRE2. Pozostałe "
-                L"polecenia menu Edycja dotyczą aktywnej karty raportu. Enter uruchamia wyszukiwanie, a "
-                L"Shift+Enter odwraca wybrany kierunek. „Uwzględnij wielkość liter” rozróżnia wielkie i "
-                L"małe litery; „Szukaj wstecz” wyszukuje w kierunku początku tekstu. Wybranie wpisu "
-                L"historii przywraca wszystkie pięć opcji wyszukiwania, w tym stan trybu wyrażeń "
-                L"regularnych; „Zawsze na wierzchu” jest niezależne. „Wyrażenie regularne” wyłącza opcje "
-                L"„Wiersz zaczyna się od” i „Wiersz kończy się na”. Gdy obie opcje krańców wiersza są "
-                L"włączone, wystarczy dopasowanie na jednym z nich. „Zawijanie wierszy” zmienia tylko "
-                L"sposób wyświetlania."
+                L"jest zapamiętywane. Do 30 wyszukiwanych tekstów z opcjami pozostaje w pamięci tylko do "
+                L"zamknięcia aplikacji. Opcje początku i końca dotyczą logicznych wierszy. Wyrażenia "
+                L"regularne używają składni PCRE2. Pozostałe polecenia menu Edycja dotyczą aktywnej karty "
+                L"raportu. Enter uruchamia wyszukiwanie, a Shift+Enter odwraca wybrany kierunek. „Uwzględnij "
+                L"wielkość liter” rozróżnia wielkie i małe litery; „Szukaj wstecz” wyszukuje w kierunku "
+                L"początku tekstu. Wybranie wpisu historii przywraca wszystkie sześć opcji wyszukiwania, w "
+                L"tym stan trybu wyrażeń regularnych. „Wyrażenie regularne” wyłącza opcje „Znajdź tylko całe "
+                L"wyrazy”, „Początek wiersza” i „Koniec wiersza”. Gdy obie opcje krańców wiersza są "
+                L"włączone, wystarczy dopasowanie na jednym z nich. „Zawijanie wierszy” zmienia tylko sposób "
+                L"wyświetlania."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -3697,9 +3691,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Znajdź &następny" },
             { TXT_FIND_MATCH_CASE, L"Uwzględnij &wielkość liter" },
             { TXT_FIND_BACKWARD, L"Szukaj w&stecz" },
-            { TXT_FIND_TOPMOST, L"Z&awsze na wierzchu" },
-            { TXT_FIND_STARTS_WITH, L"Wiersz zaczyna się &od" },
-            { TXT_FIND_ENDS_WITH, L"Wiersz &kończy się na" },
+            { TXT_FIND_WHOLE_WORDS, L"Znajdź tylko &całe wyrazy" },
+            { TXT_FIND_STARTS_WITH, L"&Początek wiersza" },
+            { TXT_FIND_ENDS_WITH, L"&Koniec wiersza" },
             { TXT_FIND_REGEX, L"Wyrażenie &regularne" },
             { TXT_FIND_NOT_FOUND, L"Nie znaleziono podanego tekstu." },
             { TXT_FIND_FAILED, L"Nie można ukończyć wyszukiwania." },
@@ -3969,16 +3963,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"zvolený zdroj. F3 hľadanie opakuje, Shift+F3 obráti jeho smer. Po dosiahnutí okraja "
                 L"textu pokračuje hľadanie na opačnom konci. Možnosti > Zalamovanie riadkov ovplyvňuje "
                 L"iba aktívnu kartu; začiarknutie sa mení podľa vybratej karty. Formulár hľadania možno "
-                L"minimalizovať a meniť jeho šírku; pamätá si polohu a voľbu Vždy navrchu. História "
-                L"uchováva najviac 30 hľadaných textov s ich voľbami iba do ukončenia aplikácie. Začína "
-                L"na a Končí na hľadajú na okrajoch logických riadkov. Regulárne výrazy používajú syntax "
-                L"PCRE2. Ostatné príkazy ponuky Úpravy sa vzťahujú na aktívnu kartu reportu. Enter spustí "
-                L"hľadanie, Shift+Enter obráti zvolený smer. Voľba „Rozlišovať veľké a malé písmená“ "
-                L"rozlišuje veľké a malé písmená; „Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z "
-                L"histórie obnoví všetkých päť volieb hľadania vrátane uloženého stavu regulárneho "
-                L"výrazu; „Vždy navrchu“ je nezávislá voľba. „Regulárny výraz“ vypne voľby „Začína na“ a "
-                L"„Končí na“. Ak sú zapnuté obe voľby okrajov riadka, stačí zhoda na jednom z nich. "
-                L"„Zalamovanie riadkov“ mení iba zobrazenie."
+                L"minimalizovať a meniť jeho šírku; pamätá si polohu. História uchováva najviac 30 hľadaných "
+                L"textov s ich voľbami iba do ukončenia aplikácie. Začiatok riadka a Koniec riadka hľadajú "
+                L"na okrajoch logických riadkov. Regulárne výrazy používajú syntax PCRE2. Ostatné príkazy "
+                L"ponuky Úpravy sa vzťahujú na aktívnu kartu reportu. Enter spustí hľadanie, Shift+Enter "
+                L"obráti zvolený smer. Voľba „Rozlišovať veľkosť písmen“ rozlišuje veľké a malé písmená; "
+                L"„Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z histórie obnoví všetkých šesť "
+                L"volieb hľadania vrátane uloženého stavu regulárneho výrazu. „Regulárny výraz“ vypne voľby "
+                L"„Iba celé slová“, „Začiatok riadka“ a „Koniec riadka“. Ak sú zapnuté obe voľby okrajov "
+                L"riadka, stačí zhoda na jednom z nich. „Zalamovanie riadkov“ mení iba zobrazenie."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4041,11 +4034,11 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_TITLE, L"%s — Hľadať" },
             { TXT_FIND_WHAT, L"&Hľadať:" },
             { TXT_FIND_NEXT, L"Hľadať ď&alej" },
-            { TXT_FIND_MATCH_CASE, L"Rozlišovať &veľké a malé písmená" },
+            { TXT_FIND_MATCH_CASE, L"Rozlišovať &veľkosť písmen" },
             { TXT_FIND_BACKWARD, L"Hľadať &dozadu" },
-            { TXT_FIND_TOPMOST, L"Vždy navr&chu" },
-            { TXT_FIND_STARTS_WITH, L"Začína &na" },
-            { TXT_FIND_ENDS_WITH, L"&Končí na" },
+            { TXT_FIND_WHOLE_WORDS, L"Iba &celé slová" },
+            { TXT_FIND_STARTS_WITH, L"Začiato&k riadka" },
+            { TXT_FIND_ENDS_WITH, L"K&oniec riadka" },
             { TXT_FIND_REGEX, L"&Regulárny výraz" },
             { TXT_FIND_NOT_FOUND, L"Zadaný text sa nenašiel." },
             { TXT_FIND_FAILED, L"Vyhľadávanie sa nepodarilo dokončiť." },
@@ -4312,17 +4305,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"kilde, mens det selv har fokus. F3 gentager søgningen; Skift+F3 vender retningen. Ved "
                 L"tekstens ender fortsætter søgningen fra den modsatte ende. Indstillinger > "
                 L"Tekstombrydning gælder kun den aktive fane; markeringen følger den valgte fane. "
-                L"Søgevinduet kan minimeres og ændres i bredden; placeringen og indstillingen Altid "
-                L"øverst huskes. Op til 30 søgetekster med deres indstillinger gemmes kun, indtil "
-                L"programmet lukkes. Indstillingerne for start og slutning gælder logiske linjer. "
-                L"Regulære udtryk bruger PCRE2-syntaks. De øvrige kommandoer i menuen Rediger gælder den "
-                L"aktive rapportfane. Enter starter søgningen; Skift+Enter vender den valgte retning. "
-                L"„Forskel på store og små bogstaver“ skelner mellem store og små bogstaver; „Søg bagud“ "
-                L"søger mod tekstens begyndelse. Valg af en historikpost gendanner alle fem "
-                L"søgeindstillinger, herunder tilstanden for regulære udtryk; „Altid øverst“ er "
-                L"uafhængig. „Regulært udtryk“ deaktiverer „Linjen starter med“ og „Linjen slutter med“. "
-                L"Er begge indstillinger for linjens ender slået til, er et match ved én ende nok. "
-                L"„Tekstombrydning“ ændrer kun visningen."
+                L"Søgevinduet kan minimeres og ændres i bredden; placeringen huskes. Op til 30 søgetekster "
+                L"med deres indstillinger gemmes kun, indtil programmet lukkes. Indstillingerne for start og "
+                L"slutning gælder logiske linjer. Regulære udtryk bruger PCRE2-syntaks. De øvrige kommandoer "
+                L"i menuen Rediger gælder den aktive rapportfane. Enter starter søgningen; Skift+Enter "
+                L"vender den valgte retning. „Forskel på store og små bogstaver“ skelner mellem store og små "
+                L"bogstaver; „Søg bagud“ søger mod tekstens begyndelse. Valg af en historikpost gendanner "
+                L"alle seks søgeindstillinger, herunder tilstanden for regulære udtryk. „Regulært udtryk“ "
+                L"deaktiverer „Søg kun hele ord“, „Begyndelse af linje“ og „Linjeafslutning“. Er begge "
+                L"indstillinger for linjens ender slået til, er et match ved én ende nok. „Tekstombrydning“ "
+                L"ændrer kun visningen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4388,9 +4380,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Søg &næste" },
             { TXT_FIND_MATCH_CASE, L"Forskel på store og små &bogstaver" },
             { TXT_FIND_BACKWARD, L"Søg b&agud" },
-            { TXT_FIND_TOPMOST, L"Altid &øverst" },
-            { TXT_FIND_STARTS_WITH, L"Linjen &starter med" },
-            { TXT_FIND_ENDS_WITH, L"Linjen sl&utter med" },
+            { TXT_FIND_WHOLE_WORDS, L"Søg kun &hele ord" },
+            { TXT_FIND_STARTS_WITH, L"Be&gyndelse af linje" },
+            { TXT_FIND_ENDS_WITH, L"L&injeafslutning" },
             { TXT_FIND_REGEX, L"&Regulært udtryk" },
             { TXT_FIND_NOT_FOUND, L"Den angivne tekst blev ikke fundet." },
             { TXT_FIND_FAILED, L"Søgningen kunne ikke fuldføres." },
@@ -4670,17 +4662,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"säilyttää viimeksi valitun lähteen, kun kohdistus on siinä. F3 toistaa haun ja "
                 L"Vaihto+F3 vaihtaa hakusuunnan. Tekstin päässä haku jatkuu toisesta päästä. Asetukset > "
                 L"Automaattinen rivitys koskee vain aktiivista välilehteä; valintamerkki seuraa valittua "
-                L"välilehteä. Hakuikkunan voi pienentää ja sen leveyttä muuttaa; sijainti ja Aina "
-                L"päällimmäisenä -asetus muistetaan. Enintään 30 hakutekstiä asetuksineen säilytetään "
-                L"vain sovelluksen sulkemiseen asti. Rivin alku- ja loppuehdot koskevat loogisia rivejä. "
-                L"Säännölliset lausekkeet käyttävät PCRE2-syntaksia. Muut Muokkaa-valikon komennot "
-                L"koskevat aktiivista raporttivälilehteä. Enter käynnistää haun; Vaihto+Enter kääntää "
-                L"valitun suunnan. ”Sama kirjainkoko” erottaa isot ja pienet kirjaimet; ”Etsi taaksepäin” "
-                L"hakee kohti tekstin alkua. Historiakohteen valinta palauttaa kaikki viisi hakuasetusta, "
-                L"myös säännöllisten lausekkeiden tilan; ”Aina päällimmäisenä” on erillinen asetus. "
-                L"”Säännöllinen lauseke” poistaa käytöstä asetukset ”Rivi alkaa” ja ”Rivi päättyy”. Kun "
-                L"molemmat rivin reunaehdot ovat käytössä, osuma kummassa tahansa reunassa riittää. "
-                L"”Automaattinen rivitys” muuttaa vain näyttötapaa."
+                L"välilehteä. Hakuikkunan voi pienentää ja sen leveyttä muuttaa; sijainti muistetaan. "
+                L"Enintään 30 hakutekstiä asetuksineen säilytetään vain sovelluksen sulkemiseen asti. Rivin "
+                L"alku- ja loppuehdot koskevat loogisia rivejä. Säännölliset lausekkeet käyttävät "
+                L"PCRE2-syntaksia. Muut Muokkaa-valikon komennot koskevat aktiivista raporttivälilehteä. "
+                L"Enter käynnistää haun; Vaihto+Enter kääntää valitun suunnan. ”Sama kirjainkoko” erottaa "
+                L"isot ja pienet kirjaimet; ”Etsi taaksepäin” hakee kohti tekstin alkua. Historiakohteen "
+                L"valinta palauttaa kaikki kuusi hakuasetusta, myös säännöllisten lausekkeiden tilan. "
+                L"”Säännöllinen lauseke” poistaa käytöstä asetukset ”Vain kokonaiset sanat”, ”Rivin alku” ja "
+                L"”Rivin loppu”. Kun molemmat rivin reunaehdot ovat käytössä, osuma kummassa tahansa "
+                L"reunassa riittää. ”Automaattinen rivitys” muuttaa vain näyttötapaa."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -4746,9 +4737,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"&Etsi seuraava" },
             { TXT_FIND_MATCH_CASE, L"Sama kirjain&koko" },
             { TXT_FIND_BACKWARD, L"Etsi t&aaksepäin" },
-            { TXT_FIND_TOPMOST, L"Aina &päällimmäisenä" },
-            { TXT_FIND_STARTS_WITH, L"Rivi a&lkaa" },
-            { TXT_FIND_ENDS_WITH, L"Rivi p&äättyy" },
+            { TXT_FIND_WHOLE_WORDS, L"&Vain kokonaiset sanat" },
+            { TXT_FIND_STARTS_WITH, L"&Rivin alku" },
+            { TXT_FIND_ENDS_WITH, L"R&ivin loppu" },
             { TXT_FIND_REGEX, L"Säänn&öllinen lauseke" },
             { TXT_FIND_NOT_FOUND, L"Määritettyä tekstiä ei löytynyt." },
             { TXT_FIND_FAILED, L"Hakua ei voitu suorittaa loppuun." },
@@ -5013,16 +5004,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"hefur fókus. F3 endurtekur leitina og Shift+F3 snýr leitarstefnunni við. Við enda "
                 L"textans heldur leitin áfram frá hinum endanum. Valkostir > Línuskipting gildir aðeins "
                 L"fyrir virkan flipa; gátmerkið fylgir völdum flipa. Hægt er að lágmarka leitargluggann "
-                L"og breyta breidd hans; staðsetning og stillingin Alltaf efst eru vistaðar. Allt að 30 "
-                L"leitartextar og stillingar þeirra eru aðeins geymd þar til forritinu er lokað. Upphafs- "
-                L"og endaskilyrði eiga við röklegar línur. Reglulegar segðir nota PCRE2-málskipan. Aðrar "
-                L"skipanir í valmyndinni Breyta eiga við virka skýrsluflipann. Enter ræsir leit; "
-                L"Shift+Enter snýr valinni stefnu við. „Greina á milli há- og lágstafa“ greinir á milli "
-                L"há- og lágstafa; „Leita afturábak“ leitar að upphafi textans. Val á færslu úr "
-                L"leitarsögunni endurheimtir alla fimm leitarvalkostina, þar á meðal stillingu reglulegra "
-                L"segða; „Alltaf efst“ er óháður valkostur. „Regluleg segð“ gerir „Lína byrjar á“ og "
-                L"„Lína endar á“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir nægir samsvörun "
-                L"við annan endann. „Línuskipting“ breytir aðeins birtingunni."
+                L"og breyta breidd hans; staðsetningin er vistuð. Allt að 30 leitartextar og stillingar "
+                L"þeirra eru aðeins geymd þar til forritinu er lokað. Upphafs- og endaskilyrði eiga við "
+                L"röklegar línur. Reglulegar segðir nota PCRE2-málskipan. Aðrar skipanir í valmyndinni "
+                L"Breyta eiga við virka skýrsluflipann. Enter ræsir leit; Shift+Enter snýr valinni stefnu "
+                L"við. „Greina á milli há- og lágstafa“ greinir á milli há- og lágstafa; „Leita afturábak“ "
+                L"leitar að upphafi textans. Val á færslu úr leitarsögunni endurheimtir alla sex "
+                L"leitarvalkostina, þar á meðal stillingu reglulegra segða. „Regluleg segð“ gerir „Heil "
+                L"orð“, „Byrjun línu“ og „Endir línu“ óvirka. Ef báðir valkostir fyrir enda línu eru virkir "
+                L"nægir samsvörun við annan endann. „Línuskipting“ breytir aðeins birtingunni."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -5088,9 +5078,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Finna &næsta" },
             { TXT_FIND_MATCH_CASE, L"Greina á milli há- og lág&stafa" },
             { TXT_FIND_BACKWARD, L"Leita a&fturábak" },
-            { TXT_FIND_TOPMOST, L"Alltaf &efst" },
-            { TXT_FIND_STARTS_WITH, L"Lína &byrjar á" },
-            { TXT_FIND_ENDS_WITH, L"Lína en&dar á" },
+            { TXT_FIND_WHOLE_WORDS, L"&Heil orð" },
+            { TXT_FIND_STARTS_WITH, L"&Byrjun línu" },
+            { TXT_FIND_ENDS_WITH, L"&Endir línu" },
             { TXT_FIND_REGEX, L"&Regluleg segð" },
             { TXT_FIND_NOT_FOUND, L"Tilgreindur texti fannst ekki." },
             { TXT_FIND_FAILED, L"Ekki tókst að ljúka leitinni." },
@@ -5356,17 +5346,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"beholder den sist valgte kilden mens det selv har fokus. F3 gjentar søket; Skift+F3 "
                 L"snur retningen. Ved tekstens ender fortsetter søket fra motsatt ende. Alternativer > "
                 L"Tekstbryting gjelder bare den aktive fanen; haken følger den valgte fanen. Søkevinduet "
-                L"kan minimeres og endres i bredden; plasseringen og innstillingen Alltid øverst huskes. "
-                L"Opptil 30 søketekster med innstillingene deres beholdes bare til programmet avsluttes. "
-                L"Valgene for begynnelse og slutt gjelder logiske linjer. Regulære uttrykk bruker "
-                L"PCRE2-syntaks. De øvrige kommandoene i Rediger-menyen gjelder den aktive rapportfanen. "
-                L"Enter starter søket; Skift+Enter snur den valgte retningen. «Skill mellom store og små "
-                L"bokstaver» skiller mellom store og små bokstaver; «Søk bakover» søker mot begynnelsen "
-                L"av teksten. Valg av en historikkoppføring gjenoppretter alle fem søkevalg, inkludert "
-                L"innstillingen for regulære uttrykk; «Alltid øverst» er uavhengig. «Regulært uttrykk» "
-                L"deaktiverer «Linjen starter med» og «Linjen slutter med». Når begge valgene for linjens "
-                L"ender er aktivert, holder det med et treff ved én ende. «Tekstbryting» endrer bare "
-                L"visningen."
+                L"kan minimeres og endres i bredden; plasseringen huskes. Opptil 30 søketekster med "
+                L"innstillingene deres beholdes bare til programmet avsluttes. Valgene for begynnelse og "
+                L"slutt gjelder logiske linjer. Regulære uttrykk bruker PCRE2-syntaks. De øvrige kommandoene "
+                L"i Rediger-menyen gjelder den aktive rapportfanen. Enter starter søket; Skift+Enter snur "
+                L"den valgte retningen. «Skill mellom store og små bokstaver» skiller mellom store og små "
+                L"bokstaver; «Søk bakover» søker mot begynnelsen av teksten. Valg av en historikkoppføring "
+                L"gjenoppretter alle seks søkevalg, inkludert innstillingen for regulære uttrykk. «Regulært "
+                L"uttrykk» deaktiverer «Bare hele ord», «Begynnelsen på linja» og «Slutten på linja». Når "
+                L"begge valgene for linjens ender er aktivert, holder det med et treff ved én ende. "
+                L"«Tekstbryting» endrer bare visningen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -5432,9 +5421,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Søk &neste" },
             { TXT_FIND_MATCH_CASE, L"Skill mellom store og små &bokstaver" },
             { TXT_FIND_BACKWARD, L"Søk b&akover" },
-            { TXT_FIND_TOPMOST, L"Alltid &øverst" },
-            { TXT_FIND_STARTS_WITH, L"Linjen &starter med" },
-            { TXT_FIND_ENDS_WITH, L"Linjen sl&utter med" },
+            { TXT_FIND_WHOLE_WORDS, L"Bare &hele ord" },
+            { TXT_FIND_STARTS_WITH, L"Be&gynnelsen på linja" },
+            { TXT_FIND_ENDS_WITH, L"&Slutten på linja" },
             { TXT_FIND_REGEX, L"&Regulært uttrykk" },
             { TXT_FIND_NOT_FOUND, L"Den angitte teksten ble ikke funnet." },
             { TXT_FIND_FAILED, L"Søket kunne ikke fullføres." },
@@ -5710,16 +5699,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"upprepar sökningen; Skift+F3 vänder riktningen. Vid textens ändar fortsätter sökningen "
                 L"från motsatt ände. Alternativ > Automatiskt radbyte gäller bara den aktiva fliken; "
                 L"bocken följer den valda fliken. Sökfönstret kan minimeras och ändras i bredd; "
-                L"positionen och inställningen Alltid överst sparas. Upp till 30 söktexter med sina "
-                L"alternativ behålls bara tills programmet avslutas. Alternativen för början och slutet "
-                L"gäller logiska rader. Reguljära uttryck använder PCRE2-syntax. Övriga kommandon i menyn "
-                L"Redigera gäller den aktiva rapportfliken. Enter startar sökningen; Skift+Enter vänder "
-                L"den valda riktningen. ”Matcha gemener och versaler” skiljer mellan gemener och "
-                L"versaler; ”Sök bakåt” söker mot textens början. Ett val i historiken återställer alla "
-                L"fem sökalternativen, inklusive inställningen för reguljära uttryck; ”Alltid överst” är "
-                L"oberoende. ”Reguljärt uttryck” inaktiverar ”Raden börjar med” och ”Raden slutar med”. "
-                L"Om båda alternativen för radens ändar är aktiverade räcker en träff vid endera änden. "
-                L"”Automatiskt radbyte” ändrar bara visningen."
+                L"positionen sparas. Upp till 30 söktexter med sina alternativ behålls bara tills programmet "
+                L"avslutas. Alternativen för början och slutet gäller logiska rader. Reguljära uttryck "
+                L"använder PCRE2-syntax. Övriga kommandon i menyn Redigera gäller den aktiva rapportfliken. "
+                L"Enter startar sökningen; Skift+Enter vänder den valda riktningen. ”Matcha gemener och "
+                L"versaler” skiljer mellan gemener och versaler; ”Sök bakåt” söker mot textens början. Ett "
+                L"val i historiken återställer alla sex sökalternativen, inklusive inställningen för "
+                L"reguljära uttryck. ”Reguljärt uttryck” inaktiverar ”Matcha hela ord”, ”Radens början” och "
+                L"”Radens slut”. Om båda alternativen för radens ändar är aktiverade räcker en träff vid "
+                L"endera änden. ”Automatiskt radbyte” ändrar bara visningen."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -5784,9 +5772,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Sök &nästa" },
             { TXT_FIND_MATCH_CASE, L"&Matcha gemener och versaler" },
             { TXT_FIND_BACKWARD, L"Sök &bakåt" },
-            { TXT_FIND_TOPMOST, L"Alltid &överst" },
-            { TXT_FIND_STARTS_WITH, L"&Raden börjar med" },
-            { TXT_FIND_ENDS_WITH, L"Raden s&lutar med" },
+            { TXT_FIND_WHOLE_WORDS, L"Matcha &hela ord" },
+            { TXT_FIND_STARTS_WITH, L"&Radens början" },
+            { TXT_FIND_ENDS_WITH, L"R&adens slut" },
             { TXT_FIND_REGEX, L"Re&guljärt uttryck" },
             { TXT_FIND_NOT_FOUND, L"Den angivna texten hittades inte." },
             { TXT_FIND_FAILED, L"Sökningen kunde inte slutföras." },
@@ -6055,17 +6043,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"yineler; Shift+F3 yönünü tersine çevirir. Metnin sonuna ulaşıldığında arama diğer uçtan "
                 L"devam eder. Seçenekler > Sözcük Kaydır yalnızca etkin sekmeyi etkiler; onay işareti "
                 L"seçili sekmeye göre değişir. Arama penceresi simge durumuna küçültülebilir ve yatay "
-                L"olarak boyutlandırılabilir; konumu ile Her zaman üstte ayarı hatırlanır. En fazla 30 "
-                L"arama metni ve seçenekleri yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve "
-                L"bitiş seçenekleri mantıksal satırları esas alır. Düzenli ifadeler PCRE2 sözdizimini "
-                L"kullanır. Düzenle menüsündeki diğer komutlar etkin rapor sekmesine uygulanır. Enter "
-                L"aramayı başlatır; Shift+Enter seçilen yönü tersine çevirir. “Büyük/küçük harf eşleştir” "
-                L"büyük ve küçük harfleri ayırt eder; “Geriye doğru ara” metnin başına doğru arar. "
-                L"Geçmişten bir öğe seçmek, düzenli ifade modunun durumu da dahil beş arama seçeneğinin "
-                L"tümünü geri yükler; “Her zaman üstte” bağımsızdır. “Düzenli ifade”, “Satır şu ifadeyle "
-                L"başlar” ve “Satır şu ifadeyle biter” seçeneklerini devre dışı bırakır. Her iki satır "
-                L"ucu seçeneği de açıksa uçlardan birinde eşleşme olması yeterlidir. “Sözcük Kaydır” "
-                L"yalnızca görünümü değiştirir."
+                L"olarak boyutlandırılabilir; konumu hatırlanır. En fazla 30 arama metni ve seçenekleri "
+                L"yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve bitiş seçenekleri mantıksal "
+                L"satırları esas alır. Düzenli ifadeler PCRE2 sözdizimini kullanır. Düzenle menüsündeki "
+                L"diğer komutlar etkin rapor sekmesine uygulanır. Enter aramayı başlatır; Shift+Enter "
+                L"seçilen yönü tersine çevirir. “Büyük/küçük harf eşleştir” büyük ve küçük harfleri ayırt "
+                L"eder; “Geriye doğru ara” metnin başına doğru arar. Geçmişten bir öğe seçmek, düzenli ifade "
+                L"modunun durumu da dahil altı arama seçeneğinin tümünü geri yükler. “Düzenli ifade”, "
+                L"“Sadece tam sözcükleri eşleştir”, “Satırın başı” ve “Satır sonu” seçeneklerini devre dışı "
+                L"bırakır. Her iki satır ucu seçeneği de açıksa uçlardan birinde eşleşme olması yeterlidir. "
+                L"“Sözcük Kaydır” yalnızca görünümü değiştirir."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6128,9 +6115,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"&Sonrakini Bul" },
             { TXT_FIND_MATCH_CASE, L"Büyük/küçük &harf eşleştir" },
             { TXT_FIND_BACKWARD, L"&Geriye doğru ara" },
-            { TXT_FIND_TOPMOST, L"Her zaman &üstte" },
-            { TXT_FIND_STARTS_WITH, L"Satır şu ifadeyle &başlar" },
-            { TXT_FIND_ENDS_WITH, L"Sa&tır şu ifadeyle biter" },
+            { TXT_FIND_WHOLE_WORDS, L"Sadece &tam sözcükleri eşleştir" },
+            { TXT_FIND_STARTS_WITH, L"S&atırın başı" },
+            { TXT_FIND_ENDS_WITH, L"Sat&ır sonu" },
             { TXT_FIND_REGEX, L"Dü&zenli ifade" },
             { TXT_FIND_NOT_FOUND, L"Belirtilen metin bulunamadı." },
             { TXT_FIND_FAILED, L"Arama tamamlanamadı." },
@@ -6386,16 +6373,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"allika, kuni fookus on selles. F3 kordab otsingut ja Shift+F3 pöörab otsingu suuna "
                 L"ümber. Teksti lõppu jõudes jätkub otsing teisest otsast. Suvandid > Reamurdmine kehtib "
                 L"ainult aktiivsel vahekaardil; märge vastab valitud vahekaardile. Otsinguakna saab "
-                L"minimeerida ja selle laiust muuta; asukoht ning valik Alati pealmine jäetakse meelde. "
-                L"Kuni 30 otsinguteksti koos valikutega säilitatakse ainult rakenduse sulgemiseni. Alguse "
-                L"ja lõpu valikud kehtivad loogiliste ridade kohta. Regulaaravaldised kasutavad PCRE2 "
-                L"süntaksit. Menüü Redigeeri ülejäänud käsud rakenduvad aktiivsele aruande vahekaardile. "
-                L"Enter käivitab otsingu; Shift+Enter pöörab valitud suuna ümber. „Tõstutundlik“ eristab "
-                L"suur- ja väiketähti; „Otsi tagasisuunas“ otsib teksti alguse suunas. Ajalookirje "
-                L"valimine taastab kõik viis otsinguvalikut, sealhulgas regulaaravaldise režiimi oleku; "
-                L"„Alati pealmine“ on sõltumatu. „Regulaaravaldis“ keelab valikud „Rida algab“ ja „Rida "
-                L"lõpeb“. Kui mõlemad reapiiri valikud on lubatud, piisab vastest ühes piiris. "
-                L"„Reamurdmine“ muudab ainult kuvamist."
+                L"minimeerida ja selle laiust muuta; asukoht jäetakse meelde. Kuni 30 otsinguteksti koos "
+                L"valikutega säilitatakse ainult rakenduse sulgemiseni. Alguse ja lõpu valikud kehtivad "
+                L"loogiliste ridade kohta. Regulaaravaldised kasutavad PCRE2 süntaksit. Menüü Redigeeri "
+                L"ülejäänud käsud rakenduvad aktiivsele aruande vahekaardile. Enter käivitab otsingu; "
+                L"Shift+Enter pöörab valitud suuna ümber. „Tõstutundlik“ eristab suur- ja väiketähti; „Otsi "
+                L"tagasisuunas“ otsib teksti alguse suunas. Ajalookirje valimine taastab kõik kuus "
+                L"otsinguvalikut, sealhulgas regulaaravaldise režiimi oleku. „Regulaaravaldis“ keelab "
+                L"valikud „Otsi tervet sõna“, „Rea algus“ ja „Rea lõpp“. Kui mõlemad reapiiri valikud on "
+                L"lubatud, piisab vastest ühes piiris. „Reamurdmine“ muudab ainult kuvamist."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6459,9 +6445,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Otsi &järgmist" },
             { TXT_FIND_MATCH_CASE, L"T&õstutundlik" },
             { TXT_FIND_BACKWARD, L"Otsi t&agasisuunas" },
-            { TXT_FIND_TOPMOST, L"Alati &pealmine" },
-            { TXT_FIND_STARTS_WITH, L"&Rida algab" },
-            { TXT_FIND_ENDS_WITH, L"Rida &lõpeb" },
+            { TXT_FIND_WHOLE_WORDS, L"Otsi te&rvet sõna" },
+            { TXT_FIND_STARTS_WITH, L"R&ea algus" },
+            { TXT_FIND_ENDS_WITH, L"Rea &lõpp" },
             { TXT_FIND_REGEX, L"Re&gulaaravaldis" },
             { TXT_FIND_NOT_FOUND, L"Määratud teksti ei leitud." },
             { TXT_FIND_FAILED, L"Otsingut ei saanud lõpule viia." },
@@ -6762,18 +6748,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"cuardach arís agus aisiompaíonn Shift+F3 an treo. Ag ceann an téacs, leanann an "
                 L"cuardach ón gceann eile. Ní bhaineann Roghanna > Timfhilleadh Focal ach leis an "
                 L"gcluaisín gníomhach; leanann an tic an cluaisín roghnaithe. Is féidir an fhuinneog "
-                L"chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh agus an socrú Ar "
-                L"barr i gcónaí. Ní choinnítear suas le 30 téacs cuardaigh agus a gcuid roghanna ach go "
-                L"dtí go ndúntar an feidhmchlár. Baineann na roghanna tosaigh agus deiridh le línte "
-                L"loighciúla. Úsáideann sloinn rialta comhréir PCRE2. Baineann na horduithe eile sa "
-                L"roghchlár Eagar leis an gcluaisín tuairisce gníomhach. Tosaíonn Enter cuardach; "
-                L"aisiompaíonn Shift+Enter an treo roghnaithe. Déanann “Meaitseáil an cás” idirdhealú "
-                L"idir cás uachtair agus cás íochtair; cuardaíonn “Cuardaigh ar gcúl” i dtreo thús an "
-                L"téacs. Athbhunaíonn roghnú iontrála staire na cúig rogha cuardaigh uile, lena "
-                L"n-áirítear staid mhód na slonn rialta; tá “Ar barr i gcónaí” neamhspleách. "
-                L"Díchumasaíonn “Slonn rialta” na roghanna “Tosaíonn an líne le” agus “Críochnaíonn an "
-                L"líne le”. Má tá an dá rogha imill líne cumasaithe, is leor meaitseáil ag ceachtar "
-                L"imeall. Ní athraíonn “Timfhilleadh Focal” ach an taispeáint."
+                L"chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh. Ní choinnítear suas "
+                L"le 30 téacs cuardaigh agus a gcuid roghanna ach go dtí go ndúntar an feidhmchlár. Baineann "
+                L"na roghanna tosaigh agus deiridh le línte loighciúla. Úsáideann sloinn rialta comhréir "
+                L"PCRE2. Baineann na horduithe eile sa roghchlár Eagar leis an gcluaisín tuairisce "
+                L"gníomhach. Tosaíonn Enter cuardach; aisiompaíonn Shift+Enter an treo roghnaithe. Déanann "
+                L"“Meaitseáil an cás” idirdhealú idir cás uachtair agus cás íochtair; cuardaíonn “Cuardaigh "
+                L"ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú iontrála staire na sé rogha cuardaigh "
+                L"uile, lena n-áirítear staid mhód na slonn rialta. Díchumasaíonn “Slonn rialta” na roghanna "
+                L"“Focail iomlána”, “Tús na líne” agus “Deireadh na líne”. Má tá an dá rogha imill líne "
+                L"cumasaithe, is leor meaitseáil ag ceachtar imeall. Ní athraíonn “Timfhilleadh Focal” ach "
+                L"an taispeáint."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -6841,9 +6826,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Aimsigh an &Chéad Cheann Eile" },
             { TXT_FIND_MATCH_CASE, L"Meaitseáil an cá&s" },
             { TXT_FIND_BACKWARD, L"Cuardaigh ar &gcúl" },
-            { TXT_FIND_TOPMOST, L"Ar &barr i gcónaí" },
-            { TXT_FIND_STARTS_WITH, L"&Tosaíonn an líne le" },
-            { TXT_FIND_ENDS_WITH, L"Críochnaíonn an líne &le" },
+            { TXT_FIND_WHOLE_WORDS, L"&Focail iomlána" },
+            { TXT_FIND_STARTS_WITH, L"&Tús na líne" },
+            { TXT_FIND_ENDS_WITH, L"D&eireadh na líne" },
             { TXT_FIND_REGEX, L"Slonn &rialta" },
             { TXT_FIND_NOT_FOUND, L"Níor aimsíodh an téacs sonraithe." },
             { TXT_FIND_FAILED, L"Níorbh fhéidir an cuardach a chríochnú." },
@@ -7115,17 +7100,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"išlaiko paskutinį pasirinktą šaltinį, kol pats yra aktyvus. F3 kartoja paiešką, o "
                 L"Shift+F3 pakeičia jos kryptį. Pasiekus teksto galą, paieška tęsiama nuo kito galo. "
                 L"Parinktys > Teksto eilučių kėlimas taikomas tik aktyviam skirtukui; varnelė atitinka "
-                L"pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo plotį; jo vieta ir "
-                L"parinktis Visada viršuje įsimenamos. Iki 30 paieškos tekstų su parinktimis saugoma tik "
-                L"iki programos uždarymo. Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. "
-                L"Reguliarieji reiškiniai naudoja PCRE2 sintaksę. Kitos meniu Redaguoti komandos taikomos "
-                L"aktyviam ataskaitos skirtukui. Enter pradeda paiešką; Shift+Enter apverčia pasirinktą "
-                L"kryptį. „Skirti didžiąsias ir mažąsias raides“ skiria didžiąsias ir mažąsias raides; "
-                L"„Ieškoti atgal“ ieško teksto pradžios link. Pasirinkus istorijos įrašą atkuriamos visos "
-                L"penkios paieškos parinktys, įskaitant reguliariųjų reiškinių režimo būseną; „Visada "
-                L"viršuje“ yra nepriklausoma. „Reguliarusis reiškinys“ išjungia „Eilutė prasideda“ ir "
-                L"„Eilutė baigiasi“. Įjungus abi eilutės kraštų parinktis, pakanka atitikmens viename "
-                L"krašte. „Teksto eilučių kėlimas“ keičia tik rodymą."
+                L"pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo plotį; jo vieta "
+                L"įsimenama. Iki 30 paieškos tekstų su parinktimis saugoma tik iki programos uždarymo. "
+                L"Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. Reguliarieji reiškiniai naudoja "
+                L"PCRE2 sintaksę. Kitos meniu Redaguoti komandos taikomos aktyviam ataskaitos skirtukui. "
+                L"Enter pradeda paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti didžiąsias ir "
+                L"mažąsias raides“ skiria didžiąsias ir mažąsias raides; „Ieškoti atgal“ ieško teksto "
+                L"pradžios link. Pasirinkus istorijos įrašą atkuriamos visos šešios paieškos parinktys, "
+                L"įskaitant reguliariųjų reiškinių režimo būseną. „Reguliarusis reiškinys“ išjungia „Tik "
+                L"pilnus žodžius“, „Eilutės pradžia“ ir „Eilutės pabaiga“. Įjungus abi eilutės kraštų "
+                L"parinktis, pakanka atitikmens viename krašte. „Teksto eilučių kėlimas“ keičia tik rodymą."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7189,9 +7173,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Rasti &kitą" },
             { TXT_FIND_MATCH_CASE, L"Skirti didžiąsias ir &mažąsias raides" },
             { TXT_FIND_BACKWARD, L"Ieškoti &atgal" },
-            { TXT_FIND_TOPMOST, L"Visada &viršuje" },
-            { TXT_FIND_STARTS_WITH, L"Eilutė &prasideda" },
-            { TXT_FIND_ENDS_WITH, L"Eilutė &baigiasi" },
+            { TXT_FIND_WHOLE_WORDS, L"Tik &pilnus žodžius" },
+            { TXT_FIND_STARTS_WITH, L"&Eilutės pradžia" },
+            { TXT_FIND_ENDS_WITH, L"E&ilutės pabaiga" },
             { TXT_FIND_REGEX, L"&Reguliarusis reiškinys" },
             { TXT_FIND_NOT_FOUND, L"Nurodytas tekstas nerastas." },
             { TXT_FIND_FAILED, L"Nepavyko užbaigti paieškos." },
@@ -7460,17 +7444,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"kamēr tam ir fokuss. F3 atkārto meklēšanu, bet Shift+F3 maina tās virzienu. Sasniedzot "
                 L"teksta malu, meklēšana turpinās no otras malas. Opcijas > Teksta aplaušana attiecas "
                 L"tikai uz aktīvo cilni; atzīme mainās atbilstoši atlasītajai cilnei. Meklēšanas logu var "
-                L"minimizēt un mainīt tā platumu; tiek atcerēta atrašanās vieta un opcija Vienmēr "
-                L"virspusē. Līdz 30 meklēšanas tekstiem ar opcijām tiek saglabāti tikai līdz lietotnes "
-                L"aizvēršanai. Sākuma un beigu opcijas attiecas uz loģiskajām rindām. Regulārās "
-                L"izteiksmes izmanto PCRE2 sintaksi. Pārējās izvēlnes Rediģēt komandas attiecas uz aktīvo "
-                L"pārskata cilni. Enter sāk meklēšanu; Shift+Enter apgriež izvēlēto virzienu. “Atšķirt "
-                L"lielos un mazos burtus” atšķir lielos un mazos burtus; “Meklēt atpakaļ” meklē teksta "
-                L"sākuma virzienā. Vēstures ieraksta izvēle atjauno visas piecas meklēšanas opcijas, "
-                L"tostarp regulārās izteiksmes režīma stāvokli; “Vienmēr virspusē” ir neatkarīga opcija. "
-                L"“Regulārā izteiksme” atspējo “Rinda sākas ar” un “Rinda beidzas ar”. Ja abas rindas "
-                L"malu opcijas ir ieslēgtas, pietiek ar atbilstību vienā malā. “Teksta aplaušana” maina "
-                L"tikai attēlojumu."
+                L"minimizēt un mainīt tā platumu; tiek atcerēta atrašanās vieta. Līdz 30 meklēšanas tekstiem "
+                L"ar opcijām tiek saglabāti tikai līdz lietotnes aizvēršanai. Sākuma un beigu opcijas "
+                L"attiecas uz loģiskajām rindām. Regulārās izteiksmes izmanto PCRE2 sintaksi. Pārējās "
+                L"izvēlnes Rediģēt komandas attiecas uz aktīvo pārskata cilni. Enter sāk meklēšanu; "
+                L"Shift+Enter apgriež izvēlēto virzienu. “Atšķirt lielos un mazos burtus” atšķir lielos un "
+                L"mazos burtus; “Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures ieraksta izvēle "
+                L"atjauno visas sešas meklēšanas opcijas, tostarp regulārās izteiksmes režīma stāvokli. "
+                L"“Regulārā izteiksme” atspējo “Meklēt tikai kā pilnu vārdu”, “Rindas sākums” un “Rindas "
+                L"beigas”. Ja abas rindas malu opcijas ir ieslēgtas, pietiek ar atbilstību vienā malā. "
+                L"“Teksta aplaušana” maina tikai attēlojumu."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7536,9 +7519,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Atrast &nākamo" },
             { TXT_FIND_MATCH_CASE, L"Atšķirt lielos un &mazos burtus" },
             { TXT_FIND_BACKWARD, L"Meklēt &atpakaļ" },
-            { TXT_FIND_TOPMOST, L"Vienmēr &virspusē" },
-            { TXT_FIND_STARTS_WITH, L"Rinda &sākas ar" },
-            { TXT_FIND_ENDS_WITH, L"Rinda &beidzas ar" },
+            { TXT_FIND_WHOLE_WORDS, L"M&eklēt tikai kā pilnu vārdu" },
+            { TXT_FIND_STARTS_WITH, L"R&indas sākums" },
+            { TXT_FIND_ENDS_WITH, L"Rin&das beigas" },
             { TXT_FIND_REGEX, L"&Regulārā izteiksme" },
             { TXT_FIND_NOT_FOUND, L"Norādītais teksts netika atrasts." },
             { TXT_FIND_FAILED, L"Meklēšanu neizdevās pabeigt." },
@@ -7832,18 +7815,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"keresést, a Shift+F3 pedig megfordítja az irányát. A szöveg végéhez érve a keresés a "
                 L"másik végéről folytatódik. A Beállítások > Sortörés csak az aktív lapra érvényes; a "
                 L"jelölés a kiválasztott lapot követi. A keresőablak kis méretre állítható és "
-                L"vízszintesen átméretezhető; a helyzete és a Mindig felül beállítás megmarad. Legfeljebb "
-                L"30 keresési szöveg és beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor "
-                L"elejére és végére vonatkozó beállítások logikai sorokra érvényesek. A reguláris "
-                L"kifejezések PCRE2-szintaxist használnak. A Szerkesztés menü többi parancsa az aktív "
-                L"jelentéslapra vonatkozik. Az Enter elindítja a keresést; a Shift+Enter megfordítja a "
-                L"kiválasztott irányt. A „Kis- és nagybetűk megkülönböztetése” megkülönbözteti a kis- és "
-                L"nagybetűket; a „Keresés visszafelé” a szöveg eleje felé keres. Egy előzmény "
-                L"kiválasztása visszaállítja mind az öt keresési beállítást, beleértve a reguláris "
-                L"kifejezések módjának állapotát is; a „Mindig felül” ettől független. A „Reguláris "
-                L"kifejezés” letiltja a „Sor elején” és „Sor végén” beállításokat. Ha mindkét sorhatárra "
-                L"vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron elég az egyezés. A „Sortörés” "
-                L"csak a megjelenítést módosítja."
+                L"vízszintesen átméretezhető; a helyzete megmarad. Legfeljebb 30 keresési szöveg és "
+                L"beállításaik csak az alkalmazás bezárásáig maradnak meg. A sor elejére és végére vonatkozó "
+                L"beállítások logikai sorokra érvényesek. A reguláris kifejezések PCRE2-szintaxist "
+                L"használnak. A Szerkesztés menü többi parancsa az aktív jelentéslapra vonatkozik. Az Enter "
+                L"elindítja a keresést; a Shift+Enter megfordítja a kiválasztott irányt. A „Kis- és "
+                L"nagybetűk megkülönböztetése” megkülönbözteti a kis- és nagybetűket; a „Keresés visszafelé” "
+                L"a szöveg eleje felé keres. Egy előzmény kiválasztása visszaállítja mind a hat keresési "
+                L"beállítást, beleértve a reguláris kifejezések módjának állapotát is. A „Reguláris "
+                L"kifejezés” letiltja a „Teljes szóegyezés”, „Sor eleje” és „Sor vége” beállításokat. Ha "
+                L"mindkét sorhatárra vonatkozó feltétel be van kapcsolva, bármelyik sorhatáron elég az "
+                L"egyezés. A „Sortörés” csak a megjelenítést módosítja."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -7910,9 +7892,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Kö&vetkező keresése" },
             { TXT_FIND_MATCH_CASE, L"Kis- és &nagybetűk megkülönböztetése" },
             { TXT_FIND_BACKWARD, L"Keresés v&isszafelé" },
-            { TXT_FIND_TOPMOST, L"Mindig &felül" },
-            { TXT_FIND_STARTS_WITH, L"Sor &elején" },
-            { TXT_FIND_ENDS_WITH, L"Sor vé&gén" },
+            { TXT_FIND_WHOLE_WORDS, L"&Teljes szóegyezés" },
+            { TXT_FIND_STARTS_WITH, L"S&or eleje" },
+            { TXT_FIND_ENDS_WITH, L"Sor v&ége" },
             { TXT_FIND_REGEX, L"&Reguláris kifejezés" },
             { TXT_FIND_NOT_FOUND, L"A megadott szöveg nem található." },
             { TXT_FIND_FAILED, L"A keresést nem sikerült befejezni." },
@@ -8205,18 +8187,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"l-fokus. F3 jirrepeti t-tfittxija; Shift+F3 jaqleb id-direzzjoni tagħha. Meta jintlaħaq "
                 L"tarf tat-test, it-tfittxija tkompli mit-tarf l-ieħor. Għażliet > Kebbeb il-kliem "
                 L"japplika biss għat-tab attiva; il-marka ssegwi t-tab magħżula. It-tieqa tat-tfittxija "
-                L"tista’ tiġi minimizzata u jinbidel il-wisa’ tagħha; il-pożizzjoni u l-għażla Dejjem fuq "
-                L"nett jinżammu. Sa 30 test tat-tfittxija bl-għażliet tagħhom jinżammu biss sakemm "
-                L"tingħalaq l-applikazzjoni. L-għażliet tal-bidu u tat-tmiem japplikaw għal-linji loġiċi. "
-                L"L-espressjonijiet regolari jużaw is-sintassi ta’ PCRE2. Il-kmandi l-oħra fil-menu "
-                L"Editja japplikaw għat-tab tar-rapport attiva. Enter jibda t-tfittxija; Shift+Enter "
-                L"jaqleb id-direzzjoni magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri "
-                L"kbar u żgħar; “Fittex lura” tfittex lejn il-bidu tat-test. Meta tagħżel entrata "
-                L"mill-istorja, jerġgħu jiġu applikati l-ħames għażliet tat-tfittxija, inkluż l-istat "
-                L"tal-modalità tal-espressjonijiet regolari; “Dejjem fuq nett” hija indipendenti. "
-                L"“Espressjoni regolari” tiddiżattiva “Il-linja tibda bi” u “Il-linja tispiċċa bi”. Meta "
-                L"ż-żewġ għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb "
-                L"il-kliem” tbiddel biss il-wiri."
+                L"tista’ tiġi minimizzata u jinbidel il-wisa’ tagħha; il-pożizzjoni tinżamm. Sa 30 test "
+                L"tat-tfittxija bl-għażliet tagħhom jinżammu biss sakemm tingħalaq l-applikazzjoni. "
+                L"L-għażliet tal-bidu u tat-tmiem japplikaw għal-linji loġiċi. L-espressjonijiet regolari "
+                L"jużaw is-sintassi ta’ PCRE2. Il-kmandi l-oħra fil-menu Editja japplikaw għat-tab "
+                L"tar-rapport attiva. Enter jibda t-tfittxija; Shift+Enter jaqleb id-direzzjoni magħżula. "
+                L"“Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri kbar u żgħar; “Fittex lura” "
+                L"tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja, jerġgħu jiġu applikati "
+                L"s-sitt għażliet tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet regolari. "
+                L"“Espressjoni regolari” tiddiżattiva “Kliem sħaħ biss”, “Bidu tal-linja” u “Tmiem "
+                L"tal-linja”. Meta ż-żewġ għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf "
+                L"wieħed. “Kebbeb il-kliem” tbiddel biss il-wiri."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -8284,9 +8265,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Sib li &jmiss" },
             { TXT_FIND_MATCH_CASE, L"Iddistingwi ittri kbar u &żgħar" },
             { TXT_FIND_BACKWARD, L"Fittex &lura" },
-            { TXT_FIND_TOPMOST, L"Dejjem fuq &nett" },
-            { TXT_FIND_STARTS_WITH, L"Il-linja &tibda bi" },
-            { TXT_FIND_ENDS_WITH, L"Il-linja tispiċċa &bi" },
+            { TXT_FIND_WHOLE_WORDS, L"&Kliem sħaħ biss" },
+            { TXT_FIND_STARTS_WITH, L"&Bidu tal-linja" },
+            { TXT_FIND_ENDS_WITH, L"&Tmiem tal-linja" },
             { TXT_FIND_REGEX, L"Espressjoni &regolari" },
             { TXT_FIND_NOT_FOUND, L"It-test speċifikat ma nstabx." },
             { TXT_FIND_FAILED, L"It-tfittxija ma setgħetx titlesta." },
@@ -8582,18 +8563,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"einde van de tekst gaat het zoeken verder vanaf het andere uiteinde. Opties > "
                 L"Automatische terugloop geldt alleen voor het actieve tabblad; het vinkje volgt het "
                 L"geselecteerde tabblad. Het zoekvenster kan worden geminimaliseerd en in de breedte "
-                L"worden aangepast; de positie en de instelling Altijd bovenop worden onthouden. Maximaal "
-                L"30 zoekteksten met hun opties blijven alleen bewaard totdat de toepassing wordt "
-                L"afgesloten. De begin- en eindopties gelden voor logische regels. Reguliere expressies "
-                L"gebruiken PCRE2-syntaxis. De overige opdrachten in het menu Bewerken gelden voor het "
-                L"actieve rapporttabblad. Enter start het zoeken; Shift+Enter keert de gekozen richting "
-                L"om. \"Hoofdlettergevoelig\" maakt onderscheid tussen hoofdletters en kleine letters; "
-                L"\"Achteruit zoeken\" zoekt naar het begin van de tekst. Een keuze uit de geschiedenis "
-                L"herstelt alle vijf zoekopties, ook de stand van de modus voor reguliere expressies; "
-                L"\"Altijd bovenop\" staat hier los van. \"Reguliere expressie\" schakelt \"Regel begint "
-                L"met\" en \"Regel eindigt op\" uit. Als beide opties voor de regeluiteinden aanstaan, "
-                L"volstaat een overeenkomst aan één uiteinde. \"Automatische terugloop\" verandert alleen "
-                L"de weergave."
+                L"worden aangepast; de positie wordt onthouden. Maximaal 30 zoekteksten met hun opties "
+                L"blijven alleen bewaard totdat de toepassing wordt afgesloten. De begin- en eindopties "
+                L"gelden voor logische regels. Reguliere expressies gebruiken PCRE2-syntaxis. De overige "
+                L"opdrachten in het menu Bewerken gelden voor het actieve rapporttabblad. Enter start het "
+                L"zoeken; Shift+Enter keert de gekozen richting om. \"Hoofdlettergevoelig\" maakt "
+                L"onderscheid tussen hoofdletters en kleine letters; \"Achteruit zoeken\" zoekt naar het "
+                L"begin van de tekst. Een keuze uit de geschiedenis herstelt alle zes zoekopties, ook de "
+                L"stand van de modus voor reguliere expressies. \"Reguliere expressie\" schakelt \"Alleen "
+                L"volledige woorden\", \"Begin van de regel\" en \"Regeleinde\" uit. Als beide opties voor "
+                L"de regeluiteinden aanstaan, volstaat een overeenkomst aan één uiteinde. \"Automatische "
+                L"terugloop\" verandert alleen de weergave."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -8662,9 +8642,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"&Volgende zoeken" },
             { TXT_FIND_MATCH_CASE, L"&Hoofdlettergevoelig" },
             { TXT_FIND_BACKWARD, L"&Achteruit zoeken" },
-            { TXT_FIND_TOPMOST, L"Altijd &bovenop" },
-            { TXT_FIND_STARTS_WITH, L"Regel be&gint met" },
-            { TXT_FIND_ENDS_WITH, L"Regel &eindigt op" },
+            { TXT_FIND_WHOLE_WORDS, L"Alleen volledige &woorden" },
+            { TXT_FIND_STARTS_WITH, L"&Begin van de regel" },
+            { TXT_FIND_ENDS_WITH, L"R&egeleinde" },
             { TXT_FIND_REGEX, L"&Reguliere expressie" },
             { TXT_FIND_NOT_FOUND, L"De opgegeven tekst is niet gevonden." },
             { TXT_FIND_FAILED, L"De zoekopdracht kon niet worden voltooid." },
@@ -8950,18 +8930,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ultima sursă selectată cât timp are focalizarea. F3 repetă căutarea; Shift+F3 îi "
                 L"inversează direcția. La capătul textului, căutarea continuă din celălalt capăt. Opțiuni "
                 L"> Încadrare cuvinte se aplică numai filei active; bifa corespunde filei selectate. "
-                L"Fereastra de căutare poate fi minimizată și redimensionată orizontal; poziția și "
-                L"opțiunea Întotdeauna deasupra sunt memorate. Până la 30 de texte căutate și opțiunile "
-                L"lor sunt păstrate numai până la închiderea aplicației. Opțiunile de început și sfârșit "
-                L"se aplică liniilor logice. Expresiile regulate folosesc sintaxa PCRE2. Celelalte "
-                L"comenzi din meniul Editare se aplică filei de raport active. Enter pornește căutarea; "
-                L"Shift+Enter inversează direcția aleasă. „Potrivire litere mari și mici” deosebește "
-                L"literele mari de cele mici; „Căutare înapoi” caută spre începutul textului. Alegerea "
-                L"unei intrări din istoric restabilește toate cele cinci opțiuni de căutare, inclusiv "
-                L"starea modului de expresii regulate; „Întotdeauna deasupra” este independentă. "
-                L"„Expresie regulată” dezactivează „Linia începe cu” și „Linia se termină cu”. Dacă "
-                L"ambele opțiuni pentru capetele liniei sunt active, este suficientă o potrivire la "
-                L"oricare capăt. „Încadrare cuvinte” schimbă numai afișarea."
+                L"Fereastra de căutare poate fi minimizată și redimensionată orizontal; poziția este "
+                L"memorată. Până la 30 de texte căutate și opțiunile lor sunt păstrate numai până la "
+                L"închiderea aplicației. Opțiunile de început și sfârșit se aplică liniilor logice. "
+                L"Expresiile regulate folosesc sintaxa PCRE2. Celelalte comenzi din meniul Editare se aplică "
+                L"filei de raport active. Enter pornește căutarea; Shift+Enter inversează direcția aleasă. "
+                L"„Potrivire litere mari și mici” deosebește literele mari de cele mici; „Căutare înapoi” "
+                L"caută spre începutul textului. Alegerea unei intrări din istoric restabilește toate cele "
+                L"șase opțiuni de căutare, inclusiv starea modului de expresii regulate. „Expresie regulată” "
+                L"dezactivează „Potrivește doar cuvintele întregi”, „Începutul rândului” și „Sfârșitul "
+                L"rândului”. Dacă ambele opțiuni pentru capetele liniei sunt active, este suficientă o "
+                L"potrivire la oricare capăt. „Încadrare cuvinte” schimbă numai afișarea."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -9029,9 +9008,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Găsire &următor" },
             { TXT_FIND_MATCH_CASE, L"&Potrivire litere mari și mici" },
             { TXT_FIND_BACKWARD, L"Căutare î&napoi" },
-            { TXT_FIND_TOPMOST, L"Întotdeauna &deasupra" },
-            { TXT_FIND_STARTS_WITH, L"Linia începe &cu" },
-            { TXT_FIND_ENDS_WITH, L"Linia se &termină cu" },
+            { TXT_FIND_WHOLE_WORDS, L"Potrivește doar cu&vintele întregi" },
+            { TXT_FIND_STARTS_WITH, L"În&ceputul rândului" },
+            { TXT_FIND_ENDS_WITH, L"&Sfârșitul rândului" },
             { TXT_FIND_REGEX, L"Expresie &regulată" },
             { TXT_FIND_NOT_FOUND, L"Textul specificat nu a fost găsit." },
             { TXT_FIND_FAILED, L"Căutarea nu a putut fi finalizată." },
@@ -9334,18 +9313,17 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"την κατεύθυνσή της. Στο τέλος του κειμένου, η αναζήτηση συνεχίζεται από το άλλο άκρο. Η "
                 L"επιλογή Επιλογές > Αναδίπλωση λέξεων αφορά μόνο την ενεργή καρτέλα· η ένδειξη επιλογής "
                 L"ακολουθεί την επιλεγμένη καρτέλα. Το παράθυρο αναζήτησης μπορεί να ελαχιστοποιηθεί και "
-                L"να αλλάξει πλάτος· η θέση του και η επιλογή Πάντα σε πρώτο πλάνο αποθηκεύονται. Έως 30 "
-                L"κείμενα αναζήτησης και οι επιλογές τους διατηρούνται μόνο μέχρι το κλείσιμο της "
-                L"εφαρμογής. Οι επιλογές αρχής και τέλους αφορούν λογικές γραμμές. Οι κανονικές εκφράσεις "
-                L"χρησιμοποιούν τη σύνταξη PCRE2. Οι υπόλοιπες εντολές του μενού Επεξεργασία αφορούν την "
-                L"ενεργή καρτέλα αναφοράς. Το Enter ξεκινά την αναζήτηση· το Shift+Enter αντιστρέφει την "
-                L"επιλεγμένη κατεύθυνση. Η επιλογή «Διάκριση πεζών-κεφαλαίων» ξεχωρίζει πεζά και "
-                L"κεφαλαία· η «Αναζήτηση προς τα πίσω» αναζητά προς την αρχή του κειμένου. Η επιλογή μιας "
-                L"εγγραφής ιστορικού επαναφέρει και τις πέντε επιλογές αναζήτησης, συμπεριλαμβανομένης "
-                L"της κατάστασης των κανονικών εκφράσεων· η «Πάντα σε πρώτο πλάνο» είναι ανεξάρτητη. Η "
-                L"«Κανονική έκφραση» απενεργοποιεί τις «Η γραμμή αρχίζει από» και «Η γραμμή τελειώνει "
-                L"σε». Όταν είναι ενεργές και οι δύο επιλογές άκρων γραμμής, αρκεί αντιστοιχία σε ένα "
-                L"άκρο. Η «Αναδίπλωση λέξεων» αλλάζει μόνο την εμφάνιση."
+                L"να αλλάξει πλάτος· η θέση του αποθηκεύεται. Έως 30 κείμενα αναζήτησης και οι επιλογές τους "
+                L"διατηρούνται μόνο μέχρι το κλείσιμο της εφαρμογής. Οι επιλογές αρχής και τέλους αφορούν "
+                L"λογικές γραμμές. Οι κανονικές εκφράσεις χρησιμοποιούν τη σύνταξη PCRE2. Οι υπόλοιπες "
+                L"εντολές του μενού Επεξεργασία αφορούν την ενεργή καρτέλα αναφοράς. Το Enter ξεκινά την "
+                L"αναζήτηση· το Shift+Enter αντιστρέφει την επιλεγμένη κατεύθυνση. Η επιλογή «Διάκριση "
+                L"πεζών-κεφαλαίων» ξεχωρίζει πεζά και κεφαλαία· η «Αναζήτηση προς τα πίσω» αναζητά προς την "
+                L"αρχή του κειμένου. Η επιλογή μιας εγγραφής ιστορικού επαναφέρει και τις έξι επιλογές "
+                L"αναζήτησης, συμπεριλαμβανομένης της κατάστασης των κανονικών εκφράσεων. Η «Κανονική "
+                L"έκφραση» απενεργοποιεί τις «Ταίριασμα μόνο ολόκληρης λέξης», «Αρχή της γραμμής» και «Τέλος "
+                L"της γραμμής». Όταν είναι ενεργές και οι δύο επιλογές άκρων γραμμής, αρκεί αντιστοιχία σε "
+                L"ένα άκρο. Η «Αναδίπλωση λέξεων» αλλάζει μόνο την εμφάνιση."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -9414,9 +9392,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Εύρεση επό&μενου" },
             { TXT_FIND_MATCH_CASE, L"&Διάκριση πεζών-κεφαλαίων" },
             { TXT_FIND_BACKWARD, L"Αναζήτηση προς τα &πίσω" },
-            { TXT_FIND_TOPMOST, L"Πάντα σε πρώτο π&λάνο" },
-            { TXT_FIND_STARTS_WITH, L"Η γραμμή &αρχίζει από" },
-            { TXT_FIND_ENDS_WITH, L"Η γραμμή τελειώνει &σε" },
+            { TXT_FIND_WHOLE_WORDS, L"Ταίριασμα μόνο &ολόκληρης λέξης" },
+            { TXT_FIND_STARTS_WITH, L"&Αρχή της γραμμής" },
+            { TXT_FIND_ENDS_WITH, L"&Τέλος της γραμμής" },
             { TXT_FIND_REGEX, L"Κανονική έκ&φραση" },
             { TXT_FIND_NOT_FOUND, L"Το καθορισμένο κείμενο δεν βρέθηκε." },
             { TXT_FIND_FAILED, L"Δεν ήταν δυνατή η ολοκλήρωση της αναζήτησης." },
@@ -9688,14 +9666,13 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ponavlja pretragu, a Shift+F3 mijenja njen smjer. Na kraju teksta pretraga se nastavlja "
                 L"s drugog kraja. Opcije > Prelamanje redova važi samo za aktivnu karticu; oznaka prati "
                 L"odabranu karticu. Prozor pretrage može se minimizirati i mijenjati mu se širina; "
-                L"položaj i opcija Uvijek na vrhu se pamte. Do 30 tekstova pretrage s njihovim opcijama "
-                L"čuva se samo do zatvaranja aplikacije. Opcije početka i kraja odnose se na logičke "
-                L"redove. Regularni izrazi koriste PCRE2 sintaksu. Ostale komande menija Uređivanje "
-                L"odnose se na aktivnu karticu izvještaja. Enter pokreće pretragu, a Shift+Enter obrće "
-                L"odabrani smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala slova; „Traži "
-                L"unazad“ traži prema početku teksta. Izbor stavke historije vraća svih pet opcija "
-                L"pretrage, uključujući stanje režima regularnih izraza; „Uvijek na vrhu“ je nezavisna "
-                L"opcija. „Regularni izraz“ onemogućava „Red počinje sa“ i „Red završava sa“. Kada su "
+                L"položaj se pamti. Do 30 tekstova pretrage s njihovim opcijama čuva se samo do zatvaranja "
+                L"aplikacije. Opcije početka i kraja odnose se na logičke redove. Regularni izrazi koriste "
+                L"PCRE2 sintaksu. Ostale komande menija Uređivanje odnose se na aktivnu karticu izvještaja. "
+                L"Enter pokreće pretragu, a Shift+Enter obrće odabrani smjer. „Razlikuj velika i mala slova“ "
+                L"razlikuje velika i mala slova; „Traži unazad“ traži prema početku teksta. Izbor stavke "
+                L"historije vraća svih šest opcija pretrage, uključujući stanje režima regularnih izraza. "
+                L"„Regularni izraz“ onemogućava „Cijele riječi“, „Početak reda“ i „Kraj reda“. Kada su "
                 L"uključene obje opcije krajeva reda, dovoljno je poklapanje na jednom kraju. „Prelamanje "
                 L"redova“ mijenja samo prikaz."
             },
@@ -9762,9 +9739,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Pronađi s&ljedeće" },
             { TXT_FIND_MATCH_CASE, L"Razlikuj velika i &mala slova" },
             { TXT_FIND_BACKWARD, L"Traži &unazad" },
-            { TXT_FIND_TOPMOST, L"Uvijek na &vrhu" },
-            { TXT_FIND_STARTS_WITH, L"Red počinje &sa" },
-            { TXT_FIND_ENDS_WITH, L"Red završava s&a" },
+            { TXT_FIND_WHOLE_WORDS, L"&Cijele riječi" },
+            { TXT_FIND_STARTS_WITH, L"&Početak reda" },
+            { TXT_FIND_ENDS_WITH, L"&Kraj reda" },
             { TXT_FIND_REGEX, L"&Regularni izraz" },
             { TXT_FIND_NOT_FOUND, L"Navedeni tekst nije pronađen." },
             { TXT_FIND_FAILED, L"Pretragu nije moguće dovršiti." },
@@ -10035,17 +10012,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"posljednji odabrani izvor dok ima fokus. F3 ponavlja pretraživanje, a Shift+F3 mijenja "
                 L"njegov smjer. Na kraju teksta pretraživanje se nastavlja s drugog kraja. Mogućnosti > "
                 L"Prelamanje redaka vrijedi samo za aktivnu karticu; oznaka prati odabranu karticu. "
-                L"Prozor pretraživanja može se minimizirati i mijenjati mu se širina; položaj i mogućnost "
-                L"Uvijek na vrhu pamte se. Do 30 tekstova pretraživanja s njihovim mogućnostima čuva se "
-                L"samo do zatvaranja aplikacije. Mogućnosti početka i kraja odnose se na logičke retke. "
-                L"Regularni izrazi koriste sintaksu PCRE2. Ostale naredbe izbornika Uređivanje odnose se "
-                L"na aktivnu karticu izvješća. Enter pokreće pretraživanje, a Shift+Enter obrće odabrani "
-                L"smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala slova; „Traži unatrag“ "
-                L"pretražuje prema početku teksta. Odabir stavke povijesti vraća svih pet mogućnosti "
-                L"pretraživanja, uključujući postavku regularnih izraza; „Uvijek na vrhu“ neovisna je "
-                L"mogućnost. „Regularni izraz“ onemogućuje „Redak počinje s“ i „Redak završava s“. Kada "
-                L"su uključene obje mogućnosti krajeva retka, dovoljno je podudaranje na jednom kraju. "
-                L"„Prelamanje redaka“ mijenja samo prikaz."
+                L"Prozor pretraživanja može se minimizirati i mijenjati mu se širina; položaj se pamti. Do "
+                L"30 tekstova pretraživanja s njihovim mogućnostima čuva se samo do zatvaranja aplikacije. "
+                L"Mogućnosti početka i kraja odnose se na logičke retke. Regularni izrazi koriste sintaksu "
+                L"PCRE2. Ostale naredbe izbornika Uređivanje odnose se na aktivnu karticu izvješća. Enter "
+                L"pokreće pretraživanje, a Shift+Enter obrće odabrani smjer. „Razlikuj velika i mala slova“ "
+                L"razlikuje velika i mala slova; „Traži unatrag“ pretražuje prema početku teksta. Odabir "
+                L"stavke povijesti vraća svih šest mogućnosti pretraživanja, uključujući postavku regularnih "
+                L"izraza. „Regularni izraz“ onemogućuje „Samo cijele riječi“, „Početak retka“ i „Kraj "
+                L"retka“. Kada su uključene obje mogućnosti krajeva retka, dovoljno je podudaranje na jednom "
+                L"kraju. „Prelamanje redaka“ mijenja samo prikaz."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -10110,9 +10086,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Pronađi s&ljedeće" },
             { TXT_FIND_MATCH_CASE, L"Razlikuj velika i &mala slova" },
             { TXT_FIND_BACKWARD, L"Traži &unatrag" },
-            { TXT_FIND_TOPMOST, L"Uvijek na &vrhu" },
-            { TXT_FIND_STARTS_WITH, L"Redak počinje &s" },
-            { TXT_FIND_ENDS_WITH, L"Redak završav&a s" },
+            { TXT_FIND_WHOLE_WORDS, L"Samo &cijele riječi" },
+            { TXT_FIND_STARTS_WITH, L"&Početak retka" },
+            { TXT_FIND_ENDS_WITH, L"&Kraj retka" },
             { TXT_FIND_REGEX, L"&Regularni izraz" },
             { TXT_FIND_NOT_FOUND, L"Navedeni tekst nije pronađen." },
             { TXT_FIND_FAILED, L"Pretraživanje nije moguće dovršiti." },
@@ -10377,16 +10353,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"Iskalno okno ohrani nazadnje izbrani vir, dokler ima fokus. F3 ponovi iskanje, Shift+F3 "
                 L"pa obrne njegovo smer. Na koncu besedila se iskanje nadaljuje z drugega konca. Možnosti "
                 L"> Prelom vrstic velja le za aktivni zavihek; kljukica sledi izbranemu zavihku. Iskalno "
-                L"okno je mogoče minimizirati in mu spreminjati širino; položaj in možnost Vedno na vrhu "
-                L"se shranita. Do 30 iskalnih besedil z možnostmi se hrani le do zaprtja programa. "
-                L"Možnosti začetka in konca veljata za logične vrstice. Regularni izrazi uporabljajo "
-                L"sintakso PCRE2. Drugi ukazi menija Uredi veljajo za aktivni zavihek poročila. Enter "
-                L"začne iskanje, Shift+Enter pa obrne izbrano smer. »Razlikuj velike in male črke« "
-                L"razlikuje velike in male črke; »Išči nazaj« išče proti začetku besedila. Izbira vnosa "
-                L"iz zgodovine obnovi vseh pet možnosti iskanja, vključno s stanjem regularnih izrazov; "
-                L"»Vedno na vrhu« je neodvisna možnost. »Regularni izraz« onemogoči »Vrstica se začne z« "
-                L"in »Vrstica se konča z«. Če sta vključeni obe možnosti robov vrstice, zadostuje "
-                L"ujemanje na enem robu. »Prelom vrstic« spremeni samo prikaz."
+                L"okno je mogoče minimizirati in mu spreminjati širino; položaj se shrani. Do 30 iskalnih "
+                L"besedil z možnostmi se hrani le do zaprtja programa. Možnosti začetka in konca veljata za "
+                L"logične vrstice. Regularni izrazi uporabljajo sintakso PCRE2. Drugi ukazi menija Uredi "
+                L"veljajo za aktivni zavihek poročila. Enter začne iskanje, Shift+Enter pa obrne izbrano "
+                L"smer. »Razlikuj velike in male črke« razlikuje velike in male črke; »Išči nazaj« išče "
+                L"proti začetku besedila. Izbira vnosa iz zgodovine obnovi vseh šest možnosti iskanja, "
+                L"vključno s stanjem regularnih izrazov. »Regularni izraz« onemogoči »Upoštevaj samo cele "
+                L"besede«, »Začetek vrstice« in »Konec vrstice«. Če sta vključeni obe možnosti robov "
+                L"vrstice, zadostuje ujemanje na enem robu. »Prelom vrstic« spremeni samo prikaz."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -10453,9 +10428,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Najdi na&slednje" },
             { TXT_FIND_MATCH_CASE, L"Razlikuj velike in &male črke" },
             { TXT_FIND_BACKWARD, L"Išči n&azaj" },
-            { TXT_FIND_TOPMOST, L"Vedno na &vrhu" },
-            { TXT_FIND_STARTS_WITH, L"Vrstica se za&čne z" },
-            { TXT_FIND_ENDS_WITH, L"Vrstica se &konča z" },
+            { TXT_FIND_WHOLE_WORDS, L"Upoštevaj samo &cele besede" },
+            { TXT_FIND_STARTS_WITH, L"Za&četek vrstice" },
+            { TXT_FIND_ENDS_WITH, L"&Konec vrstice" },
             { TXT_FIND_REGEX, L"&Regularni izraz" },
             { TXT_FIND_NOT_FOUND, L"Navedenega besedila ni bilo mogoče najti." },
             { TXT_FIND_FAILED, L"Iskanja ni bilo mogoče dokončati." },
@@ -10728,14 +10703,13 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"ponavlja pretragu, a Shift+F3 mijenja njen smjer. Na kraju teksta pretraga se nastavlja "
                 L"s drugog kraja. Opcije > Prelamanje redova važi samo za aktivnu karticu; oznaka prati "
                 L"izabranu karticu. Prozor pretrage može se minimizirati i mijenjati mu se širina; "
-                L"položaj i opcija Uvijek na vrhu se pamte. Do 30 tekstova pretrage s njihovim opcijama "
-                L"čuva se samo do zatvaranja aplikacije. Opcije početka i kraja odnose se na logičke "
-                L"redove. Regularni izrazi koriste PCRE2 sintaksu. Ostale komande menija Uređivanje "
-                L"odnose se na aktivnu karticu izvještaja. Enter pokreće pretragu, a Shift+Enter obrće "
-                L"izabrani smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala slova; „Traži "
-                L"unazad“ traži prema početku teksta. Izbor stavke istorije vraća svih pet opcija "
-                L"pretrage, uključujući stanje režima regularnih izraza; „Uvijek na vrhu“ je nezavisna "
-                L"opcija. „Regularni izraz“ onemogućava „Red počinje sa“ i „Red se završava sa“. Kada su "
+                L"položaj se pamti. Do 30 tekstova pretrage s njihovim opcijama čuva se samo do zatvaranja "
+                L"aplikacije. Opcije početka i kraja odnose se na logičke redove. Regularni izrazi koriste "
+                L"PCRE2 sintaksu. Ostale komande menija Uređivanje odnose se na aktivnu karticu izvještaja. "
+                L"Enter pokreće pretragu, a Shift+Enter obrće izabrani smjer. „Razlikuj velika i mala slova“ "
+                L"razlikuje velika i mala slova; „Traži unazad“ traži prema početku teksta. Izbor stavke "
+                L"istorije vraća svih šest opcija pretrage, uključujući stanje režima regularnih izraza. "
+                L"„Regularni izraz“ onemogućava „Cijele riječi“, „Početak reda“ i „Kraj reda“. Kada su "
                 L"uključene obje opcije krajeva reda, dovoljno je poklapanje na jednom kraju. „Prelamanje "
                 L"redova“ mijenja samo prikaz."
             },
@@ -10805,9 +10779,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Pronađi s&ljedeće" },
             { TXT_FIND_MATCH_CASE, L"Razlikuj velika i &mala slova" },
             { TXT_FIND_BACKWARD, L"Traži &unazad" },
-            { TXT_FIND_TOPMOST, L"Uvijek na &vrhu" },
-            { TXT_FIND_STARTS_WITH, L"Red počinje &sa" },
-            { TXT_FIND_ENDS_WITH, L"Red se završava s&a" },
+            { TXT_FIND_WHOLE_WORDS, L"&Cijele riječi" },
+            { TXT_FIND_STARTS_WITH, L"&Početak reda" },
+            { TXT_FIND_ENDS_WITH, L"&Kraj reda" },
             { TXT_FIND_REGEX, L"&Regularni izraz" },
             { TXT_FIND_NOT_FOUND, L"Navedeni tekst nije pronađen." },
             { TXT_FIND_FAILED, L"Pretragu nije moguće dovršiti." },
@@ -11078,15 +11052,14 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"пошуку захоўвае апошнюю выбраную крыніцу, пакуль само мае фокус. F3 паўтарае пошук, а "
                 L"Shift+F3 змяняе яго кірунак. На мяжы тэксту пошук працягваецца з супрацьлеглага канца. "
                 L"Параметры > Перанос радкоў дзейнічае толькі ў актыўнай укладцы; адзнака адпавядае "
-                L"выбранай укладцы. Акно пошуку можна згарнуць і змяняць яго шырыню; пазіцыя і налада "
-                L"Заўсёды зверху захоўваюцца. Да 30 пошукавых тэкстаў з іх параметрамі захоўваюцца толькі "
-                L"да закрыцця праграмы. Параметры пачатку і канца тычацца лагічных радкоў. Рэгулярныя "
-                L"выразы выкарыстоўваюць сінтаксіс PCRE2. Астатнія каманды меню Праўка дзейнічаюць у "
-                L"актыўнай укладцы справаздачы. Enter запускае пошук, а Shift+Enter змяняе выбраны "
-                L"кірунак на супрацьлеглы. «Улічваць рэгістр» адрознівае вялікія і малыя літары; «Шукаць "
-                L"назад» шукае ў бок пачатку тэксту. Выбар запісу гісторыі аднаўляе ўсе пяць параметраў "
-                L"пошуку, у тым ліку стан рэжыму рэгулярных выразаў; «Заўсёды зверху» — незалежны "
-                L"параметр. «Рэгулярны выраз» выключае «Радок пачынаецца з» і «Радок сканчаецца на». Калі "
+                L"выбранай укладцы. Акно пошуку можна згарнуць і змяняць яго шырыню; пазіцыя захоўваецца. Да "
+                L"30 пошукавых тэкстаў з іх параметрамі захоўваюцца толькі да закрыцця праграмы. Параметры "
+                L"пачатку і канца тычацца лагічных радкоў. Рэгулярныя выразы выкарыстоўваюць сінтаксіс "
+                L"PCRE2. Астатнія каманды меню Праўка дзейнічаюць у актыўнай укладцы справаздачы. Enter "
+                L"запускае пошук, а Shift+Enter змяняе выбраны кірунак на супрацьлеглы. «Улічваць рэгістр» "
+                L"адрознівае вялікія і малыя літары; «Шукаць назад» шукае ў бок пачатку тэксту. Выбар запісу "
+                L"гісторыі аднаўляе ўсе шэсць параметраў пошуку, у тым ліку стан рэжыму рэгулярных выразаў. "
+                L"«Рэгулярны выраз» выключае «Толькі цэлыя словы», «Пачатак радка» і «Канец радка». Калі "
                 L"ўключаны абодва параметры краёў радка, дастаткова супадзення на адным краі. «Перанос "
                 L"радкоў» змяняе толькі адлюстраванне."
             },
@@ -11155,9 +11128,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Знайсці &далей" },
             { TXT_FIND_MATCH_CASE, L"Улічваць &рэгістр" },
             { TXT_FIND_BACKWARD, L"Шукаць &назад" },
-            { TXT_FIND_TOPMOST, L"З&аўсёды зверху" },
-            { TXT_FIND_STARTS_WITH, L"Радок &пачынаецца з" },
-            { TXT_FIND_ENDS_WITH, L"Радок скан&чаецца на" },
+            { TXT_FIND_WHOLE_WORDS, L"&Толькі цэлыя словы" },
+            { TXT_FIND_STARTS_WITH, L"&Пачатак радка" },
+            { TXT_FIND_ENDS_WITH, L"&Канец радка" },
             { TXT_FIND_REGEX, L"Рэгулярны &выраз" },
             { TXT_FIND_NOT_FOUND, L"Зададзены тэкст не знойдзены." },
             { TXT_FIND_FAILED, L"Не ўдалося завяршыць пошук." },
@@ -11442,15 +11415,14 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"а Shift+F3 обръща посоката му. При достигане на края на текста търсенето продължава от "
                 L"другия край. Опции > Пренасяне на нов ред засяга само активния раздел; отметката следва "
                 L"избрания раздел. Прозорецът за търсене може да се минимизира и да се променя ширината "
-                L"му; позицията и настройката Винаги отгоре се запомнят. До 30 текста за търсене с "
-                L"техните опции се пазят само до затварянето на приложението. Опциите за начало и край се "
-                L"отнасят за логически редове. Регулярните изрази използват синтаксиса на PCRE2. "
-                L"Останалите команди в менюто Редактиране се отнасят за активния раздел на отчета. Enter "
-                L"стартира търсенето, а Shift+Enter обръща избраната посока. „Различавай главни и малки "
-                L"букви“ различава главни и малки букви; „Търси назад“ търси към началото на текста. "
-                L"Избирането на запис от историята възстановява всичките пет опции за търсене, "
-                L"включително състоянието на режима за регулярни изрази; „Винаги отгоре“ е независима "
-                L"опция. „Регулярен израз“ изключва „Редът започва с“ и „Редът завършва с“. Когато и "
+                L"му; позицията се запомня. До 30 текста за търсене с техните опции се пазят само до "
+                L"затварянето на приложението. Опциите за начало и край се отнасят за логически редове. "
+                L"Регулярните изрази използват синтаксиса на PCRE2. Останалите команди в менюто Редактиране "
+                L"се отнасят за активния раздел на отчета. Enter стартира търсенето, а Shift+Enter обръща "
+                L"избраната посока. „Различавай главни и малки букви“ различава главни и малки букви; „Търси "
+                L"назад“ търси към началото на текста. Избирането на запис от историята възстановява "
+                L"всичките шест опции за търсене, включително състоянието на режима за регулярни изрази. "
+                L"„Регулярен израз“ изключва „Само цели думи“, „Начало на реда“ и „Край на реда“. Когато и "
                 L"двете опции за краищата на реда са включени, е достатъчно съвпадение на единия край. "
                 L"„Пренасяне на нов ред“ променя само показването."
             },
@@ -11519,9 +11491,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Намери &следващ" },
             { TXT_FIND_MATCH_CASE, L"Различавай &главни и малки букви" },
             { TXT_FIND_BACKWARD, L"Търси &назад" },
-            { TXT_FIND_TOPMOST, L"Винаги &отгоре" },
-            { TXT_FIND_STARTS_WITH, L"Редът за&почва с" },
-            { TXT_FIND_ENDS_WITH, L"Редът за&вършва с" },
+            { TXT_FIND_WHOLE_WORDS, L"Само &цели думи" },
+            { TXT_FIND_STARTS_WITH, L"Н&ачало на реда" },
+            { TXT_FIND_ENDS_WITH, L"&Край на реда" },
             { TXT_FIND_REGEX, L"&Регулярен израз" },
             { TXT_FIND_NOT_FOUND, L"Указаният текст не е намерен." },
             { TXT_FIND_FAILED, L"Търсенето не можа да бъде завършено." },
@@ -11808,18 +11780,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"повторува пребарувањето, а Shift+F3 ја менува неговата насока. На крајот на текстот "
                 L"пребарувањето продолжува од другиот крај. Опции > Пренесување редови важи само за "
                 L"активната картичка; ознаката ја следи избраната картичка. Прозорецот за пребарување "
-                L"може да се минимизира и да му се менува ширината; положбата и опцијата Секогаш на врвот "
-                L"се паметат. До 30 текстови за пребарување со нивните опции се чуваат само до "
-                L"затворањето на апликацијата. Опциите за почеток и крај важат за логичките редови. "
-                L"Регуларните изрази користат синтакса на PCRE2. Другите команди во менито Уреди важат за "
-                L"активната картичка на извештајот. Enter го започнува пребарувањето, а Shift+Enter ја "
-                L"превртува избраната насока. „Разликувај големи и мали букви“ разликува големи и мали "
-                L"букви; „Барај наназад“ пребарува кон почетокот на текстот. Изборот на запис од "
-                L"историјата ги враќа сите пет опции за пребарување, вклучувајќи ја состојбата на режимот "
-                L"за регуларни изрази; „Секогаш на врвот“ е независна опција. „Регуларен израз“ ги "
-                L"исклучува „Редот почнува со“ и „Редот завршува со“. Кога се вклучени двете опции за "
-                L"краевите на редот, доволно е совпаѓање на едниот крај. „Пренесување редови“ го менува "
-                L"само приказот."
+                L"може да се минимизира и да му се менува ширината; положбата се памети. До 30 текстови за "
+                L"пребарување со нивните опции се чуваат само до затворањето на апликацијата. Опциите за "
+                L"почеток и крај важат за логичките редови. Регуларните изрази користат синтакса на PCRE2. "
+                L"Другите команди во менито Уреди важат за активната картичка на извештајот. Enter го "
+                L"започнува пребарувањето, а Shift+Enter ја превртува избраната насока. „Разликувај големи и "
+                L"мали букви“ разликува големи и мали букви; „Барај наназад“ пребарува кон почетокот на "
+                L"текстот. Изборот на запис од историјата ги враќа сите шест опции за пребарување, "
+                L"вклучувајќи ја состојбата на режимот за регуларни изрази. „Регуларен израз“ ги исклучува "
+                L"„Цели зборови“, „Почеток на ред“ и „Крај на ред“. Кога се вклучени двете опции за краевите "
+                L"на редот, доволно е совпаѓање на едниот крај. „Пренесување редови“ го менува само приказот."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -11887,9 +11857,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Најди &следно" },
             { TXT_FIND_MATCH_CASE, L"Разликувај големи и &мали букви" },
             { TXT_FIND_BACKWARD, L"Барај на&назад" },
-            { TXT_FIND_TOPMOST, L"Секогаш на &врвот" },
-            { TXT_FIND_STARTS_WITH, L"Редот &почнува со" },
-            { TXT_FIND_ENDS_WITH, L"Редот завршув&а со" },
+            { TXT_FIND_WHOLE_WORDS, L"&Цели зборови" },
+            { TXT_FIND_STARTS_WITH, L"&Почеток на ред" },
+            { TXT_FIND_ENDS_WITH, L"&Крај на ред" },
             { TXT_FIND_REGEX, L"&Регуларен израз" },
             { TXT_FIND_NOT_FOUND, L"Наведениот текст не е пронајден." },
             { TXT_FIND_FAILED, L"Пребарувањето не може да се доврши." },
@@ -12155,16 +12125,15 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"фокус. Прозор претраге задржава последњи изабрани извор док има фокус. F3 понавља "
                 L"претрагу, а Shift+F3 мења њен смер. На крају текста претрага се наставља с другог "
                 L"краја. Опције > Преламање редова важи само за активну картицу; ознака прати изабрану "
-                L"картицу. Прозор претраге може се умањити и мењати му се ширина; положај и опција Увек "
-                L"на врху се памте. До 30 текстова претраге с њиховим опцијама чува се само до затварања "
-                L"апликације. Опције почетка и краја односе се на логичке редове. Регуларни изрази "
-                L"користе синтаксу PCRE2. Остале команде менија Уређивање односе се на активну картицу "
-                L"извештаја. Enter покреће претрагу, а Shift+Enter обрће изабрани смер. „Разликуј велика "
-                L"и мала слова“ разликује велика и мала слова; „Тражи уназад“ тражи према почетку текста. "
-                L"Избор ставке историје враћа свих пет опција претраге, укључујући стање режима "
-                L"регуларних израза; „Увек на врху“ је независна опција. „Регуларни израз“ онемогућава "
-                L"„Ред почиње са“ и „Ред се завршава са“. Када су укључене обе опције крајева реда, "
-                L"довољно је поклапање на једном крају. „Преламање редова“ мења само приказ."
+                L"картицу. Прозор претраге може се умањити и мењати му се ширина; положај се памти. До 30 "
+                L"текстова претраге с њиховим опцијама чува се само до затварања апликације. Опције почетка "
+                L"и краја односе се на логичке редове. Регуларни изрази користе синтаксу PCRE2. Остале "
+                L"команде менија Уређивање односе се на активну картицу извештаја. Enter покреће претрагу, а "
+                L"Shift+Enter обрће изабрани смер. „Разликуј велика и мала слова“ разликује велика и мала "
+                L"слова; „Тражи уназад“ тражи према почетку текста. Избор ставке историје враћа свих шест "
+                L"опција претраге, укључујући стање режима регуларних израза. „Регуларни израз“ онемогућава "
+                L"„Поклапање само целих речи“, „Почетак реда“ и „Крај реда“. Када су укључене обе опције "
+                L"крајева реда, довољно је поклапање на једном крају. „Преламање редова“ мења само приказ."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -12230,9 +12199,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Пронађи с&ледеће" },
             { TXT_FIND_MATCH_CASE, L"Разликуј велика и &мала слова" },
             { TXT_FIND_BACKWARD, L"Тражи &уназад" },
-            { TXT_FIND_TOPMOST, L"Увек на &врху" },
-            { TXT_FIND_STARTS_WITH, L"Ред &почиње са" },
-            { TXT_FIND_ENDS_WITH, L"Ред се завршава с&а" },
+            { TXT_FIND_WHOLE_WORDS, L"Поклапање само &целих речи" },
+            { TXT_FIND_STARTS_WITH, L"&Почетак реда" },
+            { TXT_FIND_ENDS_WITH, L"&Крај реда" },
             { TXT_FIND_REGEX, L"&Регуларни израз" },
             { TXT_FIND_NOT_FOUND, L"Наведени текст није пронађен." },
             { TXT_FIND_FAILED, L"Претрагу није могуће довршити." },
@@ -12506,17 +12475,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"останнє вибране джерело, доки саме має фокус. F3 повторює пошук, а Shift+F3 змінює його "
                 L"напрямок. На межі тексту пошук продовжується з протилежного кінця. Параметри > "
                 L"Перенесення слів діє лише в активній вкладці; позначка відповідає вибраній вкладці. "
-                L"Вікно пошуку можна згорнути та змінювати його ширину; положення і налаштування Завжди "
-                L"зверху зберігаються. До 30 пошукових текстів із параметрами зберігаються лише до "
-                L"закриття програми. Параметри початку та кінця стосуються логічних рядків. Регулярні "
-                L"вирази використовують синтаксис PCRE2. Інші команди меню Редагування стосуються "
-                L"активної вкладки звіту. Enter запускає пошук, а Shift+Enter змінює вибраний напрямок на "
-                L"протилежний. «Враховувати регістр» розрізняє великі й малі літери; «Шукати назад» шукає "
-                L"в напрямку початку тексту. Вибір запису історії відновлює всі п’ять параметрів пошуку, "
-                L"зокрема стан режиму регулярних виразів; «Завжди зверху» — незалежний параметр. "
-                L"«Регулярний вираз» вимикає «Рядок починається з» і «Рядок закінчується на». Якщо "
-                L"ввімкнено обидва параметри країв рядка, достатньо збігу на одному краї. «Перенесення "
-                L"слів» змінює лише відображення."
+                L"Вікно пошуку можна згорнути та змінювати його ширину; положення зберігається. До 30 "
+                L"пошукових текстів із параметрами зберігаються лише до закриття програми. Параметри початку "
+                L"та кінця стосуються логічних рядків. Регулярні вирази використовують синтаксис PCRE2. Інші "
+                L"команди меню Редагування стосуються активної вкладки звіту. Enter запускає пошук, а "
+                L"Shift+Enter змінює вибраний напрямок на протилежний. «Враховувати регістр» розрізняє "
+                L"великі й малі літери; «Шукати назад» шукає в напрямку початку тексту. Вибір запису історії "
+                L"відновлює всі шість параметрів пошуку, зокрема стан режиму регулярних виразів. «Регулярний "
+                L"вираз» вимикає «Лише цілі слова», «Початок рядка» і «Кінець рядка». Якщо ввімкнено обидва "
+                L"параметри країв рядка, достатньо збігу на одному краї. «Перенесення слів» змінює лише "
+                L"відображення."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -12581,9 +12549,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Знайти &далі" },
             { TXT_FIND_MATCH_CASE, L"Враховувати &регістр" },
             { TXT_FIND_BACKWARD, L"Шукати &назад" },
-            { TXT_FIND_TOPMOST, L"З&авжди зверху" },
-            { TXT_FIND_STARTS_WITH, L"Рядок &починається з" },
-            { TXT_FIND_ENDS_WITH, L"Рядок за&кінчується на" },
+            { TXT_FIND_WHOLE_WORDS, L"&Лише цілі слова" },
+            { TXT_FIND_STARTS_WITH, L"&Початок рядка" },
+            { TXT_FIND_ENDS_WITH, L"&Кінець рядка" },
             { TXT_FIND_REGEX, L"Регулярний &вираз" },
             { TXT_FIND_NOT_FOUND, L"Зазначений текст не знайдено." },
             { TXT_FIND_FAILED, L"Не вдалося завершити пошук." },
@@ -12855,18 +12823,16 @@ static const LocalizedLanguage localizedLanguages[] = {
                 L"само имеет фокус. F3 повторяет поиск, а Shift+F3 меняет его направление. На границе "
                 L"текста поиск продолжается с противоположного конца. Параметры > Перенос по словам "
                 L"действует только в активной вкладке; флажок соответствует выбранной вкладке. Окно "
-                L"поиска можно свернуть и изменять его ширину; положение и настройка Поверх остальных "
-                L"окон сохраняются. До 30 поисковых текстов с параметрами хранятся только до закрытия "
-                L"приложения. Параметры начала и конца относятся к логическим строкам. Регулярные "
-                L"выражения используют синтаксис PCRE2. Остальные команды меню Правка относятся к "
-                L"активной вкладке отчёта. Enter запускает поиск, а Shift+Enter меняет выбранное "
-                L"направление на противоположное. «Учитывать регистр» различает прописные и строчные "
-                L"буквы; «Искать назад» ищет в сторону начала текста. Выбор записи истории "
-                L"восстанавливает все пять параметров поиска, включая состояние режима регулярных "
-                L"выражений; «Поверх остальных окон» — независимый параметр. «Регулярное выражение» "
-                L"отключает «Строка начинается с» и «Строка заканчивается на». Если включены оба "
-                L"параметра краёв строки, достаточно совпадения на одном краю. «Перенос по словам» меняет "
-                L"только отображение."
+                L"поиска можно свернуть и изменять его ширину; положение сохраняется. До 30 поисковых "
+                L"текстов с параметрами хранятся только до закрытия приложения. Параметры начала и конца "
+                L"относятся к логическим строкам. Регулярные выражения используют синтаксис PCRE2. Остальные "
+                L"команды меню Правка относятся к активной вкладке отчёта. Enter запускает поиск, а "
+                L"Shift+Enter меняет выбранное направление на противоположное. «Учитывать регистр» различает "
+                L"прописные и строчные буквы; «Искать назад» ищет в сторону начала текста. Выбор записи "
+                L"истории восстанавливает все шесть параметров поиска, включая состояние режима регулярных "
+                L"выражений. «Регулярное выражение» отключает «Только целые слова», «Начало строки» и «Конец "
+                L"строки». Если включены оба параметра краёв строки, достаточно совпадения на одном краю. "
+                L"«Перенос по словам» меняет только отображение."
             },
             { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
             { TXT_WEBP_EXPORT_FAILED,
@@ -12934,9 +12900,9 @@ static const LocalizedLanguage localizedLanguages[] = {
             { TXT_FIND_NEXT, L"Найти &далее" },
             { TXT_FIND_MATCH_CASE, L"Учитывать &регистр" },
             { TXT_FIND_BACKWARD, L"Искать н&азад" },
-            { TXT_FIND_TOPMOST, L"Поверх &остальных окон" },
-            { TXT_FIND_STARTS_WITH, L"Строка &начинается с" },
-            { TXT_FIND_ENDS_WITH, L"Строка закан&чивается на" },
+            { TXT_FIND_WHOLE_WORDS, L"То&лько целые слова" },
+            { TXT_FIND_STARTS_WITH, L"&Начало строки" },
+            { TXT_FIND_ENDS_WITH, L"&Конец строки" },
             { TXT_FIND_REGEX, L"Регулярное &выражение" },
             { TXT_FIND_NOT_FOUND, L"Указанный текст не найден." },
             { TXT_FIND_FAILED, L"Не удалось завершить поиск." },

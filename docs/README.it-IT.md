@@ -82,17 +82,16 @@ Windows 95 non è attualmente un runtime supportato.
   origine selezionata finché resta attiva. F3 ripete la ricerca; Maiusc+F3 ne inverte la direzione. Alle
   estremità del testo, la ricerca riprende dall’estremità opposta. Opzioni > A capo automatico riguarda
   solo la scheda attiva; il segno di spunta segue la scheda selezionata. La finestra di ricerca può
-  essere ridotta a icona e ridimensionata orizzontalmente; la posizione e l’opzione Sempre in primo
-  piano vengono memorizzate. Fino a 30 ricerche e le relative opzioni vengono conservate solo fino alla
-  chiusura dell’applicazione. Le opzioni di inizio e fine si riferiscono alle righe logiche. Le
-  espressioni regolari usano la sintassi PCRE2. Gli altri comandi del menu Modifica si applicano alla
-  scheda di rapporto attiva. Invio avvia la ricerca; Maiusc+Invio inverte la direzione scelta.
-  «Maiuscole/minuscole» distingue le lettere maiuscole dalle minuscole; «Cerca all’indietro» cerca verso
-  l’inizio del testo. La scelta di una voce della cronologia ripristina tutte e cinque le opzioni di
-  ricerca, compreso lo stato del modo per le espressioni regolari; «Sempre in primo piano» è
-  indipendente. «Espressione regolare» disattiva «La riga inizia con» e «La riga termina con». Se
-  entrambe le opzioni di inizio e fine riga sono attive, è sufficiente una corrispondenza a una delle
-  estremità. «A capo automatico» modifica solo la visualizzazione.
+  essere ridotta a icona e ridimensionata orizzontalmente; la posizione viene memorizzata. Fino a 30 ricerche
+  e le relative opzioni vengono conservate solo fino alla chiusura dell’applicazione. Le opzioni di inizio e
+  fine si riferiscono alle righe logiche. Le espressioni regolari usano la sintassi PCRE2. Gli altri comandi
+  del menu Modifica si applicano alla scheda di rapporto attiva. Invio avvia la ricerca; Maiusc+Invio inverte
+  la direzione scelta. «Maiuscole/minuscole» distingue le lettere maiuscole dalle minuscole; «Cerca
+  all’indietro» cerca verso l’inizio del testo. La scelta di una voce della cronologia ripristina tutte e sei
+  le opzioni di ricerca, compreso lo stato del modo per le espressioni regolari. «Espressione regolare»
+  disattiva «Solo parole intere», «Inizio della riga» e «Fine riga». Se entrambe le opzioni di inizio e fine
+  riga sono attive, è sufficiente una corrispondenza a una delle estremità. «A capo automatico» modifica solo
+  la visualizzazione.
 - Opzioni > Preferenze (Ctrl+G) apre un'unica finestra di dialogo delle preferenze per percorsi MediaInfo e
   curl, carattere del report, antialiasing dei caratteri, lingua dell'interfaccia e lingua del report. Un
   percorso DLL vuoto consente il rilevamento automatico.

@@ -78,15 +78,14 @@ Windows 95 nie jest obecnie obsługiwanym środowiskiem wykonawczym.
   fokus. F3 powtarza wyszukiwanie, a Shift+F3 odwraca jego kierunek. Po dotarciu do końca tekstu
   wyszukiwanie jest kontynuowane od drugiego końca. Opcje > Zawijanie wierszy dotyczy tylko aktywnej
   karty; zaznaczenie odpowiada wybranej karcie. Okno wyszukiwania można zminimalizować i zmieniać jego
-  szerokość; położenie oraz ustawienie Zawsze na wierzchu są zapamiętywane. Do 30 wyszukiwanych tekstów
-  z opcjami pozostaje w pamięci tylko do zamknięcia aplikacji. Opcje początku i końca dotyczą logicznych
-  wierszy. Wyrażenia regularne używają składni PCRE2. Pozostałe polecenia menu Edycja dotyczą aktywnej
-  karty raportu. Enter uruchamia wyszukiwanie, a Shift+Enter odwraca wybrany kierunek. „Uwzględnij
-  wielkość liter” rozróżnia wielkie i małe litery; „Szukaj wstecz” wyszukuje w kierunku początku tekstu.
-  Wybranie wpisu historii przywraca wszystkie pięć opcji wyszukiwania, w tym stan trybu wyrażeń
-  regularnych; „Zawsze na wierzchu” jest niezależne. „Wyrażenie regularne” wyłącza opcje „Wiersz zaczyna
-  się od” i „Wiersz kończy się na”. Gdy obie opcje krańców wiersza są włączone, wystarczy dopasowanie na
-  jednym z nich. „Zawijanie wierszy” zmienia tylko sposób wyświetlania.
+  szerokość; położenie jest zapamiętywane. Do 30 wyszukiwanych tekstów z opcjami pozostaje w pamięci tylko do
+  zamknięcia aplikacji. Opcje początku i końca dotyczą logicznych wierszy. Wyrażenia regularne używają składni
+  PCRE2. Pozostałe polecenia menu Edycja dotyczą aktywnej karty raportu. Enter uruchamia wyszukiwanie, a
+  Shift+Enter odwraca wybrany kierunek. „Uwzględnij wielkość liter” rozróżnia wielkie i małe litery; „Szukaj
+  wstecz” wyszukuje w kierunku początku tekstu. Wybranie wpisu historii przywraca wszystkie sześć opcji
+  wyszukiwania, w tym stan trybu wyrażeń regularnych. „Wyrażenie regularne” wyłącza opcje „Znajdź tylko całe
+  wyrazy”, „Początek wiersza” i „Koniec wiersza”. Gdy obie opcje krańców wiersza są włączone, wystarczy
+  dopasowanie na jednym z nich. „Zawijanie wierszy” zmienia tylko sposób wyświetlania.
 - Opcje > Preferencje (Ctrl+G) otwiera pojedyncze okno dialogowe preferencji dla ścieżek MediaInfo i curl,
   czcionki raportu, wygładzania czcionek, języka interfejsu i języka raportów. Pusta ścieżka DLL umożliwia
   automatyczne wykrywanie.

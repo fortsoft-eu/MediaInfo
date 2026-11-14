@@ -77,15 +77,14 @@ Windows 95 şu anda desteklenen bir çalışma zamanı değil.
   korur. F3 aramayı yineler; Shift+F3 yönünü tersine çevirir. Metnin sonuna ulaşıldığında arama diğer
   uçtan devam eder. Seçenekler > Sözcük Kaydır yalnızca etkin sekmeyi etkiler; onay işareti seçili
   sekmeye göre değişir. Arama penceresi simge durumuna küçültülebilir ve yatay olarak
-  boyutlandırılabilir; konumu ile Her zaman üstte ayarı hatırlanır. En fazla 30 arama metni ve
-  seçenekleri yalnızca uygulama kapatılana kadar saklanır. Başlangıç ve bitiş seçenekleri mantıksal
-  satırları esas alır. Düzenli ifadeler PCRE2 sözdizimini kullanır. Düzenle menüsündeki diğer komutlar
-  etkin rapor sekmesine uygulanır. Enter aramayı başlatır; Shift+Enter seçilen yönü tersine çevirir.
-  “Büyük/küçük harf eşleştir” büyük ve küçük harfleri ayırt eder; “Geriye doğru ara” metnin başına doğru
-  arar. Geçmişten bir öğe seçmek, düzenli ifade modunun durumu da dahil beş arama seçeneğinin tümünü
-  geri yükler; “Her zaman üstte” bağımsızdır. “Düzenli ifade”, “Satır şu ifadeyle başlar” ve “Satır şu
-  ifadeyle biter” seçeneklerini devre dışı bırakır. Her iki satır ucu seçeneği de açıksa uçlardan
-  birinde eşleşme olması yeterlidir. “Sözcük Kaydır” yalnızca görünümü değiştirir.
+  boyutlandırılabilir; konumu hatırlanır. En fazla 30 arama metni ve seçenekleri yalnızca uygulama kapatılana
+  kadar saklanır. Başlangıç ve bitiş seçenekleri mantıksal satırları esas alır. Düzenli ifadeler PCRE2
+  sözdizimini kullanır. Düzenle menüsündeki diğer komutlar etkin rapor sekmesine uygulanır. Enter aramayı
+  başlatır; Shift+Enter seçilen yönü tersine çevirir. “Büyük/küçük harf eşleştir” büyük ve küçük harfleri
+  ayırt eder; “Geriye doğru ara” metnin başına doğru arar. Geçmişten bir öğe seçmek, düzenli ifade modunun
+  durumu da dahil altı arama seçeneğinin tümünü geri yükler. “Düzenli ifade”, “Sadece tam sözcükleri
+  eşleştir”, “Satırın başı” ve “Satır sonu” seçeneklerini devre dışı bırakır. Her iki satır ucu seçeneği de
+  açıksa uçlardan birinde eşleşme olması yeterlidir. “Sözcük Kaydır” yalnızca görünümü değiştirir.
 - Seçenekler > Tercihler (Ctrl+G), MediaInfo ve curl yolları, rapor yazı tipi, yazı tipi kenar yumuşatma,
   arayüz dili ve rapor dili için tek bir tercihler iletişim kutusu açar. Boş bir DLL yolu otomatik keşif
   sağlar.

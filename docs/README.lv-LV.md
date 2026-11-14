@@ -78,15 +78,14 @@ Windows 95 pašlaik netiek atbalstīts izpildlaiks.
   tam ir fokuss. F3 atkārto meklēšanu, bet Shift+F3 maina tās virzienu. Sasniedzot teksta malu,
   meklēšana turpinās no otras malas. Opcijas > Teksta aplaušana attiecas tikai uz aktīvo cilni; atzīme
   mainās atbilstoši atlasītajai cilnei. Meklēšanas logu var minimizēt un mainīt tā platumu; tiek
-  atcerēta atrašanās vieta un opcija Vienmēr virspusē. Līdz 30 meklēšanas tekstiem ar opcijām tiek
-  saglabāti tikai līdz lietotnes aizvēršanai. Sākuma un beigu opcijas attiecas uz loģiskajām rindām.
-  Regulārās izteiksmes izmanto PCRE2 sintaksi. Pārējās izvēlnes Rediģēt komandas attiecas uz aktīvo
-  pārskata cilni. Enter sāk meklēšanu; Shift+Enter apgriež izvēlēto virzienu. “Atšķirt lielos un mazos
-  burtus” atšķir lielos un mazos burtus; “Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures
-  ieraksta izvēle atjauno visas piecas meklēšanas opcijas, tostarp regulārās izteiksmes režīma stāvokli;
-  “Vienmēr virspusē” ir neatkarīga opcija. “Regulārā izteiksme” atspējo “Rinda sākas ar” un “Rinda
-  beidzas ar”. Ja abas rindas malu opcijas ir ieslēgtas, pietiek ar atbilstību vienā malā. “Teksta
-  aplaušana” maina tikai attēlojumu.
+  atcerēta atrašanās vieta. Līdz 30 meklēšanas tekstiem ar opcijām tiek saglabāti tikai līdz lietotnes
+  aizvēršanai. Sākuma un beigu opcijas attiecas uz loģiskajām rindām. Regulārās izteiksmes izmanto PCRE2
+  sintaksi. Pārējās izvēlnes Rediģēt komandas attiecas uz aktīvo pārskata cilni. Enter sāk meklēšanu;
+  Shift+Enter apgriež izvēlēto virzienu. “Atšķirt lielos un mazos burtus” atšķir lielos un mazos burtus;
+  “Meklēt atpakaļ” meklē teksta sākuma virzienā. Vēstures ieraksta izvēle atjauno visas sešas meklēšanas
+  opcijas, tostarp regulārās izteiksmes režīma stāvokli. “Regulārā izteiksme” atspējo “Meklēt tikai kā pilnu
+  vārdu”, “Rindas sākums” un “Rindas beigas”. Ja abas rindas malu opcijas ir ieslēgtas, pietiek ar atbilstību
+  vienā malā. “Teksta aplaušana” maina tikai attēlojumu.
 - Opcijas > Iestatījumi (Ctrl+G) atver vienu preferenču dialoglodziņu MediaInfo un curl ceļiem, atskaites
   fontam, fontu antialiasingam, saskarnes valodai un atskaites valodai. Tukšs DLL ceļš nodrošina automātisku
   atklāšanu.

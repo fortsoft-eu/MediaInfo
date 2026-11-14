@@ -82,15 +82,14 @@ Ní am rite tacaithe é Windows 95 faoi láthair.
   fhoinse dheireanach a roghnaíodh agus an fócas aici. F3 an cuardach arís agus aisiompaíonn Shift+F3 an
   treo. Ag ceann an téacs, leanann an cuardach ón gceann eile. Ní bhaineann Roghanna > Timfhilleadh
   Focal ach leis an gcluaisín gníomhach; leanann an tic an cluaisín roghnaithe. Is féidir an fhuinneog
-  chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh agus an socrú Ar barr i gcónaí. Ní
-  choinnítear suas le 30 téacs cuardaigh agus a gcuid roghanna ach go dtí go ndúntar an feidhmchlár.
-  Baineann na roghanna tosaigh agus deiridh le línte loighciúla. Úsáideann sloinn rialta comhréir PCRE2.
-  Baineann na horduithe eile sa roghchlár Eagar leis an gcluaisín tuairisce gníomhach. Tosaíonn Enter
-  cuardach; aisiompaíonn Shift+Enter an treo roghnaithe. Déanann “Meaitseáil an cás” idirdhealú idir cás
-  uachtair agus cás íochtair; cuardaíonn “Cuardaigh ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú
-  iontrála staire na cúig rogha cuardaigh uile, lena n-áirítear staid mhód na slonn rialta; tá “Ar barr
-  i gcónaí” neamhspleách. Díchumasaíonn “Slonn rialta” na roghanna “Tosaíonn an líne le” agus
-  “Críochnaíonn an líne le”. Má tá an dá rogha imill líne cumasaithe, is leor meaitseáil ag ceachtar
+  chuardaigh a íoslaghdú agus a leithead a athrú; coinnítear a suíomh. Ní choinnítear suas le 30 téacs
+  cuardaigh agus a gcuid roghanna ach go dtí go ndúntar an feidhmchlár. Baineann na roghanna tosaigh agus
+  deiridh le línte loighciúla. Úsáideann sloinn rialta comhréir PCRE2. Baineann na horduithe eile sa roghchlár
+  Eagar leis an gcluaisín tuairisce gníomhach. Tosaíonn Enter cuardach; aisiompaíonn Shift+Enter an treo
+  roghnaithe. Déanann “Meaitseáil an cás” idirdhealú idir cás uachtair agus cás íochtair; cuardaíonn
+  “Cuardaigh ar gcúl” i dtreo thús an téacs. Athbhunaíonn roghnú iontrála staire na sé rogha cuardaigh uile,
+  lena n-áirítear staid mhód na slonn rialta. Díchumasaíonn “Slonn rialta” na roghanna “Focail iomlána”, “Tús
+  na líne” agus “Deireadh na líne”. Má tá an dá rogha imill líne cumasaithe, is leor meaitseáil ag ceachtar
   imeall. Ní athraíonn “Timfhilleadh Focal” ach an taispeáint.
 - Roghanna > Sainroghanna (Ctrl+G) osclaíonn dialóg roghanna amháin le haghaidh cosáin MediaInfo agus curl,
   cló tuairisce, frith-ailiasú cló, teanga comhéadain agus teanga tuairisce. Ligeann cosán folamh DLL

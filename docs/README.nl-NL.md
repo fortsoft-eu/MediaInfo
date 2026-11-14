@@ -84,16 +84,15 @@ Windows 95 is momenteel geen ondersteunde runtime.
   zelf de focus heeft. F3 herhaalt de zoekopdracht; Shift+F3 keert de richting om. Aan het einde van de
   tekst gaat het zoeken verder vanaf het andere uiteinde. Opties > Automatische terugloop geldt alleen
   voor het actieve tabblad; het vinkje volgt het geselecteerde tabblad. Het zoekvenster kan worden
-  geminimaliseerd en in de breedte worden aangepast; de positie en de instelling Altijd bovenop worden
-  onthouden. Maximaal 30 zoekteksten met hun opties blijven alleen bewaard totdat de toepassing wordt
-  afgesloten. De begin- en eindopties gelden voor logische regels. Reguliere expressies gebruiken
-  PCRE2-syntaxis. De overige opdrachten in het menu Bewerken gelden voor het actieve rapporttabblad.
-  Enter start het zoeken; Shift+Enter keert de gekozen richting om. "Hoofdlettergevoelig" maakt
-  onderscheid tussen hoofdletters en kleine letters; "Achteruit zoeken" zoekt naar het begin van de
-  tekst. Een keuze uit de geschiedenis herstelt alle vijf zoekopties, ook de stand van de modus voor
-  reguliere expressies; "Altijd bovenop" staat hier los van. "Reguliere expressie" schakelt "Regel
-  begint met" en "Regel eindigt op" uit. Als beide opties voor de regeluiteinden aanstaan, volstaat een
-  overeenkomst aan één uiteinde. "Automatische terugloop" verandert alleen de weergave.
+  geminimaliseerd en in de breedte worden aangepast; de positie wordt onthouden. Maximaal 30 zoekteksten met
+  hun opties blijven alleen bewaard totdat de toepassing wordt afgesloten. De begin- en eindopties gelden voor
+  logische regels. Reguliere expressies gebruiken PCRE2-syntaxis. De overige opdrachten in het menu Bewerken
+  gelden voor het actieve rapporttabblad. Enter start het zoeken; Shift+Enter keert de gekozen richting om.
+  "Hoofdlettergevoelig" maakt onderscheid tussen hoofdletters en kleine letters; "Achteruit zoeken" zoekt naar
+  het begin van de tekst. Een keuze uit de geschiedenis herstelt alle zes zoekopties, ook de stand van de
+  modus voor reguliere expressies. "Reguliere expressie" schakelt "Alleen volledige woorden", "Begin van de
+  regel" en "Regeleinde" uit. Als beide opties voor de regeluiteinden aanstaan, volstaat een overeenkomst aan
+  één uiteinde. "Automatische terugloop" verandert alleen de weergave.
 - Opties > Voorkeuren (Ctrl+G) opent één dialoogvenster met voorkeuren voor MediaInfo en curl paden,
   rapportlettertype, lettertype-anti-aliasing, interfacetaal en rapporttaal. Een leeg DLL pad maakt
   automatische detectie mogelijk.

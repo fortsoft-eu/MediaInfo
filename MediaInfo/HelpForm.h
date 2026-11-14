@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.1.7
  */
 
 #pragma once
@@ -67,9 +67,6 @@ public:
 
     /// Shows the independently minimizable Help form or activates its existing instance.
     void Show(HWND owner);
-
-    /// Reveals Help beneath the search form without changing the active search input.
-    void Reveal(HWND search);
 
     /// Closes the active modeless dialog.
     void Close();

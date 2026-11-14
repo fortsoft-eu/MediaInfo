@@ -82,17 +82,16 @@ Windows 95 n'est actuellement pas un moteur d'exécution pris en charge.
   sélectionnée tant qu’elle a le focus. F3 répète la recherche ; Maj+F3 inverse son sens. Aux extrémités
   du texte, la recherche reprend à l’autre extrémité. Options > Retour automatique à la ligne concerne
   uniquement l’onglet actif ; la coche suit l’onglet sélectionné. La fenêtre de recherche peut être
-  réduite et redimensionnée horizontalement ; sa position et l’option Toujours au premier plan sont
-  mémorisées. Jusqu’à 30 recherches et leurs options sont conservées uniquement jusqu’à la fermeture de
-  l’application. Les options de début et de fin s’appliquent aux lignes logiques. Les expressions
-  régulières utilisent la syntaxe PCRE2. Les autres commandes du menu Édition concernent l’onglet de
-  rapport actif. Entrée lance la recherche ; Maj+Entrée inverse le sens choisi. « Respecter la casse »
-  distingue les majuscules des minuscules ; « Rechercher vers l’arrière » recherche vers le début du
-  texte. Choisir une entrée de l’historique rétablit les cinq options de recherche, y compris l’état du
-  mode d’expression régulière ; « Toujours au premier plan » est indépendante. « Expression régulière »
-  désactive « La ligne commence par » et « La ligne se termine par ». Si les deux options de début et de
-  fin de ligne sont activées, une correspondance à l’une des extrémités suffit. « Retour automatique à
-  la ligne » modifie uniquement l’affichage.
+  réduite et redimensionnée horizontalement ; sa position est mémorisée. Jusqu’à 30 recherches et leurs
+  options sont conservées uniquement jusqu’à la fermeture de l’application. Les options de début et de fin
+  s’appliquent aux lignes logiques. Les expressions régulières utilisent la syntaxe PCRE2. Les autres
+  commandes du menu Édition concernent l’onglet de rapport actif. Entrée lance la recherche ; Maj+Entrée
+  inverse le sens choisi. « Respecter la casse » distingue les majuscules des minuscules ; « Rechercher vers
+  l’arrière » recherche vers le début du texte. Choisir une entrée de l’historique rétablit les six options de
+  recherche, y compris l’état du mode d’expression régulière . « Expression régulière » désactive « Mot entier
+  uniquement », « Début de ligne » et « Fin de ligne ». Si les deux options de début et de fin de ligne sont
+  activées, une correspondance à l’une des extrémités suffit. « Retour automatique à la ligne » modifie
+  uniquement l’affichage.
 - Options > Préférences (Ctrl+G) ouvre une boîte de dialogue de préférences unique pour les chemins MediaInfo
   et curl, la police du rapport, l'anticrénelage des polices, la langue de l'interface et la langue du
   rapport. Un chemin DLL vide permet la découverte automatique.

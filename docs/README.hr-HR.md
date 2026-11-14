@@ -80,15 +80,14 @@ Windows 95 trenutno nije podržano runtime.
   izvor dok ima fokus. F3 ponavlja pretraživanje, a Shift+F3 mijenja njegov smjer. Na kraju teksta
   pretraživanje se nastavlja s drugog kraja. Mogućnosti > Prelamanje redaka vrijedi samo za aktivnu
   karticu; oznaka prati odabranu karticu. Prozor pretraživanja može se minimizirati i mijenjati mu se
-  širina; položaj i mogućnost Uvijek na vrhu pamte se. Do 30 tekstova pretraživanja s njihovim
-  mogućnostima čuva se samo do zatvaranja aplikacije. Mogućnosti početka i kraja odnose se na logičke
-  retke. Regularni izrazi koriste sintaksu PCRE2. Ostale naredbe izbornika Uređivanje odnose se na
-  aktivnu karticu izvješća. Enter pokreće pretraživanje, a Shift+Enter obrće odabrani smjer. „Razlikuj
-  velika i mala slova“ razlikuje velika i mala slova; „Traži unatrag“ pretražuje prema početku teksta.
-  Odabir stavke povijesti vraća svih pet mogućnosti pretraživanja, uključujući postavku regularnih
-  izraza; „Uvijek na vrhu“ neovisna je mogućnost. „Regularni izraz“ onemogućuje „Redak počinje s“ i
-  „Redak završava s“. Kada su uključene obje mogućnosti krajeva retka, dovoljno je podudaranje na jednom
-  kraju. „Prelamanje redaka“ mijenja samo prikaz.
+  širina; položaj se pamti. Do 30 tekstova pretraživanja s njihovim mogućnostima čuva se samo do zatvaranja
+  aplikacije. Mogućnosti početka i kraja odnose se na logičke retke. Regularni izrazi koriste sintaksu PCRE2.
+  Ostale naredbe izbornika Uređivanje odnose se na aktivnu karticu izvješća. Enter pokreće pretraživanje, a
+  Shift+Enter obrće odabrani smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala slova; „Traži
+  unatrag“ pretražuje prema početku teksta. Odabir stavke povijesti vraća svih šest mogućnosti pretraživanja,
+  uključujući postavku regularnih izraza. „Regularni izraz“ onemogućuje „Samo cijele riječi“, „Početak retka“
+  i „Kraj retka“. Kada su uključene obje mogućnosti krajeva retka, dovoljno je podudaranje na jednom kraju.
+  „Prelamanje redaka“ mijenja samo prikaz.
 - Mogućnosti > Postavke (Ctrl+G) otvara jedan dijaloški okvir postavki za staze MediaInfo i curl, font
   izvješća, antialiasing fonta, jezik sučelja i jezik izvješća. Prazna staza DLL omogućuje automatsko
   otkrivanje.

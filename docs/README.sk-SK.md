@@ -78,14 +78,14 @@ Windows 95 momentálne nie je podporované prostredie runtime.
   zvolený zdroj. F3 hľadanie opakuje, Shift+F3 obráti jeho smer. Po dosiahnutí okraja textu pokračuje
   hľadanie na opačnom konci. Možnosti > Zalamovanie riadkov ovplyvňuje iba aktívnu kartu; začiarknutie
   sa mení podľa vybratej karty. Formulár hľadania možno minimalizovať a meniť jeho šírku; pamätá si
-  polohu a voľbu Vždy navrchu. História uchováva najviac 30 hľadaných textov s ich voľbami iba do
-  ukončenia aplikácie. Začína na a Končí na hľadajú na okrajoch logických riadkov. Regulárne výrazy
-  používajú syntax PCRE2. Ostatné príkazy ponuky Úpravy sa vzťahujú na aktívnu kartu reportu. Enter
-  spustí hľadanie, Shift+Enter obráti zvolený smer. Voľba „Rozlišovať veľké a malé písmená“ rozlišuje
-  veľké a malé písmená; „Hľadať dozadu“ hľadá smerom k začiatku textu. Výber z histórie obnoví všetkých
-  päť volieb hľadania vrátane uloženého stavu regulárneho výrazu; „Vždy navrchu“ je nezávislá voľba.
-  „Regulárny výraz“ vypne voľby „Začína na“ a „Končí na“. Ak sú zapnuté obe voľby okrajov riadka, stačí
-  zhoda na jednom z nich. „Zalamovanie riadkov“ mení iba zobrazenie.
+  polohu. História uchováva najviac 30 hľadaných textov s ich voľbami iba do ukončenia aplikácie. Začiatok
+  riadka a Koniec riadka hľadajú na okrajoch logických riadkov. Regulárne výrazy používajú syntax PCRE2.
+  Ostatné príkazy ponuky Úpravy sa vzťahujú na aktívnu kartu reportu. Enter spustí hľadanie, Shift+Enter
+  obráti zvolený smer. Voľba „Rozlišovať veľkosť písmen“ rozlišuje veľké a malé písmená; „Hľadať dozadu“ hľadá
+  smerom k začiatku textu. Výber z histórie obnoví všetkých šesť volieb hľadania vrátane uloženého stavu
+  regulárneho výrazu. „Regulárny výraz“ vypne voľby „Iba celé slová“, „Začiatok riadka“ a „Koniec riadka“. Ak
+  sú zapnuté obe voľby okrajov riadka, stačí zhoda na jednom z nich. „Zalamovanie riadkov“ mení iba
+  zobrazenie.
 - Možnosti > Predvoľby (Ctrl+G) otvorí jediný dialóg pre cesty MediaInfo a curl, písmo reportu, vyhladzovanie
   písma, jazyk rozhrania a jazyk reportu. Prázdna cesta DLL zapína automatické vyhľadávanie.
 - Tlačidlo písma zobrazuje rodinu, veľkosť bodu a štýl a otvára štandardné dialógové okno písma Windows.

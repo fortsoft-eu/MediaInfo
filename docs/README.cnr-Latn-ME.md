@@ -79,15 +79,14 @@ Windows 95 trenutno nije podržano vrijeme izvođenja.
   ili O programu, zavisno od toga koji prozor ima fokus. Prozor pretrage zadržava posljednji izabrani
   izvor dok ima fokus. F3 ponavlja pretragu, a Shift+F3 mijenja njen smjer. Na kraju teksta pretraga se
   nastavlja s drugog kraja. Opcije > Prelamanje redova važi samo za aktivnu karticu; oznaka prati
-  izabranu karticu. Prozor pretrage može se minimizirati i mijenjati mu se širina; položaj i opcija
-  Uvijek na vrhu se pamte. Do 30 tekstova pretrage s njihovim opcijama čuva se samo do zatvaranja
-  aplikacije. Opcije početka i kraja odnose se na logičke redove. Regularni izrazi koriste PCRE2
-  sintaksu. Ostale komande menija Uređivanje odnose se na aktivnu karticu izvještaja. Enter pokreće
-  pretragu, a Shift+Enter obrće izabrani smjer. „Razlikuj velika i mala slova“ razlikuje velika i mala
-  slova; „Traži unazad“ traži prema početku teksta. Izbor stavke istorije vraća svih pet opcija
-  pretrage, uključujući stanje režima regularnih izraza; „Uvijek na vrhu“ je nezavisna opcija.
-  „Regularni izraz“ onemogućava „Red počinje sa“ i „Red se završava sa“. Kada su uključene obje opcije
-  krajeva reda, dovoljno je poklapanje na jednom kraju. „Prelamanje redova“ mijenja samo prikaz.
+  izabranu karticu. Prozor pretrage može se minimizirati i mijenjati mu se širina; položaj se pamti. Do 30
+  tekstova pretrage s njihovim opcijama čuva se samo do zatvaranja aplikacije. Opcije početka i kraja odnose
+  se na logičke redove. Regularni izrazi koriste PCRE2 sintaksu. Ostale komande menija Uređivanje odnose se na
+  aktivnu karticu izvještaja. Enter pokreće pretragu, a Shift+Enter obrće izabrani smjer. „Razlikuj velika i
+  mala slova“ razlikuje velika i mala slova; „Traži unazad“ traži prema početku teksta. Izbor stavke istorije
+  vraća svih šest opcija pretrage, uključujući stanje režima regularnih izraza. „Regularni izraz“ onemogućava
+  „Cijele riječi“, „Početak reda“ i „Kraj reda“. Kada su uključene obje opcije krajeva reda, dovoljno je
+  poklapanje na jednom kraju. „Prelamanje redova“ mijenja samo prikaz.
 - Postavke > Preference (Ctrl+G) otvara jedan dijalog postavki za MediaInfo i curl putanje, font izvještaja,
   antialiasing fonta, jezik interfejsa i jezik izvještaja. Prazna staza DLL omogućava automatsko otkrivanje.
 - Dugme fonta prikazuje porodicu, veličinu tačke i stil i otvara standardni dijalog Windows fonta. Zadano

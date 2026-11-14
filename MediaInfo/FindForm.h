@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.7
  */
 
 #pragma once
@@ -29,7 +29,7 @@
 #include "MediaInfo.h"
 #include "PersistWindowState.h"
 
-/// Stores one session-only search expression together with its five matching options.
+/// Stores one session-only search expression together with its six matching options.
 struct FindHistoryEntry {
     wchar_t* text;
     DWORD options;
@@ -67,6 +67,7 @@ private:
     bool ownsUiFont;
     bool matchCase;
     bool backward;
+    bool wholeWords;
     bool startsWith;
     bool endsWith;
     bool regularExpression;
@@ -83,13 +84,13 @@ private:
     /// Enables Find Next only when a report and a nonempty search expression are available.
     void UpdateFindButton();
 
-    /// Disables line-start and line-end options while regular-expression matching is selected.
+    /// Disables whole-word and line-edge options while regular expressions are selected.
     void UpdateRegexOptions();
 
     /// Copies pending search text and options, retaining the last query if allocation fails.
     bool ReadOptions();
 
-    /// Returns the five matching options stored with a session history entry.
+    /// Returns the six matching options stored with a session history entry.
     DWORD Options() const;
 
     /// Restores matching options when a search-history item is selected.
@@ -112,9 +113,6 @@ private:
 
     /// Selects the next or previous collected match, wrapping once at the ends of the report.
     void SelectMatch(bool reverse);
-
-    /// Applies the Always on Top checkbox immediately and preserves its native saved state.
-    void ChangeTopMost();
 
     /// Restores history options during navigation and selects the text after the choice is committed.
     void ChooseHistory(bool selectText);

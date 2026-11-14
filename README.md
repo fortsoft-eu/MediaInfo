@@ -72,15 +72,14 @@ Windows 95 is not currently a supported runtime.
   which window has focus. The Find window retains the last selected source while it has focus. F3
   repeats the search; Shift+F3 reverses its direction. Searching wraps at the ends of the text.
   Options > Word Wrap affects only the active tab, and its check mark follows the selected tab. The
-  search window can be minimized and resized horizontally; its position and Always on Top setting are
-  remembered. Up to 30 search texts and their options are retained only until the application exits.
-  Starts with and Ends with match the edges of logical lines. Regular expressions use PCRE2 syntax. The
-  other Edit menu commands apply to the active report tab. Enter searches; Shift+Enter reverses the
-  selected direction. "Case sensitive" distinguishes uppercase and lowercase; "Backward" searches toward
-  the start of the text. Choosing a history entry restores all five search options, including the saved
-  regular-expression mode; "Always on top" is independent. "Regular expression" disables "Starts with"
-  and "Ends with". With both line-edge options enabled, either edge can match. "Word Wrap" changes only
-  the display.
+  search window can be minimized and resized horizontally; its position is remembered. Up to 30 search texts
+  and their options are retained only until the application exits. Beginning of line and End of line match the
+  edges of logical lines. Regular expressions use PCRE2 syntax. The other Edit menu commands apply to the
+  active report tab. Enter searches; Shift+Enter reverses the selected direction. "Match case" distinguishes
+  uppercase and lowercase; "Search backward" searches toward the start of the text. Choosing a history entry
+  restores all six search options, including the saved regular-expression mode. "Regular expression" disables
+  "Match whole word only", "Beginning of line" and "End of line". With both line-edge options enabled, either
+  edge can match. "Word Wrap" changes only the display.
 - Options > Preferences (Ctrl+G) opens a single preferences dialog for MediaInfo and curl paths, report font,
   font antialiasing, interface language and report language. An empty DLL path enables automatic discovery.
 - The font button displays the family, point size and style and opens the standard Windows font dialog.

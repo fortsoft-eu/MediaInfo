@@ -88,16 +88,15 @@ Windows 95 ist derzeit keine unterstützte Laufzeit.
   Quelle bei. F3 wiederholt die Suche; Umschalt+F3 kehrt die Suchrichtung um. Am Textende wird die Suche
   am anderen Ende fortgesetzt. Optionen > Zeilenumbruch gilt nur für den aktiven Tab; das Häkchen
   richtet sich nach dem ausgewählten Tab. Das Suchfenster lässt sich minimieren und in der Breite
-  verändern; seine Position und die Einstellung Immer im Vordergrund werden gespeichert. Bis zu 30
-  Suchtexte mit ihren Optionen bleiben nur bis zum Beenden der Anwendung erhalten. Zeile beginnt mit und
-  Zeile endet mit beziehen sich auf logische Zeilen. Reguläre Ausdrücke verwenden die PCRE2-Syntax. Die
-  übrigen Befehle im Menü Bearbeiten betreffen den aktiven Berichtstab. Eingabe startet die Suche;
-  Umschalt+Eingabe kehrt die gewählte Richtung um. „Groß-/Kleinschreibung beachten“ unterscheidet Groß-
-  und Kleinbuchstaben; „Rückwärts suchen“ sucht zum Textanfang hin. Ein Eintrag aus dem Verlauf stellt
-  alle fünf Suchoptionen wieder her und schaltet gegebenenfalls den Regexmodus aus; „Immer im
-  Vordergrund“ ist unabhängig davon. „Regulärer Ausdruck“ deaktiviert „Zeile beginnt mit“ und „Zeile
-  endet mit“. Sind beide Zeilenrandoptionen aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“
-  ändert nur die Darstellung.
+  verändern; seine Position wird gespeichert. Bis zu 30 Suchtexte mit ihren Optionen bleiben nur bis zum
+  Beenden der Anwendung erhalten. Zeilenanfang und Zeilenende beziehen sich auf logische Zeilen. Reguläre
+  Ausdrücke verwenden die PCRE2-Syntax. Die übrigen Befehle im Menü Bearbeiten betreffen den aktiven
+  Berichtstab. Eingabe startet die Suche; Umschalt+Eingabe kehrt die gewählte Richtung um.
+  „Groß-/Kleinschreibung beachten“ unterscheidet Groß- und Kleinbuchstaben; „Rückwärts suchen“ sucht zum
+  Textanfang hin. Ein Eintrag aus dem Verlauf stellt alle sechs Suchoptionen wieder her, einschließlich des
+  gespeicherten Regexmodus. „Regulärer Ausdruck“ deaktiviert „Nur ganze Wörter suchen“, „Zeilenanfang“ und
+  „Zeilenende“. Sind beide Zeilenrandoptionen aktiv, genügt ein Treffer an einem Rand. „Zeilenumbruch“ ändert
+  nur die Darstellung.
 - Optionen > Voreinstellungen (Strg+G) öffnet einen einzelnen Voreinstellungsdialog für MediaInfo- und
   curl-Pfade, Berichtsschriftart, Schriftarten-Antialiasing, Schnittstellensprache und Berichtssprache. Ein
   leerer DLL-Pfad ermöglicht die automatische Erkennung.

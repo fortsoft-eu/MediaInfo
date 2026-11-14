@@ -80,13 +80,12 @@ Windows 95 ei ole tällä hetkellä tuettu suoritusaika.
   lähteen, kun kohdistus on siinä. F3 toistaa haun ja Vaihto+F3 vaihtaa hakusuunnan. Tekstin päässä haku
   jatkuu toisesta päästä. Asetukset > Automaattinen rivitys koskee vain aktiivista välilehteä;
   valintamerkki seuraa valittua välilehteä. Hakuikkunan voi pienentää ja sen leveyttä muuttaa; sijainti
-  ja Aina päällimmäisenä -asetus muistetaan. Enintään 30 hakutekstiä asetuksineen säilytetään vain
-  sovelluksen sulkemiseen asti. Rivin alku- ja loppuehdot koskevat loogisia rivejä. Säännölliset
-  lausekkeet käyttävät PCRE2-syntaksia. Muut Muokkaa-valikon komennot koskevat aktiivista
-  raporttivälilehteä. Enter käynnistää haun; Vaihto+Enter kääntää valitun suunnan. ”Sama kirjainkoko”
-  erottaa isot ja pienet kirjaimet; ”Etsi taaksepäin” hakee kohti tekstin alkua. Historiakohteen valinta
-  palauttaa kaikki viisi hakuasetusta, myös säännöllisten lausekkeiden tilan; ”Aina päällimmäisenä” on
-  erillinen asetus. ”Säännöllinen lauseke” poistaa käytöstä asetukset ”Rivi alkaa” ja ”Rivi päättyy”.
+  muistetaan. Enintään 30 hakutekstiä asetuksineen säilytetään vain sovelluksen sulkemiseen asti. Rivin alku-
+  ja loppuehdot koskevat loogisia rivejä. Säännölliset lausekkeet käyttävät PCRE2-syntaksia. Muut
+  Muokkaa-valikon komennot koskevat aktiivista raporttivälilehteä. Enter käynnistää haun; Vaihto+Enter kääntää
+  valitun suunnan. ”Sama kirjainkoko” erottaa isot ja pienet kirjaimet; ”Etsi taaksepäin” hakee kohti tekstin
+  alkua. Historiakohteen valinta palauttaa kaikki kuusi hakuasetusta, myös säännöllisten lausekkeiden tilan.
+  ”Säännöllinen lauseke” poistaa käytöstä asetukset ”Vain kokonaiset sanat”, ”Rivin alku” ja ”Rivin loppu”.
   Kun molemmat rivin reunaehdot ovat käytössä, osuma kummassa tahansa reunassa riittää. ”Automaattinen
   rivitys” muuttaa vain näyttötapaa.
 - Asetukset > Asetukset (Ctrl+G) avaa yhden asetusikkunan MediaInfo- ja curl-poluille, raportin fontille,

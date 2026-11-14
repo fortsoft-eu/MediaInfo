@@ -76,14 +76,13 @@ Windows 95 trenutno ni podprto izvajalno okolje.
   programu, odvisno od tega, katero okno ima fokus. Iskalno okno ohrani nazadnje izbrani vir, dokler ima
   fokus. F3 ponovi iskanje, Shift+F3 pa obrne njegovo smer. Na koncu besedila se iskanje nadaljuje z
   drugega konca. Možnosti > Prelom vrstic velja le za aktivni zavihek; kljukica sledi izbranemu zavihku.
-  Iskalno okno je mogoče minimizirati in mu spreminjati širino; položaj in možnost Vedno na vrhu se
-  shranita. Do 30 iskalnih besedil z možnostmi se hrani le do zaprtja programa. Možnosti začetka in
-  konca veljata za logične vrstice. Regularni izrazi uporabljajo sintakso PCRE2. Drugi ukazi menija
-  Uredi veljajo za aktivni zavihek poročila. Enter začne iskanje, Shift+Enter pa obrne izbrano smer.
-  »Razlikuj velike in male črke« razlikuje velike in male črke; »Išči nazaj« išče proti začetku
-  besedila. Izbira vnosa iz zgodovine obnovi vseh pet možnosti iskanja, vključno s stanjem regularnih
-  izrazov; »Vedno na vrhu« je neodvisna možnost. »Regularni izraz« onemogoči »Vrstica se začne z« in
-  »Vrstica se konča z«. Če sta vključeni obe možnosti robov vrstice, zadostuje ujemanje na enem robu.
+  Iskalno okno je mogoče minimizirati in mu spreminjati širino; položaj se shrani. Do 30 iskalnih besedil z
+  možnostmi se hrani le do zaprtja programa. Možnosti začetka in konca veljata za logične vrstice. Regularni
+  izrazi uporabljajo sintakso PCRE2. Drugi ukazi menija Uredi veljajo za aktivni zavihek poročila. Enter začne
+  iskanje, Shift+Enter pa obrne izbrano smer. »Razlikuj velike in male črke« razlikuje velike in male črke;
+  »Išči nazaj« išče proti začetku besedila. Izbira vnosa iz zgodovine obnovi vseh šest možnosti iskanja,
+  vključno s stanjem regularnih izrazov. »Regularni izraz« onemogoči »Upoštevaj samo cele besede«, »Začetek
+  vrstice« in »Konec vrstice«. Če sta vključeni obe možnosti robov vrstice, zadostuje ujemanje na enem robu.
   »Prelom vrstic« spremeni samo prikaz.
 - Možnosti > Nastavitve (Ctrl+G) odpre eno samo pogovorno okno z nastavitvami za poti MediaInfo in curl,
   pisavo poročila, izravnavo pisave, jezik vmesnika in jezik poročila. Prazna pot DLL omogoča samodejno

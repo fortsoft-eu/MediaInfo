@@ -83,16 +83,15 @@ Windows 95 no es actualmente un tiempo de ejecución compatible.
   seleccionado mientras tiene el foco. F3 repite la búsqueda; Mayús+F3 invierte su dirección. Al llegar
   a un extremo del texto, la búsqueda continúa desde el otro. Opciones > Ajuste de línea solo afecta a
   la pestaña activa; la marca cambia según la pestaña seleccionada. La ventana de búsqueda se puede
-  minimizar y redimensionar horizontalmente; se recuerdan su posición y la opción Siempre visible. Se
-  conservan hasta 30 búsquedas y sus opciones solo hasta que se cierra la aplicación. Las opciones de
-  principio y final se aplican a las líneas lógicas. Las expresiones regulares usan la sintaxis de
-  PCRE2. Los demás comandos del menú Edición se aplican a la pestaña de informe activa. Entrar inicia la
-  búsqueda; Mayús+Entrar invierte la dirección elegida. «Coincidir mayúsculas y minúsculas» distingue
-  mayúsculas y minúsculas; «Buscar hacia atrás» busca hacia el principio del texto. Elegir una entrada
-  del historial restaura las cinco opciones de búsqueda, incluido el estado del modo de expresión
-  regular; «Siempre visible» es independiente. «Expresión regular» desactiva «La línea empieza por» y
-  «La línea termina en». Si ambas opciones de extremos de línea están activadas, basta con que coincida
-  uno de ellos. «Ajuste de línea» solo cambia la visualización.
+  minimizar y redimensionar horizontalmente; se recuerda su posición. Se conservan hasta 30 búsquedas y sus
+  opciones solo hasta que se cierra la aplicación. Las opciones de principio y final se aplican a las líneas
+  lógicas. Las expresiones regulares usan la sintaxis de PCRE2. Los demás comandos del menú Edición se aplican
+  a la pestaña de informe activa. Entrar inicia la búsqueda; Mayús+Entrar invierte la dirección elegida.
+  «Coincidir mayúsculas y minúsculas» distingue mayúsculas y minúsculas; «Buscar hacia atrás» busca hacia el
+  principio del texto. Elegir una entrada del historial restaura las seis opciones de búsqueda, incluido el
+  estado del modo de expresión regular. «Expresión regular» desactiva «Solo palabras completas», «Comienzo de
+  línea» y «Fin de línea». Si ambas opciones de extremos de línea están activadas, basta con que coincida uno
+  de ellos. «Ajuste de línea» solo cambia la visualización.
 - Opciones > Preferencias (Ctrl+G) abre un cuadro de diálogo de preferencias único para las rutas MediaInfo y
   curl, la fuente del informe, el suavizado de fuente, el idioma de la interfaz y el idioma del informe. Una
   ruta DLL vacía permite el descubrimiento automático.

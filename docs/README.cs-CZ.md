@@ -74,15 +74,14 @@ Windows 95 v současnosti nejsou podporovaným prostředím pro spuštění.
   Nápovědy nebo v textové oblasti O programu. Okno hledání si po dobu vlastního fokusu ponechá naposledy
   zvolený zdroj. F3 hledání opakuje, Shift+F3 obrátí jeho směr. Po dosažení okraje textu pokračuje
   hledání na opačném konci. Možnosti > Zalamování řádků ovlivňuje jen aktivní kartu; zatržení se mění
-  podle vybrané karty. Formulář hledání lze minimalizovat a měnit jeho šířku; pamatuje si polohu a volbu
-  Vždy navrchu. Historie uchovává až 30 hledaných textů s jejich volbami pouze do ukončení aplikace.
-  Začíná na a Končí na hledají na okrajích logických řádků. Regulární výrazy používají syntaxi PCRE2.
-  Ostatní příkazy nabídky Úpravy pracují s aktivní kartou reportu. Enter spustí hledání, Shift+Enter
-  obrátí zvolený směr. Volba „Rozlišovat velikost písmen“ rozlišuje velká a malá písmena; „Hledat
-  pozpátku“ hledá směrem k začátku textu. Výběr z historie obnoví všech pět voleb hledání, včetně
-  uloženého stavu regulárního výrazu; „Vždy navrchu“ je nezávislá volba. „Regulární výraz“ vypne volby
-  „Začíná na“ a „Končí na“. Jsou-li obě volby okrajů zapnuté, stačí shoda na jednom z nich. „Zalamování
-  řádků“ mění pouze zobrazení.
+  podle vybrané karty. Formulář hledání lze minimalizovat a měnit jeho šířku; pamatuje si polohu. Historie
+  uchovává až 30 hledaných textů s jejich volbami pouze do ukončení aplikace. Začátek řádku a Konec řádku
+  hledají na okrajích logických řádků. Regulární výrazy používají syntaxi PCRE2. Ostatní příkazy nabídky
+  Úpravy pracují s aktivní kartou reportu. Enter spustí hledání, Shift+Enter obrátí zvolený směr. Volba
+  „Rozlišovat velikost písmen“ rozlišuje velká a malá písmena; „Hledat pozpátku“ hledá směrem k začátku textu.
+  Výběr z historie obnoví všech šest voleb hledání, včetně uloženého stavu regulárního výrazu. „Regulární
+  výraz“ vypne volby „Pouze celá slova“, „Začátek řádku“ a „Konec řádku“. Jsou-li obě volby okrajů zapnuté,
+  stačí shoda na jednom z nich. „Zalamování řádků“ mění pouze zobrazení.
 - Možnosti > Předvolby (Ctrl+G) otevře jediný dialog pro cesty MediaInfo a curl, písmo reportu, vyhlazování
   písma, jazyk rozhraní a jazyk reportu. Prázdná cesta DLL zapíná automatické vyhledávání.
 - Tlačítko písma ukazuje rodinu, bodovou velikost a řez a otevírá standardní dialog písma Windows. Výchozí

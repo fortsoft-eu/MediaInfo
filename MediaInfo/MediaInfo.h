@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.7
  */
 
 #pragma once
@@ -264,7 +264,7 @@ enum TextId {
     TXT_FIND_NEXT,
     TXT_FIND_MATCH_CASE,
     TXT_FIND_BACKWARD,
-    TXT_FIND_TOPMOST,
+    TXT_FIND_WHOLE_WORDS,
     TXT_FIND_STARTS_WITH,
     TXT_FIND_ENDS_WITH,
     TXT_FIND_REGEX,

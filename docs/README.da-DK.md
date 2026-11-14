@@ -74,15 +74,14 @@ Windows 95 er i øjeblikket ikke en understøttet runtime.
   hvilket vindue der har fokus. Søgevinduet beholder den senest valgte kilde, mens det selv har fokus.
   F3 gentager søgningen; Skift+F3 vender retningen. Ved tekstens ender fortsætter søgningen fra den
   modsatte ende. Indstillinger > Tekstombrydning gælder kun den aktive fane; markeringen følger den
-  valgte fane. Søgevinduet kan minimeres og ændres i bredden; placeringen og indstillingen Altid øverst
-  huskes. Op til 30 søgetekster med deres indstillinger gemmes kun, indtil programmet lukkes.
-  Indstillingerne for start og slutning gælder logiske linjer. Regulære udtryk bruger PCRE2-syntaks. De
-  øvrige kommandoer i menuen Rediger gælder den aktive rapportfane. Enter starter søgningen; Skift+Enter
-  vender den valgte retning. „Forskel på store og små bogstaver“ skelner mellem store og små bogstaver;
-  „Søg bagud“ søger mod tekstens begyndelse. Valg af en historikpost gendanner alle fem
-  søgeindstillinger, herunder tilstanden for regulære udtryk; „Altid øverst“ er uafhængig. „Regulært
-  udtryk“ deaktiverer „Linjen starter med“ og „Linjen slutter med“. Er begge indstillinger for linjens
-  ender slået til, er et match ved én ende nok. „Tekstombrydning“ ændrer kun visningen.
+  valgte fane. Søgevinduet kan minimeres og ændres i bredden; placeringen huskes. Op til 30 søgetekster med
+  deres indstillinger gemmes kun, indtil programmet lukkes. Indstillingerne for start og slutning gælder
+  logiske linjer. Regulære udtryk bruger PCRE2-syntaks. De øvrige kommandoer i menuen Rediger gælder den
+  aktive rapportfane. Enter starter søgningen; Skift+Enter vender den valgte retning. „Forskel på store og små
+  bogstaver“ skelner mellem store og små bogstaver; „Søg bagud“ søger mod tekstens begyndelse. Valg af en
+  historikpost gendanner alle seks søgeindstillinger, herunder tilstanden for regulære udtryk. „Regulært
+  udtryk“ deaktiverer „Søg kun hele ord“, „Begyndelse af linje“ og „Linjeafslutning“. Er begge indstillinger
+  for linjens ender slået til, er et match ved én ende nok. „Tekstombrydning“ ændrer kun visningen.
 - Indstillinger > Præferencer (Ctrl+G) åbner en enkelt præferencedialog for MediaInfo og curl stier,
   rapportskrifttype, skrifttypeudligning, grænsefladesprog og rapportsprog. En tom DLL-sti muliggør automatisk
   opdagelse.

@@ -78,16 +78,15 @@ Windows 95 šiuo metu nepalaikomas vykdymo laikas.
   atsižvelgiant į tai, kuris langas aktyvus. Paieškos langas išlaiko paskutinį pasirinktą šaltinį, kol
   pats yra aktyvus. F3 kartoja paiešką, o Shift+F3 pakeičia jos kryptį. Pasiekus teksto galą, paieška
   tęsiama nuo kito galo. Parinktys > Teksto eilučių kėlimas taikomas tik aktyviam skirtukui; varnelė
-  atitinka pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo plotį; jo vieta ir
-  parinktis Visada viršuje įsimenamos. Iki 30 paieškos tekstų su parinktimis saugoma tik iki programos
-  uždarymo. Pradžios ir pabaigos parinktys taikomos loginėms eilutėms. Reguliarieji reiškiniai naudoja
-  PCRE2 sintaksę. Kitos meniu Redaguoti komandos taikomos aktyviam ataskaitos skirtukui. Enter pradeda
-  paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti didžiąsias ir mažąsias raides“ skiria
-  didžiąsias ir mažąsias raides; „Ieškoti atgal“ ieško teksto pradžios link. Pasirinkus istorijos įrašą
-  atkuriamos visos penkios paieškos parinktys, įskaitant reguliariųjų reiškinių režimo būseną; „Visada
-  viršuje“ yra nepriklausoma. „Reguliarusis reiškinys“ išjungia „Eilutė prasideda“ ir „Eilutė baigiasi“.
-  Įjungus abi eilutės kraštų parinktis, pakanka atitikmens viename krašte. „Teksto eilučių kėlimas“
-  keičia tik rodymą.
+  atitinka pasirinktą skirtuką. Paieškos langą galima sumažinti ir keisti jo plotį; jo vieta įsimenama. Iki 30
+  paieškos tekstų su parinktimis saugoma tik iki programos uždarymo. Pradžios ir pabaigos parinktys taikomos
+  loginėms eilutėms. Reguliarieji reiškiniai naudoja PCRE2 sintaksę. Kitos meniu Redaguoti komandos taikomos
+  aktyviam ataskaitos skirtukui. Enter pradeda paiešką; Shift+Enter apverčia pasirinktą kryptį. „Skirti
+  didžiąsias ir mažąsias raides“ skiria didžiąsias ir mažąsias raides; „Ieškoti atgal“ ieško teksto pradžios
+  link. Pasirinkus istorijos įrašą atkuriamos visos šešios paieškos parinktys, įskaitant reguliariųjų
+  reiškinių režimo būseną. „Reguliarusis reiškinys“ išjungia „Tik pilnus žodžius“, „Eilutės pradžia“ ir
+  „Eilutės pabaiga“. Įjungus abi eilutės kraštų parinktis, pakanka atitikmens viename krašte. „Teksto eilučių
+  kėlimas“ keičia tik rodymą.
 - „Nustatymai“ > „Nuostatos“ (Ctrl+G) atidaro vieną nuostatų dialogo langą, skirtą MediaInfo ir curl takams,
   ataskaitos šriftui, šrifto antialiasing, sąsajos kalbai ir ataskaitos kalbai. Tuščias DLL kelias įgalina
   automatinį aptikimą.

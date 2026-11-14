@@ -79,16 +79,15 @@ Windows 95 bħalissa mhix runtime appoġġjata.
   l-fokus. F3 jirrepeti t-tfittxija; Shift+F3 jaqleb id-direzzjoni tagħha. Meta jintlaħaq tarf tat-test,
   it-tfittxija tkompli mit-tarf l-ieħor. Għażliet > Kebbeb il-kliem japplika biss għat-tab attiva;
   il-marka ssegwi t-tab magħżula. It-tieqa tat-tfittxija tista’ tiġi minimizzata u jinbidel il-wisa’
-  tagħha; il-pożizzjoni u l-għażla Dejjem fuq nett jinżammu. Sa 30 test tat-tfittxija bl-għażliet
-  tagħhom jinżammu biss sakemm tingħalaq l-applikazzjoni. L-għażliet tal-bidu u tat-tmiem japplikaw
-  għal-linji loġiċi. L-espressjonijiet regolari jużaw is-sintassi ta’ PCRE2. Il-kmandi l-oħra fil-menu
-  Editja japplikaw għat-tab tar-rapport attiva. Enter jibda t-tfittxija; Shift+Enter jaqleb
-  id-direzzjoni magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi bejn ittri kbar u żgħar; “Fittex
-  lura” tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja, jerġgħu jiġu applikati l-ħames
-  għażliet tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet regolari; “Dejjem fuq nett”
-  hija indipendenti. “Espressjoni regolari” tiddiżattiva “Il-linja tibda bi” u “Il-linja tispiċċa bi”.
-  Meta ż-żewġ għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb il-kliem”
-  tbiddel biss il-wiri.
+  tagħha; il-pożizzjoni tinżamm. Sa 30 test tat-tfittxija bl-għażliet tagħhom jinżammu biss sakemm tingħalaq
+  l-applikazzjoni. L-għażliet tal-bidu u tat-tmiem japplikaw għal-linji loġiċi. L-espressjonijiet regolari
+  jużaw is-sintassi ta’ PCRE2. Il-kmandi l-oħra fil-menu Editja japplikaw għat-tab tar-rapport attiva. Enter
+  jibda t-tfittxija; Shift+Enter jaqleb id-direzzjoni magħżula. “Iddistingwi ittri kbar u żgħar” tiddistingwi
+  bejn ittri kbar u żgħar; “Fittex lura” tfittex lejn il-bidu tat-test. Meta tagħżel entrata mill-istorja,
+  jerġgħu jiġu applikati s-sitt għażliet tat-tfittxija, inkluż l-istat tal-modalità tal-espressjonijiet
+  regolari. “Espressjoni regolari” tiddiżattiva “Kliem sħaħ biss”, “Bidu tal-linja” u “Tmiem tal-linja”. Meta
+  ż-żewġ għażliet tat-truf tal-linja jkunu attivi, biżżejjed qbil f’tarf wieħed. “Kebbeb il-kliem” tbiddel
+  biss il-wiri.
 - Settings > Preferenzi (Ctrl+G) jiftaħ djalogu tal-preferenzi wieħed għal mogħdijiet MediaInfo u curl, font
   tar-rapport, antialiasing tat-tipa, lingwa tal-interface u lingwa tar-rapport. Mogħdija DLL vojta
   tippermetti skoperta awtomatika.
