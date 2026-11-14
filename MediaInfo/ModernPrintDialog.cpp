@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.8
  */
 #undef WINVER
 #undef _WIN32_WINNT
@@ -47,6 +47,7 @@ typedef HRESULT(WINAPI* CreateD2DFactoryFunction)(D2D1_FACTORY_TYPE, REFIID,
 typedef HRESULT(WINAPI* CreateDWriteFactoryFunction)(DWRITE_FACTORY_TYPE, REFIID, IUnknown**);
 typedef LONG(WINAPI* GetVersionFunction)(OSVERSIONINFOW*);
 
+/// Maps a native printer paper identifier to the corresponding Windows print media size.
 struct PrintPaperMapping {
     SHORT paper;
     Printing::PrintMediaSize size;

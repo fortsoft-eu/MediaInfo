@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.4
+ * Last modified for version 1.2.1.8
  */
 
 #pragma once
@@ -30,11 +30,13 @@
 
 struct PrintJob;
 
+/// Stores one wrapped plain-text line as a UTF-16 source offset and length.
 struct PrintLine {
     int start;
     int length;
 };
 
+/// Owns printer selections and page margins for the compatible native print and page setup dialogs.
 class PrintSettings {
 
 private:
@@ -65,6 +67,7 @@ public:
     bool GetDeviceMode(DEVMODEW& mode) const;
 };
 
+/// Paginates captured rich or plain text and renders pages using retained font and printer metrics.
 class PrintLayout {
 
 private:

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.8
  */
 #pragma once
 
@@ -58,6 +58,7 @@ struct ModernPrintPage {
     UINT32 length;
 };
 
+/// Owns the modern Windows print UI, task callbacks and pagination of an immutable text snapshot.
 class ModernPrintDialog : public Printing::IPrintDocumentSource, public IPrintDocumentPageSource,
     public IPrintPreviewPageCollection, public PrintRequestedHandler,
     public Printing::IPrintTaskSourceRequestedHandler, public PrintCompletedHandler,
