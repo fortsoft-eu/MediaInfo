@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.1.8
  */
 
 #include "JpegEncoder.h"
@@ -51,15 +51,14 @@ struct ImageCodec {
     const BYTE* signatureMask;
 };
 
-/// Dynamically resolved GDI+ startup and encoder-enumeration entry points.
+/// Declares dynamically resolved GDI+ startup and encoder-enumeration entry points.
 typedef int (WINAPI* ImageStartupFunction)(ULONG_PTR*, const ImageStartupInput*, void*);
 typedef int (WINAPI* ImageEncodersSizeFunction)(UINT*, UINT*);
 typedef int (WINAPI* ImageEncodersFunction)(UINT, UINT, ImageCodec*);
 
 /// Loads optional GDI+ entry points and locates the installed JPEG encoder.
-JpegEncoder::JpegEncoder()
-        : module(nullptr), token(0), encoder(), shutdown(nullptr), create(nullptr), save(nullptr),
-        dispose(nullptr), available(false) {
+JpegEncoder::JpegEncoder() : module(nullptr), token(0), encoder(), shutdown(nullptr), create(nullptr),
+        save(nullptr), dispose(nullptr), available(false) {
     wchar_t filename[MAX_PATH];
     UINT length = GetSystemDirectoryW(filename, MAX_PATH);
     if (!length || length + 13 >= MAX_PATH) {

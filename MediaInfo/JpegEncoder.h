@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.1.8
  */
 
 #pragma once
@@ -32,13 +32,13 @@
 class JpegEncoder {
 
 private:
-    /// Dynamically resolved GDI+ entry-point signatures.
+    /// Declares the dynamically resolved GDI+ entry-point signatures.
     typedef void (WINAPI* ShutdownFunction)(ULONG_PTR);
     typedef int (WINAPI* FromBitmapFunction)(HBITMAP, HPALETTE, void**);
     typedef int (WINAPI* SaveFunction)(void*, const wchar_t*, const GUID*, const void*);
     typedef int (WINAPI* DisposeFunction)(void*);
 
-    /// GDI+ lifetime, selected encoder and resolved image operations.
+    /// Retains the GDI+ lifetime, selected encoder and resolved image operations.
     HMODULE module;
     ULONG_PTR token;
     GUID encoder;

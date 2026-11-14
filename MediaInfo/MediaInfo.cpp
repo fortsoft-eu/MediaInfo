@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.5
+ * Last modified for version 1.2.1.8
  */
 
 #include "MediaInfo.h"
@@ -35,8 +35,7 @@
 #include "SelectionEdit.h"
 #include "ComboBoxSupport.h"
 #include "ModernFileDialog.h"
-#include "JpegEncoder.h"
-#include "WebpEncoder.h"
+#include "ImageWriter.h"
 #include "resource.h"
 #include <commdlg.h>
 #include <commctrl.h>
@@ -84,22 +83,6 @@ struct UiTextLine {
     LONG ascent;
     LONG descent;
     LONG gap;
-};
-
-/// Buffers GIF data blocks and packed codes while retaining the output-write status.
-struct GifWriter {
-    HANDLE file;
-    BYTE block[255];
-    DWORD packed;
-    int bits;
-    int count;
-    bool success;
-};
-
-/// Maps a rendered RGB color to its exact GIF palette index.
-struct GifColor {
-    DWORD color;
-    BYTE index;
 };
 
 /// Retains dialog layout, pending settings and committed values used by Apply and Cancel.
@@ -217,20 +200,6 @@ static const UINT buttonGetIdealSize = 0x1601;
 /// Maximum number of source bytes copied by Create a Header File.
 static const DWORD headerByteLimit = 524288;
 
-/// TIFF directory layout and the start of values stored after its entries.
-static const WORD tiffTagCount = 14;
-static const DWORD tiffValuesOffset = 8 + 2 + tiffTagCount * 12 + 4;
-
-/// Image-export diagnostics indexed in the same order as the six image formats.
-static const TextId imageErrors[] = {
-    TXT_BMP_EXPORT_FAILED,
-    TXT_GIF_EXPORT_FAILED,
-    TXT_JPEG_EXPORT_FAILED,
-    TXT_PNG_EXPORT_FAILED,
-    TXT_TIFF_EXPORT_FAILED,
-    TXT_WEBP_EXPORT_FAILED
-};
-
 /// Preferences refresh timer, control-subclass property and label-to-field keyboard routing.
 static const UINT_PTR preferencesTimer = 1;
 static const wchar_t preferencesControlProperty[] = L"Preferences.OriginalProc";
@@ -263,6 +232,7 @@ static const ExportChoice exportChoices[] = {
 /// Native file-dialog filter templates whose captions use the interface translations.
 const wchar_t mediaFilePattern[] =
     L"*.avi;*.mkv;*.mp4;*.mov;*.mpg;*.mpeg;*.ts;*.m2ts;*.wmv;*.webm;*.mp3;*.flac;*.wav;*.ogg;*.m4a;*.aac";
+
 const LocalizedFileFilter mediaFilters[] = {
     { TXT_MEDIA_FILES, mediaFilePattern },
     { TXT_ALL_FILES, L"*.*" },
@@ -648,11 +618,11 @@ void UpdateWindowIcons(HWND window, UINT resource) {
         if (width <= 0 || height <= 0) {
             continue;
         }
-        HICON icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(resource),
-            IMAGE_ICON, width, height, 0));
+        HICON icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr),
+            MAKEINTRESOURCEW(resource), IMAGE_ICON, width, height, 0));
         if (!icon && resource != IDI_MEDIAINFO) {
-            icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr), MAKEINTRESOURCEW(IDI_MEDIAINFO),
-                IMAGE_ICON, width, height, 0));
+            icon = static_cast<HICON>(LoadImageW(GetModuleHandleW(nullptr),
+                MAKEINTRESOURCEW(IDI_MEDIAINFO), IMAGE_ICON, width, height, 0));
         }
         if (icon) {
             HICON previous = static_cast<HICON>(GetPropW(window, entry.property));
@@ -1235,7 +1205,7 @@ static bool PathCaptionFits(HDC dc, const wchar_t* text, int width) {
 
 /// Combines a retained path prefix, omitted ancestors, parent name and filename using bounded native copies.
 static void BuildPathCaption(const wchar_t* path, UINT prefix, bool omitted, const wchar_t* parent,
-    const wchar_t* name, wchar_t* caption, DWORD capacity) {
+        const wchar_t* name, wchar_t* caption, DWORD capacity) {
     lstrcpynW(caption, path, prefix + 1 < capacity ? prefix + 1 : capacity);
     DWORD used = static_cast<DWORD>(lstrlenW(caption));
     const wchar_t* parts[] = { omitted ? L"\u2026\\" : L"", parent, parent[0] ? L"\\" : L"", name };
@@ -1308,350 +1278,9 @@ void FormatPathCaption(HDC dc, const wchar_t* path, int width, wchar_t* caption,
     }
 }
 
-/// Writes the complete image-output buffer, handling partial writes and propagating file errors.
-static bool WriteBytes(HANDLE file, const void* data, DWORD bytes) {
-    const BYTE* cursor = static_cast<const BYTE*>(data);
-    while (bytes) {
-        DWORD written = 0;
-        if (!WriteFile(file, cursor, bytes, &written, nullptr) || !written) {
-            return false;
-        }
-        cursor += written;
-        bytes -= written;
-    }
-    return true;
-}
-
-/// Stores a 16-bit value in little-endian byte order.
-static void LittleEndian16(BYTE* output, WORD value) {
-    output[0] = static_cast<BYTE>(value);
-    output[1] = static_cast<BYTE>(value >> 8);
-}
-
-/// Stores a 32-bit value in little-endian byte order.
-static void LittleEndian32(BYTE* output, DWORD value) {
-    LittleEndian16(output, static_cast<WORD>(value));
-    LittleEndian16(output + 2, static_cast<WORD>(value >> 16));
-}
-
-/// Writes the rendered report as an uncompressed 24-bit Windows bitmap.
-static bool WriteBmp(HANDLE file, const BYTE* pixels, int width, int height, int dpiX, int dpiY) {
-    DWORD stride = width * 3 + 3 & ~3UL;
-    BITMAPFILEHEADER header = BITMAPFILEHEADER{};
-    BITMAPINFOHEADER info = BITMAPINFOHEADER{};
-    header.bfType = 0x4D42;
-    header.bfOffBits = sizeof(header) + sizeof(info);
-    header.bfSize = header.bfOffBits + stride * height;
-    info.biSize = sizeof(info);
-    info.biWidth = width;
-    info.biHeight = height;
-    info.biPlanes = 1;
-    info.biBitCount = 24;
-    info.biCompression = BI_RGB;
-    info.biSizeImage = stride * height;
-    info.biXPelsPerMeter = MulDiv(dpiX, 10000, 254);
-    info.biYPelsPerMeter = MulDiv(dpiY, 10000, 254);
-    BYTE* row = static_cast<BYTE*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, stride));
-    if (!row) {
-        return false;
-    }
-    bool success = WriteBytes(file, &header, sizeof(header)) && WriteBytes(file, &info, sizeof(info));
-    for (int y = height - 1; y >= 0 && success; --y) {
-        const BYTE* source = pixels + static_cast<SIZE_T>(y) * width * 4;
-        for (int x = 0; x < width; ++x) {
-            row[x * 3] = source[x * 4];
-            row[x * 3 + 1] = source[x * 4 + 1];
-            row[x * 3 + 2] = source[x * 4 + 2];
-        }
-        success = WriteBytes(file, row, stride);
-    }
-    HeapFree(GetProcessHeap(), 0, row);
-    return success;
-}
-
-/// Appends one little-endian TIFF directory entry and advances the output pointer.
-static void TiffEntry(BYTE*& entry, WORD tag, WORD type, DWORD count, DWORD value) {
-    LittleEndian16(entry, tag);
-    LittleEndian16(entry + 2, type);
-    LittleEndian32(entry + 4, count);
-    LittleEndian32(entry + 8, value);
-    entry += 12;
-}
-
-/// Writes the rendered report as an uncompressed RGB TIFF with its physical resolution.
-static bool WriteTiff(HANDLE file, const BYTE* pixels, int width, int height, int dpiX, int dpiY) {
-    DWORD rowSize = width * 3;
-    DWORD rowsPerStrip = 8192 / rowSize;
-    if (!rowsPerStrip) {
-        rowsPerStrip = 1;
-    }
-    DWORD stripCount = (height + rowsPerStrip - 1) / rowsPerStrip;
-    DWORD tablesSize = stripCount > 1 ? stripCount * 8 : 0;
-    DWORD dataOffset = tiffValuesOffset + 22 + tablesSize;
-    BYTE* header = static_cast<BYTE*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, dataOffset));
-    BYTE* row = static_cast<BYTE*>(HeapAlloc(GetProcessHeap(), 0, rowSize));
-    if (!header || !row) {
-        if (header) {
-            HeapFree(GetProcessHeap(), 0, header);
-        }
-        if (row) {
-            HeapFree(GetProcessHeap(), 0, row);
-        }
-        return false;
-    }
-    header[0] = 'I';
-    header[1] = 'I';
-    LittleEndian16(header + 2, 42);
-    LittleEndian32(header + 4, 8);
-    LittleEndian16(header + 8, tiffTagCount);
-    BYTE* entry = header + 10;
-    TiffEntry(entry, 256, 4, 1, width);
-    TiffEntry(entry, 257, 4, 1, height);
-    TiffEntry(entry, 258, 3, 3, tiffValuesOffset);
-    TiffEntry(entry, 259, 3, 1, 1);
-    TiffEntry(entry, 262, 3, 1, 2);
-    TiffEntry(entry, 273, 4, stripCount, stripCount == 1
-        ? dataOffset
-        : tiffValuesOffset + 22);
-    TiffEntry(entry, 274, 3, 1, 1);
-    TiffEntry(entry, 277, 3, 1, 3);
-    TiffEntry(entry, 278, 4, 1, rowsPerStrip);
-    TiffEntry(entry, 279, 4, stripCount, stripCount == 1
-        ? rowSize * height
-        : tiffValuesOffset + 22 + stripCount * 4);
-    TiffEntry(entry, 282, 5, 1, tiffValuesOffset + 6);
-    TiffEntry(entry, 283, 5, 1, tiffValuesOffset + 14);
-    TiffEntry(entry, 284, 3, 1, 1);
-    TiffEntry(entry, 296, 3, 1, 2);
-    for (int component = 0; component < 3; ++component) {
-        LittleEndian16(header + tiffValuesOffset + component * 2, 8);
-    }
-    LittleEndian32(header + tiffValuesOffset + 6, dpiX);
-    LittleEndian32(header + tiffValuesOffset + 10, 1);
-    LittleEndian32(header + tiffValuesOffset + 14, dpiY);
-    LittleEndian32(header + tiffValuesOffset + 18, 1);
-    if (stripCount > 1) {
-        for (DWORD index = 0; index < stripCount; ++index) {
-            DWORD firstRow = index * rowsPerStrip;
-            DWORD rows = height - firstRow;
-            if (rows > rowsPerStrip) {
-                rows = rowsPerStrip;
-            }
-            LittleEndian32(header + tiffValuesOffset + 22 + index * 4, dataOffset + firstRow * rowSize);
-            LittleEndian32(header + tiffValuesOffset + 22 + stripCount * 4 + index * 4, rows * rowSize);
-        }
-    }
-    bool success = WriteBytes(file, header, dataOffset);
-    for (int y = 0; y < height && success; ++y) {
-        const BYTE* source = pixels + static_cast<SIZE_T>(y) * width * 4;
-        for (int x = 0; x < width; ++x) {
-            row[x * 3] = source[x * 4 + 2];
-            row[x * 3 + 1] = source[x * 4 + 1];
-            row[x * 3 + 2] = source[x * 4];
-        }
-        success = WriteBytes(file, row, rowSize);
-    }
-    HeapFree(GetProcessHeap(), 0, row);
-    HeapFree(GetProcessHeap(), 0, header);
-    return success;
-}
-
-/// Stores a 32-bit value in big-endian byte order.
-static void BigEndian(BYTE* output, DWORD value) {
-    output[0] = static_cast<BYTE>(value >> 24);
-    output[1] = static_cast<BYTE>(value >> 16);
-    output[2] = static_cast<BYTE>(value >> 8);
-    output[3] = static_cast<BYTE>(value);
-}
-
-/// Updates a PNG CRC32 accumulator with a sequence of bytes.
-static DWORD CrcBytes(DWORD crc, const BYTE* bytes, DWORD length) {
-    for (DWORD index = 0; index < length; ++index) {
-        crc ^= bytes[index];
-        for (int bit = 0; bit < 8; ++bit) {
-            crc = crc >> 1 ^ (crc & 1 ? 0xEDB88320 : 0);
-        }
-    }
-    return crc;
-}
-
-/// Writes a PNG chunk with its length, type, payload and CRC32.
-static bool PngChunk(HANDLE file, const char* type, const BYTE* data, DWORD length) {
-    BYTE header[8];
-    BigEndian(header, length);
-    CopyMemory(header + 4, type, 4);
-    DWORD crc = CrcBytes(0xFFFFFFFF, header + 4, 4);
-    crc = CrcBytes(crc, data, length) ^ 0xFFFFFFFF;
-    BYTE checksum[4];
-    BigEndian(checksum, crc);
-    return WriteBytes(file, header, 8) && WriteBytes(file, data, length) && WriteBytes(file, checksum, 4);
-}
-
-/// Writes the rendered report as a lossless PNG using stored DEFLATE blocks.
-static bool WritePng(HANDLE file, const BYTE* pixels, int width, int height) {
-    const BYTE signature[] = { 137, 80, 78, 71, 13, 10, 26, 10 };
-    BYTE info[13] = {};
-    BigEndian(info, width);
-    BigEndian(info + 4, height);
-    info[8] = 8;
-    info[9] = 2;
-    const BYTE zlib[] = { 0x78, 0x01 };
-    if (!WriteBytes(file, signature, 8)
-            || !PngChunk(file, "IHDR", info, 13)
-            || !PngChunk(file, "IDAT", zlib, 2)) {
-        return false;
-    }
-    DWORD rowLength = 1 + width * 3;
-    BYTE* row = static_cast<BYTE*>(HeapAlloc(GetProcessHeap(), 0, rowLength + 5));
-    if (!row) {
-        return false;
-    }
-    DWORD a = 1;
-    DWORD b = 0;
-    bool success = true;
-    for (int y = 0; y < height && success; ++y) {
-        row[0] = y == height - 1 ? 1 : 0;
-        row[1] = static_cast<BYTE>(rowLength);
-        row[2] = static_cast<BYTE>(rowLength >> 8);
-        row[3] = static_cast<BYTE>(~rowLength);
-        row[4] = static_cast<BYTE>(~rowLength >> 8);
-        row[5] = 0;
-        const BYTE* source = pixels + static_cast<SIZE_T>(y) * width * 4;
-        for (int x = 0; x < width; ++x) {
-            row[6 + x * 3] = source[x * 4 + 2];
-            row[7 + x * 3] = source[x * 4 + 1];
-            row[8 + x * 3] = source[x * 4];
-        }
-        for (DWORD index = 5; index < rowLength + 5; ++index) {
-            a += row[index];
-            if (a >= 65521) {
-                a -= 65521;
-            }
-            b += a;
-            if (b >= 65521) {
-                b -= 65521;
-            }
-        }
-        success = PngChunk(file, "IDAT", row, rowLength + 5);
-    }
-    HeapFree(GetProcessHeap(), 0, row);
-    BYTE adler[4];
-    BigEndian(adler, b << 16 | a);
-    return success && PngChunk(file, "IDAT", adler, 4) && PngChunk(file, "IEND", nullptr, 0);
-}
-
-/// Buffers one GIF data byte and flushes complete sub-blocks to the output file.
-static void GifByte(GifWriter& writer, BYTE value) {
-    writer.block[writer.count++] = value;
-    if (writer.count == 255) {
-        BYTE count = 255;
-        writer.success = writer.success
-            && WriteBytes(writer.file, &count, 1)
-            && WriteBytes(writer.file, writer.block, 255);
-        writer.count = 0;
-    }
-}
-
-/// Packs one GIF LZW code into the buffered image-data stream.
-static void GifCode(GifWriter& writer, DWORD code) {
-    writer.packed |= code << writer.bits;
-    writer.bits += 9;
-    while (writer.bits >= 8) {
-        GifByte(writer, static_cast<BYTE>(writer.packed));
-        writer.packed >>= 8;
-        writer.bits -= 8;
-    }
-}
-
-/// Writes an exact GIF palette image, rejecting reports that require more than 256 colors.
-static bool WriteGif(HANDLE file, const BYTE* pixels, int width, int height) {
-    GifColor* colors =
-        static_cast<GifColor*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, 4096 * sizeof(GifColor)));
-    if (!colors) {
-        return false;
-    }
-    BYTE palette[768] = {};
-    int colorCount = 0;
-    SIZE_T count = static_cast<SIZE_T>(width) * height;
-    bool success = true;
-    for (SIZE_T index = 0; index < count; ++index) {
-        DWORD color = pixels[index * 4] | pixels[index * 4 + 1] << 8 | pixels[index * 4 + 2] << 16;
-        DWORD slot = color * 2654435761U >> 20;
-        while (colors[slot].color && colors[slot].color != color + 1) {
-            slot = slot + 1 & 4095;
-        }
-        if (!colors[slot].color) {
-            if (colorCount == 256) {
-                success = false;
-                break;
-            }
-            colors[slot].color = color + 1;
-            colors[slot].index = static_cast<BYTE>(colorCount);
-            palette[colorCount * 3] = static_cast<BYTE>(color >> 16);
-            palette[colorCount * 3 + 1] = static_cast<BYTE>(color >> 8);
-            palette[colorCount * 3 + 2] = static_cast<BYTE>(color);
-            ++colorCount;
-        }
-    }
-    BYTE header[] = { 'G', 'I', 'F', '8', '9', 'a', 0, 0, 0, 0, 0xF7, 0, 0 };
-    header[6] = static_cast<BYTE>(width);
-    header[7] = static_cast<BYTE>(width >> 8);
-    header[8] = static_cast<BYTE>(height);
-    header[9] = static_cast<BYTE>(height >> 8);
-    BYTE descriptor[] = { 0x2C, 0, 0, 0, 0, header[6], header[7], header[8], header[9], 0, 8 };
-    GifWriter writer = GifWriter{};
-    writer.file = file;
-    writer.success = success
-        && WriteBytes(file, header, sizeof(header))
-        && WriteBytes(file, palette, sizeof(palette))
-        && WriteBytes(file, descriptor, sizeof(descriptor));
-    GifCode(writer, 256);
-    int literals = 0;
-    for (SIZE_T index = 0; index < count && writer.success; ++index) {
-        DWORD color = pixels[index * 4] | pixels[index * 4 + 1] << 8 | pixels[index * 4 + 2] << 16;
-        DWORD slot = color * 2654435761U >> 20;
-        while (colors[slot].color != color + 1) {
-            slot = slot + 1 & 4095;
-        }
-        GifCode(writer, colors[slot].index);
-        if (++literals == 250) {
-            GifCode(writer, 256);
-            literals = 0;
-        }
-    }
-    GifCode(writer, 257);
-    if (writer.bits) {
-        GifByte(writer, static_cast<BYTE>(writer.packed));
-    }
-    if (writer.count) {
-        BYTE length = static_cast<BYTE>(writer.count);
-        writer.success = writer.success
-            && WriteBytes(file, &length, 1)
-            && WriteBytes(file, writer.block, length);
-    }
-    const BYTE end[] = { 0, 0x3B };
-    writer.success = writer.success && WriteBytes(file, end, 2);
-    HeapFree(GetProcessHeap(), 0, colors);
-    return writer.success;
-}
-
 /// Reports whether the requested image format can be written without substituting another format.
 bool IsReportImageTypeAvailable(DWORD type) {
-    if (type == 8) {
-        JpegEncoder encoder;
-        return encoder.IsAvailable();
-    }
-    if (type == 11) {
-        WebpEncoder encoder;
-        return encoder.IsAvailable();
-    }
-    return type >= 6 && type <= 10;
-}
-
-/// Saves the supplied image pixels in WebP format.
-static bool SaveWebpImage(HANDLE file, BYTE* pixels, int width, int height) {
-    WebpEncoder encoder;
-    return encoder.Save(file, pixels, width, height);
+    return type >= 6 && type <= 11 && ImageWriter::Available(type - 5);
 }
 
 /// Renders the report in its selected font and saves it with the requested available encoder.
@@ -1661,17 +1290,15 @@ bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
         lstrcpynW(error, T(TXT_IMAGE_FORMAT_UNSUPPORTED), errorCapacity);
         return false;
     }
+    lstrcpynW(error, T(TXT_REPORT_IMAGE_CREATE_FAILED), errorCapacity);
     HDC screen = GetDC(edit);
     HDC dc = screen ? CreateCompatibleDC(screen) : nullptr;
     if (screen) {
         ReleaseDC(edit, screen);
     }
     if (!dc) {
-        lstrcpynW(error, T(TXT_REPORT_IMAGE_CREATE_FAILED), errorCapacity);
         return false;
     }
-    int dpiX = GetDeviceCaps(dc, LOGPIXELSX);
-    int dpiY = GetDeviceCaps(dc, LOGPIXELSY);
     HFONT font = reinterpret_cast<HFONT>(SendMessageW(edit, WM_GETFONT, 0, 0));
     HGDIOBJ oldFont = SelectObject(dc, font);
     TEXTMETRICW metrics = TEXTMETRICW{};
@@ -1699,22 +1326,21 @@ bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
     }
     LONGLONG measuredWidth = static_cast<LONGLONG>(lineWidth) + 2 * margin;
     LONGLONG measuredHeight = static_cast<LONGLONG>(lineCount) * lineHeight + 2 * margin;
-    int maximumWidth = type == 11 ? 16383 : 16384;
-    int maximumHeight = type == 11 ? 16383 : 32767;
-    int width = measuredWidth > maximumWidth ? maximumWidth : static_cast<int>(measuredWidth);
-    int height = measuredHeight > maximumHeight ? maximumHeight : static_cast<int>(measuredHeight);
+    int maximumDimension = 0x7FFFFFFF;
+    if (type == 7 || type == 8) {
+        maximumDimension = 0xFFFF;
+    } else if (type == 11) {
+        maximumDimension = 16383;
+    }
+    int width = measuredWidth > maximumDimension ? maximumDimension : static_cast<int>(measuredWidth);
+    int height = measuredHeight > maximumDimension ? maximumDimension : static_cast<int>(measuredHeight);
     if (!validLines || width < 1 || height < 1) {
         if (text) {
             HeapFree(GetProcessHeap(), 0, text);
         }
         SelectObject(dc, oldFont);
         DeleteDC(dc);
-        lstrcpynW(error, T(TXT_REPORT_IMAGE_CREATE_FAILED), errorCapacity);
         return false;
-    }
-    int memoryHeight = 0x10000000 / 4 / width;
-    if (height > memoryHeight) {
-        height = memoryHeight;
     }
     BITMAPINFO info = BITMAPINFO{};
     info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
@@ -1740,73 +1366,26 @@ bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
         FillRect(dc, &bounds, background);
         SetBkMode(dc, OPAQUE);
         int right = measuredWidth > width ? width : width - margin;
-        int top = margin;
+        LONGLONG top = margin;
         for (int line = 0; line < lineCount && top < height; ++line, top += lineHeight) {
             int start = static_cast<int>(SendMessageW(edit, EM_LINEINDEX, line, 0));
             int length = static_cast<int>(SendMessageW(edit, EM_LINELENGTH, start, 0));
-            RECT row = RECT{ margin, top, right, top + lineHeight };
-            if (row.bottom > height) {
-                row.bottom = height;
+            LONGLONG bottom = top + lineHeight;
+            if (bottom > height) {
+                bottom = height;
             }
+            RECT row = RECT{ margin, static_cast<LONG>(top), right, static_cast<LONG>(bottom) };
             DrawTextW(dc, text + start, length, &row, DT_SINGLELINE | DT_NOPREFIX | DT_EXPANDTABS);
         }
         GdiFlush();
-        wchar_t fullPath[MAX_PATH];
-        wchar_t temporary[MAX_PATH];
-        wchar_t* name = nullptr;
-        DWORD length = GetFullPathNameW(path, MAX_PATH, fullPath, &name);
-        if (length && length < MAX_PATH && name) {
-            *name = 0;
-            if (GetTempFileNameW(fullPath, L"MIV", 0, temporary)) {
-                if (type == 8) {
-                    SelectObject(dc, oldBitmap);
-                    JpegEncoder encoder;
-                    success = encoder.Save(temporary, bitmap);
-                    SelectObject(dc, bitmap);
-                } else {
-                    HANDLE file = CreateFileW(temporary, GENERIC_WRITE, 0, nullptr,
-                        TRUNCATE_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
-                    if (file != INVALID_HANDLE_VALUE) {
-                        switch (type) {
-                            case 9:
-                                success = WritePng(file, pixels, width, height);
-                                break;
-                            case 7:
-                                success = WriteGif(file, pixels, width, height);
-                                break;
-                            case 6:
-                                success = WriteBmp(file, pixels, width, height, dpiX, dpiY);
-                                break;
-                            case 10:
-                                success = WriteTiff(file, pixels, width, height, dpiX, dpiY);
-                                break;
-                            case 11:
-                                success = SaveWebpImage(file, pixels, width, height);
-                                break;
-                        }
-                        if (!CloseHandle(file)) {
-                            success = false;
-                        }
-                    }
-                }
-                if (success) {
-                    success = MoveFileExW(temporary, path, MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)
-                        != FALSE;
-                }
-                if (!success) {
-                    DeleteFileW(temporary);
-                }
-            }
-        }
         SelectObject(dc, oldBitmap);
+        success = ImageWriter::Save(path, pixels, width, height, bounds, type - 5,
+            error, errorCapacity);
         DeleteObject(bitmap);
     }
     HeapFree(GetProcessHeap(), 0, text);
     SelectObject(dc, oldFont);
     DeleteDC(dc);
-    if (!success) {
-        lstrcpynW(error, T(imageErrors[type - 6]), errorCapacity);
-    }
     return success;
 }
 
@@ -3684,8 +3263,8 @@ bool ShowPreferences(HWND owner, MediaInfoLibrary& library, PersistWindowState& 
 /// Passes absolute Unicode file paths to the existing viewer, or reactivates it for an empty launch.
 bool ForwardInstanceFiles(HWND target, int count, wchar_t** arguments) {
     SIZE_T capacity = static_cast<SIZE_T>(count > 0 ? count : 1) * MAX_PATH + 2;
-    wchar_t* paths =
-        static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, capacity * sizeof(wchar_t)));
+    wchar_t* paths = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(),
+        HEAP_ZERO_MEMORY, capacity * sizeof(wchar_t)));
     if (!paths) {
         return false;
     }

@@ -21,11 +21,79 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.8
  */
 
 #include "Localization.h"
-#include "ReportLanguageData.inc"
+
+/// Maps the shared image writer's source text to existing application translations.
+static const LocalizedText imageWriterTexts[] = {
+    { TXT_PNG_EXPORT_FAILED,
+        L"The PNG image could not be saved. Check the destination and available memory and disk space."
+    },
+    { TXT_GIF_EXPORT_FAILED, L"GIF export failed. Exact GIF output requires at most 256 colors." },
+    { TXT_JPEG_EXPORT_FAILED, L"JPEG export failed. A working GDI+ JPEG encoder is required." },
+    { TXT_BMP_EXPORT_FAILED,
+        L"The BMP image could not be saved. Check the destination and available memory and disk space."
+    },
+    { TXT_TIFF_EXPORT_FAILED,
+        L"The TIFF image could not be saved. Check the destination and available memory and disk space."
+    },
+    { TXT_WEBP_EXPORT_FAILED,
+        L"The WebP image could not be saved. Check the destination and available memory and disk space."
+    },
+    { TXT_REPORT_IMAGE_CREATE_FAILED,
+        L"The selected image format cannot exceed 65535 pixels in either dimension."
+    },
+    { TXT_BMP_FORMAT, L"Windows Bitmap BMP (*.bmp)" },
+    { TXT_GIF_FORMAT, L"CompuServe GIF 89a (*.gif)" },
+    { TXT_JPEG_FORMAT, L"JPEG File Interchange Format (*.jpg)" },
+    { TXT_PNG_FORMAT, L"Portable Network Graphics PNG (*.png)" },
+    { TXT_TIFF_FORMAT, L"Tagged Image File Format TIFF (*.tif)" },
+    { TXT_WEBP_FORMAT, L"Google WebP (*.webp)" },
+};
+
+/// Defines report-language names and resource identifiers in the existing selection order.
+static const ReportLanguageEntry reportLanguages[] = {
+    { L"cs", L"Čeština", 2000 },
+    { L"", L"English", 0 },
+    { L"de", L"Deutsch", 2001 },
+    { L"fr", L"Français", 2002 },
+    { L"es", L"Español", 2003 },
+    { L"it", L"Italiano", 2004 },
+    { L"pt", L"Português (Portugal)", 2005 },
+    { L"pt-BR", L"Português (Brasil)", 2006 },
+    { L"pl", L"Polski", 2007 },
+    { L"sk", L"Slovenčina", 2008 },
+    { L"da", L"Dansk", 2009 },
+    { L"sv", L"Svenska", 2010 },
+    { L"tr", L"Türkçe", 2011 },
+    { L"lt", L"Lietuvių", 2012 },
+    { L"hu", L"Magyar", 2013 },
+    { L"nl", L"Nederlands", 2014 },
+    { L"ro", L"Română", 2015 },
+    { L"gr", L"Ελληνικά", 2016 },
+    { L"hr", L"Hrvatski", 2017 },
+    { L"ca", L"Català", 2018 },
+    { L"eu", L"Euskara", 2019 },
+    { L"gl", L"Galego", 2020 },
+    { L"sq", L"Shqip", 2021 },
+    { L"be", L"Беларуская", 2022 },
+    { L"bg", L"Български", 2023 },
+    { L"uk", L"Українська", 2024 },
+    { L"ru", L"Русский", 2025 },
+    { L"ar", L"العربية", 2026 },
+    { L"fa", L"فارسی", 2027 },
+    { L"hy", L"Հայերեն", 2028 },
+    { L"id", L"Bahasa Indonesia", 2029 },
+    { L"ja", L"日本語", 2030 },
+    { L"ka", L"ქართული", 2031 },
+    { L"ko", L"한국어", 2032 },
+    { L"th", L"ไทย", 2033 },
+    { L"zh-CN", L"简体中文", 2034 },
+    { L"zh-HK", L"香港正體字", 2035 },
+    { L"zh-TW", L"華語 (台灣)", 2036 },
+};
 
 /// Stores the complete interface catalog as static read-only data.
 static const LocalizedLanguage localizedLanguages[] = {
@@ -12917,6 +12985,16 @@ static_assert(sizeof(localizedLanguages) / sizeof(localizedLanguages[0]) == LANG
 /// Returns the immutable translation for a supported language and named text key.
 const wchar_t* GetLocalizedText(AppLanguage language, TextId id) {
     return localizedLanguages[language].texts[id].text;
+}
+
+/// Resolves shared image-writer text through the application's existing interface translations.
+const wchar_t* TranslateText(const wchar_t* text) {
+    for (UINT index = 0; index < ARRAYSIZE(imageWriterTexts); ++index) {
+        if (!lstrcmpW(text, imageWriterTexts[index].text)) {
+            return T(imageWriterTexts[index].id);
+        }
+    }
+    return text;
 }
 
 /// Returns the complete Help text for the active interface language.

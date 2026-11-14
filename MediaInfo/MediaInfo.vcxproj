@@ -239,6 +239,8 @@
     </ClCompile>
     <ClCompile Include="AboutForm.cpp" />
     <ClCompile Include="ModernFileDialog.cpp" />
+    <ClCompile Include="ImageWriter.cpp" />
+    <ClCompile Include="PngWriter.cpp" />
     <ClCompile Include="JpegEncoder.cpp" />
     <ClCompile Include="WebpEncoder.cpp" />
     <ClCompile Include="runtime.cpp" />
@@ -273,6 +275,8 @@
     <ClInclude Include="PCRE2\pcre2_util.h" />
     <ClInclude Include="AboutForm.h" />
     <ClInclude Include="ModernFileDialog.h" />
+    <ClInclude Include="ImageWriter.h" />
+    <ClInclude Include="PngWriter.h" />
     <ClInclude Include="JpegEncoder.h" />
     <ClInclude Include="WebpEncoder.h" />
     <ClInclude Include="resource.h" />

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.1.8
  */
 
 #pragma once
@@ -46,6 +46,9 @@ struct ReportLanguageEntry {
     const wchar_t* name;
     UINT resource;
 };
+
+/// Resolves shared image-writer text through the application's existing interface translations.
+const wchar_t* TranslateText(const wchar_t* text);
 
 /// Returns the immutable translation for a supported language and named text key.
 const wchar_t* GetLocalizedText(AppLanguage language, TextId id);
