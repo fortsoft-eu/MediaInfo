@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.9
  */
 
 #include "Localization.h"
@@ -146,9 +146,8 @@ static void ReadFileMenuAvailability(FileMenuContext& context) {
 
 /// Reads file identity, size and write time without reading its media content.
 static bool GetReportFileInfo(const wchar_t* path, BY_HANDLE_FILE_INFORMATION& information) {
-    HANDLE file = CreateFileW(path,
-        FILE_READ_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-        nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    HANDLE file = CreateFileW(path, FILE_READ_ATTRIBUTES, FILE_SHARE_READ | FILE_SHARE_WRITE
+        | FILE_SHARE_DELETE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
     if (file == INVALID_HANDLE_VALUE) {
         return false;
     }
@@ -214,15 +213,13 @@ static void FormatTabCaption(const FileTab* file, UINT limit, wchar_t* caption, 
 }
 
 /// Initializes the viewer window, file lists, fonts and report-worker state.
-MainForm::MainForm()
-        : window(nullptr), tabs(nullptr), status(nullptr), lastFocusedControl(nullptr), searchWindow(nullptr),
-        printOwner(nullptr), printDialog(nullptr), uiFont(nullptr), reportFont(nullptr),
-        accelerators(nullptr), reportThread(nullptr), printThread(nullptr), files(nullptr),
-        activeJob(nullptr), activePrintJob(nullptr), modernPrint(nullptr), tabMenuContext(nullptr),
-        reportFontSpec(), reportFontDpi(96), nextId(1), tabNameLength(defaultTabNameLength),
-        titleNameLength(defaultTitleNameLength), traceLevel(0), closing(false), printDialogOpen(false),
-        libraryLoading(true), unicodeTabs(false), visualStylesActive(false), advancedMode(false),
-        fullParsing(false), defaultWordWrap(false), closeTabsOnDoubleClick(false) {
+MainForm::MainForm() : window(nullptr), tabs(nullptr), status(nullptr), printOwner(nullptr), uiFont(nullptr),
+        lastFocusedControl(nullptr), printDialog(nullptr), reportFont(nullptr), activeJob(nullptr), nextId(1),
+        searchWindow(nullptr), accelerators(nullptr), reportThread(nullptr), files(nullptr), reportFontSpec(),
+        printThread(nullptr), activePrintJob(nullptr), modernPrint(nullptr), reportFontDpi(96), traceLevel(0),
+        tabMenuContext(nullptr), tabNameLength(defaultTabNameLength), titleNameLength(defaultTitleNameLength),
+        closing(false), printDialogOpen(false), libraryLoading(true), unicodeTabs(false), advancedMode(false),
+        visualStylesActive(false), fullParsing(false), defaultWordWrap(false), closeTabsOnDoubleClick(false) {
     LoadReportOptionsSetting(fullParsing, advancedMode, traceLevel);
     defaultWordWrap = LoadWordWrapSetting();
     closeTabsOnDoubleClick = LoadCloseTabsOnDoubleClickSetting();
@@ -286,8 +283,9 @@ bool MainForm::Create() {
         return false;
     }
     HMENU menu = LoadMenuW(instance, MAKEINTRESOURCEW(IDR_MENU));
-    window = CreateWindowExW(0, viewerWindowClass, L"MediaInfo", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
-        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, nullptr, menu, instance, this);
+    window = CreateWindowExW(0, viewerWindowClass, GetApplicationName(),
+        WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+        nullptr, menu, instance, this);
     if (!window) {
         if (menu) {
             DestroyMenu(menu);
@@ -498,10 +496,12 @@ void MainForm::UpdateStatus() {
     bool printable = active && active->ready || !files && helpForm.GetWindow();
     EnableMenuItem(GetMenu(window), ID_FILE_PRINT,
         MF_BYCOMMAND | (printable && !closing && !printDialogOpen && !printThread && !modernPrint
-            ? MF_ENABLED : MF_GRAYED));
+            ? MF_ENABLED
+            : MF_GRAYED));
     EnableMenuItem(GetMenu(window), ID_FILE_PAGE_SETUP,
         MF_BYCOMMAND | (printable && !closing && !printDialogOpen && !printThread && !modernPrint
-            ? MF_ENABLED : MF_GRAYED));
+            ? MF_ENABLED
+            : MF_GRAYED));
     EnableMenuItem(GetMenu(window), ID_PREFERENCES,
         MF_BYCOMMAND | (HasPendingReports() ? MF_GRAYED : MF_ENABLED));
     EnableMenuItem(GetMenu(window), ID_ADVANCED_MODE,
@@ -572,7 +572,7 @@ void MainForm::ShowAbout() {
     modalFindHook = SetWindowsHookExW(WH_MSGFILTER, ModalFindFilter, nullptr, GetCurrentThreadId());
     if (!modalFindHook) {
         modalFindOwner = nullptr;
-        MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         return;
     }
     aboutForm.Show(window);
@@ -615,7 +615,7 @@ void MainForm::ShowStatusContextMenu(POINT point) {
             window, nullptr);
         DestroyMenu(menu);
         if (command == statusCopyCommand && !CopyTextToClipboard(window, text)) {
-            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         }
         return;
     }
@@ -712,7 +712,7 @@ void MainForm::ExecuteFileCommand(UINT command, const wchar_t* path) {
         FormatFileNameCaption(selected, MAX_PATH, name, ARRAYSIZE(name));
         const wchar_t* text = command == ID_EDIT_COPY_FILE_NAME ? name : selected;
         if (!CopyTextToClipboard(window, text)) {
-            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         }
         return;
     }
@@ -741,7 +741,7 @@ void MainForm::OpenTabFile(const wchar_t* path, const wchar_t* folder, bool sele
         if (!length || length + ARRAYSIZE(L"\\explorer.exe") > ARRAYSIZE(explorer)) {
             wchar_t error[MAX_PATH + 128];
             wsprintfW(error, T(TXT_FILE_OPEN_FAILED), path);
-            MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, error, GetApplicationName(), MB_OK | MB_ICONERROR);
             return;
         }
         lstrcatW(explorer, L"\\explorer.exe");
@@ -785,7 +785,7 @@ bool MainForm::AddFile(const wchar_t* filename) {
     wchar_t path[MAX_PATH];
     DWORD length = GetFullPathNameW(filename, MAX_PATH, path, nullptr);
     if (!length || length >= MAX_PATH) {
-        MessageBoxW(window, T(TXT_INVALID_MEDIA_PATH), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_INVALID_MEDIA_PATH), GetApplicationName(), MB_OK | MB_ICONERROR);
         return false;
     }
     if (SelectExistingTab(LibraryCommand::Read, path)) {
@@ -793,7 +793,7 @@ bool MainForm::AddFile(const wchar_t* filename) {
     }
     DWORD attributes = GetFileAttributesW(path);
     if (attributes == INVALID_FILE_ATTRIBUTES || attributes & FILE_ATTRIBUTE_DIRECTORY) {
-        MessageBoxW(window, T(TXT_INVALID_MEDIA_PATH), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_INVALID_MEDIA_PATH), GetApplicationName(), MB_OK | MB_ICONERROR);
         return false;
     }
     return CreateTab(LibraryCommand::Read, path);
@@ -943,11 +943,11 @@ void MainForm::ToggleWordWrap() {
         return;
     }
     if (!ReplaceReportEdit(file, !file->wordWrap)) {
-        MessageBoxW(window, T(TXT_WORD_WRAP_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_WORD_WRAP_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
     } else {
         defaultWordWrap = file->wordWrap;
         if (!SaveWordWrapSetting(defaultWordWrap)) {
-            MessageBoxW(window, T(TXT_PREFERENCES_SAVE_FAILED), L"MediaInfo", MB_OK | MB_ICONWARNING);
+            MessageBoxW(window, T(TXT_PREFERENCES_SAVE_FAILED), GetApplicationName(), MB_OK | MB_ICONWARNING);
         }
     }
     UpdateStatus();
@@ -956,7 +956,7 @@ void MainForm::ToggleWordWrap() {
 /// Creates the common report edit and tab and queues the selected library operation.
 bool MainForm::CreateTab(LibraryCommand command, const wchar_t* path) {
     if (!libraryLoading && !library.IsLoaded()) {
-        MessageBoxW(window, library.GetError(), L"MediaInfo", MB_OK | MB_ICONWARNING);
+        MessageBoxW(window, library.GetError(), GetApplicationName(), MB_OK | MB_ICONWARNING);
         Preferences();
         if (!library.IsLoaded()) {
             return false;
@@ -1136,7 +1136,7 @@ void MainForm::OpenFolder() {
     if (error != ERROR_SUCCESS && error != ERROR_NO_MORE_FILES && error != ERROR_FILE_NOT_FOUND) {
         wchar_t message[MAX_PATH + 512];
         wsprintfW(message, T(TXT_FOLDER_READ_FAILED), folder, error);
-        MessageBoxW(window, message, L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, message, GetApplicationName(), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -1187,16 +1187,17 @@ bool MainForm::PreferencesClearRecentFiles(void* context) {
 void MainForm::UpdateWindowTitle() {
     FileTab* file = CurrentFile();
     if (!file) {
-        SetWindowTextW(window, L"MediaInfo");
+        SetWindowTextW(window, GetApplicationName());
         return;
     }
-    wchar_t caption[MAX_PATH + 16];
+    wchar_t caption[2 * MAX_PATH + 4];
     if (file->command == LibraryCommand::Read) {
         FormatFileNameCaption(file->path, titleNameLength, caption, MAX_PATH);
     } else {
         FormatMiddleCaption(KnownInformationTitle(file->command), titleNameLength, false, caption, MAX_PATH);
     }
-    lstrcatW(caption, L" \u2014 MediaInfo");
+    lstrcatW(caption, L" \u2014 ");
+    lstrcatW(caption, GetApplicationName());
     SetWindowTextW(window, caption);
 }
 
@@ -1248,7 +1249,7 @@ void MainForm::ChangeReportOptions(UINT command) {
         active->traceLevel = traceLevel;
     }
     if (!SaveReportOptionsSetting(fullParsing, advancedMode, traceLevel)) {
-        MessageBoxW(window, T(TXT_PREFERENCES_SAVE_FAILED), L"MediaInfo", MB_OK | MB_ICONWARNING);
+        MessageBoxW(window, T(TXT_PREFERENCES_SAVE_FAILED), GetApplicationName(), MB_OK | MB_ICONWARNING);
     }
     RefreshReports();
 }
@@ -1313,7 +1314,7 @@ void MainForm::ExportReport() {
     if (saved) {
         SaveExportSetting(path, type);
     } else {
-        MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, error, GetApplicationName(), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -1339,13 +1340,12 @@ void MainForm::PrintReport() {
     if (closing || !edit || printThread) {
         return;
     }
-    wchar_t aboutTitle[MAX_PATH] = L"";
+    wchar_t informationTitle[512] = L"";
     const wchar_t* title;
-    if (about) {
-        GetWindowTextW(dialog, aboutTitle, ARRAYSIZE(aboutTitle));
-        title = aboutTitle;
-    } else if (help) {
-        title = T(TXT_HELP_TITLE);
+    if (about || help) {
+        HWND information = about ? dialog : helpForm.GetWindow();
+        GetWindowTextW(information, informationTitle, ARRAYSIZE(informationTitle));
+        title = informationTitle;
     } else if (active->command == LibraryCommand::Read) {
         title = active->path;
     } else {
@@ -1361,7 +1361,7 @@ void MainForm::PrintReport() {
             modernPrint = nullptr;
             printOwner = nullptr;
             if (result != HRESULT_FROM_WIN32(ERROR_CANCELLED)) {
-                MessageBoxW(dialog, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+                MessageBoxW(dialog, T(TXT_PRINT_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
             }
         }
         UpdateStatus();
@@ -1379,7 +1379,7 @@ void MainForm::PrintReport() {
             printDialogOpen = false;
             printOwner = nullptr;
             UpdateStatus();
-            MessageBoxW(dialog, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(dialog, T(TXT_PRINT_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
             return;
         }
     }
@@ -1403,7 +1403,7 @@ void MainForm::PrintReport() {
     if (!job) {
         UpdateStatus();
         if (error[0]) {
-            MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, error, GetApplicationName(), MB_OK | MB_ICONERROR);
         }
         return;
     }
@@ -1411,7 +1411,7 @@ void MainForm::PrintReport() {
     printThread = CreateThread(nullptr, 0, PrintDocument, job, 0, nullptr);
     if (!printThread) {
         FreePrintJob(job);
-        MessageBoxW(window, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_PRINT_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         return;
     }
     activePrintJob = job;
@@ -1468,7 +1468,7 @@ void MainForm::PageSetup() {
     printDialogOpen = false;
     UpdateStatus();
     if (!accepted && error[0]) {
-        MessageBoxW(window, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, error, GetApplicationName(), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -1498,7 +1498,7 @@ void MainForm::CompletePrint(PrintJob* job) {
     } else {
         UpdateStatus();
         if (failed) {
-            MessageBoxW(window, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, T(TXT_PRINT_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         }
     }
 }
@@ -1516,7 +1516,7 @@ void MainForm::CompleteModernPrint(ModernPrintDialog* source) {
     ReleaseModernPrint(source);
     UpdateStatus();
     if (failed && !closing) {
-        MessageBoxW(window, T(TXT_PRINT_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_PRINT_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -1954,8 +1954,9 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                                 : T(TXT_RECENT_FILE_UNAVAILABLE);
                         wchar_t question[MAX_PATH + 512];
                         wsprintfW(question, prompt, path);
-                        if (MessageBoxW(window, question, L"MediaInfo",
-                            MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON1) == IDYES) {
+                        int answer = MessageBoxW(window, question, GetApplicationName(),
+                            MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON1);
+                        if (answer == IDYES) {
                             owner->recentFiles.Remove(path);
                             owner->recentFiles.Save();
                             owner->recentFiles.UpdateMenu(GetMenu(window));

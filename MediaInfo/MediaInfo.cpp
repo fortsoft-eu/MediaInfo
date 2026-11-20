@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.8
+ * Last modified for version 1.2.1.9
  */
 
 #include "MediaInfo.h"
@@ -42,6 +42,7 @@
 #include <shellapi.h>
 #include <shlobj.h>
 #include <usp10.h>
+#include <winver.h>
 
 #undef small
 
@@ -274,6 +275,66 @@ const LocalizedFileFilter headerOutputFilters[] = {
 const wchar_t viewerWindowClass[] = L"FortSoft.MediaInfo.Window";
 
 static const char startupMutexName[] = "FortSoft.MediaInfo.Startup";
+
+/// Loads the executable version resource for product-name and version queries; the caller frees the buffer.
+BYTE* LoadApplicationVersionInfo() {
+    wchar_t path[MAX_PATH] = {};
+    DWORD length = GetModuleFileNameW(nullptr, path, ARRAYSIZE(path));
+    if (!length || length >= ARRAYSIZE(path)) {
+        return nullptr;
+    }
+    DWORD ignored = 0;
+    DWORD size = GetFileVersionInfoSizeW(path, &ignored);
+    if (!size) {
+        return nullptr;
+    }
+    BYTE* data = static_cast<BYTE*>(HeapAlloc(GetProcessHeap(), 0, size));
+    if (data && !GetFileVersionInfoW(path, 0, size, data)) {
+        HeapFree(GetProcessHeap(), 0, data);
+        return nullptr;
+    }
+    return data;
+}
+
+/// Returns a borrowed product name from the declared version-resource translation tables, or ? if
+/// unavailable.
+static const wchar_t* GetApplicationName(const BYTE* data) {
+    if (!data) {
+        return L"?";
+    }
+    WORD* translations = nullptr;
+    UINT translationBytes = 0;
+    BOOL found = VerQueryValueW(data, L"\\VarFileInfo\\Translation",
+        reinterpret_cast<void**>(&translations), &translationBytes);
+    if (!found || !translations) {
+        return L"?";
+    }
+    for (UINT index = 0; index + 1 < translationBytes / sizeof(WORD); index += 2) {
+        wchar_t query[64];
+        wsprintfW(query, L"\\StringFileInfo\\%04X%04X\\ProductName", translations[index],
+            translations[index + 1]);
+        wchar_t* name = nullptr;
+        UINT length = 0;
+        found = VerQueryValueW(data, query, reinterpret_cast<void**>(&name), &length);
+        if (found && name && length > 1 && name[0]) {
+            return name;
+        }
+    }
+    return L"?";
+}
+
+/// Returns the executable ProductName from the version resource, cached for the process lifetime.
+const wchar_t* GetApplicationName() {
+    static wchar_t name[MAX_PATH];
+    if (!name[0]) {
+        BYTE* data = LoadApplicationVersionInfo();
+        lstrcpynW(name, GetApplicationName(data), ARRAYSIZE(name));
+        if (data) {
+            HeapFree(GetProcessHeap(), 0, data);
+        }
+    }
+    return name;
+}
 
 /// Maps a Windows language identifier to one of the supported interface variants.
 int ApplicationLanguageFromLangId(LANGID language) {
@@ -1626,7 +1687,7 @@ static void FileDialogError(HWND owner, HRESULT result) {
     if (FAILED(result) && result != HRESULT_FROM_WIN32(ERROR_CANCELLED)) {
         MessageBoxW(owner, result == HRESULT_FROM_WIN32(ERROR_FILENAME_EXCED_RANGE)
             ? T(TXT_SELECTED_PATHS_TOO_LONG)
-            : T(TXT_FILE_DIALOG_SELECTION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            : T(TXT_FILE_DIALOG_SELECTION_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -1708,7 +1769,7 @@ wchar_t* ChooseMediaFiles(HWND owner) {
         DWORD error = CommDlgExtendedError();
         if (error) {
             MessageBoxW(owner, error == 0x3003 ? T(TXT_TOO_MANY_FILES) : T(TXT_FILE_DIALOG_OPEN_FAILED),
-                L"MediaInfo", MB_OK | MB_ICONERROR);
+                GetApplicationName(), MB_OK | MB_ICONERROR);
         }
     }
     HeapFree(GetProcessHeap(), 0, buffer);
@@ -1907,13 +1968,13 @@ void CreateHeaderFile(HWND owner, wchar_t* folder) {
             if (!success) {
                 wchar_t error[MAX_PATH + 256];
                 wsprintfW(error, T(TXT_HEADER_SAVE_FAILED), destination);
-                MessageBoxW(owner, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+                MessageBoxW(owner, error, GetApplicationName(), MB_OK | MB_ICONERROR);
             }
         }
     } else {
         wchar_t error[MAX_PATH + 256];
         wsprintfW(error, T(TXT_HEADER_READ_FAILED), source);
-        MessageBoxW(owner, error, L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(owner, error, GetApplicationName(), MB_OK | MB_ICONERROR);
     }
     if (input != INVALID_HANDLE_VALUE) {
         CloseHandle(input);
@@ -2713,7 +2774,8 @@ static void LayoutPreferences(PreferencesData& data) {
     for (int index = 0; index < 3; ++index) {
         HWND control = GetDlgItem(window, wideLabels[index]);
         RECT bounds = ControlRect(control, window);
-        PlaceControl(control, margin.cx, bounds.top, client.right - 2 * margin.cx, bounds.bottom - bounds.top);
+        PlaceControl(control, margin.cx, bounds.top, client.right - 2 * margin.cx,
+            bounds.bottom - bounds.top);
     }
     RECT dropped = RECT{};
     SendMessageW(antialiasing, CB_GETDROPPEDCONTROLRECT, 0, reinterpret_cast<LPARAM>(&dropped));
@@ -2886,12 +2948,13 @@ static bool ApplyPreferences(PreferencesData& data) {
     BOOL valid = FALSE;
     UINT tabLength = GetDlgItemInt(data.window, IDC_TAB_NAME_LENGTH, &valid, FALSE);
     if (!valid || tabLength < minimumTabNameLength || tabLength > maximumTabNameLength) {
-        MessageBoxW(data.window, T(TXT_TAB_NAME_LENGTH_INVALID), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(data.window, T(TXT_TAB_NAME_LENGTH_INVALID), GetApplicationName(), MB_OK | MB_ICONERROR);
         return false;
     }
     UINT titleLength = GetDlgItemInt(data.window, IDC_TITLE_NAME_LENGTH, &valid, FALSE);
     if (!valid || titleLength < minimumTitleNameLength || titleLength > maximumTitleNameLength) {
-        MessageBoxW(data.window, T(TXT_TITLE_NAME_LENGTH_INVALID), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(data.window, T(TXT_TITLE_NAME_LENGTH_INVALID), GetApplicationName(),
+            MB_OK | MB_ICONERROR);
         return false;
     }
     wchar_t path[MAX_PATH];
@@ -2906,7 +2969,7 @@ static bool ApplyPreferences(PreferencesData& data) {
             if (attributes == INVALID_FILE_ATTRIBUTES || attributes & FILE_ATTRIBUTE_DIRECTORY) {
                 wchar_t message[512];
                 wsprintfW(message, T(TXT_FILE_OPEN_FAILED), paths[index]);
-                MessageBoxW(data.window, message, L"MediaInfo", MB_OK | MB_ICONERROR);
+                MessageBoxW(data.window, message, GetApplicationName(), MB_OK | MB_ICONERROR);
                 SetFocus(GetDlgItem(data.window, controls[index]));
                 return false;
             }
@@ -2939,7 +3002,7 @@ static bool ApplyPreferences(PreferencesData& data) {
             data.callbacks->loading(data.callbacks->context, false);
         }
         if (!loaded) {
-            MessageBoxW(data.window, data.library->GetError(), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(data.window, data.library->GetError(), GetApplicationName(), MB_OK | MB_ICONERROR);
             return false;
         }
     }
@@ -2978,7 +3041,8 @@ static bool ApplyPreferences(PreferencesData& data) {
     }
     UpdateApplyButton(data);
     if (!saved) {
-        MessageBoxW(data.window, T(TXT_PREFERENCES_SAVE_FAILED), L"MediaInfo", MB_OK | MB_ICONWARNING);
+        MessageBoxW(data.window, T(TXT_PREFERENCES_SAVE_FAILED), GetApplicationName(),
+            MB_OK | MB_ICONWARNING);
     }
     return true;
 }
@@ -3170,7 +3234,7 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
                         : SaveRecentFilesSetting(L"\0", 2);
                     UpdateApplyButton(*data);
                     if (!saved) {
-                        MessageBoxW(window, T(TXT_RECENT_FILES_SAVE_FAILED), L"MediaInfo",
+                        MessageBoxW(window, T(TXT_RECENT_FILES_SAVE_FAILED), GetApplicationName(),
                             MB_OK | MB_ICONWARNING);
                     }
                 }
@@ -3328,7 +3392,7 @@ int RunViewer(int count, wchar_t** arguments) {
             CloseHandle(startupMutex);
         }
         SetCursor(LoadCursorW(nullptr, IDC_ARROW));
-        MessageBoxW(nullptr, T(TXT_VIEWER_CREATE_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(nullptr, T(TXT_VIEWER_CREATE_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         return 1;
     }
     HWND existing = !LoadMultipleInstancesSetting() ? FindWindowW(viewerWindowClass, nullptr) : nullptr;
@@ -3345,7 +3409,7 @@ int RunViewer(int count, wchar_t** arguments) {
     }
     if (!success) {
         MessageBoxW(nullptr, T(existing ? TXT_INSTANCE_FORWARD_FAILED : TXT_VIEWER_CREATE_FAILED),
-            L"MediaInfo", MB_OK | MB_ICONERROR);
+            GetApplicationName(), MB_OK | MB_ICONERROR);
         return 1;
     }
     if (existing) {

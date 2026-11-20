@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.9
  */
 
 #pragma once
@@ -441,6 +441,12 @@ void ResetInformationWordBreak();
 
 /// Installs Unicode wrapping when system Uniscribe is available without requiring it on Windows NT 4.0.
 void InstallInformationWordBreak(HWND edit);
+
+/// Loads the executable version resource; the caller releases the buffer with HeapFree.
+BYTE* LoadApplicationVersionInfo();
+
+/// Returns the executable ProductName from the version resource, cached for the process lifetime.
+const wchar_t* GetApplicationName();
 
 /// Loads a saved interface choice or detects the Windows language with the legacy API path.
 void InitializeApplicationLanguage();

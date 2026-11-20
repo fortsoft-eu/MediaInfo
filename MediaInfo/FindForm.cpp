@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.9
  */
 
 #include "FindForm.h"
@@ -460,7 +460,7 @@ bool FindForm::FindRegex(const wchar_t* report) {
     if (!expression.Compile(query, matchCase)) {
         wchar_t message[512];
         wsprintfW(message, T(TXT_FIND_REGEX_ERROR), expression.GetError());
-        MessageBoxW(window ? window : ownerWindow, message, L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window ? window : ownerWindow, message, GetApplicationName(), MB_OK | MB_ICONERROR);
         return false;
     }
     int length = lstrlenW(report);
@@ -475,11 +475,11 @@ bool FindForm::FindRegex(const wchar_t* report) {
         if (result == RegexSearchResult::Error) {
             wchar_t message[512];
             wsprintfW(message, T(TXT_FIND_REGEX_ERROR), expression.GetError());
-            MessageBoxW(window ? window : ownerWindow, message, L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window ? window : ownerWindow, message, GetApplicationName(), MB_OK | MB_ICONERROR);
             return false;
         }
         if (!AddMatch(start, matched)) {
-            MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo",
+            MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), GetApplicationName(),
                 MB_OK | MB_ICONERROR);
             return false;
         }
@@ -553,7 +553,7 @@ void FindForm::FindNext(HWND owner, bool reverse) {
     }
     bool dialogSearch = window && GetActiveWindow() == window;
     if (dialogSearch && !ReadOptions()) {
-        MessageBoxW(window, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         return;
     }
     if (!query || !query[0]) {
@@ -566,13 +566,13 @@ void FindForm::FindNext(HWND owner, bool reverse) {
         SendMessageW(input, EM_SETSEL, 0, -1);
     }
     if (dialogSearch && !RememberSearch()) {
-        MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo",
+        MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), GetApplicationName(),
             MB_OK | MB_ICONERROR);
         return;
     }
     wchar_t* report = CopyControlText(target);
     if (!report) {
-        MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo",
+        MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), GetApplicationName(),
             MB_OK | MB_ICONERROR);
         return;
     }
@@ -581,11 +581,11 @@ void FindForm::FindNext(HWND owner, bool reverse) {
     HeapFree(GetProcessHeap(), 0, report);
     if (!success) {
         if (!regularExpression) {
-            MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo",
+            MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_FAILED), GetApplicationName(),
                 MB_OK | MB_ICONERROR);
         }
     } else if (!matchCount) {
-        MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_NOT_FOUND), L"MediaInfo",
+        MessageBoxW(window ? window : ownerWindow, T(TXT_FIND_NOT_FOUND), GetApplicationName(),
             MB_OK | MB_ICONINFORMATION);
     } else {
         SelectMatch(reverse);
@@ -630,8 +630,8 @@ void FindForm::RefreshLanguage() {
     if (!window) {
         return;
     }
-    wchar_t title[256];
-    wsprintfW(title, T(TXT_FIND_TITLE), L"MediaInfo");
+    wchar_t title[512];
+    wsprintfW(title, T(TXT_FIND_TITLE), GetApplicationName());
     SetWindowTextW(window, title);
     SetDlgItemTextW(window, IDC_FIND_LABEL, T(TXT_FIND_WHAT));
     SetDlgItemTextW(window, IDOK, T(TXT_FIND_NEXT));
@@ -670,20 +670,20 @@ void FindForm::Show(HWND owner) {
         HINSTANCE instance = GetModuleHandleW(nullptr);
         DLGTEMPLATE* definition = LoadSystemDialogTemplate(instance, IDD_FIND, owner);
         if (!definition) {
-            MessageBoxW(owner, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(owner, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
             return;
         }
         HWND created = CreateDialogIndirectParamW(instance, definition, nullptr, DialogProc,
             reinterpret_cast<LPARAM>(this));
         HeapFree(GetProcessHeap(), 0, definition);
         if (!created || !window) {
-            MessageBoxW(owner, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(owner, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
             return;
         }
         if (!SendMessageW(ownerWindow, findVisibilityChangedMessage, 0, 0)) {
             Close();
             SendMessageW(ownerWindow, findVisibilityChangedMessage, 0, 0);
-            MessageBoxW(owner, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(owner, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
             return;
         }
         placement.Show();
@@ -706,7 +706,7 @@ void FindForm::Close() {
 INT_PTR FindForm::HandleClose() {
     Close();
     if (!SendMessageW(ownerWindow, findVisibilityChangedMessage, 0, 0)) {
-        MessageBoxW(ownerWindow, T(TXT_FIND_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(ownerWindow, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
     }
     return TRUE;
 }

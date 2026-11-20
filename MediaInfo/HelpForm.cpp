@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.1.9
  */
 
 #include "HelpForm.h"
@@ -94,7 +94,9 @@ void HelpForm::RefreshLanguage() {
     if (!window) {
         return;
     }
-    SetWindowTextW(window, T(TXT_HELP_TITLE));
+    wchar_t title[512];
+    wsprintfW(title, T(TXT_HELP_TITLE), GetApplicationName());
+    SetWindowTextW(window, title);
     SetDlgItemTextW(window, IDOK, T(TXT_CLOSE));
     SetDlgItemTextW(window, IDC_INFO_TEXT, LocalizedHelpText());
     Layout();

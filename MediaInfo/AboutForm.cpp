@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.1.9
  */
 
 #include "AboutForm.h"
@@ -106,45 +106,26 @@ static LRESULT CALLBACK AboutLicenseSubclassProc(HWND window, UINT message, WPAR
     return CallWindowProcW(original, window, message, wParam, lParam);
 }
 
-/// Loads the executable version resource for product-name and version queries; the caller frees the buffer.
-static BYTE* LoadApplicationVersionInfo() {
-    wchar_t path[MAX_PATH] = {};
-    DWORD length = GetModuleFileNameW(nullptr, path, ARRAYSIZE(path));
-    if (!length || length >= ARRAYSIZE(path)) {
-        return nullptr;
-    }
-    DWORD ignored = 0;
-    DWORD size = GetFileVersionInfoSizeW(path, &ignored);
-    if (!size) {
-        return nullptr;
-    }
-    BYTE* data = static_cast<BYTE*>(HeapAlloc(GetProcessHeap(), 0, size));
-    if (data && !GetFileVersionInfoW(path, 0, size, data)) {
-        HeapFree(GetProcessHeap(), 0, data);
-        return nullptr;
-    }
-    return data;
-}
-
-/// Returns a borrowed product name from the declared version-resource translation tables, or ? if
-/// unavailable.
-static const wchar_t* GetApplicationName(const BYTE* data) {
+/// Returns a borrowed string from the declared version-resource translation tables, or ? if unavailable.
+static const wchar_t* GetApplicationString(const BYTE* data, const wchar_t* entry) {
     WORD* translations = nullptr;
     UINT translationBytes = 0;
-    if (!data || !VerQueryValueW(data, L"\\VarFileInfo\\Translation",
-            reinterpret_cast<void**>(&translations), &translationBytes) || !translations) {
+    if (!data) {
+        return L"?";
+    }
+    BOOL result = VerQueryValueW(data, L"\\VarFileInfo\\Translation",
+        reinterpret_cast<void**>(&translations), &translationBytes);
+    if (!result || !translations) {
         return L"?";
     }
     for (UINT index = 0; index + 1 < translationBytes / sizeof(WORD); index += 2) {
         wchar_t query[64];
-        wsprintfW(query, L"\\StringFileInfo\\%04X%04X\\ProductName", translations[index],
-            translations[index + 1]);
+        wsprintfW(query, L"\\StringFileInfo\\%04X%04X\\%s", translations[index],
+            translations[index + 1], entry);
         wchar_t* name = nullptr;
         UINT length = 0;
-        if (VerQueryValueW(data, query, reinterpret_cast<void**>(&name), &length)
-                && name
-                && length > 1
-                && name[0]) {
+        result = VerQueryValueW(data, query, reinterpret_cast<void**>(&name), &length);
+        if (result && name && length > 1 && name[0]) {
             return name;
         }
     }
@@ -156,39 +137,39 @@ static void GetApplicationVersion(const BYTE* data, wchar_t* version) {
     lstrcpyW(version, L"?");
     VS_FIXEDFILEINFO* information = nullptr;
     UINT informationSize = 0;
-    if (data
-            && VerQueryValueW(data, L"\\", reinterpret_cast<void**>(&information), &informationSize)
-            && information
-            && informationSize >= sizeof(VS_FIXEDFILEINFO)
-            && information->dwSignature == VS_FFI_SIGNATURE) {
-        wsprintfW(version, L"%u.%u.%u.%u",
-            HIWORD(information->dwProductVersionMS),
-            LOWORD(information->dwProductVersionMS),
-            HIWORD(information->dwProductVersionLS),
-            LOWORD(information->dwProductVersionLS));
+    if (!data) {
+        return;
+    }
+    BOOL result = VerQueryValueW(data, L"\\", reinterpret_cast<void**>(&information), &informationSize);
+    if (result && information && informationSize >= sizeof(VS_FIXEDFILEINFO)) {
+        if (information->dwSignature == VS_FFI_SIGNATURE) {
+            wsprintfW(version, L"%u.%u.%u.%u",
+                HIWORD(information->dwProductVersionMS),
+                LOWORD(information->dwProductVersionMS),
+                HIWORD(information->dwProductVersionLS),
+                LOWORD(information->dwProductVersionLS));
+        }
     }
 }
 
 /// Inserts the executable product name into the localized About title, preserving its language-specific
 /// order.
 static void BuildAboutTitle(wchar_t* title) {
-    BYTE* data = LoadApplicationVersionInfo();
-    wsprintfW(title, T(TXT_ABOUT_TITLE), GetApplicationName(data));
-    if (data) {
-        HeapFree(GetProcessHeap(), 0, data);
-    }
+    wsprintfW(title, T(TXT_ABOUT_TITLE), GetApplicationName());
 }
 
-/// Builds the localized product header with the executable product name, version and bundled-library
-/// versions.
+/// Builds the localized product header from executable metadata and bundled-library versions.
 static void BuildAboutProductText(wchar_t* product) {
     BYTE* data = LoadApplicationVersionInfo();
     wchar_t version[48];
     GetApplicationVersion(data, version);
-    wsprintfW(product, L"%s\r\n%s\r\n\r\n%s %s\r\nCopyright © Petr Červinka — FortSoft 2026\r\n%s Win32"
-        L" (x86)\r\n%s %s, %s, %s\r\n%s %s", GetApplicationName(data), T(TXT_APPLICATION_DESCRIPTION),
-        T(TXT_VERSION), version, T(TXT_PLATFORM), T(TXT_EMBEDDED_MEDIALIB), bundledMediaInfoVersions[0],
-        bundledMediaInfoVersions[1], bundledMediaInfoVersions[2], T(TXT_EMBEDDED_CURL), bundledCurlVersions);
+    const wchar_t* name = GetApplicationName();
+    const wchar_t* description = TranslateText(GetApplicationString(data, L"FileDescription"));
+    const wchar_t* copyright = GetApplicationString(data, L"LegalCopyright");
+    wsprintfW(product, L"%s\r\n%s\r\n\r\n%s %s\r\n%s\r\n%s Win32 (x86)\r\n%s %s, %s, %s\r\n%s %s", name,
+        description, T(TXT_VERSION), version, copyright, T(TXT_PLATFORM), T(TXT_EMBEDDED_MEDIALIB),
+        bundledMediaInfoVersions[0], bundledMediaInfoVersions[1], bundledMediaInfoVersions[2],
+        T(TXT_EMBEDDED_CURL), bundledCurlVersions);
     if (data) {
         HeapFree(GetProcessHeap(), 0, data);
     }
@@ -196,15 +177,11 @@ static void BuildAboutProductText(wchar_t* product) {
 
 /// Builds the product website URL in a MAX_PATH buffer using the lowercase executable product name.
 static void BuildAboutWebsiteUrl(wchar_t* website) {
-    BYTE* data = LoadApplicationVersionInfo();
     UINT rootLength = ARRAYSIZE(websiteRoot) - 1;
     lstrcpyW(website, websiteRoot);
-    lstrcpynW(website + rootLength, GetApplicationName(data), MAX_PATH - rootLength - 1);
+    lstrcpynW(website + rootLength, GetApplicationName(), MAX_PATH - rootLength - 1);
     CharLowerBuffW(website + rootLength, lstrlenW(website + rootLength));
     lstrcatW(website, L"/");
-    if (data) {
-        HeapFree(GetProcessHeap(), 0, data);
-    }
 }
 
 /// Loads the license body without its optional title, BOM or outer whitespace and uses native edit line
@@ -802,7 +779,7 @@ void AboutForm::DetachControls() {
 void AboutForm::OpenWebsite() {
     HINSTANCE result = ShellExecuteW(window, L"open", websiteUrl, nullptr, nullptr, SW_SHOWNORMAL);
     if (reinterpret_cast<INT_PTR>(result) <= 32) {
-        MessageBoxW(window, T(TXT_WEBSITE_OPEN_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+        MessageBoxW(window, T(TXT_WEBSITE_OPEN_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
     }
 }
 
@@ -820,7 +797,7 @@ void AboutForm::CopyInformation() {
         lstrcatW(text, label);
         lstrcatW(text, websiteUrl);
         if (!CopyTextToClipboard(window, text)) {
-            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, T(TXT_COPY_INFORMATION_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         }
         HeapFree(GetProcessHeap(), 0, text);
     }
@@ -853,7 +830,7 @@ void AboutForm::ShowContextMenu(HWND source, LPARAM location) {
         OpenWebsite();
     } else if (command == copyUrlCommand) {
         if (!CopyTextToClipboard(window, websiteUrl)) {
-            MessageBoxW(window, T(TXT_COPY_URL_FAILED), L"MediaInfo", MB_OK | MB_ICONERROR);
+            MessageBoxW(window, T(TXT_COPY_URL_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         }
     } else if (command == copyInformationCommand) {
         CopyInformation();
