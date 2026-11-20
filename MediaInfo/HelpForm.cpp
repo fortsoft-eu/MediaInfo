@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.9
+ * Last modified for version 1.2.2.0
  */
 
 #include "HelpForm.h"
@@ -152,6 +152,11 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
         return FALSE;
     }
     switch (message) {
+        case WM_CTLCOLORDLG:
+            if (!AreVisualStylesActive()) {
+                return reinterpret_cast<INT_PTR>(GetSysColorBrush(COLOR_BTNFACE));
+            }
+            break;
         case WM_COMMAND:
             if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) {
                 owner->Close();

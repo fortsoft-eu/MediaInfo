@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.9
+ * Last modified for version 1.2.2.0
  */
 
 #include "FindForm.h"
@@ -786,6 +786,11 @@ INT_PTR CALLBACK FindForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
         return FALSE;
     }
     switch (message) {
+        case WM_CTLCOLORDLG:
+            if (!AreVisualStylesActive()) {
+                return reinterpret_cast<INT_PTR>(GetSysColorBrush(COLOR_BTNFACE));
+            }
+            break;
         case WM_COMMAND:
             return owner->HandleCommand(wParam);
         case WM_HELP:

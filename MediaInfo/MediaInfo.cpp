@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.9
+ * Last modified for version 1.2.2.0
  */
 
 #include "MediaInfo.h"
@@ -376,6 +376,7 @@ int ApplicationLanguageFromLangId(LANGID language) {
 
 /// Loads a saved interface choice or detects the Windows language with the legacy API path.
 void InitializeApplicationLanguage() {
+    InitializeLocalizedText();
     int language = LoadApplicationLanguageSetting();
     if (language < 0 || language >= applicationLanguageCount) {
         HMODULE kernel = GetModuleHandleW(L"kernel32.dll");
@@ -1182,7 +1183,12 @@ void FormatMiddleCaption(const wchar_t* name, UINT limit, bool keepExtension, wc
     }
     UINT suffix = static_cast<UINT>(name + length - extension);
     UINT stem = static_cast<UINT>(extension - name);
+    const wchar_t* ellipsis = UiEllipsis();
+    UINT ellipsisLength = static_cast<UINT>(lstrlenW(ellipsis));
     UINT kept = limit > suffix + 3 ? limit - suffix - 1 : 2;
+    if (kept >= ellipsisLength) {
+        kept -= ellipsisLength - 1;
+    }
     if (kept >= stem) {
         lstrcpynW(caption, name, capacity);
         return;
@@ -1207,8 +1213,8 @@ void FormatMiddleCaption(const wchar_t* name, UINT limit, bool keepExtension, wc
     for (UINT index = 0; index < left && used + 1 < capacity; ++index) {
         caption[used++] = name[index];
     }
-    if (used + 1 < capacity) {
-        caption[used++] = L'\u2026';
+    for (const wchar_t* cursor = ellipsis; *cursor && used + 1 < capacity; ++cursor) {
+        caption[used++] = *cursor;
     }
     for (const wchar_t* cursor = extension - right; *cursor && used + 1 < capacity; ++cursor) {
         caption[used++] = *cursor;
@@ -1269,7 +1275,13 @@ static void BuildPathCaption(const wchar_t* path, UINT prefix, bool omitted, con
         const wchar_t* name, wchar_t* caption, DWORD capacity) {
     lstrcpynW(caption, path, prefix + 1 < capacity ? prefix + 1 : capacity);
     DWORD used = static_cast<DWORD>(lstrlenW(caption));
-    const wchar_t* parts[] = { omitted ? L"\u2026\\" : L"", parent, parent[0] ? L"\\" : L"", name };
+    const wchar_t* parts[] = {
+        omitted ? UiEllipsis() : L"",
+        omitted ? L"\\" : L"",
+        parent,
+        parent[0] ? L"\\" : L"",
+        name
+    };
     for (UINT index = 0; index < ARRAYSIZE(parts); ++index) {
         lstrcpynW(caption + used, parts[index], capacity - used);
         used += static_cast<DWORD>(lstrlenW(caption + used));
@@ -2903,9 +2915,9 @@ static void UpdateFontButtons(PreferencesData& data) {
     } else {
         style = T(TXT_FONT_REGULAR);
     }
-    wchar_t text[LF_FACESIZE + 48];
-    wchar_t caption[2 * (LF_FACESIZE + 48)];
-    wsprintfW(text, L"%s, %d, %s\u2026", description.lfFaceName, points, style);
+    wchar_t text[LF_FACESIZE + 50];
+    wchar_t caption[2 * (LF_FACESIZE + 50)];
+    wsprintfW(text, L"%s, %d, %s%s", description.lfFaceName, points, style, UiEllipsis());
     int output = 0;
     for (int index = 0; text[index]; ++index) {
         caption[output++] = text[index];

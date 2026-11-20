@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.9
+ * Last modified for version 1.2.2.0
  */
 
 #include "Localization.h"
@@ -12983,9 +12983,64 @@ static const LocalizedLanguage localizedLanguages[] = {
 static_assert(sizeof(localizedLanguages) / sizeof(localizedLanguages[0]) == LANG_COUNT,
     "Every application language must define its translations.");
 
-/// Returns the immutable translation for a supported language and named text key.
+/// Retains converted interface strings for the process lifetime without changing translation data.
+static wchar_t* displayedTexts[LANG_COUNT][TXT_COUNT];
+static bool legacyUiEllipsis;
+
+/// Prepares interface text for Windows before 5.0 before any application worker threads are started.
+void InitializeLocalizedText() {
+    OSVERSIONINFOW version = OSVERSIONINFOW{};
+    version.dwOSVersionInfoSize = sizeof(version);
+#pragma warning(suppress: 4996)
+    BOOL versionRead = GetVersionExW(&version);
+    legacyUiEllipsis = versionRead && version.dwMajorVersion < 5;
+    if (!legacyUiEllipsis) {
+        return;
+    }
+    HANDLE heap = GetProcessHeap();
+    for (int language = 0; language < LANG_COUNT; ++language) {
+        for (int index = 0; index < TXT_COUNT; ++index) {
+            const wchar_t* text = localizedLanguages[language].texts[index].text;
+            SIZE_T length = static_cast<SIZE_T>(lstrlenW(text));
+            SIZE_T expanded = length;
+            for (SIZE_T position = 0; position < length; ++position) {
+                if (text[position] == L'\x2026') {
+                    expanded += 2;
+                }
+            }
+            if (expanded == length) {
+                continue;
+            }
+            wchar_t* displayed = static_cast<wchar_t*>(HeapAlloc(heap, 0,
+                (expanded + 1) * sizeof(wchar_t)));
+            if (!displayed) {
+                continue;
+            }
+            SIZE_T used = 0;
+            for (SIZE_T position = 0; position < length; ++position) {
+                if (text[position] == L'\x2026') {
+                    displayed[used++] = L'.';
+                    displayed[used++] = L'.';
+                    displayed[used++] = L'.';
+                } else {
+                    displayed[used++] = text[position];
+                }
+            }
+            displayed[used] = 0;
+            displayedTexts[language][index] = displayed;
+        }
+    }
+}
+
+/// Returns the shared ellipsis used by application-generated control captions on the current system.
+const wchar_t* UiEllipsis() {
+    return legacyUiEllipsis ? L"..." : L"\u2026";
+}
+
+/// Returns system-compatible interface text for a supported language and text key.
 const wchar_t* GetLocalizedText(AppLanguage language, TextId id) {
-    return localizedLanguages[language].texts[id].text;
+    const wchar_t* displayed = displayedTexts[language][id];
+    return displayed ? displayed : localizedLanguages[language].texts[id].text;
 }
 
 /// Resolves source text through the application's existing interface translations.
