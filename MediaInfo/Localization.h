@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.1
  */
 
 #pragma once
@@ -53,8 +53,8 @@ const wchar_t* TranslateText(const wchar_t* text);
 /// Prepares interface text for the running Windows version without changing translations.
 void InitializeLocalizedText();
 
-/// Returns the shared ellipsis for application-generated control captions.
-const wchar_t* UiEllipsis();
+/// Replaces UI punctuation before Windows 5.0; returns false if unchanged or unable to fit.
+bool ReplaceUiPunctuation(wchar_t* text, SIZE_T capacity);
 
 /// Returns system-compatible interface text for a supported language and text key.
 const wchar_t* GetLocalizedText(AppLanguage language, TextId id);

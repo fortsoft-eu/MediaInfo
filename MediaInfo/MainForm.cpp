@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.1
  */
 
 #include "Localization.h"
@@ -1190,7 +1190,7 @@ void MainForm::UpdateWindowTitle() {
         SetWindowTextW(window, GetApplicationName());
         return;
     }
-    wchar_t caption[2 * MAX_PATH + 4];
+    wchar_t caption[3 * (2 * MAX_PATH + 4)];
     if (file->command == LibraryCommand::Read) {
         FormatFileNameCaption(file->path, titleNameLength, caption, MAX_PATH);
     } else {
@@ -1198,6 +1198,7 @@ void MainForm::UpdateWindowTitle() {
     }
     lstrcatW(caption, L" \u2014 ");
     lstrcatW(caption, GetApplicationName());
+    ReplaceUiPunctuation(caption, ARRAYSIZE(caption));
     SetWindowTextW(window, caption);
 }
 
@@ -2186,6 +2187,9 @@ bool MainForm::Translate(MSG* message) {
     }
     if (message->hwnd != window && !IsChild(window, message->hwnd)) {
         return false;
+    }
+    if (message->message == WM_KEYDOWN && message->wParam == VK_ESCAPE) {
+        return true;
     }
     return TranslateAcceleratorW(window, accelerators, message)
         || IsDialogMessageW(window, message);

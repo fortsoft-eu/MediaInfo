@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.1
  */
 
 #include "Localization.h"
@@ -12985,7 +12985,43 @@ static_assert(sizeof(localizedLanguages) / sizeof(localizedLanguages[0]) == LANG
 
 /// Retains converted interface strings for the process lifetime without changing translation data.
 static wchar_t* displayedTexts[LANG_COUNT][TXT_COUNT];
-static bool legacyUiEllipsis;
+static bool legacyUiText;
+
+/// Replaces UI punctuation in place before Windows 5.0 when the complete result fits the buffer.
+bool ReplaceUiPunctuation(wchar_t* text, SIZE_T capacity) {
+    if (!legacyUiText || !capacity) {
+        return false;
+    }
+    SIZE_T length = static_cast<SIZE_T>(lstrlenW(text));
+    SIZE_T expanded = length;
+    bool replace = false;
+    for (SIZE_T position = 0; position < length; ++position) {
+        wchar_t character = text[position];
+        if (character == L'\x2026') {
+            expanded += 2;
+            replace = true;
+        } else if (character == L'\x2014' || character == L'\x2013') {
+            replace = true;
+        }
+    }
+    if (!replace || expanded >= capacity) {
+        return false;
+    }
+    text[expanded] = 0;
+    while (length) {
+        wchar_t character = text[--length];
+        if (character == L'\x2026') {
+            text[--expanded] = L'.';
+            text[--expanded] = L'.';
+            text[--expanded] = L'.';
+        } else if (character == L'\x2014' || character == L'\x2013') {
+            text[--expanded] = L'-';
+        } else {
+            text[--expanded] = character;
+        }
+    }
+    return true;
+}
 
 /// Prepares interface text for Windows before 5.0 before any application worker threads are started.
 void InitializeLocalizedText() {
@@ -12993,48 +13029,40 @@ void InitializeLocalizedText() {
     version.dwOSVersionInfoSize = sizeof(version);
 #pragma warning(suppress: 4996)
     BOOL versionRead = GetVersionExW(&version);
-    legacyUiEllipsis = versionRead && version.dwMajorVersion < 5;
-    if (!legacyUiEllipsis) {
+    legacyUiText = versionRead && version.dwMajorVersion < 5;
+    if (!legacyUiText) {
         return;
     }
-    HANDLE heap = GetProcessHeap();
+    SIZE_T capacity = 1;
     for (int language = 0; language < LANG_COUNT; ++language) {
         for (int index = 0; index < TXT_COUNT; ++index) {
             const wchar_t* text = localizedLanguages[language].texts[index].text;
-            SIZE_T length = static_cast<SIZE_T>(lstrlenW(text));
-            SIZE_T expanded = length;
-            for (SIZE_T position = 0; position < length; ++position) {
-                if (text[position] == L'\x2026') {
-                    expanded += 2;
-                }
+            SIZE_T required = 3 * static_cast<SIZE_T>(lstrlenW(text)) + 1;
+            if (required > capacity) {
+                capacity = required;
             }
-            if (expanded == length) {
-                continue;
-            }
-            wchar_t* displayed = static_cast<wchar_t*>(HeapAlloc(heap, 0,
-                (expanded + 1) * sizeof(wchar_t)));
-            if (!displayed) {
-                continue;
-            }
-            SIZE_T used = 0;
-            for (SIZE_T position = 0; position < length; ++position) {
-                if (text[position] == L'\x2026') {
-                    displayed[used++] = L'.';
-                    displayed[used++] = L'.';
-                    displayed[used++] = L'.';
-                } else {
-                    displayed[used++] = text[position];
-                }
-            }
-            displayed[used] = 0;
-            displayedTexts[language][index] = displayed;
         }
     }
-}
-
-/// Returns the shared ellipsis used by application-generated control captions on the current system.
-const wchar_t* UiEllipsis() {
-    return legacyUiEllipsis ? L"..." : L"\u2026";
+    HANDLE heap = GetProcessHeap();
+    wchar_t* buffer = static_cast<wchar_t*>(HeapAlloc(heap, 0, capacity * sizeof(wchar_t)));
+    if (!buffer) {
+        return;
+    }
+    for (int language = 0; language < LANG_COUNT; ++language) {
+        for (int index = 0; index < TXT_COUNT; ++index) {
+            lstrcpyW(buffer, localizedLanguages[language].texts[index].text);
+            if (!ReplaceUiPunctuation(buffer, capacity)) {
+                continue;
+            }
+            SIZE_T bytes = (static_cast<SIZE_T>(lstrlenW(buffer)) + 1) * sizeof(wchar_t);
+            wchar_t* displayed = static_cast<wchar_t*>(HeapAlloc(heap, 0, bytes));
+            if (displayed) {
+                CopyMemory(displayed, buffer, bytes);
+                displayedTexts[language][index] = displayed;
+            }
+        }
+    }
+    HeapFree(heap, 0, buffer);
 }
 
 /// Returns system-compatible interface text for a supported language and text key.

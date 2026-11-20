@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.1
  */
 
 #include "MediaInfo.h"
@@ -1183,7 +1183,8 @@ void FormatMiddleCaption(const wchar_t* name, UINT limit, bool keepExtension, wc
     }
     UINT suffix = static_cast<UINT>(name + length - extension);
     UINT stem = static_cast<UINT>(extension - name);
-    const wchar_t* ellipsis = UiEllipsis();
+    wchar_t ellipsis[4] = L"\u2026";
+    ReplaceUiPunctuation(ellipsis, ARRAYSIZE(ellipsis));
     UINT ellipsisLength = static_cast<UINT>(lstrlenW(ellipsis));
     UINT kept = limit > suffix + 3 ? limit - suffix - 1 : 2;
     if (kept >= ellipsisLength) {
@@ -1275,9 +1276,12 @@ static void BuildPathCaption(const wchar_t* path, UINT prefix, bool omitted, con
         const wchar_t* name, wchar_t* caption, DWORD capacity) {
     lstrcpynW(caption, path, prefix + 1 < capacity ? prefix + 1 : capacity);
     DWORD used = static_cast<DWORD>(lstrlenW(caption));
+    wchar_t omittedPart[5] = L"\u2026\\";
+    if (omitted) {
+        ReplaceUiPunctuation(omittedPart, ARRAYSIZE(omittedPart));
+    }
     const wchar_t* parts[] = {
-        omitted ? UiEllipsis() : L"",
-        omitted ? L"\\" : L"",
+        omitted ? omittedPart : L"",
         parent,
         parent[0] ? L"\\" : L"",
         name
@@ -2915,9 +2919,10 @@ static void UpdateFontButtons(PreferencesData& data) {
     } else {
         style = T(TXT_FONT_REGULAR);
     }
-    wchar_t text[LF_FACESIZE + 50];
-    wchar_t caption[2 * (LF_FACESIZE + 50)];
-    wsprintfW(text, L"%s, %d, %s%s", description.lfFaceName, points, style, UiEllipsis());
+    wchar_t text[3 * (LF_FACESIZE + 50)];
+    wchar_t caption[2 * ARRAYSIZE(text)];
+    wsprintfW(text, L"%s, %d, %s\u2026", description.lfFaceName, points, style);
+    ReplaceUiPunctuation(text, ARRAYSIZE(text));
     int output = 0;
     for (int index = 0; text[index]; ++index) {
         caption[output++] = text[index];
