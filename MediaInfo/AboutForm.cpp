@@ -50,7 +50,7 @@ static const wchar_t websiteRoot[] = L"https://fortsoft.eu/";
 static const UINT openWebsiteCommand = 1;
 static const UINT copyUrlCommand = 2;
 static const UINT copyInformationCommand = 3;
-static const int aboutControls[] = { IDC_INFO_PRODUCT, IDC_INFO_WEBSITE, IDC_INFO_LINK, IDC_INFO_ICON };
+static const int aboutControls[] = { IDC_INFO_PRODUCT, IDC_INFO_WEBSITE, IDC_INFO_LINK };
 
 /// Optional title removed before the embedded license body is displayed.
 static const wchar_t licenseHeading[] = L"MIT License";
@@ -811,9 +811,9 @@ bool AboutForm::AttachControls() {
     if (!hand) {
         hand = LoadCursorW(nullptr, IDC_ARROW);
     }
-    for (int index = 0; index < 4; ++index) {
-        HWND control = GetDlgItem(window, aboutControls[index]);
-        if (aboutControls[index] != IDC_INFO_LINK || !nativeLink) {
+    for (int id : aboutControls) {
+        HWND control = GetDlgItem(window, id);
+        if (id != IDC_INFO_LINK || !nativeLink) {
             SetWindowLongW(control, GWL_STYLE, GetWindowLongW(control, GWL_STYLE) | SS_NOTIFY);
         }
         WNDPROC original = reinterpret_cast<WNDPROC>(GetWindowLongPtrW(control, GWLP_WNDPROC));
@@ -878,8 +878,8 @@ void AboutForm::DetachControls() {
     }
     tooltip = nullptr;
     if (window && IsWindow(window)) {
-        for (int index = 0; index < 4; ++index) {
-            HWND control = GetDlgItem(window, aboutControls[index]);
+        for (int id : aboutControls) {
+            HWND control = GetDlgItem(window, id);
             if (GetPropW(control, ownerProperty) == this) {
                 WNDPROC original = reinterpret_cast<WNDPROC>(GetPropW(control, originalProperty));
                 if (original) {
