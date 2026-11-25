@@ -54,8 +54,8 @@
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <StackReserveSize>1048576</StackReserveSize>
-      <StackCommitSize>1048576</StackCommitSize>
+      <StackReserveSize>524288</StackReserveSize>
+      <StackCommitSize>524288</StackCommitSize>
       <MinimumRequiredVersion>5.01</MinimumRequiredVersion>
       <EntryPointSymbol>Start</EntryPointSymbol>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>

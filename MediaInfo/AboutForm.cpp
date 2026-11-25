@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.2.4
  */
 
 #include "AboutForm.h"
@@ -277,25 +277,29 @@ static wchar_t* LicenseText() {
     return text;
 }
 
-/// Initializes an unopened modal About form and its owned resources.
+/// Initializes an unopened About form and its owned resources.
 AboutForm::AboutForm()
         : window(nullptr),
         tooltip(nullptr),
+        ownerWindow(nullptr),
         uiFont(nullptr),
         textFont(nullptr),
         linkFont(nullptr),
         hand(nullptr),
         legacyCursorModule(nullptr),
+        initialPosition(DialogPosition::Template),
         licenseSize(SIZE{}),
         licenseDpi(96),
         ownsUiFont(false),
         nativeLink(false),
-        initialized(false) {
+        initialized(false),
+        modal(false) {
     websiteUrl[0] = 0;
     placement.SetDisableSaveSize(true);
     placement.SetDisableSaveWindowState(true);
     placement.SetSavingOptions(PersistWindowStateSavingOptions::None);
     placement.SetDetectionOptions(WindowDetectionOptions::NoDetection);
+    placement.SetUseWindowsDefaultLocation(false);
     placement.SetUseWindowsDefaultSize(false);
 }
 
@@ -415,7 +419,7 @@ void AboutForm::FitToWorkArea() const {
     }
 }
 
-/// right.
+/// Builds the natural About layout, fits it to the work area and anchors controls on resize.
 void AboutForm::Layout(bool resize) const {
     if (!initialized || IsIconic(window)) {
         return;
@@ -514,8 +518,40 @@ void AboutForm::RefreshLanguage() {
     Layout();
 }
 
+/// Applies the requested initial placement while leaving a retained position to PersistWindowState.
+bool AboutForm::ApplyInitialPosition() {
+    if (initialPosition != DialogPosition::CenterParent
+            && initialPosition != DialogPosition::CenterScreen) {
+        return true;
+    }
+    const PersistWindowStateData& saved = placement.GetState();
+    if (saved.x != CW_USEDEFAULT && saved.y != CW_USEDEFAULT) {
+        return true;
+    }
+    RECT bounds = RECT{};
+    if (!GetWindowRect(window, &bounds)) {
+        return false;
+    }
+    RECT reference = bounds;
+    if (ownerWindow && !GetWindowRect(ownerWindow, &reference)) {
+        return false;
+    }
+    if (initialPosition == DialogPosition::CenterScreen || !ownerWindow) {
+        reference = WindowWorkArea(reference);
+    }
+    int x = reference.left + (reference.right - reference.left - bounds.right + bounds.left) / 2;
+    int y = reference.top + (reference.bottom - reference.top - bounds.bottom + bounds.top) / 2;
+    return SetWindowPos(window, nullptr, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE) != FALSE;
+}
+
 /// Loads the license, installs native controls and restores the position retained in memory.
 bool AboutForm::Initialize() {
+    if (modal) {
+        LONG_PTR extended = GetWindowLongPtrW(window, GWL_EXSTYLE);
+        SetWindowLongPtrW(window, GWL_EXSTYLE, extended & ~WS_EX_APPWINDOW | WS_EX_DLGMODALFRAME);
+        SetWindowPos(window, nullptr, 0, 0, 0, 0,
+            SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+    }
     BuildAboutWebsiteUrl(websiteUrl);
     licenseDpi = WindowDpi(window);
     licenseSize = SIZE{
@@ -551,7 +587,15 @@ bool AboutForm::Initialize() {
         return false;
     }
     Layout();
-    return placement.Attach(window, "AboutWindow");
+    if (!ApplyInitialPosition() || !placement.Attach(window, "AboutWindow")) {
+        return false;
+    }
+    SetFocus(GetDlgItem(window, IDOK));
+    SendDlgItemMessageW(window, IDC_INFO_TEXT, EM_SETSEL, 0, 0);
+    if (!modal) {
+        placement.Show();
+    }
+    return true;
 }
 
 /// Applies the suggested DPI-change bounds, rebuilds fonts and updates the dialog layout.
@@ -587,8 +631,6 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
             owner->Close();
             return FALSE;
         }
-        SetFocus(GetDlgItem(window, IDOK));
-        SendDlgItemMessageW(window, IDC_INFO_TEXT, EM_SETSEL, 0, 0);
         return FALSE;
     }
     if (!owner) {
@@ -667,26 +709,49 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
     return FALSE;
 }
 
-/// Opens About modally and restores its position retained only within this application instance.
-void AboutForm::Show(HWND owner) {
-    if (window) {
+/// Creates or activates About, optionally using the native modal dialog loop.
+void AboutForm::Show(HWND owner, DialogPosition position, bool modalDialog) {
+    if (window != nullptr && IsWindow(window)) {
         placement.BringToFront();
         return;
     }
+    ownerWindow = owner;
+    initialPosition = position;
+    modal = modalDialog;
+    initialized = false;
+    placement.SetUseWindowsDefaultLocation(position == DialogPosition::WindowsDefault);
     HINSTANCE instance = GetModuleHandleW(nullptr);
     DLGTEMPLATE* definition = LoadSystemDialogTemplate(instance, IDD_ABOUT, owner);
-    if (!definition) {
+    if (definition == nullptr) {
         return;
     }
-    DialogBoxIndirectParamW(instance, definition, owner, DialogProc, reinterpret_cast<LPARAM>(this));
+    if (modal) {
+        DialogBoxIndirectParamW(instance, definition, ownerWindow, DialogProc,
+            reinterpret_cast<LPARAM>(this));
+    } else {
+        CreateDialogIndirectParamW(instance, definition, nullptr, DialogProc,
+            reinterpret_cast<LPARAM>(this));
+    }
     HeapFree(GetProcessHeap(), 0, definition);
 }
 
-/// Closes the active modal dialog.
-void AboutForm::Close() {
-    if (window) {
-        EndDialog(window, IDOK);
+/// Destroys the modeless form or ends its native modal dialog loop.
+void AboutForm::Close() const {
+    if (window != nullptr) {
+        if (modal) {
+            EndDialog(window, IDCANCEL);
+        } else {
+            DestroyWindow(window);
+        }
     }
+}
+
+/// Routes modeless keyboard input through the native dialog manager.
+bool AboutForm::Translate(MSG* message) {
+    return !modal
+        && window
+        && (message->hwnd == window || IsChild(window, message->hwnd))
+        && IsDialogMessageW(window, message);
 }
 
 /// Returns the dialog handle, or null when it is closed.

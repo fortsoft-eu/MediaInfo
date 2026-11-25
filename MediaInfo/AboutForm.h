@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.2.4
  */
 
 #pragma once
@@ -29,13 +29,22 @@
 #include <windows.h>
 #include "PersistWindowState.h"
 
-/// Hosts modal About and owns its license text, website link, tooltip and context commands.
+/// Initial placement used before restoring a position retained by the form.
+enum class DialogPosition {
+    Template,
+    CenterParent,
+    CenterScreen,
+    WindowsDefault
+};
+
+/// Hosts modal and modeless About with its license text, website link, tooltip and context commands.
 class AboutForm {
 
 private:
     /// Native dialog, website tooltip, fonts and system cursor resources.
     HWND window;
     HWND tooltip;
+    HWND ownerWindow;
     HFONT uiFont;
     HFONT textFont;
     HFONT linkFont;
@@ -44,6 +53,7 @@ private:
 
     /// Retains the dialog position only for this application instance.
     PersistWindowState placement;
+    DialogPosition initialPosition;
 
     /// Native layout measurements and link state.
     SIZE licenseSize;
@@ -51,6 +61,7 @@ private:
     bool ownsUiFont;
     bool nativeLink;
     bool initialized;
+    bool modal;
     wchar_t websiteUrl[MAX_PATH];
     wchar_t tooltipText[256];
     char ansiTooltipText[768];
@@ -69,6 +80,9 @@ private:
 
     /// Loads the license, installs native controls and restores the position retained in memory.
     bool Initialize();
+
+    /// Applies the requested initial placement while leaving a retained position to PersistWindowState.
+    bool ApplyInitialPosition();
 
     /// Replaces the static website control with a native SysLink when supported.
     void CreateNativeLink();
@@ -101,17 +115,20 @@ private:
     static LRESULT CALLBACK ControlProc(HWND control, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:
-    /// Initializes an unopened modal About form and its owned resources.
+    /// Initializes an unopened About form and its owned resources.
     AboutForm();
 
     /// Closes the dialog and releases its fonts, tooltip and control subclasses.
     ~AboutForm();
 
-    /// Opens About modally and restores its position retained only within this application instance.
-    void Show(HWND owner);
+    /// Creates or activates About, optionally using the native modal dialog loop.
+    void Show(HWND owner, DialogPosition position = DialogPosition::Template, bool modalDialog = false);
 
-    /// Closes the active modal dialog.
-    void Close();
+    /// Destroys the modeless form or ends its native modal dialog loop.
+    void Close() const;
+
+    /// Routes modeless keyboard input through the native dialog manager.
+    bool Translate(MSG* message);
 
     /// Refreshes the localized title, product header and website label.
     void RefreshLanguage();

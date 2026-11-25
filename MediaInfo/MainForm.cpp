@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.2.4
  */
 
 #include "Localization.h"
@@ -577,7 +577,7 @@ void MainForm::ShowAbout() {
         MessageBoxW(window, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
         return;
     }
-    aboutForm.Show(window);
+    aboutForm.Show(window, DialogPosition::Template, true);
     UnhookWindowsHookEx(modalFindHook);
     modalFindHook = nullptr;
     modalFindOwner = nullptr;
@@ -2204,7 +2204,9 @@ bool MainForm::Translate(MSG* message) {
         }
         return false;
     }
-    if (findForm.Translate(message) || helpForm.Translate(message)) {
+    if (findForm.Translate(message)
+            || helpForm.Translate(message)
+            || aboutForm.Translate(message)) {
         return true;
     }
     if (message->hwnd != window && !IsChild(window, message->hwnd)) {
