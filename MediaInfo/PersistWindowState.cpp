@@ -1119,7 +1119,7 @@ bool PersistWindowState::Attach(HWND target, const char* formIdentity) {
     bool visible = IsWindowVisible(window) != FALSE;
     bool initialMaximized = IsZoomed(window) != FALSE;
     bool initialMinimized = IsIconic(window) != FALSE;
-    bool initialTopMost = GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST;
+    bool initialTopMost = (GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
     restoredShowState = hasState;
     if (!hasState) {
         state.maximized = initialMaximized;
@@ -1430,7 +1430,7 @@ void PersistWindowState::Capture() {
         }
     }
     state.minimized = minimized;
-    state.topMost = GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST;
+    state.topMost = (GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
 }
 
 /// Fits normal bounds to actual monitor work areas after a display or system-setting change.

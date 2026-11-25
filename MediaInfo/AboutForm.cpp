@@ -699,10 +699,10 @@ void AboutForm::CreateNativeLink() {
     HMODULE commonControls = GetModuleHandleW(L"comctl32.dll");
     InitializeControlsFunction initialize;
     if (commonControls) {
-        InitializeControlsFunction initialize = reinterpret_cast<InitializeControlsFunction>(
-            GetProcAddress(commonControls, "InitCommonControlsEx"));
+        initialize = reinterpret_cast<InitializeControlsFunction>(GetProcAddress(commonControls,
+            "InitCommonControlsEx"));
     } else {
-        InitializeControlsFunction initialize = nullptr;
+        initialize = nullptr;
     }
     INITCOMMONCONTROLSEX controls = INITCOMMONCONTROLSEX{ sizeof(controls), ICC_LINK_CLASS };
     if (!initialize || !initialize(&controls)) {
