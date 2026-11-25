@@ -21,14 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.2
  */
 
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
 #include "FindForm.h"
 #include "MainForm.h"
 #include "RegexSearch.h"
-#include "SelectionEdit.h"
 #include "ComboBoxSupport.h"
+#include "SelectionEdit.h"
 #include "SystemDialogTemplate.h"
 #include "resource.h"
 
@@ -89,11 +91,30 @@ static bool FindLiteralAt(const wchar_t* report, const wchar_t* query, int start
 
 /// Initializes forward literal searching and an empty thirty-item session history.
 FindForm::FindForm()
-        : window(nullptr), ownerWindow(nullptr), target(nullptr), lastTarget(nullptr),
-        uiFont(nullptr), buttonSize(SIZE{}), templateDpi(96), minimumWidth(380), fixedHeight(0),
-        query(nullptr), history(), matches(nullptr), historyCount(0), matchCount(0), matchCapacity(0),
-        lastMatchStart(-1), lastMatchLength(0), ownsUiFont(false), matchCase(false), backward(false),
-        wholeWords(false), startsWith(false), endsWith(false), regularExpression(false) {}
+        : window(nullptr),
+        ownerWindow(nullptr),
+        target(nullptr),
+        lastTarget(nullptr),
+        uiFont(nullptr),
+        buttonSize(SIZE{}),
+        templateDpi(96),
+        minimumWidth(380),
+        fixedHeight(0),
+        query(nullptr),
+        history(),
+        matches(nullptr),
+        historyCount(0),
+        matchCount(0),
+        matchCapacity(0),
+        lastMatchStart(-1),
+        lastMatchLength(0),
+        ownsUiFont(false),
+        matchCase(false),
+        backward(false),
+        wholeWords(false),
+        startsWith(false),
+        endsWith(false),
+        regularExpression(false) {}
 
 /// Closes the form and releases its font, expression, history and match buffers.
 FindForm::~FindForm() {
@@ -255,7 +276,7 @@ void FindForm::Layout() {
 }
 
 /// Enables Find Next only when the selected edit contains text and a search expression is available.
-void FindForm::UpdateFindButton() {
+void FindForm::UpdateFindButton() const {
     if (!window) {
         return;
     }
@@ -270,7 +291,7 @@ void FindForm::UpdateFindButton() {
 }
 
 /// Disables whole-word and line-edge options while regular expressions are selected.
-void FindForm::UpdateRegexOptions() {
+void FindForm::UpdateRegexOptions() const {
     bool regex = IsDlgButtonChecked(window, IDC_FIND_REGEX) == BST_CHECKED;
     if (regex) {
         CheckDlgButton(window, IDC_FIND_WHOLE_WORDS, BST_UNCHECKED);
@@ -293,7 +314,7 @@ DWORD FindForm::Options() const {
 }
 
 /// Restores matching options when a search-history item is selected.
-void FindForm::ApplyOptions(DWORD options) {
+void FindForm::ApplyOptions(DWORD options) const {
     CheckDlgButton(window, IDC_FIND_MATCH_CASE, options & findMatchCase ? BST_CHECKED : BST_UNCHECKED);
     CheckDlgButton(window, IDC_FIND_BACKWARD, options & findBackward ? BST_CHECKED : BST_UNCHECKED);
     CheckDlgButton(window, IDC_FIND_STARTS_WITH, options & findStartsWith ? BST_CHECKED : BST_UNCHECKED);
@@ -328,7 +349,7 @@ bool FindForm::ReadOptions() {
 }
 
 /// Repopulates the editable combo without changing its current text or text selection.
-void FindForm::PopulateHistory() {
+void FindForm::PopulateHistory() const {
     HWND combo = GetDlgItem(window, IDC_FIND_TEXT);
     HWND input = ::GetWindow(combo, GW_CHILD);
     DWORD start = 0;
@@ -426,11 +447,12 @@ bool FindForm::FindLiteral(wchar_t* report) {
             if (prefix) {
                 success = AddMatch(first, length);
             }
-            if (success
-                    && endsWith
-                    && suffix >= first
-                    && (!prefix || suffix != first)
-                    && FindLiteralAt(report, needle, suffix, length, wholeWords)) {
+            bool suffixMatch = success
+                && endsWith
+                && suffix >= first
+                && (!prefix || suffix != first)
+                && FindLiteralAt(report, needle, suffix, length, wholeWords);
+            if (suffixMatch) {
                 success = AddMatch(suffix, length);
             }
             first = last;
@@ -696,14 +718,14 @@ void FindForm::Show(HWND owner) {
 }
 
 /// Closes the form while retaining expressions and options only in this running instance.
-void FindForm::Close() {
+void FindForm::Close() const {
     if (window) {
         DestroyWindow(window);
     }
 }
 
 /// Closes a user-dismissed form and restores ordinary report-selection visibility.
-INT_PTR FindForm::HandleClose() {
+INT_PTR FindForm::HandleClose() const {
     Close();
     if (!SendMessageW(ownerWindow, findVisibilityChangedMessage, 0, 0)) {
         MessageBoxW(ownerWindow, T(TXT_FIND_FAILED), GetApplicationName(), MB_OK | MB_ICONERROR);
@@ -712,7 +734,7 @@ INT_PTR FindForm::HandleClose() {
 }
 
 /// Restores history options during navigation and selects the text after the choice is committed.
-void FindForm::ChooseHistory(bool selectText) {
+void FindForm::ChooseHistory(bool selectText) const {
     HWND combo = GetDlgItem(window, IDC_FIND_TEXT);
     LRESULT index = SendMessageW(combo, CB_GETCURSEL, 0, 0);
     if (index >= 0
@@ -762,7 +784,7 @@ INT_PTR FindForm::HandleDpiChange(LPARAM lParam) {
 }
 
 /// Supplies the measured minimum width while PersistWindowState fixes the form's height.
-INT_PTR FindForm::HandleMinMax(LPARAM lParam) {
+INT_PTR FindForm::HandleMinMax(LPARAM lParam) const {
     MINMAXINFO* limits = reinterpret_cast<MINMAXINFO*>(lParam);
     limits->ptMinTrackSize.x = minimumWidth;
     limits->ptMinTrackSize.y = fixedHeight;
@@ -786,11 +808,6 @@ INT_PTR CALLBACK FindForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
         return FALSE;
     }
     switch (message) {
-        case WM_CTLCOLORDLG:
-            if (!AreVisualStylesActive()) {
-                return reinterpret_cast<INT_PTR>(GetSysColorBrush(COLOR_BTNFACE));
-            }
-            break;
         case WM_COMMAND:
             return owner->HandleCommand(wParam);
         case WM_HELP:
@@ -819,7 +836,7 @@ INT_PTR CALLBACK FindForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
 }
 
 /// Preserves the reference form's Insert overwrite mode through native edit selection.
-void FindForm::PrepareOverwrite(MSG* message) {
+void FindForm::PrepareOverwrite(MSG* message) const {
     HWND input = ::GetWindow(GetDlgItem(window, IDC_FIND_TEXT), GW_CHILD);
     if (message->message != WM_CHAR || message->hwnd != input || !(GetKeyState(VK_INSERT) & 1)) {
         return;

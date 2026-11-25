@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.1
+ * Last modified for version 1.2.2.2
  */
 
 #include "MediaInfo.h"
@@ -647,9 +647,11 @@ HFONT CreateReportFont(HWND window, const LOGFONTW* saved, UINT savedDpi) {
         lstrcpyW(font.lfFaceName, consolas ? L"Consolas" : L"Courier New");
     }
     BYTE quality = saved ? saved->lfQuality : 0;
-    font.lfQuality = quality == 5 || quality == ANTIALIASED_QUALITY || quality == NONANTIALIASED_QUALITY
-        ? quality
-        : DefaultReportFontQuality();
+    if (quality == 5 || quality == ANTIALIASED_QUALITY || quality == NONANTIALIASED_QUALITY) {
+        font.lfQuality = quality;
+    } else {
+        font.lfQuality = DefaultReportFontQuality();
+    }
     return CreateFontIndirectW(&font);
 }
 
@@ -729,6 +731,47 @@ SIZE DialogUnits(HFONT font, int x, int y) {
     ReleaseDC(nullptr, dc);
     int baseX = (extent.cx / 26 + 1) / 2;
     return SIZE{ MulDiv(x, baseX, 4), MulDiv(y, metrics.tmHeight, 8) };
+}
+
+/// Skips a native dialog-template string or ordinal resource identifier.
+static const WORD* SkipDialogTemplateString(const WORD* value) {
+    if (*value == 0xFFFF) {
+        return value + 2;
+    }
+    while (*value != 0) {
+        value++;
+    }
+    return value + 1;
+}
+
+/// Scales a control's authored dimensions from its extended dialog resource using the current font.
+SIZE DialogResourceControlSize(int resourceId, int id, HFONT font) {
+    HINSTANCE instance = GetModuleHandleW(nullptr);
+    HRSRC resource = FindResourceW(instance, MAKEINTRESOURCEW(resourceId), RT_DIALOG);
+    HGLOBAL loaded = resource == nullptr ? nullptr : LoadResource(instance, resource);
+    const WORD* definition = loaded == nullptr ? nullptr : static_cast<const WORD*>(LockResource(loaded));
+    if (definition == nullptr || SizeofResource(instance, resource) < 26 || definition[1] != 0xFFFF) {
+        return SIZE{};
+    }
+    WORD count = definition[8];
+    const WORD* item = SkipDialogTemplateString(definition + 13);
+    item = SkipDialogTemplateString(item);
+    item = SkipDialogTemplateString(item);
+    if ((definition[6] & DS_SETFONT) != 0) {
+        item = SkipDialogTemplateString(item + 3);
+    }
+    for (WORD index = 0; index < count; index++) {
+        item = reinterpret_cast<const WORD*>(reinterpret_cast<UINT_PTR>(item) + 3 & ~UINT_PTR{ 3 });
+        int controlId = item[10] | item[11] << 16;
+        if (controlId == id) {
+            return DialogUnits(font, static_cast<short>(item[8]), static_cast<short>(item[9]));
+        }
+        item = SkipDialogTemplateString(item + 12);
+        item = SkipDialogTemplateString(item);
+        WORD bytes = *item++;
+        item = reinterpret_cast<const WORD*>(reinterpret_cast<const BYTE*>(item) + bytes);
+    }
+    return SIZE{};
 }
 
 /// Expands a native button only as needed for its current localized text and native padding.
@@ -1589,19 +1632,6 @@ bool SaveReportText(const wchar_t* report, const wchar_t* path, DWORD type, wcha
     return success;
 }
 
-/// Releases a print snapshot and its selected printer device context.
-void FreePrintJob(PrintJob* job) {
-    if (job) {
-        if (job->printer) {
-            DeleteDC(job->printer);
-        }
-        if (job->report) {
-            HeapFree(GetProcessHeap(), 0, job->report);
-        }
-        HeapFree(GetProcessHeap(), 0, job);
-    }
-}
-
 /// Captures the information edit text and font for an independent print request.
 PrintJob* CapturePrintJob(HWND owner, HWND edit, const wchar_t* title, const RECT& margins) {
     PrintJob* job = static_cast<PrintJob*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(PrintJob)));
@@ -1630,7 +1660,8 @@ PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* title, Print
         lstrcpynW(error, T(TXT_PRINT_FAILED), errorCapacity);
         return nullptr;
     }
-    job->printer = settings.ChoosePrinter(owner, &job->printToFile, error, errorCapacity);
+    job->printer = settings.ChoosePrinter(owner, &job->printToFile, T(TXT_PRINT_FAILED),
+        error, errorCapacity);
     if (!job->printer) {
         FreePrintJob(job);
         return nullptr;
@@ -2131,9 +2162,10 @@ static bool PreferencesBusy(const PreferencesData& data) {
 
 /// Checks the live viewer or saved registry state for recent files that can be cleared.
 static bool PreferencesHasRecentFiles(const PreferencesData& data) {
-    return data.callbacks && data.callbacks->hasRecentFiles
-        ? data.callbacks->hasRecentFiles(data.callbacks->context)
-        : HasRecentFilesSetting();
+    if (data.callbacks && data.callbacks->hasRecentFiles) {
+        return data.callbacks->hasRecentFiles(data.callbacks->context);
+    }
+    return HasRecentFilesSetting();
 }
 
 /// Changes button availability only when needed and moves focus before disabling a focused button.
@@ -2869,9 +2901,12 @@ static void UpdateSmoothingChoices(PreferencesData& data) {
 
 /// Uses the template font initially or refreshes the system font, then recalculates Preferences geometry.
 static void SetPreferencesFont(PreferencesData& data, bool updateUi) {
-    HFONT font = updateUi
-        ? CreateUiFont(data.window)
-        : reinterpret_cast<HFONT>(SendMessageW(data.window, WM_GETFONT, 0, 0));
+    HFONT font;
+    if (updateUi) {
+        font = CreateUiFont(data.window);
+    } else {
+        font = reinterpret_cast<HFONT>(SendMessageW(data.window, WM_GETFONT, 0, 0));;
+    }
     if (!font) {
         return;
     }
@@ -3008,9 +3043,12 @@ static bool ApplyPreferences(PreferencesData& data) {
         if (data.callbacks && data.callbacks->loading) {
             data.callbacks->loading(data.callbacks->context, true);
         }
-        bool loaded = path[0]
-            ? data.library->Load(path, curlPath, data.reportLanguage)
-            : data.library->Discover(curlPath, data.reportLanguage);
+        bool loaded;
+        if (path[0]) {
+            loaded = data.library->Load(path, curlPath, data.reportLanguage);
+        } else {
+            loaded = data.library->Discover(curlPath, data.reportLanguage);
+        }
         SetCursor(previous ? previous : LoadCursorW(nullptr, IDC_ARROW));
         if (!loaded) {
             SetApplicationLanguage(data.originalLanguage);
@@ -3246,9 +3284,12 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
                 return TRUE;
             case IDC_RECENT_CLEAR:
                 if (PreferencesHasRecentFiles(*data)) {
-                    bool saved = data->callbacks && data->callbacks->clearRecentFiles
-                        ? data->callbacks->clearRecentFiles(data->callbacks->context)
-                        : SaveRecentFilesSetting(L"\0", 2);
+                    bool saved;
+                    if (data->callbacks && data->callbacks->clearRecentFiles) {
+                        saved = data->callbacks->clearRecentFiles(data->callbacks->context);
+                    } else {
+                        saved = SaveRecentFilesSetting(L"\0", 2);
+                    }
                     UpdateApplyButton(*data);
                     if (!saved) {
                         MessageBoxW(window, T(TXT_RECENT_FILES_SAVE_FAILED), GetApplicationName(),
@@ -3342,8 +3383,8 @@ bool ShowPreferences(HWND owner, MediaInfoLibrary& library, PersistWindowState& 
 /// Passes absolute Unicode file paths to the existing viewer, or reactivates it for an empty launch.
 bool ForwardInstanceFiles(HWND target, int count, wchar_t** arguments) {
     SIZE_T capacity = static_cast<SIZE_T>(count > 0 ? count : 1) * MAX_PATH + 2;
-    wchar_t* paths = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(),
-        HEAP_ZERO_MEMORY, capacity * sizeof(wchar_t)));
+    wchar_t* paths = static_cast<wchar_t*>(HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY,
+        capacity * sizeof(wchar_t)));
     if (!paths) {
         return false;
     }

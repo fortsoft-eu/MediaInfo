@@ -21,14 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.8
+ * Last modified for version 1.2.2.1
  */
 
 #pragma once
 
 #include <windows.h>
+#include <unknwn.h>
 
-struct PrintJob;
+/// Retains one native RichEdit character-format run for the modern vector-printing path.
+struct PrintTextRun {
+    UINT start;
+    UINT length;
+    COLORREF color;
+    LONG heightTwips;
+    LONG weight;
+    bool italic;
+    bool underline;
+    bool strikeOut;
+    wchar_t family[LF_FACESIZE];
+};
+
+/// Owns a printer context and a report snapshot for one cancellable background print job.
+struct PrintJob {
+    HWND target;
+    HDC printer;
+    wchar_t* report;
+    BYTE* richText;
+    ULONG richTextSize;
+    PrintTextRun* formats;
+    UINT formatCount;
+    HRESULT(*formatLayout)(const PrintJob* job, IUnknown* layout, IUnknown* context, UINT start, UINT length);
+    LOGFONTW font;
+    RECT margins;
+    UINT fontDpi;
+    wchar_t title[MAX_PATH];
+    volatile LONG canceled;
+    bool printToFile;
+    bool success;
+};
 
 /// Stores one wrapped plain-text line as a UTF-16 source offset and length.
 struct PrintLine {
@@ -54,11 +85,12 @@ public:
     /// Releases the retained printer configuration buffers.
     ~PrintSettings();
 
-    /// Opens native Page Setup and commits printer settings and margins only when accepted.
-    bool PageSetup(HWND owner, wchar_t* error, int capacity);
+    /// Opens native Page Setup with caller-supplied failure text and commits only accepted settings.
+    bool PageSetup(HWND owner, const wchar_t* failureText, wchar_t* error, int capacity);
 
-    /// Returns a printer context owned by the caller and commits only accepted device settings.
-    HDC ChoosePrinter(HWND owner, bool* printToFile, wchar_t* error, int capacity);
+    /// Returns a caller-owned printer context, using caller-supplied failure text for dialog errors.
+    HDC ChoosePrinter(HWND owner, bool* printToFile, const wchar_t* failureText, wchar_t* error,
+        int capacity);
 
     /// Returns page margins in hundredths of a millimeter.
     RECT GetMargins() const;
@@ -110,6 +142,9 @@ public:
     /// Returns the number of pages in the prepared layout.
     UINT GetPageCount() const;
 };
+
+/// Releases an immutable print snapshot and its native resources allocated on the process heap.
+void FreePrintJob(PrintJob* job);
 
 /// Converts physical page margins to printer pixels and clips them to the printable area.
 RECT PrintContentRect(HDC printer, const RECT& margins);

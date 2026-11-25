@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.2.1
  */
 
 #include "PrintSettings.h"
-#include "MainForm.h"
 #include <commdlg.h>
 #include <richedit.h>
 
@@ -39,6 +38,25 @@ struct RichPrintInput {
     ULONG size;
     ULONG position;
 };
+
+/// Releases the printer context, captured text, rich-format buffers and process-heap print-job storage.
+void FreePrintJob(PrintJob* job) {
+    if (job) {
+        if (job->printer) {
+            DeleteDC(job->printer);
+        }
+        if (job->report) {
+            HeapFree(GetProcessHeap(), 0, job->report);
+        }
+        if (job->richText) {
+            HeapFree(GetProcessHeap(), 0, job->richText);
+        }
+        if (job->formats) {
+            HeapFree(GetProcessHeap(), 0, job->formats);
+        }
+        HeapFree(GetProcessHeap(), 0, job);
+    }
+}
 
 /// Supplies RTF snapshot bytes without referring to the original GUI control.
 static DWORD CALLBACK ReadPrintRtf(DWORD_PTR cookie, LPBYTE bytes, LONG capacity, LONG* copied) {
@@ -90,7 +108,9 @@ static void FreePrintHandles(HGLOBAL mode, HGLOBAL names) {
 
 /// Initializes empty printer selections and margins of 12.7 mm on every side.
 PrintSettings::PrintSettings()
-        : deviceMode(nullptr), deviceNames(nullptr), margins(RECT{ 1270, 1270, 1270, 1270 }) {}
+        : deviceMode(nullptr),
+        deviceNames(nullptr),
+        margins(RECT{ 1270, 1270, 1270, 1270 }) {}
 
 /// Releases the retained printer configuration buffers.
 PrintSettings::~PrintSettings() {
@@ -105,7 +125,7 @@ void PrintSettings::ReplaceDevice(HGLOBAL mode, HGLOBAL names) {
 }
 
 /// Opens native Page Setup and commits printer settings and margins only when accepted.
-bool PrintSettings::PageSetup(HWND owner, wchar_t* error, int capacity) {
+bool PrintSettings::PageSetup(HWND owner, const wchar_t* failureText, wchar_t* error, int capacity) {
     error[0] = 0;
     PAGESETUPDLGW dialog = PAGESETUPDLGW{};
     dialog.lStructSize = sizeof(dialog);
@@ -123,7 +143,7 @@ bool PrintSettings::PageSetup(HWND owner, wchar_t* error, int capacity) {
     }
     FreePrintHandles(dialog.hDevMode, dialog.hDevNames);
     if (!copied || failure) {
-        if (!lstrcpynW(error, T(TXT_PAGE_SETUP_FAILED), capacity)) {
+        if (!lstrcpynW(error, failureText, capacity)) {
             error[0] = 0;
             OutputDebugStringW(L"PrintSettings::PageSetup: copying the error message failed.\n");
         }
@@ -132,7 +152,8 @@ bool PrintSettings::PageSetup(HWND owner, wchar_t* error, int capacity) {
 }
 
 /// Returns a printer context owned by the caller and commits only accepted device settings.
-HDC PrintSettings::ChoosePrinter(HWND owner, bool* printToFile, wchar_t* error, int capacity) {
+HDC PrintSettings::ChoosePrinter(HWND owner, bool* printToFile, const wchar_t* failureText, wchar_t* error,
+        int capacity) {
     error[0] = 0;
     PRINTDLGW dialog = PRINTDLGW{};
     dialog.lStructSize = sizeof(dialog);
@@ -157,7 +178,7 @@ HDC PrintSettings::ChoosePrinter(HWND owner, bool* printToFile, wchar_t* error, 
     }
     FreePrintHandles(dialog.hDevMode, dialog.hDevNames);
     if (!copied || failure || accepted) {
-        if (!lstrcpynW(error, T(TXT_PRINT_FAILED), capacity)) {
+        if (!lstrcpynW(error, failureText, capacity)) {
             error[0] = 0;
             OutputDebugStringW(L"PrintSettings::ChoosePrinter: copying the error message failed.\n");
         }
@@ -218,8 +239,18 @@ static int PrintedLineLength(HDC dc, const wchar_t* text, int length, int width)
 
 /// Initializes an empty page layout without allocating font or line storage.
 PrintLayout::PrintLayout()
-        : richEdit(nullptr), richTarget(nullptr), font(nullptr), text(nullptr), richArea(RECT{}),
-        richPage(RECT{}), area(RECT{}), lines(nullptr), lineCount(0), capacity(0), rows(0), lineHeight(0) {}
+        : richEdit(nullptr),
+        richTarget(nullptr),
+        font(nullptr),
+        text(nullptr),
+        richArea(RECT{}),
+        richPage(RECT{}),
+        area(RECT{}),
+        lines(nullptr),
+        lineCount(0),
+        capacity(0),
+        rows(0),
+        lineHeight(0) {}
 
 /// Releases the font and line positions owned by the page layout.
 PrintLayout::~PrintLayout() {
@@ -418,7 +449,10 @@ UINT PrintLayout::GetPageCount() const {
     if (richEdit) {
         return lineCount;
     }
-    return rows ? lineCount / rows + (lineCount % rows != 0) : 0;
+    if (rows) {
+        return lineCount / rows + (lineCount % rows != 0);
+    }
+    return 0;
 }
 
 /// Converts physical page margins to printer pixels and clips them to the printable area.

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.0
+ * Last modified for version 1.2.2.1
  */
 
 using System;
@@ -29,37 +29,47 @@ using System.IO;
 using System.IO.Compression;
 
 /// <summary>
-/// Prepares compressed x86 library resources during the native application's build.
+/// Prepares compressed library and data resources during the native application's build.
 /// </summary>
 public static class ResourcePacker {
+
     /// <summary>
     /// Identifies the packed library-resource header consumed by the native decompressor.
     /// </summary>
     private const uint Signature = 0x4D494450;
 
     /// <summary>
-    /// Writes the resource signature, original length and CRC32 followed by
-    /// the source's DEFLATE-compressed bytes.
+    /// Writes the resource signature, original length and CRC32 followed by the source's DEFLATE-compressed
+    /// bytes.
     /// </summary>
-    /// <param name="source">
-    /// The path of the original x86 PE library to embed without modifying its bytes.
+    /// <param name="source">The path of the original x86 PE library to embed without modifying its bytes.
     /// </param>
     /// <param name="destination">The path of the packed resource file to create or overwrite.</param>
     /// <exception cref="InvalidDataException">The source does not contain an x86 PE header.</exception>
-    /// <exception cref="IOException">
-    /// The source cannot be read or the destination cannot be written.
+    /// <exception cref="IOException">The source cannot be read or the destination cannot be written.
     /// </exception>
-    /// <exception cref="UnauthorizedAccessException">
-    /// Access to the source or destination is denied.
+    /// <exception cref="UnauthorizedAccessException">Access to the source or destination is denied.
     /// </exception>
     public static void Pack(string source, string destination) {
+        Pack(source, destination, false);
+    }
+
+    /// <summary>
+    /// Packs library or raw data bytes with the same length, CRC32 and DEFLATE resource format.
+    /// </summary>
+    /// <param name="source">The input file to compress.</param>
+    /// <param name="destination">The packed resource file to create or overwrite.</param>
+    /// <param name="rawData">True for data; false retains the required x86 PE validation.</param>
+    public static void Pack(string source, string destination, bool rawData) {
         byte[] data = File.ReadAllBytes(source);
-        int pe = data.Length >= 64 ? BitConverter.ToInt32(data, 60) : -1;
-        if (pe < 64
-                || pe > data.Length - 24
-                || BitConverter.ToUInt32(data, pe) != 0x4550
-                || BitConverter.ToUInt16(data, pe + 4) != 0x14C) {
-            throw new InvalidDataException("Expected an x86 Windows library: " + source);
+        if (!rawData) {
+            int pe = data.Length >= 64 ? BitConverter.ToInt32(data, 60) : -1;
+            if (pe < 64
+                    || pe > data.Length - 24
+                    || BitConverter.ToUInt32(data, pe) != 0x4550
+                    || BitConverter.ToUInt16(data, pe + 4) != 0x14C) {
+                throw new InvalidDataException("Expected an x86 Windows library: " + source);
+            }
         }
         uint crc = 0xFFFFFFFF;
         foreach (byte value in data) {

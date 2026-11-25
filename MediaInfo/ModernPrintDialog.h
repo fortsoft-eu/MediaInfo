@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.8
+ * Last modified for version 1.2.2.1
  */
+
 #pragma once
 
 #include <windows.h>
@@ -59,10 +60,14 @@ struct ModernPrintPage {
 };
 
 /// Owns the modern Windows print UI, task callbacks and pagination of an immutable text snapshot.
-class ModernPrintDialog : public Printing::IPrintDocumentSource, public IPrintDocumentPageSource,
-    public IPrintPreviewPageCollection, public PrintRequestedHandler,
-    public Printing::IPrintTaskSourceRequestedHandler, public PrintCompletedHandler,
-    public PrintUiCompletedHandler {
+class ModernPrintDialog
+        : public Printing::IPrintDocumentSource,
+        public IPrintDocumentPageSource,
+        public IPrintPreviewPageCollection,
+        public PrintRequestedHandler,
+        public Printing::IPrintTaskSourceRequestedHandler,
+        public PrintCompletedHandler,
+        public PrintUiCompletedHandler {
 
 private:
     LONG references;
@@ -72,6 +77,7 @@ private:
     DEVMODEW deviceMode;
     ModernPrintPage* pages;
     UINT pageCount;
+    UINT completeMessage;
     D2D1_RECT_F content;
     Printing::PrintPageDescription description;
     Microsoft::WRL::ComPtr<IUnknown> marshaler;
@@ -123,14 +129,15 @@ private:
     static void operator delete(void* memory);
 
 public:
-    /// Adopts the print snapshot and copies the initial printer settings.
-    ModernPrintDialog(PrintJob* snapshot, const PrintSettings& settings);
+    /// Adopts the print snapshot and copies the initial printer settings and completion message.
+    ModernPrintDialog(PrintJob* snapshot, const PrintSettings& settings, UINT completionMessage);
 
     /// Releases the captured report, page ranges and owned graphics resources.
     ~ModernPrintDialog();
 
-    /// Takes ownership of a snapshot and returns its print source, or null on allocation failure.
-    static ModernPrintDialog* Create(PrintJob* snapshot, const PrintSettings& settings);
+    /// Adopts the snapshot and caller-selected completion message, or returns null on allocation failure.
+    static ModernPrintDialog* Create(PrintJob* snapshot, const PrintSettings& settings,
+        UINT completionMessage);
 
     /// Registers the print callbacks and asynchronously opens the system print UI for the owner window.
     HRESULT Show(HWND owner);
@@ -187,13 +194,11 @@ public:
 
 #endif
 
-const UINT modernPrintCompleteMessage = WM_APP + 9;
-
 /// Selects the modern printing path for Windows 11 system builds.
 bool UseModernPrintDialog();
 
-/// Takes ownership of a snapshot and returns its print source, or null on allocation failure.
-ModernPrintDialog* CreateModernPrint(PrintJob* job, const PrintSettings& settings);
+/// Adopts the snapshot and caller-selected completion message, or returns null on allocation failure.
+ModernPrintDialog* CreateModernPrint(PrintJob* job, const PrintSettings& settings, UINT completionMessage);
 
 /// Opens the system print UI while retaining the source through reentrant callbacks.
 HRESULT ShowModernPrint(ModernPrintDialog* source, HWND owner);

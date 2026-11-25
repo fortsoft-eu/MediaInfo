@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.2.2
  */
 
 #pragma once
@@ -82,10 +82,10 @@ private:
     void Layout();
 
     /// Enables Find Next only when a report and a nonempty search expression are available.
-    void UpdateFindButton();
+    void UpdateFindButton() const;
 
     /// Disables whole-word and line-edge options while regular expressions are selected.
-    void UpdateRegexOptions();
+    void UpdateRegexOptions() const;
 
     /// Copies pending search text and options, retaining the last query if allocation fails.
     bool ReadOptions();
@@ -94,13 +94,13 @@ private:
     DWORD Options() const;
 
     /// Restores matching options when a search-history item is selected.
-    void ApplyOptions(DWORD options);
+    void ApplyOptions(DWORD options) const;
 
     /// Moves the current expression to the front of the bounded session history.
     bool RememberSearch();
 
     /// Repopulates the editable combo without changing its current text or text selection.
-    void PopulateHistory();
+    void PopulateHistory() const;
 
     /// Appends one match while checking process-heap allocation and buffer size limits.
     bool AddMatch(int start, int length);
@@ -115,10 +115,10 @@ private:
     void SelectMatch(bool reverse);
 
     /// Restores history options during navigation and selects the text after the choice is committed.
-    void ChooseHistory(bool selectText);
+    void ChooseHistory(bool selectText) const;
 
     /// Closes a user-dismissed form and restores ordinary report-selection visibility.
-    INT_PTR HandleClose();
+    INT_PTR HandleClose() const;
 
     /// Handles combo notifications, search options, Find Next and Close commands.
     INT_PTR HandleCommand(WPARAM wParam);
@@ -127,10 +127,10 @@ private:
     INT_PTR HandleDpiChange(LPARAM lParam);
 
     /// Supplies the measured minimum width while PersistWindowState fixes the form's height.
-    INT_PTR HandleMinMax(LPARAM lParam);
+    INT_PTR HandleMinMax(LPARAM lParam) const;
 
     /// Preserves the reference form's Insert overwrite mode through native edit selection.
-    void PrepareOverwrite(MSG* message);
+    void PrepareOverwrite(MSG* message) const;
 
     /// Dispatches native modeless form messages without changing the shared selection component.
     static INT_PTR CALLBACK DialogProc(HWND window, UINT message, WPARAM wParam, LPARAM lParam);
@@ -155,7 +155,7 @@ public:
     void Show(HWND owner);
 
     /// Closes the form while retaining expressions and options only in this running instance.
-    void Close();
+    void Close() const;
 
     /// Searches the selected text edit, reversing the selected direction for Find Previous or Shift.
     void FindNext(HWND owner, bool reverse);

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.2
+ * Last modified for version 1.2.2.2
  */
 
 #pragma once
@@ -46,7 +46,6 @@ private:
     PersistWindowState placement;
 
     /// Native layout measurements and link state.
-    SIZE buttonSize;
     SIZE licenseSize;
     UINT licenseDpi;
     bool ownsUiFont;
@@ -57,7 +56,7 @@ private:
     char ansiTooltipText[768];
 
     /// Applies current fonts and refreshes the caption and body icons for the current window DPI.
-    void SetFonts(bool updateUi);
+    bool ApplyStyle(bool updateFont = true);
 
     /// Builds the natural About layout, fits it to the work area and anchors controls on resize.
     void Layout(bool resize = true) const;

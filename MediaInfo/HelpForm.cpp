@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.2
  */
 
 #include "HelpForm.h"
@@ -34,7 +34,11 @@
 
 /// Initializes an unopened modeless Help form and its font state.
 HelpForm::HelpForm()
-        : window(nullptr), ownerWindow(nullptr), uiFont(nullptr), buttonSize(SIZE{}), ownsUiFont(false) {}
+        : window(nullptr), 
+        ownerWindow(nullptr),
+        uiFont(nullptr),
+        ownsUiFont(false),
+        initialized(false) {}
 
 /// Closes Help and releases its owned font.
 HelpForm::~HelpForm() {
@@ -44,36 +48,52 @@ HelpForm::~HelpForm() {
     }
 }
 
-/// Refreshes caption icons and applies the current system message font to the text and Close button.
-void HelpForm::SetFonts(bool updateUi) {
+/// Applies the effective application font and theme to the Help controls.
+bool HelpForm::ApplyStyle(bool updateFont) {
+    if (window == nullptr) {
+        return false;
+    }
+    HFONT font = uiFont;
+    if (updateFont) {
+        font = CreateSystemDialogFont(window);
+    }
+    if (font == nullptr) {
+        return false;
+    }
+    HFONT previousFont = ownsUiFont ? uiFont : nullptr;
+    uiFont = font;
+    ownsUiFont = updateFont;
+    SendMessageW(window, WM_SETFONT, reinterpret_cast<WPARAM>(font), FALSE);
+    const int ids[] = {
+        IDC_INFO_TEXT,
+        IDOK,
+        IDC_INFO_GRIP
+    };
+    for (int id : ids) {
+        HWND control = GetDlgItem(window, id);
+        if (control == nullptr) {
+            continue;
+        }
+        SendMessageW(control, WM_SETFONT, reinterpret_cast<WPARAM>(font), FALSE);
+    }
+    if (previousFont != nullptr) {
+        DeleteObject(previousFont);
+    }
     UpdateWindowIcons(window, IDI_MEDIAINFO);
-    HFONT newUi = updateUi
-        ? CreateUiFont(window)
-        : reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
-    if (!newUi) {
-        return;
-    }
-    if (updateUi) {
-        SendMessageW(window, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), FALSE);
-        SendDlgItemMessageW(window, IDC_INFO_TEXT, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), TRUE);
-        SendDlgItemMessageW(window, IDOK, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), TRUE);
-    }
-    if (ownsUiFont) {
-        DeleteObject(uiFont);
-    }
-    uiFont = newUi;
-    ownsUiFont = updateUi;
+    Layout();
+    RedrawWindow(window, nullptr, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_FRAME | RDW_ALLCHILDREN);
+    return true;
 }
 
 /// Fits the Help edit, Close button and size grip to the current client area.
 void HelpForm::Layout() {
-    if (!window || IsIconic(window)) {
+    if (!initialized || IsIconic(window)) {
         return;
     }
     RECT client = RECT{};
     GetClientRect(window, &client);
     SIZE margin = DialogUnits(uiFont, 8, 8);
-    SIZE button = buttonSize;
+    SIZE button = DialogResourceControlSize(IDD_HELP, IDOK, uiFont);
     button.cx = PreferredButtonSize(GetDlgItem(window, IDOK), button).cx;
     SIZE gap = DialogUnits(uiFont, 4, 6);
     int textTop = margin.cy;
@@ -104,11 +124,10 @@ void HelpForm::RefreshLanguage() {
 
 /// Loads Help text, installs native edit behavior and attaches persisted placement.
 bool HelpForm::Initialize() {
-    RECT buttonBounds = ControlRect(GetDlgItem(window, IDOK), window);
-    buttonSize = SIZE{ buttonBounds.right - buttonBounds.left, buttonBounds.bottom - buttonBounds.top };
-    SetFonts(false);
+    uiFont = reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
+    initialized = true;
     HWND edit = GetDlgItem(window, IDC_INFO_TEXT);
-    if (!InstallSelectionEditHandler(edit)) {
+    if (!InstallSelectionEditHandler(edit) || !ApplyStyle(false)) {
         return false;
     }
     SendMessageW(edit, EM_SETLIMITTEXT, 0x7FFFFFFE, 0);
@@ -129,8 +148,7 @@ INT_PTR HelpForm::HandleDpiChange(LPARAM lParam) {
     RECT* bounds = reinterpret_cast<RECT*>(lParam);
     SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
         bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
-    SetFonts(true);
-    Layout();
+    ApplyStyle(true);
     return TRUE;
 }
 
@@ -152,6 +170,12 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
         return FALSE;
     }
     switch (message) {
+        case WM_GETFONT:
+            if (owner->uiFont) {
+                SetWindowLongPtrW(window, DWLP_MSGRESULT, reinterpret_cast<LONG_PTR>(owner->uiFont));
+                return TRUE;
+            }
+            break;
         case WM_CTLCOLORDLG:
             if (!AreVisualStylesActive()) {
                 return reinterpret_cast<INT_PTR>(GetSysColorBrush(COLOR_BTNFACE));
@@ -168,8 +192,9 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             return TRUE;
         case WM_SETTINGCHANGE:
         case WM_THEMECHANGED:
+            owner->ApplyStyle(true);
+            return TRUE;
         case WM_DISPLAYCHANGE:
-            owner->SetFonts(true);
             owner->Layout();
             return TRUE;
         case WM_DPICHANGED:
@@ -180,6 +205,12 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
         case WM_NCDESTROY:
             ClearWindowIcons(window);
             ResetInformationWordBreak();
+            if (owner->ownsUiFont) {
+                DeleteObject(owner->uiFont);
+            }
+            owner->uiFont = nullptr;
+            owner->ownsUiFont = false;
+            owner->initialized = false;
             owner->window = nullptr;
             if (IsWindow(owner->ownerWindow)) {
                 SendMessageW(owner->ownerWindow, helpVisibilityChangedMessage, 0, 0);

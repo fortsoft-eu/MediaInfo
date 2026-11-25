@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.7
+ * Last modified for version 1.2.2.2
  */
 
 #pragma once
@@ -33,18 +33,18 @@
 class HelpForm {
 
 private:
-    /// Native dialog, its font and the Close-button size supplied by the resource template.
+    /// Native dialog, its owner, current system font and initialization state.
     HWND window;
     HWND ownerWindow;
     HFONT uiFont;
-    SIZE buttonSize;
     bool ownsUiFont;
+    bool initialized;
 
     /// Help-window placement and cross-process instance handling.
     PersistWindowState placement;
 
     /// Refreshes caption icons and applies the current system message font to the text and Close button.
-    void SetFonts(bool updateUi);
+    bool ApplyStyle(bool updateFont = true);
 
     /// Fits the Help edit, Close button and size grip to the current client area.
     void Layout();

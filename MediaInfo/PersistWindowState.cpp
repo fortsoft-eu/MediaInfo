@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.0.1
+ * Last modified for version 1.2.2.2
  */
 
 #define NOMINMAX
@@ -48,6 +48,10 @@ typedef struct tagMONITORINFO {
 } MONITORINFO;
 
 #define MONITOR_DEFAULTTONEAREST 0x00000002
+#endif
+
+#ifndef WS_EX_NOACTIVATE
+#define WS_EX_NOACTIVATE 0x08000000L
 #endif
 
 /// Physical monitor bounds and the corresponding taskbar-adjusted work area.
@@ -94,6 +98,8 @@ struct VersionResourceTranslation {
     WORD codePage;
 };
 
+static const DWORD topMostStateFlag = 0x01;
+static const DWORD restoreMaximizedStateFlag = 0x02;
 static const wchar_t placementProperty[] = L"FortSoft.PersistWindowState";
 
 /// Adds a physical monitor and its taskbar-adjusted work rectangle to the owned collection.
@@ -471,15 +477,37 @@ static LONG ConstrainDimension(LONG value, LONG minimum, LONG maximum) {
 
 /// Creates a native state tracker with registry saving and Windows-selected initial bounds.
 PersistWindowState::PersistWindowState()
-        : window(nullptr), instanceMutex(nullptr), originalProc(nullptr), registrationLocked(false),
-        allowSaveMinimized(false), allowSaveTopMost(false), disableSaveHeight(false),
-        disableSavePosition(false), disableSaveSize(false), disableSaveWidth(false),
-        disableSaveWindowState(false), fixHeight(false), fixWidth(false), placeOnScreenAfterLoad(true),
-        singleInstance(false), useWindowsDefaultLocation(true), useWindowsDefaultSize(true), hasState(false),
-        applying(false), restoredShowState(false), detectionOptions(WindowDetectionOptions::Default),
-        savingOptions(PersistWindowStateSavingOptions::Registry), registryPath(nullptr),
-        initialTitle(nullptr), errorCode(ERROR_SUCCESS), errorHandler(nullptr), loadedHandler(nullptr),
-        savedHandler(nullptr), errorContext(nullptr), loadedContext(nullptr), savedContext(nullptr) {
+        : window(nullptr),
+        instanceMutex(nullptr),
+        originalProc(nullptr),
+        registrationLocked(false),
+        allowSaveMinimized(false),
+        allowSaveTopMost(false),
+        disableSaveHeight(false),
+        disableSavePosition(false),
+        disableSaveSize(false),
+        disableSaveWidth(false),
+        disableSaveWindowState(false),
+        fixHeight(false),
+        fixWidth(false),
+        placeOnScreenAfterLoad(true),
+        singleInstance(false),
+        useWindowsDefaultLocation(true),
+        useWindowsDefaultSize(true),
+        hasState(false),
+        applying(false),
+        restoredShowState(false),
+        detectionOptions(WindowDetectionOptions::Default),
+        savingOptions(PersistWindowStateSavingOptions::Registry),
+        registryPath(nullptr),
+        initialTitle(nullptr),
+        errorCode(ERROR_SUCCESS),
+        errorHandler(nullptr),
+        loadedHandler(nullptr),
+        savedHandler(nullptr),
+        errorContext(nullptr),
+        loadedContext(nullptr),
+        savedContext(nullptr) {
     identity[0] = 0;
     instanceProperty[0] = 0;
     InitializeRegistryPath();
@@ -504,8 +532,8 @@ void PersistWindowState::InitializeRegistryPath() {
     VersionResourceTranslation* translations = nullptr;
     UINT translationBytes = 0;
     if (GetFileVersionInfoW(module, 0, bytes, information)
-            && VerQueryValueW(information, L"\\VarFileInfo\\Translation",
-            reinterpret_cast<void**>(&translations), &translationBytes)) {
+        && VerQueryValueW(information, L"\\VarFileInfo\\Translation", reinterpret_cast<void**>(&translations),
+            &translationBytes)) {
         for (UINT index = 0; index < translationBytes / sizeof(*translations); index++) {
             wchar_t query[64];
             wchar_t* company = nullptr;
@@ -799,7 +827,9 @@ bool PersistWindowState::WriteValue(HKEY key, const wchar_t* suffix, DWORD type,
 /// Returns whether the native form supports saving its show state.
 bool PersistWindowState::CanSaveWindowState() const {
     LONG_PTR style = window ? GetWindowLongPtrW(window, GWL_STYLE) : 0;
-    return !disableSaveWindowState && style & WS_SYSMENU && style & (WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+    return !disableSaveWindowState
+        && style & WS_SYSMENU
+        && (style & WS_MAXIMIZEBOX || allowSaveMinimized && style & WS_MINIMIZEBOX);
 }
 
 /// Returns whether the native form supports restoring or persisting its dimensions.
@@ -847,16 +877,16 @@ void PersistWindowState::ReadRegistry() {
     DWORD show = 0;
     if ((CanSaveWindowState() || allowSaveTopMost)
             && ReadValue(key, L"State", REG_DWORD, &show, sizeof(show)) == ERROR_SUCCESS) {
-        DWORD restore = LOWORD(show) == 2 ? 2 : 0;
-        ReadValue(key, L"RestoreState", REG_DWORD, &restore, sizeof(restore));
+        DWORD current = LOWORD(show);
+        DWORD flags = HIWORD(show);
         if (CanSaveWindowState()) {
-            state.minimized = LOWORD(show) == 1 && allowSaveMinimized;
-            state.maximized = LOWORD(show) == 2 || LOWORD(show) == 1 && !allowSaveMinimized && restore == 2;
-            state.restoreMaximized = restore == 2;
+            state.restoreMaximized = current == 2 || flags & restoreMaximizedStateFlag;
+            state.minimized = current == 1 && allowSaveMinimized;
+            state.maximized = current == 2 || current == 1 && !allowSaveMinimized && state.restoreMaximized;
             restoredShowState = true;
         }
         if (allowSaveTopMost) {
-            state.topMost = HIWORD(show) != 0;
+            state.topMost = flags & topMostStateFlag;
         }
     }
     RegCloseKey(key);
@@ -902,15 +932,26 @@ void PersistWindowState::WriteRegistry() {
             readResult = ReadValue(key, L"State", REG_DWORD, &previous, sizeof(previous));
         }
         if (readResult == ERROR_SUCCESS || readResult == ERROR_FILE_NOT_FOUND) {
-            DWORD show = state.minimized && allowSaveMinimized ? 1 : state.maximized
-                || state.minimized && state.restoreMaximized ? 2 : 0;
-            DWORD value = CanSaveWindowState() ? show : LOWORD(previous);
-            value |= allowSaveTopMost ? state.topMost ? 0x10000 : 0 : previous & 0xFFFF0000;
-            success = WriteValue(key, L"State", REG_DWORD, &value, sizeof(value)) && success;
+            DWORD show = LOWORD(previous);
+            DWORD flags = HIWORD(previous);
             if (CanSaveWindowState()) {
-                DWORD restore = state.restoreMaximized ? 2 : 0;
-                success = WriteValue(key, L"RestoreState", REG_DWORD, &restore, sizeof(restore)) && success;
+                show = 0;
+                if (state.minimized && allowSaveMinimized) {
+                    show = 1;
+                } else if (state.maximized || state.minimized && state.restoreMaximized) {
+                    show = 2;
+                }
+                if (state.restoreMaximized) {
+                    flags = flags | restoreMaximizedStateFlag;
+                } else {
+                    flags = flags & ~restoreMaximizedStateFlag;
+                }
             }
+            if (allowSaveTopMost) {
+                flags = state.topMost ? flags | topMostStateFlag : flags & ~topMostStateFlag;
+            }
+            DWORD value = MAKELONG(show, flags);
+            success = WriteValue(key, L"State", REG_DWORD, &value, sizeof(value)) && success;
         } else {
             success = false;
         }
@@ -1021,8 +1062,8 @@ void PersistWindowState::UnregisterForm() {
 
 /// Reads Windows-selected bounds without displaying or activating the temporary native window.
 bool PersistWindowState::ReadWindowsDefaultBounds(int width, int height, RECT* bounds) {
-    HWND positionWindow = CreateWindowExW(0, L"STATIC", L"", WS_OVERLAPPED, CW_USEDEFAULT, CW_USEDEFAULT,
-        width, height, nullptr, nullptr, GetModuleHandleW(nullptr), nullptr);
+    HWND positionWindow = CreateWindowExW(WS_EX_NOACTIVATE, L"STATIC", L"", WS_OVERLAPPED, CW_USEDEFAULT,
+        CW_USEDEFAULT, width, height, nullptr, nullptr, GetModuleHandleW(nullptr), nullptr);
     if (!positionWindow) {
         return false;
     }
@@ -1078,7 +1119,7 @@ bool PersistWindowState::Attach(HWND target, const char* formIdentity) {
     bool visible = IsWindowVisible(window) != FALSE;
     bool initialMaximized = IsZoomed(window) != FALSE;
     bool initialMinimized = IsIconic(window) != FALSE;
-    bool initialTopMost = (GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+    bool initialTopMost = GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST;
     restoredShowState = hasState;
     if (!hasState) {
         state.maximized = initialMaximized;
@@ -1389,7 +1430,7 @@ void PersistWindowState::Capture() {
         }
     }
     state.minimized = minimized;
-    state.topMost = (GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST) != 0;
+    state.topMost = GetWindowLongPtrW(window, GWL_EXSTYLE) & WS_EX_TOPMOST;
 }
 
 /// Fits normal bounds to actual monitor work areas after a display or system-setting change.

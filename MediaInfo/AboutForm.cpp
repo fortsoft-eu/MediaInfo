@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.0
+ * Last modified for version 1.2.2.2
  */
 
 #include "AboutForm.h"
@@ -54,6 +54,26 @@ static const int aboutControls[] = { IDC_INFO_PRODUCT, IDC_INFO_WEBSITE, IDC_INF
 
 /// Optional title removed before the embedded license body is displayed.
 static const wchar_t licenseHeading[] = L"MIT License";
+
+/// Measures unwrapped information text using the control's current font.
+static SIZE InformationTextSize(HWND control) {
+    SIZE size = {};
+    HDC dc = GetDC(control);
+    if (dc != nullptr) {
+        HFONT font = reinterpret_cast<HFONT>(SendMessageW(control, WM_GETFONT, 0, 0));
+        HGDIOBJ previous = font == nullptr ? nullptr : SelectObject(dc, font);
+        wchar_t* text = CopyControlText(control);
+        if (text != nullptr) {
+            GetTextExtentPoint32W(dc, text, lstrlenW(text), &size);
+            HeapFree(GetProcessHeap(), 0, text);
+        }
+        if (previous != nullptr) {
+            SelectObject(dc, previous);
+        }
+        ReleaseDC(control, dc);
+    }
+    return size;
+}
 
 /// Measures unwrapped license text in the edit's current font and toggles the horizontal scrollbar only when
 /// needed. Restores horizontal position to the start before hiding the bar; measurement also works while the
@@ -259,13 +279,24 @@ static wchar_t* LicenseText() {
 
 /// Initializes an unopened modal About form and its owned resources.
 AboutForm::AboutForm()
-        : window(nullptr), tooltip(nullptr), uiFont(nullptr), textFont(nullptr), linkFont(nullptr),
-        hand(nullptr), legacyCursorModule(nullptr), buttonSize(SIZE{}), licenseSize(SIZE{}), licenseDpi(96),
-        ownsUiFont(false), nativeLink(false), initialized(false) {
+        : window(nullptr),
+        tooltip(nullptr),
+        uiFont(nullptr),
+        textFont(nullptr),
+        linkFont(nullptr),
+        hand(nullptr),
+        legacyCursorModule(nullptr),
+        licenseSize(SIZE{}),
+        licenseDpi(96),
+        ownsUiFont(false),
+        nativeLink(false),
+        initialized(false) {
     websiteUrl[0] = 0;
+    placement.SetDisableSaveSize(true);
+    placement.SetDisableSaveWindowState(true);
     placement.SetSavingOptions(PersistWindowStateSavingOptions::None);
     placement.SetDetectionOptions(WindowDetectionOptions::NoDetection);
-    placement.SetUseWindowsDefaultLocation(false);
+    placement.SetUseWindowsDefaultSize(false);
 }
 
 /// Closes the dialog and releases its fonts, tooltip and control subclasses.
@@ -284,33 +315,45 @@ AboutForm::~AboutForm() {
 }
 
 /// Applies current fonts and refreshes the caption and body icons for the current window DPI.
-void AboutForm::SetFonts(bool updateUi) {
-    UpdateWindowIcons(window, IDI_MEDIAINFO);
-    HFONT newUi = updateUi
-        ? CreateUiFont(window)
-        : reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
+bool AboutForm::ApplyStyle(bool updateFont) {
+    if (!window) {
+        return false;
+    }
+    HFONT newUi = updateFont ? CreateSystemDialogFont(window) : uiFont;
     if (!newUi) {
-        return;
+        return false;
     }
     HFONT newText = CreateAboutFont(window);
+    if (!newText) {
+        if (updateFont) {
+            DeleteObject(newUi);
+        }
+        return false;
+    }
     LOGFONTW link = LOGFONTW{};
     GetObjectW(newUi, sizeof(link), &link);
     link.lfUnderline = TRUE;
     HFONT newLink = CreateFontIndirectW(&link);
-    if (updateUi) {
-        SendMessageW(window, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), FALSE);
+    if (!newLink) {
+        DeleteObject(newText);
+        if (updateFont) {
+            DeleteObject(newUi);
+        }
+        return false;
     }
+    SendMessageW(window, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), FALSE);
     const int ids[] = { IDC_INFO_PRODUCT, IDC_INFO_WEBSITE, IDC_INFO_LINK, IDC_INFO_TEXT, IDOK };
     for (int index = 0; index < 5; ++index) {
         HFONT font = newUi;
-        if (ids[index] == IDC_INFO_TEXT && newText) {
+        if (ids[index] == IDC_INFO_TEXT) {
             font = newText;
         } else if (ids[index] == IDC_INFO_LINK && !nativeLink) {
             font = newLink;
         }
-        if (updateUi || font != newUi) {
-            SendDlgItemMessageW(window, ids[index], WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
-        }
+        SendDlgItemMessageW(window, ids[index], WM_SETFONT, reinterpret_cast<WPARAM>(font), FALSE);
+    }
+    if (tooltip) {
+        SendMessageW(tooltip, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), FALSE);
     }
     if (ownsUiFont) {
         DeleteObject(uiFont);
@@ -322,7 +365,7 @@ void AboutForm::SetFonts(bool updateUi) {
         DeleteObject(linkFont);
     }
     uiFont = newUi;
-    ownsUiFont = updateUi;
+    ownsUiFont = updateFont;
     textFont = newText;
     linkFont = newLink;
     int iconSize = WindowDpi(window) >= 130 ? 48 : 32;
@@ -331,6 +374,10 @@ void AboutForm::SetFonts(bool updateUi) {
     HWND iconControl = GetDlgItem(window, IDC_INFO_ICON);
     SendMessageW(iconControl, STM_SETICON, reinterpret_cast<WPARAM>(icon), 0);
     SetWindowPos(iconControl, nullptr, 0, 0, iconSize, iconSize, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+    UpdateWindowIcons(window, IDI_MEDIAINFO);
+    Layout();
+    RedrawWindow(window, nullptr, nullptr, RDW_INVALIDATE | RDW_ERASE | RDW_FRAME | RDW_ALLCHILDREN);
+    return true;
 }
 
 /// Fits the About window to its monitor work area after its natural layout.
@@ -368,85 +415,73 @@ void AboutForm::FitToWorkArea() const {
     }
 }
 
-/// Builds the natural About layout, fits it to the work area and anchors controls on resize.
+/// right.
 void AboutForm::Layout(bool resize) const {
     if (!initialized || IsIconic(window)) {
         return;
     }
-    RECT client = RECT{};
+    RECT client = {};
     GetClientRect(window, &client);
-    SIZE currentClient = { client.right, client.bottom };
+    SIZE current = { client.right, client.bottom };
+    UINT dpi = WindowDpi(window);
     SIZE margin = DialogUnits(uiFont, 8, 8);
-    SIZE button = buttonSize;
-    button.cx = PreferredButtonSize(GetDlgItem(window, IDOK), button).cx;
     SIZE gap = DialogUnits(uiFont, 4, 6);
+    SIZE button = DialogResourceControlSize(IDD_ABOUT, IDOK, uiFont);
+    button.cx = PreferredButtonSize(GetDlgItem(window, IDOK), button).cx;
     int textTop = margin.cy;
     if (resize) {
-        UINT dpi = WindowDpi(window);
-        SIZE license = { MulDiv(licenseSize.cx, dpi, licenseDpi), MulDiv(licenseSize.cy, dpi, licenseDpi) };
+        SIZE license = {
+            MulDiv(licenseSize.cx, dpi, licenseDpi),
+            MulDiv(licenseSize.cy, dpi, licenseDpi)
+        };
         client.right = license.cx + 2 * DialogUnits(uiFont, 10, 0).cx;
-        HWND icon = GetDlgItem(window, IDC_INFO_ICON);
-        SetWindowPos(icon, nullptr, margin.cx, margin.cy, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
-        RECT iconBounds = ControlRect(icon, window);
+        SetWindowPos(GetDlgItem(window, IDC_INFO_ICON), nullptr, margin.cx, margin.cy, 0, 0,
+            SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+        RECT icon = ControlRect(GetDlgItem(window, IDC_INFO_ICON), window);
         SIZE productPosition = DialogUnits(uiFont, 0, 4);
-        productPosition.cx = iconBounds.right + iconBounds.left;
+        productPosition.cx = icon.right + icon.left;
         int width = client.right - margin.cx - productPosition.cx;
-        HWND product = GetDlgItem(window, IDC_INFO_PRODUCT);
-        int productHeight = WrappedLabelHeight(product, width);
-        PlaceControl(product, productPosition.cx, productPosition.cy, width, productHeight);
-        TEXTMETRICW metrics = TEXTMETRICW{};
-        ReadControlMetrics(GetDlgItem(window, IDC_INFO_WEBSITE), &metrics);
-        SIZE labelSize = SIZE{};
-        HDC dc = GetDC(window);
-        HGDIOBJ old = SelectObject(dc, uiFont);
-        wchar_t websiteText[128];
-        GetDlgItemTextW(window, IDC_INFO_WEBSITE, websiteText, 128);
-        GetTextExtentPoint32W(dc, websiteText, lstrlenW(websiteText), &labelSize);
-        SelectObject(dc, old);
-        ReleaseDC(window, dc);
+        int productHeight = WrappedLabelHeight(GetDlgItem(window, IDC_INFO_PRODUCT), width);
+        PlaceControl(GetDlgItem(window, IDC_INFO_PRODUCT), productPosition.cx, productPosition.cy, width,
+            productHeight);
+        SIZE website = InformationTextSize(GetDlgItem(window, IDC_INFO_WEBSITE));
         int websiteY = productPosition.cy + productHeight + gap.cy;
-        PlaceControl(GetDlgItem(window, IDC_INFO_WEBSITE), productPosition.cx, websiteY, labelSize.cx,
-            metrics.tmHeight);
-        int linkX = productPosition.cx + labelSize.cx + gap.cx;
-        HWND link = GetDlgItem(window, IDC_INFO_LINK);
+        PlaceControl(GetDlgItem(window, IDC_INFO_WEBSITE), productPosition.cx, websiteY, website.cx,
+            website.cy);
+        int linkX = productPosition.cx + website.cx + gap.cx;
         int linkWidth = client.right - margin.cx - linkX;
-        int linkHeight = metrics.tmHeight;
+        SIZE idealLink = {};
+        int linkHeight = website.cy;
         if (nativeLink) {
-            SIZE ideal = SIZE{};
-            LRESULT height = SendMessageW(link, LM_GETIDEALSIZE, linkWidth, reinterpret_cast<LPARAM>(&ideal));
+            LRESULT height = SendDlgItemMessageW(window, IDC_INFO_LINK, LM_GETIDEALSIZE, linkWidth,
+                reinterpret_cast<LPARAM>(&idealLink));
             if (height > 0) {
                 linkHeight = static_cast<int>(height);
             }
-            if (ideal.cx > 0 && ideal.cx < linkWidth) {
-                linkWidth = ideal.cx;
+            if (idealLink.cx > 0 && idealLink.cx < linkWidth) {
+                linkWidth = idealLink.cx;
             }
         } else {
-            dc = GetDC(link);
-            old = SelectObject(dc, reinterpret_cast<HFONT>(SendMessageW(link, WM_GETFONT, 0, 0)));
-            wchar_t linkText[256];
-            GetWindowTextW(link, linkText, 256);
-            SIZE textSize = SIZE{};
-            if (GetTextExtentPoint32W(dc, linkText, lstrlenW(linkText), &textSize)) {
-                if (textSize.cx > 0 && textSize.cx < linkWidth) {
-                    linkWidth = textSize.cx;
-                }
-                linkHeight = textSize.cy;
+            SIZE text = InformationTextSize(GetDlgItem(window, IDC_INFO_LINK));
+            if (text.cx > 0 && text.cx < linkWidth) {
+                linkWidth = text.cx;
             }
-            SelectObject(dc, old);
-            ReleaseDC(link, dc);
+            linkHeight = text.cy;
         }
-        PlaceControl(link, linkX, websiteY, linkWidth, linkHeight);
-        AlignControlBaseline(link, GetDlgItem(window, IDC_INFO_WEBSITE));
-        RECT linkBounds = ControlRect(link, window);
-        int rowBottom = websiteY + metrics.tmHeight;
-        textTop = (linkBounds.bottom > rowBottom ? linkBounds.bottom : rowBottom) + gap.cy;
+        PlaceControl(GetDlgItem(window, IDC_INFO_LINK), linkX, websiteY, linkWidth, linkHeight);
+        AlignControlBaseline(GetDlgItem(window, IDC_INFO_LINK), GetDlgItem(window, IDC_INFO_WEBSITE));
+        RECT link = ControlRect(GetDlgItem(window, IDC_INFO_LINK), window);
+        textTop = websiteY + website.cy;
+        if (link.bottom > textTop) {
+            textTop = link.bottom;
+        }
+        textTop += gap.cy;
         client.bottom = textTop + license.cy + gap.cy + button.cy + margin.cy;
-        RECT bounds;
-        GetWindowRect(window, &bounds);
-        int outerWidth = bounds.right - bounds.left + client.right - currentClient.cx;
-        int outerHeight = bounds.bottom - bounds.top + client.bottom - currentClient.cy;
-        if (outerWidth != bounds.right - bounds.left || outerHeight != bounds.bottom - bounds.top) {
-            SetWindowPos(window, nullptr, 0, 0, outerWidth, outerHeight,
+        if (client.right != current.cx || client.bottom != current.cy) {
+            RECT bounds = {};
+            GetWindowRect(window, &bounds);
+            SetWindowPos(window, nullptr, 0, 0, bounds.right - bounds.left + client.right - current.cx,
+                bounds.bottom - bounds.top + client.bottom - current.cy,
                 SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
         }
     }
@@ -456,8 +491,8 @@ void AboutForm::Layout(bool resize) const {
     int buttonY = client.bottom - margin.cy - button.cy;
     PlaceControl(GetDlgItem(window, IDOK), client.right - margin.cx - button.cx, buttonY, button.cx,
         button.cy);
-    PlaceControl(GetDlgItem(window, IDC_INFO_TEXT), margin.cx, textTop, client.right - 2 * margin.cx,
-        buttonY - gap.cy - textTop);
+    PlaceControl(GetDlgItem(window, IDC_INFO_TEXT), margin.cx, textTop,
+        client.right - 2 * margin.cx, buttonY - gap.cy - textTop);
     if (resize) {
         FitToWorkArea();
     }
@@ -482,20 +517,15 @@ void AboutForm::RefreshLanguage() {
 /// Loads the license, installs native controls and restores the position retained in memory.
 bool AboutForm::Initialize() {
     BuildAboutWebsiteUrl(websiteUrl);
-    RECT buttonBounds = ControlRect(GetDlgItem(window, IDOK), window);
-    buttonSize = SIZE{ buttonBounds.right - buttonBounds.left, buttonBounds.bottom - buttonBounds.top };
     licenseDpi = WindowDpi(window);
     licenseSize = SIZE{
         MulDiv(ABOUT_LICENSE_WIDTH_96DPI, licenseDpi, 96),
         MulDiv(ABOUT_LICENSE_HEIGHT_96DPI, licenseDpi, 96)
     };
-    SetFonts(false);
-    if (!uiFont) {
-        return false;
-    }
+    uiFont = reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
     initialized = true;
     HWND edit = GetDlgItem(window, IDC_INFO_TEXT);
-    if (!InstallSelectionEditHandler(edit)) {
+    if (!InstallSelectionEditHandler(edit) || !ApplyStyle(false)) {
         return false;
     }
     SendMessageW(edit, EM_SETLIMITTEXT, 0x7FFFFFFE, 0);
@@ -529,8 +559,7 @@ INT_PTR AboutForm::HandleDpiChange(LPARAM lParam) {
     RECT* bounds = reinterpret_cast<RECT*>(lParam);
     SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
         bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
-    SetFonts(true);
-    Layout();
+    ApplyStyle(true);
     return TRUE;
 }
 
@@ -566,6 +595,12 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
         return FALSE;
     }
     switch (message) {
+        case WM_GETFONT:
+            if (owner->uiFont) {
+                SetWindowLongPtrW(window, DWLP_MSGRESULT, reinterpret_cast<LONG_PTR>(owner->uiFont));
+                return TRUE;
+            }
+            break;
         case WM_CTLCOLORDLG:
             if (!AreVisualStylesActive()) {
                 return reinterpret_cast<INT_PTR>(GetSysColorBrush(COLOR_BTNFACE));
@@ -589,8 +624,9 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
             return TRUE;
         case WM_SETTINGCHANGE:
         case WM_THEMECHANGED:
+            owner->ApplyStyle(true);
+            return TRUE;
         case WM_DISPLAYCHANGE:
-            owner->SetFonts(true);
             owner->Layout();
             return TRUE;
         case WM_DPICHANGED:
@@ -611,6 +647,19 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
         case WM_NCDESTROY:
             ClearWindowIcons(window);
             ResetInformationWordBreak();
+            if (owner->ownsUiFont) {
+                DeleteObject(owner->uiFont);
+            }
+            if (owner->textFont) {
+                DeleteObject(owner->textFont);
+                owner->textFont = nullptr;
+            }
+            if (owner->linkFont) {
+                DeleteObject(owner->linkFont);
+                owner->linkFont = nullptr;
+            }
+            owner->uiFont = nullptr;
+            owner->ownsUiFont = false;
             owner->window = nullptr;
             owner->initialized = false;
             break;
@@ -621,7 +670,7 @@ INT_PTR CALLBACK AboutForm::DialogProc(HWND window, UINT message, WPARAM wParam,
 /// Opens About modally and restores its position retained only within this application instance.
 void AboutForm::Show(HWND owner) {
     if (window) {
-        SetForegroundWindow(window);
+        placement.BringToFront();
         return;
     }
     HINSTANCE instance = GetModuleHandleW(nullptr);
@@ -648,9 +697,13 @@ HWND AboutForm::GetWindow() const {
 /// Replaces the static website control with a native SysLink when the installed controls support it.
 void AboutForm::CreateNativeLink() {
     HMODULE commonControls = GetModuleHandleW(L"comctl32.dll");
-    InitializeControlsFunction initialize = commonControls
-        ? reinterpret_cast<InitializeControlsFunction>(GetProcAddress(commonControls, "InitCommonControlsEx"))
-        : nullptr;
+    InitializeControlsFunction initialize;
+    if (commonControls) {
+        InitializeControlsFunction initialize = reinterpret_cast<InitializeControlsFunction>(
+            GetProcAddress(commonControls, "InitCommonControlsEx"));
+    } else {
+        InitializeControlsFunction initialize = nullptr;
+    }
     INITCOMMONCONTROLSEX controls = INITCOMMONCONTROLSEX{ sizeof(controls), ICC_LINK_CLASS };
     if (!initialize || !initialize(&controls)) {
         return;

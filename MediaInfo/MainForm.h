@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.6
+ * Last modified for version 1.2.2.1
  */
 
 #pragma once
@@ -114,23 +114,6 @@ struct ReportJob {
     bool success;
     bool advancedMode;
     bool fullParsing;
-};
-
-/// Owns a printer context and a report snapshot for one cancellable background print job.
-struct PrintJob {
-    HWND target;
-    HDC printer;
-    wchar_t* report;
-    BYTE* richText;
-    ULONG richTextSize;
-    HRESULT(*formatLayout)(const PrintJob* job, IUnknown* layout, IUnknown* context, UINT start, UINT length);
-    LOGFONTW font;
-    RECT margins;
-    UINT fontDpi;
-    wchar_t title[MAX_PATH];
-    volatile LONG canceled;
-    bool printToFile;
-    bool success;
 };
 
 /// Identifies committed preferences that require refreshing reports, tab captions or the window title.

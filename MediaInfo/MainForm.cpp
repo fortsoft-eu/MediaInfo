@@ -37,6 +37,8 @@
 #include <shellapi.h>
 #include <windowsx.h>
 
+static const UINT modernPrintCompleteMessage = WM_APP + 9;
+
 /// Associates a menu command with its submenu and localized caption identifier.
 struct MenuCaption {
     int menu;
@@ -988,9 +990,13 @@ bool MainForm::CreateTab(LibraryCommand command, const wchar_t* path) {
     item.mask = TCIF_TEXT | TCIF_PARAM;
     item.pszText = name;
     item.lParam = reinterpret_cast<LPARAM>(file);
-    int inserted = unicodeTabs
-        ? static_cast<int>(SendMessageW(tabs, TCM_INSERTITEMW, index, reinterpret_cast<LPARAM>(&item)))
-        : -1;
+    int inserted;
+    if (unicodeTabs) {
+        inserted = static_cast<int>(SendMessageW(tabs, TCM_INSERTITEMW, index,
+            reinterpret_cast<LPARAM>(&item)));
+    } else {
+        inserted = -1;
+    }
     if (inserted < 0) {
         char ansiName[MAX_PATH];
         WideCharToMultiByte(CP_ACP, 0, name, -1, ansiName, MAX_PATH, nullptr, nullptr);
@@ -1309,9 +1315,12 @@ void MainForm::ExportReport() {
         return;
     }
     wchar_t error[512];
-    bool saved = type <= 5
-        ? SaveReportText(active->report, path, type, error, 512)
-        : SaveReportImage(active->edit, path, type, error, 512);
+    bool saved;
+    if (type <= 5) {
+        saved = SaveReportText(active->report, path, type, error, 512);
+    } else {
+        saved = SaveReportImage(active->edit, path, type, error, 512);
+    }
     if (saved) {
         SaveExportSetting(path, type);
     } else {
@@ -1355,7 +1364,11 @@ void MainForm::PrintReport() {
     printOwner = dialog;
     if (UseModernPrintDialog()) {
         PrintJob* snapshot = CapturePrintJob(window, edit, title, printSettings.GetMargins());
-        modernPrint = snapshot ? CreateModernPrint(snapshot, printSettings) : nullptr;
+        if (snapshot) {
+            modernPrint = CreateModernPrint(snapshot, printSettings, modernPrintCompleteMessage);
+        } else {
+            modernPrint = nullptr;
+        }
         HRESULT result = modernPrint ? ShowModernPrint(modernPrint, dialog) : E_OUTOFMEMORY;
         if (FAILED(result)) {
             CloseModernPrint(modernPrint);
@@ -1386,8 +1399,7 @@ void MainForm::PrintReport() {
     }
     bool filtering = modalFindFiltering;
     modalFindFiltering = false;
-    PrintJob* job = ChooseReportPrinter(dialog, edit, title,
-        printSettings, error, ARRAYSIZE(error));
+    PrintJob* job = ChooseReportPrinter(dialog, edit, title, printSettings, error, ARRAYSIZE(error));
     modalFindFiltering = filtering;
     if (ownHook) {
         UnhookWindowsHookEx(modalFindHook);
@@ -1465,7 +1477,7 @@ void MainForm::PageSetup() {
     wchar_t error[512];
     printDialogOpen = true;
     UpdateStatus();
-    bool accepted = printSettings.PageSetup(window, error, ARRAYSIZE(error));
+    bool accepted = printSettings.PageSetup(window, T(TXT_PAGE_SETUP_FAILED), error, ARRAYSIZE(error));
     printDialogOpen = false;
     UpdateStatus();
     if (!accepted && error[0]) {
@@ -1524,9 +1536,12 @@ void MainForm::CompleteModernPrint(ModernPrintDialog* source) {
 /// Reads the requested file report on the background thread and posts its completion to the viewer.
 DWORD WINAPI MainForm::ReadReport(void* parameter) {
     ReportJob* job = static_cast<ReportJob*>(parameter);
-    job->success = job->command == LibraryCommand::Read
-        ? job->library->Read(job->path, &job->report, job->advancedMode, job->fullParsing, job->traceLevel)
-        : job->library->Query(job->command, &job->report);
+    if (job->command == LibraryCommand::Read) {
+        job->success = job->library->Read(job->path, &job->report, job->advancedMode, job->fullParsing,
+            job->traceLevel);
+    } else {
+        job->success = job->library->Query(job->command, &job->report);
+    }
     if (job->success && job->command == LibraryCommand::Read) {
         BY_HANDLE_FILE_INFORMATION information = BY_HANDLE_FILE_INFORMATION{};
         job->sourceKnown = job->sourceKnown
@@ -1710,9 +1725,11 @@ LRESULT MainForm::HandleNotification(WPARAM wParam, LPARAM lParam) {
         SendMessageW(notification->hwndFrom, TTM_SETMAXTIPWIDTH, 0, work.right - work.left);
         const wchar_t* tooltip = nullptr;
         if (file) {
-            tooltip = file->command == LibraryCommand::Read
-                ? file->path
-                : KnownInformationTitle(file->command);
+            if (file->command == LibraryCommand::Read) {
+                tooltip = file->path;
+            } else {
+                tooltip = KnownInformationTitle(file->command);
+            }
         }
         if (notification->code == TTN_GETDISPINFOW) {
             reinterpret_cast<NMTTDISPINFOW*>(lParam)->lpszText = const_cast<wchar_t*>(tooltip);
@@ -1946,13 +1963,18 @@ LRESULT CALLBACK MainForm::WindowProc(HWND window, UINT message, WPARAM wParam, 
                     lstrcpyW(path, recent);
                     DWORD attributes = GetFileAttributesW(path);
                     if (attributes == INVALID_FILE_ATTRIBUTES || attributes & FILE_ATTRIBUTE_DIRECTORY) {
-                        DWORD failure = attributes == INVALID_FILE_ATTRIBUTES
-                            ? GetLastError()
-                            : ERROR_SUCCESS;
-                        const wchar_t* prompt = failure == ERROR_FILE_NOT_FOUND
-                            || failure == ERROR_PATH_NOT_FOUND
-                                ? T(TXT_RECENT_FILE_MISSING)
-                                : T(TXT_RECENT_FILE_UNAVAILABLE);
+                        DWORD failure;
+                        if (attributes) {
+                            failure = GetLastError();
+                        } else {
+                            failure = ERROR_SUCCESS;
+                        }
+                        const wchar_t* prompt;
+                        if (failure == ERROR_FILE_NOT_FOUND || failure == ERROR_PATH_NOT_FOUND) {
+                            prompt = T(TXT_RECENT_FILE_MISSING);
+                        } else {
+                            prompt = T(TXT_RECENT_FILE_UNAVAILABLE);
+                        }
                         wchar_t question[MAX_PATH + 512];
                         wsprintfW(question, prompt, path);
                         int answer = MessageBoxW(window, question, GetApplicationName(),

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.1.9
+ * Last modified for version 1.2.2.2
  */
 
 #pragma once
@@ -341,15 +341,11 @@ PrintJob* ChooseReportPrinter(HWND owner, HWND edit, const wchar_t* title, Print
 /// Prints the complete snapshot with page breaks and printer-scaled report font.
 bool PrintReportPages(PrintJob* job);
 
-/// Releases a print snapshot and its selected printer device context.
-void FreePrintJob(PrintJob* job);
-
 /// Reports whether the requested image format can be written without substituting another format.
 bool IsReportImageTypeAvailable(DWORD type);
 
 /// Renders the report in its selected font and saves it with the requested available encoder.
-bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error,
-    int errorCapacity);
+bool SaveReportImage(HWND edit, const wchar_t* path, DWORD type, wchar_t* error, int errorCapacity);
 
 /// Saves the report in the selected text encoding, replacing the destination only after a complete write.
 bool SaveReportText(const wchar_t* report, const wchar_t* path, DWORD type, wchar_t* error,
@@ -384,6 +380,9 @@ HFONT CreateReportFont(HWND window, const LOGFONTW* saved, UINT savedDpi);
 
 /// Converts dialog units using the supplied font metrics rather than fixed pixel assumptions.
 SIZE DialogUnits(HFONT font, int x, int y);
+
+/// Scales a control's authored dimensions from its extended dialog resource using the current font.
+SIZE DialogResourceControlSize(int resourceId, int id, HFONT font);
 
 /// Expands a native button only as needed for its current localized text and native padding.
 SIZE PreferredButtonSize(HWND button, const SIZE& minimum);
