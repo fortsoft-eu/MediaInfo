@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.2
+ * Last modified for version 1.2.2.3
  */
 
 #define NOMINMAX
