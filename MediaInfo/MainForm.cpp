@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.4
+ * Last modified for version 1.2.3.0
  */
 
 #include "Localization.h"
@@ -393,7 +393,13 @@ void MainForm::RebuildFonts() {
     SendMessageW(tabs, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), TRUE);
     SendMessageW(status, WM_SETFONT, reinterpret_cast<WPARAM>(newUi), TRUE);
     for (FileTab* file = files; file; file = file->next) {
-        SendMessageW(file->edit, WM_SETFONT, reinterpret_cast<WPARAM>(newReport), TRUE);
+        HWND control = file->edit;
+        SendMessageW(control, WM_SETFONT, reinterpret_cast<WPARAM>(newReport), TRUE);
+        LONG_PTR style = GetWindowLongPtrW(control, GWL_EXSTYLE);
+        SetWindowLongPtrW(control, GWL_EXSTYLE,
+            visualStylesActive ? style & ~WS_EX_CLIENTEDGE : style | WS_EX_CLIENTEDGE);
+        SetWindowPos(control, nullptr, 0, 0, 0, 0,
+            SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
     }
     if (uiFont) {
         DeleteObject(uiFont);
@@ -830,7 +836,8 @@ HWND MainForm::CreateReportEdit(bool wordWrap) {
     if (!wordWrap) {
         style |= WS_HSCROLL | ES_AUTOHSCROLL;
     }
-    HWND edit = CreateWindowExW(WS_EX_CLIENTEDGE, L"EDIT", L"", style,
+    DWORD extended = visualStylesActive ? 0 : WS_EX_CLIENTEDGE;
+    HWND edit = CreateWindowExW(extended, L"EDIT", L"", style,
         0, 0, 1, 1, window, nullptr, GetModuleHandleW(nullptr), nullptr);
     if (!edit || !InstallSelectionEditHandler(edit)) {
         if (edit) {
