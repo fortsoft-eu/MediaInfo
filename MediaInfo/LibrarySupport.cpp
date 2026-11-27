@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.0.0.0
+ * Last modified for version 1.2.3.0
  */
 
 #include "LibrarySupport.h"
@@ -821,8 +821,8 @@ bool ExtractBundledLibrary(
             folder[--length] = 0;
         }
         const wchar_t* application = index == 5 || index == 6
-            ? L"\\MediaInfo\\Libraries\\"
-            : L"\\FortSoft\\MediaInfo\\Libraries\\";
+            ? L"\\MediaInfo\\"
+            : L"\\FortSoft\\MediaInfo\\";
         wchar_t suffix[80];
         wsprintfW(suffix, L"%s-%08lX", version, u32(packed + 8));
         if (length + lstrlenW(application) + lstrlenW(suffix) + lstrlenW(name) + 2 > MAX_PATH) {
