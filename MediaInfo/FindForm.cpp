@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.3.0
  */
 
 #define NOMINMAX
@@ -34,6 +34,13 @@
 #include "SystemDialogTemplate.h"
 #include "resource.h"
 
+#ifndef BCM_GETIDEALSIZE
+#define BCM_GETIDEALSIZE 0x1601
+#endif
+
+/// Refreshes layout after Windows completes native dialog DPI scaling.
+static const UINT nativeDialogDpiChangedMessage = WM_APP + 25;
+
 /// Matching flags stored with one search-history entry.
 static const DWORD findMatchCase = 0x01;
 static const DWORD findBackward = 0x02;
@@ -41,6 +48,86 @@ static const DWORD findStartsWith = 0x04;
 static const DWORD findEndsWith = 0x08;
 static const DWORD findRegularExpression = 0x10;
 static const DWORD findWholeWords = 0x20;
+
+/// Skips a native dialog-template string or ordinal resource identifier.
+static const WORD* SkipDialogTemplateString(const WORD* value) {
+    if (*value == 0xFFFF) {
+        return value + 2;
+    }
+    while (*value != 0) {
+        value++;
+    }
+    return value + 1;
+}
+
+/// Lets Windows map authored control dimensions using the current native dialog font.
+static SIZE DialogResourceControlSize(HWND window, int resourceId, int id) {
+    HINSTANCE hInstance = GetModuleHandleW(nullptr);
+    HRSRC resource = FindResourceW(hInstance, MAKEINTRESOURCEW(resourceId), RT_DIALOG);
+    HGLOBAL loaded = resource == nullptr ? nullptr : LoadResource(hInstance, resource);
+    const WORD* definition = loaded == nullptr ? nullptr : static_cast<const WORD*>(LockResource(loaded));
+    if (definition == nullptr || SizeofResource(hInstance, resource) < 26 || definition[1] != 0xFFFF) {
+        return SIZE{};
+    }
+    WORD count = definition[8];
+    const WORD* item = SkipDialogTemplateString(definition + 13);
+    item = SkipDialogTemplateString(item);
+    item = SkipDialogTemplateString(item);
+    if ((definition[6] & DS_SETFONT) != 0) {
+        item = SkipDialogTemplateString(item + 3);
+    }
+    for (WORD index = 0; index < count; index++) {
+        item = reinterpret_cast<const WORD*>(reinterpret_cast<UINT_PTR>(item) + 3 & ~UINT_PTR{ 3 });
+        int controlId = item[10] | item[11] << 16;
+        if (controlId == id) {
+            RECT bounds = RECT{ 0, 0, static_cast<short>(item[8]), static_cast<short>(item[9]) };
+            MapDialogRect(window, &bounds);
+            return SIZE{ bounds.right, bounds.bottom };
+        }
+        item = SkipDialogTemplateString(item + 12);
+        item = SkipDialogTemplateString(item);
+        WORD bytes = *item++;
+        item = reinterpret_cast<const WORD*>(reinterpret_cast<const BYTE*>(item) + bytes);
+    }
+    return SIZE{};
+}
+
+/// Fits localized button text above its template width while preserving the current native height.
+static SIZE DialogButtonSize(HWND button, int resourceId) {
+    HWND parent = GetParent(button);
+    SIZE minimum = DialogResourceControlSize(parent, resourceId, GetDlgCtrlID(button));
+    SIZE size{};
+    if (!SendMessageW(button, BCM_GETIDEALSIZE, 0, reinterpret_cast<LPARAM>(&size))) {
+        HDC dc = GetDC(button);
+        if (dc != nullptr) {
+            HFONT font = reinterpret_cast<HFONT>(SendMessageW(button, WM_GETFONT, 0, 0));
+            HGDIOBJ previous = font == nullptr ? nullptr : SelectObject(dc, font);
+            wchar_t* text = CopyControlText(button);
+            RECT bounds{};
+            if (text != nullptr) {
+                DrawTextW(dc, text, -1, &bounds, DT_CALCRECT | DT_SINGLELINE);
+                HeapFree(GetProcessHeap(), 0, text);
+            }
+            RECT padding = RECT{ 0, 0, 12, 0 };
+            MapDialogRect(parent, &padding);
+            size.cx = bounds.right + padding.right + 2 * GetSystemMetrics(SM_CXEDGE);
+            if (previous != nullptr) {
+                SelectObject(dc, previous);
+            }
+            ReleaseDC(button, dc);
+        }
+    }
+    if (size.cx < minimum.cx) {
+        size.cx = minimum.cx;
+    }
+    RECT bounds{};
+    GetWindowRect(button, &bounds);
+    size.cy = bounds.bottom - bounds.top;
+    if (GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDialogDpiChangeBehavior") == nullptr) {
+        size.cy = minimum.cy;
+    }
+    return size;
+}
 
 /// Measures one localized caption with its current native font and mnemonic processing.
 static LONG FindCaptionWidth(HWND control) {
@@ -96,8 +183,6 @@ FindForm::FindForm()
         target(nullptr),
         lastTarget(nullptr),
         uiFont(nullptr),
-        buttonSize(SIZE{}),
-        templateDpi(96),
         minimumWidth(380),
         fixedHeight(0),
         query(nullptr),
@@ -146,9 +231,12 @@ void FindForm::SetTarget(HWND edit) {
 /// Refreshes caption icons, applies the system font and recalculates native font- and DPI-aware geometry.
 void FindForm::SetFonts(bool updateUi) {
     UpdateWindowIcons(window, IDI_FIND);
-    HFONT font = updateUi
-        ? CreateUiFont(window)
-        : reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
+    HFONT font;
+    if (updateUi) {
+        font = CreateUiFont(window);
+    } else {
+        font = reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
+    }
     if (!font) {
         return;
     }
@@ -160,11 +248,11 @@ void FindForm::SetFonts(bool updateUi) {
             SendMessageW(control, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
         }
     }
-    if (ownsUiFont) {
+    if (ownsUiFont && uiFont != font) {
         DeleteObject(uiFont);
     }
+    ownsUiFont = updateUi || ownsUiFont && uiFont == font;
     uiFont = font;
-    ownsUiFont = updateUi;
     Layout();
 }
 
@@ -181,12 +269,12 @@ void FindForm::Layout() {
     SIZE margin = DialogUnits(uiFont, 7, 7);
     LONG top = DialogUnits(uiFont, 0, 6).cy;
     SIZE gap = DialogUnits(uiFont, 4, 3);
-    SIZE button = buttonSize;
+    SIZE button = DialogButtonSize(next, IDD_FIND);
     UINT dpi = WindowDpi(window);
-    button.cx = MulDiv(button.cx, dpi, templateDpi);
-    button.cy = MulDiv(button.cy, dpi, templateDpi);
-    button.cx = PreferredButtonSize(next, button).cx;
-    button.cx = PreferredButtonSize(close, button).cx;
+    SIZE closeButton = DialogButtonSize(close, IDD_FIND);
+    if (closeButton.cx > button.cx) {
+        button.cx = closeButton.cx;
+    }
     LONG inputLeft = DialogUnits(uiFont, 50, 0).cx;
     LONG labelWidth = FindCaptionWidth(label);
     if (margin.cx + labelWidth + gap.cx > inputLeft) {
@@ -616,9 +704,7 @@ void FindForm::FindNext(HWND owner, bool reverse) {
 
 /// Initializes the editable combo, native controls, icons and persisted form placement.
 bool FindForm::Initialize() {
-    RECT bounds = ControlRect(GetDlgItem(window, IDOK), window);
-    buttonSize = SIZE{ bounds.right - bounds.left, bounds.bottom - bounds.top };
-    templateDpi = WindowDpi(window);
+    RECT bounds = RECT{};
     HWND combo = GetDlgItem(window, IDC_FIND_TEXT);
     HWND input = ::GetWindow(combo, GW_CHILD);
     if (!input || !InstallSelectionEditHandler(input)) {
@@ -776,6 +862,10 @@ INT_PTR FindForm::HandleCommand(WPARAM wParam) {
 
 /// Applies suggested DPI bounds and refreshes native fonts and geometry.
 INT_PTR FindForm::HandleDpiChange(LPARAM lParam) {
+    if (GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDialogDpiChangeBehavior") != nullptr) {
+        PostMessageW(window, nativeDialogDpiChangedMessage, 0, 0);
+        return FALSE;
+    }
     RECT* bounds = reinterpret_cast<RECT*>(lParam);
     SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
         bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
@@ -827,6 +917,9 @@ INT_PTR CALLBACK FindForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             return TRUE;
         case WM_DPICHANGED:
             return owner->HandleDpiChange(lParam);
+        case nativeDialogDpiChangedMessage:
+            owner->SetFonts(false);
+            return TRUE;
         case WM_NCDESTROY:
             ClearWindowIcons(window);
             owner->window = nullptr;

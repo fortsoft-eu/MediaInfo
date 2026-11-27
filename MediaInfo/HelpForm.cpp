@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.3.0
  */
 
 #include "HelpForm.h"
@@ -31,6 +31,93 @@
 #include "SystemDialogTemplate.h"
 #include "resource.h"
 #include <commctrl.h>
+
+#ifndef BCM_GETIDEALSIZE
+#define BCM_GETIDEALSIZE 0x1601
+#endif
+
+/// Refreshes layout after Windows completes native dialog DPI scaling.
+static const UINT nativeDialogDpiChangedMessage = WM_APP + 25;
+
+/// Skips a native dialog-template string or ordinal resource identifier.
+static const WORD* SkipDialogTemplateString(const WORD* value) {
+    if (*value == 0xFFFF) {
+        return value + 2;
+    }
+    while (*value != 0) {
+        value++;
+    }
+    return value + 1;
+}
+
+/// Lets Windows map authored control dimensions using the current native dialog font.
+static SIZE DialogResourceControlSize(HWND window, int resourceId, int id) {
+    HINSTANCE hInstance = GetModuleHandleW(nullptr);
+    HRSRC resource = FindResourceW(hInstance, MAKEINTRESOURCEW(resourceId), RT_DIALOG);
+    HGLOBAL loaded = resource == nullptr ? nullptr : LoadResource(hInstance, resource);
+    const WORD* definition = loaded == nullptr ? nullptr : static_cast<const WORD*>(LockResource(loaded));
+    if (definition == nullptr || SizeofResource(hInstance, resource) < 26 || definition[1] != 0xFFFF) {
+        return SIZE{};
+    }
+    WORD count = definition[8];
+    const WORD* item = SkipDialogTemplateString(definition + 13);
+    item = SkipDialogTemplateString(item);
+    item = SkipDialogTemplateString(item);
+    if ((definition[6] & DS_SETFONT) != 0) {
+        item = SkipDialogTemplateString(item + 3);
+    }
+    for (WORD index = 0; index < count; index++) {
+        item = reinterpret_cast<const WORD*>(reinterpret_cast<UINT_PTR>(item) + 3 & ~UINT_PTR{ 3 });
+        int controlId = item[10] | item[11] << 16;
+        if (controlId == id) {
+            RECT bounds = RECT{ 0, 0, static_cast<short>(item[8]), static_cast<short>(item[9]) };
+            MapDialogRect(window, &bounds);
+            return SIZE{ bounds.right, bounds.bottom };
+        }
+        item = SkipDialogTemplateString(item + 12);
+        item = SkipDialogTemplateString(item);
+        WORD bytes = *item++;
+        item = reinterpret_cast<const WORD*>(reinterpret_cast<const BYTE*>(item) + bytes);
+    }
+    return SIZE{};
+}
+
+/// Fits localized button text above its template width while preserving the current native height.
+static SIZE DialogButtonSize(HWND button, int resourceId) {
+    HWND parent = GetParent(button);
+    SIZE minimum = DialogResourceControlSize(parent, resourceId, GetDlgCtrlID(button));
+    SIZE size{};
+    if (!SendMessageW(button, BCM_GETIDEALSIZE, 0, reinterpret_cast<LPARAM>(&size))) {
+        HDC dc = GetDC(button);
+        if (dc != nullptr) {
+            HFONT font = reinterpret_cast<HFONT>(SendMessageW(button, WM_GETFONT, 0, 0));
+            HGDIOBJ previous = font == nullptr ? nullptr : SelectObject(dc, font);
+            wchar_t* text = CopyControlText(button);
+            RECT bounds{};
+            if (text != nullptr) {
+                DrawTextW(dc, text, -1, &bounds, DT_CALCRECT | DT_SINGLELINE);
+                HeapFree(GetProcessHeap(), 0, text);
+            }
+            RECT padding = RECT{ 0, 0, 12, 0 };
+            MapDialogRect(parent, &padding);
+            size.cx = bounds.right + padding.right + 2 * GetSystemMetrics(SM_CXEDGE);
+            if (previous != nullptr) {
+                SelectObject(dc, previous);
+            }
+            ReleaseDC(button, dc);
+        }
+    }
+    if (size.cx < minimum.cx) {
+        size.cx = minimum.cx;
+    }
+    RECT bounds{};
+    GetWindowRect(button, &bounds);
+    size.cy = bounds.bottom - bounds.top;
+    if (GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDialogDpiChangeBehavior") == nullptr) {
+        size.cy = minimum.cy;
+    }
+    return size;
+}
 
 /// Initializes an unopened modeless Help form and its font state.
 HelpForm::HelpForm()
@@ -53,16 +140,18 @@ bool HelpForm::ApplyStyle(bool updateFont) {
     if (window == nullptr) {
         return false;
     }
-    HFONT font = uiFont;
+    HFONT font;
     if (updateFont) {
         font = CreateSystemDialogFont(window);
+    } else {
+        font = reinterpret_cast<HFONT>(SendMessageW(window, WM_GETFONT, 0, 0));
     }
     if (font == nullptr) {
         return false;
     }
-    HFONT previousFont = ownsUiFont ? uiFont : nullptr;
+    HFONT previousFont = ownsUiFont && uiFont != font ? uiFont : nullptr;
+    ownsUiFont = updateFont || ownsUiFont && uiFont == font;
     uiFont = font;
-    ownsUiFont = updateFont;
     SendMessageW(window, WM_SETFONT, reinterpret_cast<WPARAM>(font), FALSE);
     const int ids[] = {
         IDC_INFO_TEXT,
@@ -93,8 +182,7 @@ void HelpForm::Layout() {
     RECT client = RECT{};
     GetClientRect(window, &client);
     SIZE margin = DialogUnits(uiFont, 8, 8);
-    SIZE button = DialogResourceControlSize(IDD_HELP, IDOK, uiFont);
-    button.cx = PreferredButtonSize(GetDlgItem(window, IDOK), button).cx;
+    SIZE button = DialogButtonSize(GetDlgItem(window, IDOK), IDD_HELP);
     SIZE gap = DialogUnits(uiFont, 4, 6);
     int textTop = margin.cy;
     int buttonY = client.bottom - margin.cy - button.cy;
@@ -145,6 +233,10 @@ bool HelpForm::Initialize() {
 
 /// Applies the suggested DPI-change bounds, rebuilds fonts and updates the dialog layout.
 INT_PTR HelpForm::HandleDpiChange(LPARAM lParam) {
+    if (GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDialogDpiChangeBehavior") != nullptr) {
+        PostMessageW(window, nativeDialogDpiChangedMessage, 0, 0);
+        return FALSE;
+    }
     RECT* bounds = reinterpret_cast<RECT*>(lParam);
     SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
         bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
@@ -170,12 +262,6 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
         return FALSE;
     }
     switch (message) {
-        case WM_GETFONT:
-            if (owner->uiFont) {
-                SetWindowLongPtrW(window, DWLP_MSGRESULT, reinterpret_cast<LONG_PTR>(owner->uiFont));
-                return TRUE;
-            }
-            break;
         case WM_CTLCOLORDLG:
             if (!AreVisualStylesActive()) {
                 return reinterpret_cast<INT_PTR>(GetSysColorBrush(COLOR_BTNFACE));
@@ -199,6 +285,9 @@ INT_PTR CALLBACK HelpForm::DialogProc(HWND window, UINT message, WPARAM wParam, 
             return TRUE;
         case WM_DPICHANGED:
             return owner->HandleDpiChange(lParam);
+        case nativeDialogDpiChangedMessage:
+            owner->ApplyStyle(false);
+            return TRUE;
         case WM_CLOSE:
             owner->Close();
             return TRUE;

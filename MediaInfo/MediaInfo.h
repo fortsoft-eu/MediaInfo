@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.3.0
  */
 
 #pragma once
@@ -380,9 +380,6 @@ HFONT CreateReportFont(HWND window, const LOGFONTW* saved, UINT savedDpi);
 
 /// Converts dialog units using the supplied font metrics rather than fixed pixel assumptions.
 SIZE DialogUnits(HFONT font, int x, int y);
-
-/// Scales a control's authored dimensions from its extended dialog resource using the current font.
-SIZE DialogResourceControlSize(int resourceId, int id, HFONT font);
 
 /// Expands a native button only as needed for its current localized text and native padding.
 SIZE PreferredButtonSize(HWND button, const SIZE& minimum);

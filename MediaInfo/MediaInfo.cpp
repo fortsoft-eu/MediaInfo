@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.3.0
  */
 
 #include "MediaInfo.h"
@@ -95,10 +95,8 @@ struct PreferencesData {
     LOGFONTW* appliedFont;
     UINT* appliedDpi;
     const PreferencesCallbacks* callbacks;
-    SIZE buttonSize;
     LOGFONTW font;
     UINT dpi;
-    int widthReduction;
     int contentHeight;
     int scrollPosition;
     int wheelRemainder;
@@ -195,8 +193,12 @@ static const WindowIconEntry windowIconEntries[] = {
 
 /// Native constants used to select a window's nearest monitor and effective display DPI.
 
-/// Native button-caption measurement message.
-static const UINT buttonGetIdealSize = 0x1601;
+#ifndef BCM_GETIDEALSIZE
+#define BCM_GETIDEALSIZE 0x1601
+#endif
+
+/// Refreshes layout after Windows completes native dialog DPI scaling.
+static const UINT nativeDialogDpiChangedMessage = WM_APP + 25;
 
 /// Maximum number of source bytes copied by Create a Header File.
 static const DWORD headerByteLimit = 524288;
@@ -744,13 +746,13 @@ static const WORD* SkipDialogTemplateString(const WORD* value) {
     return value + 1;
 }
 
-/// Scales a control's authored dimensions from its extended dialog resource using the current font.
-SIZE DialogResourceControlSize(int resourceId, int id, HFONT font) {
-    HINSTANCE instance = GetModuleHandleW(nullptr);
-    HRSRC resource = FindResourceW(instance, MAKEINTRESOURCEW(resourceId), RT_DIALOG);
-    HGLOBAL loaded = resource == nullptr ? nullptr : LoadResource(instance, resource);
+/// Lets Windows map authored control dimensions using the current native dialog font.
+static SIZE DialogResourceControlSize(HWND window, int resourceId, int id) {
+    HINSTANCE hInstance = GetModuleHandleW(nullptr);
+    HRSRC resource = FindResourceW(hInstance, MAKEINTRESOURCEW(resourceId), RT_DIALOG);
+    HGLOBAL loaded = resource == nullptr ? nullptr : LoadResource(hInstance, resource);
     const WORD* definition = loaded == nullptr ? nullptr : static_cast<const WORD*>(LockResource(loaded));
-    if (definition == nullptr || SizeofResource(instance, resource) < 26 || definition[1] != 0xFFFF) {
+    if (definition == nullptr || SizeofResource(hInstance, resource) < 26 || definition[1] != 0xFFFF) {
         return SIZE{};
     }
     WORD count = definition[8];
@@ -764,7 +766,9 @@ SIZE DialogResourceControlSize(int resourceId, int id, HFONT font) {
         item = reinterpret_cast<const WORD*>(reinterpret_cast<UINT_PTR>(item) + 3 & ~UINT_PTR{ 3 });
         int controlId = item[10] | item[11] << 16;
         if (controlId == id) {
-            return DialogUnits(font, static_cast<short>(item[8]), static_cast<short>(item[9]));
+            RECT bounds = RECT{ 0, 0, static_cast<short>(item[8]), static_cast<short>(item[9]) };
+            MapDialogRect(window, &bounds);
+            return SIZE{ bounds.right, bounds.bottom };
         }
         item = SkipDialogTemplateString(item + 12);
         item = SkipDialogTemplateString(item);
@@ -774,10 +778,47 @@ SIZE DialogResourceControlSize(int resourceId, int id, HFONT font) {
     return SIZE{};
 }
 
+/// Fits localized button text above its template width while preserving the current native height.
+static SIZE DialogButtonSize(HWND button, int resourceId) {
+    HWND parent = GetParent(button);
+    SIZE minimum = DialogResourceControlSize(parent, resourceId, GetDlgCtrlID(button));
+    SIZE size{};
+    if (!SendMessageW(button, BCM_GETIDEALSIZE, 0, reinterpret_cast<LPARAM>(&size))) {
+        HDC dc = GetDC(button);
+        if (dc != nullptr) {
+            HFONT font = reinterpret_cast<HFONT>(SendMessageW(button, WM_GETFONT, 0, 0));
+            HGDIOBJ previous = font == nullptr ? nullptr : SelectObject(dc, font);
+            wchar_t* text = CopyControlText(button);
+            RECT bounds{};
+            if (text != nullptr) {
+                DrawTextW(dc, text, -1, &bounds, DT_CALCRECT | DT_SINGLELINE);
+                HeapFree(GetProcessHeap(), 0, text);
+            }
+            RECT padding = RECT{ 0, 0, 12, 0 };
+            MapDialogRect(parent, &padding);
+            size.cx = bounds.right + padding.right + 2 * GetSystemMetrics(SM_CXEDGE);
+            if (previous != nullptr) {
+                SelectObject(dc, previous);
+            }
+            ReleaseDC(button, dc);
+        }
+    }
+    if (size.cx < minimum.cx) {
+        size.cx = minimum.cx;
+    }
+    RECT bounds{};
+    GetWindowRect(button, &bounds);
+    size.cy = bounds.bottom - bounds.top;
+    if (GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDialogDpiChangeBehavior") == nullptr) {
+        size.cy = minimum.cy;
+    }
+    return size;
+}
+
 /// Expands a native button only as needed for its current localized text and native padding.
 SIZE PreferredButtonSize(HWND button, const SIZE& minimum) {
     SIZE size = SIZE{};
-    if (!SendMessageW(button, buttonGetIdealSize, 0, reinterpret_cast<LPARAM>(&size))) {
+    if (!SendMessageW(button, BCM_GETIDEALSIZE, 0, reinterpret_cast<LPARAM>(&size))) {
         wchar_t* text = CopyControlText(button);
         HDC dc = GetDC(button);
         if (text && dc) {
@@ -2720,7 +2761,7 @@ static void LayoutPreferences(PreferencesData& data) {
     GetClientRect(window, &client);
     SIZE margin = DialogUnits(data.uiFont, 8, 8);
     SIZE gap = DialogUnits(data.uiFont, 6, 0);
-    SIZE button = data.buttonSize;
+    SIZE button = DialogButtonSize(GetDlgItem(window, IDOK), IDD_PREFERENCES);
     const int buttons[] = {
         IDC_DLL_BROWSE,
         IDC_CURL_BROWSE,
@@ -2731,14 +2772,36 @@ static void LayoutPreferences(PreferencesData& data) {
         IDCANCEL,
         IDC_PREFERENCES_APPLY
     };
-    for (int index = 0; index < 8; ++index) {
-        SIZE preferred = PreferredButtonSize(GetDlgItem(window, buttons[index]), button);
-        button.cx = preferred.cx;
+    for (int id : buttons) {
+        SIZE preferred = DialogButtonSize(GetDlgItem(window, id), IDD_PREFERENCES);
+        if (preferred.cx > button.cx) {
+            button.cx = preferred.cx;
+        }
     }
     SIZE checkSize = PreferredButtonSize(multipleInstances, SIZE{ 0, button.cy });
     SIZE closeSize = PreferredButtonSize(closeTabs, SIZE{ 0, button.cy });
     LONG recentWidth = PreferenceLabelWidth(window, IDC_RECENT_LABEL);
+    SIZE column = DialogUnits(data.uiFont, 80, 0);
+    const int columnLabels[] = {
+        IDC_FONT_LABEL,
+        IDC_SMOOTHING_LABEL,
+        IDC_LANGUAGE_LABEL,
+        IDC_REPORT_LABEL,
+        IDC_TAB_NAME_LABEL
+    };
+    int columnLabelCount = static_cast<int>(sizeof(columnLabels) / sizeof(columnLabels[0]));
+    for (int index = 0; index < columnLabelCount; ++index) {
+        LONG required = margin.cx + PreferenceLabelWidth(window, columnLabels[index]) + gap.cx;
+        if (required > column.cx) {
+            column.cx = required;
+        }
+    }
     LONG requiredWidth = 2 * margin.cx + checkSize.cx + 2 * gap.cx + recentWidth + button.cx;
+    SIZE fontButton = DialogButtonSize(font, IDD_PREFERENCES);
+    LONG fontRequiredWidth = column.cx + fontButton.cx + gap.cx + button.cx + margin.cx;
+    if (fontRequiredWidth > requiredWidth) {
+        requiredWidth = fontRequiredWidth;
+    }
     if (requiredWidth > client.right) {
         RECT bounds = RECT{};
         GetWindowRect(window, &bounds);
@@ -2762,23 +2825,8 @@ static void LayoutPreferences(PreferencesData& data) {
     RECT comboBounds = ControlRect(antialiasing, window);
     RECT lengthBounds = ControlRect(tabLength, window);
     RECT clearBounds = ControlRect(clear, window);
-    SIZE column = DialogUnits(data.uiFont, 80, 0);
-    const int columnLabels[] = {
-        IDC_FONT_LABEL,
-        IDC_SMOOTHING_LABEL,
-        IDC_LANGUAGE_LABEL,
-        IDC_REPORT_LABEL,
-        IDC_TAB_NAME_LABEL
-    };
-    int columnLabelCount = static_cast<int>(sizeof(columnLabels) / sizeof(columnLabels[0]));
-    for (int index = 0; index < columnLabelCount; ++index) {
-        LONG required = margin.cx + PreferenceLabelWidth(window, columnLabels[index]) + gap.cx;
-        if (required > column.cx) {
-            column.cx = required;
-        }
-    }
     SIZE fullCombo = DialogUnits(data.uiFont, 180, 0);
-    int comboWidth = (fullCombo.cx - data.widthReduction) / 2;
+    int comboWidth = (fullCombo.cx - MulDiv(50, WindowDpi(window), 96)) / 2;
     fontBounds.left = column.cx;
     for (int index = 0; index < columnLabelCount; ++index) {
         HWND label = GetDlgItem(window, columnLabels[index]);
@@ -2843,18 +2891,13 @@ static void LayoutPreferences(PreferencesData& data) {
     OrderPreferencesLabels(window);
 }
 
-/// Applies the requested DPI-scaled width reduction once for the current window DPI.
-static void ResizePreferencesWidth(PreferencesData& data) {
+/// Applies the initial compact width before the first layout.
+static void ResizePreferencesWidth(const PreferencesData& data) {
     int reduction = MulDiv(50, WindowDpi(data.window), 96);
-    int difference = reduction - data.widthReduction;
-    if (!difference) {
-        return;
-    }
     RECT bounds = RECT{};
     GetWindowRect(data.window, &bounds);
-    SetWindowPos(data.window, nullptr, 0, 0, bounds.right - bounds.left - difference,
+    SetWindowPos(data.window, nullptr, 0, 0, bounds.right - bounds.left - reduction,
         bounds.bottom - bounds.top, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
-    data.widthReduction = reduction;
 }
 
 /// Rebuilds antialiasing choices only when availability, captions or the pending selection differ.
@@ -2905,7 +2948,7 @@ static void SetPreferencesFont(PreferencesData& data, bool updateUi) {
     if (updateUi) {
         font = CreateUiFont(data.window);
     } else {
-        font = reinterpret_cast<HFONT>(SendMessageW(data.window, WM_GETFONT, 0, 0));;
+        font = reinterpret_cast<HFONT>(SendMessageW(data.window, WM_GETFONT, 0, 0));
     }
     if (!font) {
         return;
@@ -2918,12 +2961,11 @@ static void SetPreferencesFont(PreferencesData& data, bool updateUi) {
             SendMessageW(control, WM_SETFONT, reinterpret_cast<WPARAM>(font), TRUE);
         }
     }
-    if (data.ownsUiFont) {
+    if (data.ownsUiFont && data.uiFont != font) {
         DeleteObject(data.uiFont);
     }
+    data.ownsUiFont = updateUi || data.ownsUiFont && data.uiFont == font;
     data.uiFont = font;
-    data.ownsUiFont = updateUi;
-    ResizePreferencesWidth(data);
     LayoutPreferences(data);
 }
 
@@ -2968,6 +3010,7 @@ static void UpdateFontButtons(PreferencesData& data) {
     caption[output] = 0;
     SetPreferencesCaption(GetDlgItem(data.window, IDC_FONT_CHOOSE), caption);
     EnablePreferencesControl(data.window, IDC_FONT_DEFAULT, custom);
+    LayoutPreferences(data);
 }
 
 /// Copies a native font-dialog selection into pending report-font settings.
@@ -3178,11 +3221,6 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         data = reinterpret_cast<PreferencesData*>(lParam);
         data->window = window;
         SetWindowLongPtrW(window, DWLP_USER, reinterpret_cast<LONG_PTR>(data));
-        RECT buttonBounds = ControlRect(GetDlgItem(window, IDOK), window);
-        data->buttonSize = SIZE{
-            buttonBounds.right - buttonBounds.left,
-            buttonBounds.bottom - buttonBounds.top
-        };
         LoadLibrarySetting(data->originalPath, MAX_PATH);
         LoadCurlSetting(data->originalCurlPath, MAX_PATH);
         SetDlgItemTextW(window, IDC_CURL_PATH, data->originalCurlPath);
@@ -3223,6 +3261,7 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         PopulateLanguages(*data);
         SetPreferencesLabels(*data);
         UpdateSmoothingChoices(*data);
+        ResizePreferencesWidth(*data);
         SetPreferencesFont(*data, false);
         UpdateFontButtons(*data);
         if (!InstallPreferencesControlHandlers(window)
@@ -3255,6 +3294,22 @@ static INT_PTR CALLBACK PreferencesProc(HWND window, UINT message, WPARAM wParam
         return DrawWrappedTextItem(reinterpret_cast<const DRAWITEMSTRUCT*>(lParam));
     }
     if (message == WM_TIMER && wParam == preferencesTimer) {
+        UpdateApplyButton(*data);
+        return TRUE;
+    }
+    if (message == WM_DPICHANGED) {
+        if (GetProcAddress(GetModuleHandleW(L"user32.dll"), "GetDialogDpiChangeBehavior") != nullptr) {
+            PostMessageW(window, nativeDialogDpiChangedMessage, 0, 0);
+            return FALSE;
+        }
+        RECT* bounds = reinterpret_cast<RECT*>(lParam);
+        SetWindowPos(window, nullptr, bounds->left, bounds->top, bounds->right - bounds->left,
+            bounds->bottom - bounds->top, SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+    if (message == nativeDialogDpiChangedMessage) {
+        UpdateSmoothingChoices(*data);
+        SetPreferencesFont(*data, false);
+        UpdateFontButtons(*data);
         UpdateApplyButton(*data);
         return TRUE;
     }

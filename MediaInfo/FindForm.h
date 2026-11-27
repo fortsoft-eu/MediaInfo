@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  **
- * Last modified for version 1.2.2.3
+ * Last modified for version 1.2.3.0
  */
 
 #pragma once
@@ -52,8 +52,6 @@ private:
 
     HFONT uiFont;
     PersistWindowState placement;
-    SIZE buttonSize;
-    UINT templateDpi;
     LONG minimumWidth;
     LONG fixedHeight;
     wchar_t* query;
